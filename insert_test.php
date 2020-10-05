@@ -4,6 +4,8 @@ $account = $_POST['accounts_select'];
 $location = $_POST['location_select'];
 $emp = $_POST['employee_select'];
 $collection = $_POST['collectiondate'];
+$date_reported = $_POST['date_reported'];
+$date_mro_recvd = $_POST['date_mro_recvd'];
 $testdate = $_POST['testdate'];
 $reason = $_POST['testreason'];
 $stype = $_POST['sampletype'];
@@ -42,7 +44,7 @@ $labId = $rowLab['lab_id'];
 $prac = $rowLab['practitioner_id'];
 
 $sql =
-    'INSERT INTO `test`( `account_id`, `division_id`, `emp_id`, `collection_date`, `company_id`, `lab_id`, `reason_id`, `result`, `practitioner_id`, `test_date`, `type_id`, `sample_id`, `amount`,  `batch_id`, `insert_user_id`, `form_id`, `other`, `other_nm`) VALUES (' .
+    'INSERT INTO `test`( `account_id`, `division_id`, `emp_id`, `collection_date`, `reported_date`, `mro_received_date`, `company_id`, `lab_id`, `reason_id`, `result`, `practitioner_id`, `test_date`, `type_id`, `sample_id`, `amount`,  `batch_id`, `insert_user_id`, `form_id`, `other`, `other_nm`) VALUES (' .
     $account .
     ',' .
     $location .
@@ -50,6 +52,10 @@ $sql =
     $emp .
     '","' .
     $collection .
+    '","' .
+    $date_reported .
+    '","' .
+    $date_mro_recvd .
     '",' .
     $compId .
     ',' .

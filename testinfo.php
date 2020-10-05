@@ -230,7 +230,7 @@ to get the desired effect
                                     <label>Date Reported:</label>
                                     <input type="date" max="<?php echo date(
                                             'Y-m-d'
-                                        ); ?>" name="date_mro_recvd" id="date_mro_recvd" placeholder=""
+                                        ); ?>" name="date_reported" id="date_reported" placeholder=""
                                         style="width: 240px; height: 31px; text-align:center">
                                 </div>
                                 <div class="form-group">
@@ -613,6 +613,8 @@ to get the desired effect
                 'location_select': $('#location_select').val(),
                 'testreason': $('#testreason').val(),
                 'collectiondate': $('#collectiondate').val(),
+                'date_reported': $('#date_reported').val(),
+                'date_mro_recvd': $('#date_mro_recvd').val(),
                 'sampletype': $('#sampletype').val(),
                 'testdate': $('#testdate').val(),
                 'testtype': $('#testtype').val(),
