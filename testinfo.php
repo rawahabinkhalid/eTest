@@ -181,7 +181,7 @@ to get the desired effect
                     <div class="container-fluid">
                         <!-- <form action="" method="POST" class=""> -->
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Test No:</label>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -278,7 +278,7 @@ to get the desired effect
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="record_complete">
                                         <input type="checkbox" id="record_complete" name="" value="">
@@ -335,7 +335,7 @@ to get the desired effect
                             <div class="col-md-10" style="border: 1px solid black;">
                                 <h5><b>Test Result</b></h5>
                                 <div class="row">
-                                    <div class="col-md-2">
+                                    <div class="col-md-3">
                                         <label for="negative_pos" style="display: inline-block">
                                             <div class="form-group">
                                                 <input type="radio" id="negative_pos" name="negative_positive"
@@ -345,7 +345,7 @@ to get the desired effect
                                         </label>
                                     </div>
 
-                                    <div class="col-md-8">
+                                    <div class="col-md-9">
                                         <div class="form-group">
                                             <label>Form:</label>
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -372,14 +372,14 @@ to get the desired effect
                                                                 '</option>';
                                                         }
                                                     }
-                                                    ?>
+?>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3" style="display: inline-block">
-                                        <label for="negative_positive" style="display: inline-block">
+                                        <label for="negative_positive" style="display: inline-block; text-align: left;">
                                             <input type="radio" id="negative_positive" name="negative_positive"
                                                 value="pos">
                                             Positive for the Following:
@@ -413,7 +413,7 @@ to get the desired effect
                                                         echo '</label></div>';
                                                     }
                                                 }
-                                                ?>
+?>
 
                                         </div>
                                     </div>
@@ -422,7 +422,8 @@ to get the desired effect
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="other_substances" style="display: inline-block">
+                                            <label for="other_substances"
+                                                style="display: inline-block; text-align: left;">
                                                 <input type="checkbox" name="" id="other_substances" value="T">
                                                 Other Substances:
                                             </label>

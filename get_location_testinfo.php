@@ -16,7 +16,7 @@ if(isset($_GET['account_id_location'])) {
 
 if(isset($_GET['account_id_employee']) && isset($_GET['location_select'])) {
     $content = '<option selected disabled value="">Please select Employee</option>';
-    $sql = 'SELECT * FROM employees WHERE status = "A" AND account_id = ' . $_GET['account_id_employee'] . ' AND division_id = ' . $_GET['location_select'];
+    $sql = 'SELECT * FROM employees WHERE status = "P" AND account_id = ' . $_GET['account_id_employee'] . ' AND division_id = ' . $_GET['location_select'];
     // echo $sql;
     $result = $conn->query($sql);
     if($result->num_rows > 0) {
