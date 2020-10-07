@@ -743,6 +743,8 @@ if ($result->num_rows > 0) {
             url: "retrieveAllTests.php?account_id=" + $('#accounts_select').val(),
             success: function(resultData) {
                 console.log(resultData);
+                $('#tbl_search_results').dataTable().fnDestroy();
+                $('#tbl_search_results_body').html("");
                 $('#tbl_search_results_body').html(resultData);
                 $('#tbl_search_results').DataTable();
 
@@ -760,6 +762,8 @@ if ($result->num_rows > 0) {
             url: "retrieveUnbilledTests.php?account_id=" + $('#accounts_select').val(),
             success: function(resultData) {
                 // console.log(resultData);
+                $('#tbl_search_results').dataTable().fnDestroy();
+                $('#tbl_search_results_body').html("");
                 $('#tbl_search_results_body').html(resultData);
                 $('#tbl_search_results').DataTable();
 
@@ -776,6 +780,8 @@ if ($result->num_rows > 0) {
                 '#test_no_retrieve').val(),
             success: function(resultData) {
                 // console.log(resultData);
+                $('#tbl_search_results').dataTable().fnDestroy();
+                $('#tbl_search_results_body').html("");
                 $('#tbl_search_results_body').html(resultData);
                 $('#tbl_search_results').DataTable();
             }
@@ -823,6 +829,8 @@ if ($result->num_rows > 0) {
                 var obj = JSON.parse(resultData);
                 console.log(obj);
 
+                $('#tbl_search_results').dataTable().fnDestroy();
+                $('#tbl_search_results_body').html("");
                 $('#tbl_search_results_body').html(obj.data);
                 $('#tbl_search_results').DataTable();
             }

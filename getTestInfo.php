@@ -370,8 +370,11 @@ if ($result->num_rows > 0) {
                             style="background-color:#E7D7B7; border-radius:12px; width: 100px;"
                             onclick="window.open('testinfo.php', '_self');">New</button>
                         <button type="button" name="" id="" class="btn ml-1"
-                            style="background-color:#E7D7B7; border-radius:12px; width: 100px;" onclick="window.open('downloadPDF.php?id=<?php echo $_GET['id']; ?>', '_self'
+                            style="background-color:#E7D7B7; border-radius:12px; width: 100px;" onclick="window.open('viewMROReport.php?id=<?php echo $_GET['id']; ?>', '_blank'
                             );">Print</button>
+                        <button type="button" name="" id="" class="btn ml-1"
+                            style="background-color:#E7D7B7; border-radius:12px; width: 100px;" onclick="window.open('viewMROReportEmail.php?id=<?php echo $_GET['id']; ?>', '_blank'
+                            );">Email</button>
                         <button type="button" name="submitSave" id="submitSave" class="btn ml-1"
                             style="background-color:#E7D7B7; border-radius:12px; width: 100px;">Save</button>
                         <button type="button" name="submitDelete" id="submitDelete" class="btn ml-1"
