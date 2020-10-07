@@ -215,6 +215,13 @@ if ($result->num_rows > 0) {
                                     </select>
                                 </div>
                                 <div class="form-group">
+                                    <label>Date Reported:</label>
+                                    <input type="date" disabled
+                                        value="<?php if(isset($row['reported_date'])) echo $row['reported_date']; ?>"
+                                        name="date_reported" id="date_reported" placeholder=""
+                                        style="width: 230px; height: 31px; text-align:center">
+                                </div>
+                                <div class="form-group">
                                     <label>Sample Type:</label>
                                     <select style="width: 240px; height: 31px;" id="sampletype" disabled>
                                         <option value="<?php if(isset($row['sample_id'])) echo $row['sample_id']; ?>">
@@ -260,6 +267,14 @@ if ($result->num_rows > 0) {
                                             text-align:center" id="collectiondate" value="<?php if(isset($row['collection_date'])) 
                                             $date = explode(" ",$row['collection_date']);
                                             echo $date[0]; ?>">
+                                </div>
+                                <div class="form-group">
+                                    <label>Date MRO Copy Recvd:</label>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="date" disabled
+                                        value="<?php if(isset($row['mro_received_date'])) echo $row['mro_received_date']; ?>"
+                                        name="date_mro_recvd" id="date_mro_recvd" placeholder=""
+                                        style="width: 170px; height: 31px; text-align:center">
                                 </div>
                                 <div class="form-group">
                                     <label>Test Date:</label>
