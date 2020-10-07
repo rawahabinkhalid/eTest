@@ -368,7 +368,7 @@ if(!$mail->Send())
 }
 else
 {   
-    // header('location:newpassword.html');
+    header('location:getTestInfo.php?id=' . $_GET['id']);
     // header('location:contact.html?email_sent');
     // echo "Email successfully sent!!";
 }
