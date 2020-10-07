@@ -858,14 +858,14 @@ while ($row = mysqli_fetch_assoc($result)) {
                         <div class="modal-body" style="display: inline-block">
                             <div class="row">
                                 <div class="col-md-2" style="display: inline-block">Location Name: </div>
-                                <div class="col-md-7" style="display: inline-block">
+                                <div class="col-md-8" style="display: inline-block">
                                     <input type="hidden" id="locationindex" name="locationindex" value="">
                                     <input class="form-control" id="division_nm" name="division_nm">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-2" style="display: inline-block">Address: </div>
-                                <div class="col-md-7" style="display: inline-block"><input class="form-control"
+                                <div class="col-md-8" style="display: inline-block"><input class="form-control"
                                         id="address" name="address"></div>
                             </div>
                             <div class="row">
@@ -876,7 +876,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 <div class="col-md-1" style="display: inline-block"><input class="form-control"
                                         id="state" name="state"></div>
                                 <div class="col-md-1" style="display: inline-block">Zip: </div>
-                                <div class="col-md-1" style="display: inline-block"><input class="form-control" id="zip"
+                                <div class="col-md-2" style="display: inline-block"><input class="form-control" id="zip"
                                         name="zip"></div>
                             </div>
                             <div class="row">
@@ -891,17 +891,17 @@ while ($row = mysqli_fetch_assoc($result)) {
                             </div>
                             <div class="row">
                                 <div class="col-md-2" style="display: inline-block">Contact: </div>
-                                <div class="col-md-7" style="display: inline-block"><input class="form-control"
+                                <div class="col-md-8" style="display: inline-block"><input class="form-control"
                                         id="contact" name="contact"></div>
                             </div>
                             <div class="row">
                                 <div class="col-md-2" style="display: inline-block">Email Address: </div>
-                                <div class="col-md-7" style="display: inline-block"><input class="form-control"
+                                <div class="col-md-8" style="display: inline-block"><input class="form-control"
                                         id="email" name="email"></div>
                             </div>
                             <div class="row">
                                 <div class="col-md-2" style="display: inline-block">Comments: </div>
-                                <div class="col-md-7" style="display: inline-block"><textarea class="form-control"
+                                <div class="col-md-8" style="display: inline-block"><textarea class="form-control"
                                         id="comments" name="comments"></textarea></div>
                             </div>
                         </div>

@@ -30,35 +30,38 @@ include_once "conn.php";
         float: left;
         margin-right: 15px;
     }
+
     /* Style the buttons that are used to open and close the accordion panel */
     .accordion {
-    background-color: #E7D7B7;
-    color: #444;
-    cursor: pointer;
-    padding: 18px;
-    width: 100%;
-    text-align: left;
-    border: none;
-    outline: none;
-    transition: 0.4s;
+        background-color: #E7D7B7;
+        color: #444;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        text-align: left;
+        border: none;
+        outline: none;
+        transition: 0.4s;
     }
 
     /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-    .accordion-active, .accordion:hover {
-    background-color: #d4b77e;
+    .accordion-active,
+    .accordion:hover {
+        background-color: #d4b77e;
     }
 
     /* Style the accordion panel. Note: hidden by default */
     .panel {
-    padding: 0 18px;
-    /* background-color: white; */
-    display: none;
-    width: 100%;
-    overflow: hidden;
+        padding: 0 18px;
+        /* background-color: white; */
+        display: none;
+        width: 100%;
+        overflow: hidden;
     }
 
     .accordion:after {
-        content: '\02795'; /* Unicode character for "plus" sign (+) */
+        content: '\02795';
+        /* Unicode character for "plus" sign (+) */
         font-size: 13px;
         color: #777;
         float: right;
@@ -66,7 +69,8 @@ include_once "conn.php";
     }
 
     .accordion-active:after {
-        content: "\2796"; /* Unicode character for "minus" sign (-) */
+        content: "\2796";
+        /* Unicode character for "minus" sign (-) */
     }
     </style>
     <script>
@@ -195,47 +199,49 @@ if ($result->num_rows > 0) {
                 <div class="content">
                     <div class="container-fluid">
                         <!-- <form action="" method="POST" class=""> -->
-                            <div class="row">
-                                <div class="col-md-6" style="border: 1px solid black;">
-                                    <h5><b>Options</b></h5>
-                                    <div class="row">
-                                        <div class="col-md-10">
-                                            <div class="form-group">
-                                                <label>Retrieve:</label>
-                                                &nbsp;
-                                                <select style="width: 300px; height: 31px;" id="retrieve_tests">
-                                                    <option value="All_test_results">All test results</option>
-                                                    <option value="Unbilled_test_results">Unbilled test results</option>
-                                                    <option value="By_test_number">By test number</option>
-                                                    <option value="Other">Other</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Test No:</label>
-                                                &nbsp;&nbsp;&nbsp;
-                                                <input disabled id="test_no_retrieve" type="number" min=0 value="0"
-                                                    placeholder="" style="width: 200px;">
-                                            </div>
+                        <div class="row">
+                            <div class="col-md-6" style="border: 1px solid black;">
+                                <h5><b>Options</b></h5>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label>Retrieve:</label>
+                                            &nbsp;
+                                            <select style="width: 300px; height: 31px;" id="retrieve_tests">
+                                                <option value="All_test_results">All test results</option>
+                                                <option value="Unbilled_test_results">Unbilled test results</option>
+                                                <option value="By_test_number">By test number</option>
+                                                <option value="Other">Other</option>
+                                            </select>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6" style="">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <button type="button" id="select_ok_button" class="btn mt-2 ml-1"
-                                                style="background-color:#E7D7B7; border-radius:5px; width: 100px;">OK</button>
-                                            <button type="button" onclick="window.open('retrievetest.php', '_self');" class="btn mt-2 ml-1"
-                                                style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Cancel</button>
+                                        <div class="form-group">
+                                            <label>Test No:</label>
+                                            &nbsp;&nbsp;&nbsp;
+                                            <input disabled id="test_no_retrieve" type="number" min=0 value="0"
+                                                placeholder="" style="width: 200px;">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row" id="search_criteria" style="display: none; margin-top: 10px; padding-top: 10px">
-                                <button class="accordion">Search Criteria</button>
-                                <div class="panel">
-                                    <div class="col-md-12 mt-2" style="border: 1px solid black;">
-                                        <!-- <h5><b>Search Criteria</b></h5> -->
-                                        <!-- <div class="row">
+                            <div class="col-md-6" style="">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <button type="button" id="select_ok_button" class="btn mt-2 ml-1"
+                                            style="background-color:#E7D7B7; border-radius:5px; width: 100px;">OK</button>
+                                        <button type="button" onclick="window.open('retrievetest.php', '_self');"
+                                            class="btn mt-2 ml-1"
+                                            style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="search_criteria"
+                            style="display: none; margin-top: 10px; padding-top: 10px">
+                            <button class="accordion">Search Criteria</button>
+                            <div class="panel">
+                                <div class="col-md-12 mt-2" style="border: 1px solid black;">
+                                    <!-- <h5><b>Search Criteria</b></h5> -->
+                                    <!-- <div class="row">
                                             <div class="col-md-10">
                                                 <div class="form-group">
                                                     <input type="checkbox" name="" value="">
@@ -243,102 +249,102 @@ if ($result->num_rows > 0) {
                                                 </div>
                                             </div>
                                         </div> -->
-                                        <div class="row" style="margin-top: 10px;">
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="search_by_employee_id_checkbox"><input type="checkbox" id="search_by_employee_id_checkbox" name=""
-                                                        value="">
+                                    <div class="row" style="margin-top: 10px;">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="search_by_employee_id_checkbox"><input type="checkbox"
+                                                        id="search_by_employee_id_checkbox" name="" value="">
                                                     Employee ID:</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <select style="width: 477px; height: 31px;" id="search_by_employee_id"
-                                                    disabled>
-                                                    
-                                                </select>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="search_by_test_date_checkbox"><input type="checkbox" id="search_by_test_date_checkbox" name=""
-                                                        value="">
+                                        <div class="col-md-6">
+                                            <select style="width: 477px; height: 31px;" id="search_by_employee_id"
+                                                disabled>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="search_by_test_date_checkbox"><input type="checkbox"
+                                                        id="search_by_test_date_checkbox" name="" value="">
                                                     Test Date:</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label>From:</label>
-                                                <input type="date" id="search_by_from_test_date" name="" value="" disabled>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label>To:</label>
-                                                <input type="date" id="search_by_to_test_date" name="" value="" disabled>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="search_by_collection_date_checkbox"><input type="checkbox" id="search_by_collection_date_checkbox" name=""
-                                                        value="">
+                                        <div class="col-md-3">
+                                            <label>From:</label>
+                                            <input type="date" id="search_by_from_test_date" name="" value="" disabled>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>To:</label>
+                                            <input type="date" id="search_by_to_test_date" name="" value="" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="search_by_collection_date_checkbox"><input type="checkbox"
+                                                        id="search_by_collection_date_checkbox" name="" value="">
                                                     Collection Date:</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label>From:</label>
-                                                <input type="date" id="search_by_from_collection_date" name="" value=""
-                                                    disabled>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label>To:</label>
-                                                <input type="date" id="search_by_to_collection_date" name="" value=""
-                                                    disabled>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="search_by_complete_checkbox"><input type="checkbox" name="" value=""
-                                                        id="search_by_complete_checkbox">
+                                        <div class="col-md-3">
+                                            <label>From:</label>
+                                            <input type="date" id="search_by_from_collection_date" name="" value=""
+                                                disabled>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>To:</label>
+                                            <input type="date" id="search_by_to_collection_date" name="" value=""
+                                                disabled>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="search_by_complete_checkbox"><input type="checkbox" name=""
+                                                        value="" id="search_by_complete_checkbox">
                                                     Complete:</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <select id="search_by_complete" style="width: 150px; height: 31px;"
-                                                    disabled>
-                                                    <option>No</option>
-                                                    <option>Yes</option>
-                                                </select>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="search_by_test_results_checkbox"><input type="checkbox" name="" value=""
-                                                        id="search_by_test_results_checkbox">
+                                        <div class="col-md-6">
+                                            <select id="search_by_complete" style="width: 150px; height: 31px;"
+                                                disabled>
+                                                <option>No</option>
+                                                <option>Yes</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="search_by_test_results_checkbox"><input type="checkbox"
+                                                        name="" value="" id="search_by_test_results_checkbox">
                                                     Test Results:</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <select style="width: 150px; height: 31px;" id="search_by_test_results"
-                                                    disabled>
-                                                    <option>Negative</option>
-                                                    <option>Positive</option>
-                                                </select>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="search_by_test_type_checkbox"><input type="checkbox" name="" value=""
-                                                        id="search_by_test_type_checkbox">
+                                        <div class="col-md-6">
+                                            <select style="width: 150px; height: 31px;" id="search_by_test_results"
+                                                disabled>
+                                                <option>Negative</option>
+                                                <option>Positive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="search_by_test_type_checkbox"><input type="checkbox" name=""
+                                                        value="" id="search_by_test_type_checkbox">
                                                     Test Type:</label>
-                                                </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <select style="width: 477px; height: 31px;" id="search_by_test_type"
-                                                    disabled>
-                                                    <option selected disabled value="">Please select Test Type</option>
-                                                    <?php
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select style="width: 477px; height: 31px;" id="search_by_test_type"
+                                                disabled>
+                                                <option selected disabled value="">Please select Test Type</option>
+                                                <?php
     $sql = 'SELECT * FROM testtype';
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
@@ -347,22 +353,22 @@ if ($result->num_rows > 0) {
         }
     }
     ?>
-                                                </select>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="search_by_test_reason_checkbox"><input type="checkbox"
+                                                        name="" value="" id="search_by_test_reason_checkbox">
+                                                    Test Reason:</label>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                <label for="search_by_test_reason_checkbox"><input type="checkbox" name="" value=""
-                                                        id="search_by_test_reason_checkbox">
-                                                    Test Reason:</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <select style="width: 477px; height: 31px;" id="search_by_test_reason"
-                                                    disabled>
-                                                    <option selected disabled value="">Please select Test Reason</option>
-                                                    <?php
+                                        <div class="col-md-6">
+                                            <select style="width: 477px; height: 31px;" id="search_by_test_reason"
+                                                disabled>
+                                                <option selected disabled value="">Please select Test Reason</option>
+                                                <?php
     $sql = 'SELECT * FROM reasons';
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
@@ -371,36 +377,37 @@ if ($result->num_rows > 0) {
         }
     }
     ?>
-                                                </select>
-                                            </div>
+                                            </select>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="search_by_group_no_checkbox"><input type="checkbox" name="" value=""
-                                                        id="search_by_group_no_checkbox">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="search_by_group_no_checkbox"><input type="checkbox" name=""
+                                                        value="" id="search_by_group_no_checkbox">
                                                     Group No:</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <select style="width: 477px; height: 31px;" id="search_by_group_no"
-                                                    disabled>
-                                                    <option></option>
-                                                    <option></option>
-                                                </select>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                <label for="search_by_form_checkbox"><input type="checkbox" name="" value="" id="search_by_form_checkbox">
+                                        <div class="col-md-6">
+                                            <select style="width: 477px; height: 31px;" id="search_by_group_no"
+                                                disabled>
+                                                <option></option>
+                                                <option></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="search_by_form_checkbox"><input type="checkbox" name=""
+                                                        value="" id="search_by_form_checkbox">
                                                     Form:</label>
-                                                </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <select style="width: 477px; height: 31px;" id="search_by_form" disabled>
-                                                    <option selected disabled value="">Please select Form</option>
-                                                    <?php
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select style="width: 477px; height: 31px;" id="search_by_form" disabled>
+                                                <option selected disabled value="">Please select Form</option>
+                                                <?php
     $sql = 'SELECT * FROM drugform';
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
@@ -409,22 +416,22 @@ if ($result->num_rows > 0) {
         }
     }
     ?>
-                                                </select>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="search_by_entry_user_checkbox"><input type="checkbox"
+                                                        name="" value="" id="search_by_entry_user_checkbox">
+                                                    Entry User:</label>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="search_by_entry_user_checkbox"><input type="checkbox" name="" value=""
-                                                        id="search_by_entry_user_checkbox">
-                                                    Entry User:</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <select style="width: 477px; height: 31px;" id="search_by_entry_user"
-                                                    disabled>
-                                                    <option selected disabled value="">Please select Entry User</option>
-                                                    <?php
+                                        <div class="col-md-6">
+                                            <select style="width: 477px; height: 31px;" id="search_by_entry_user"
+                                                disabled>
+                                                <option selected disabled value="">Please select Entry User</option>
+                                                <?php
     $sql = 'SELECT * FROM users';
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
@@ -433,39 +440,39 @@ if ($result->num_rows > 0) {
         }
     }
     ?>
-                                                </select>
-                                            </div>
+                                            </select>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="search_by_entry_date_checkbox"><input type="checkbox" name="" value=""
-                                                        id="search_by_entry_date_checkbox">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="search_by_entry_date_checkbox"><input type="checkbox"
+                                                        name="" value="" id="search_by_entry_date_checkbox">
                                                     Entry Date:</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label>From:</label>
-                                                <input type="date" name="" value="" disabled id="search_by_entry_date_from">
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label>To:</label>
-                                                <input type="date" name="" value="" disabled id="search_by_entry_date_to">
                                             </div>
                                         </div>
-                                        <div class="row" style="margin-bottom: 10px">
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="search_by_invoice_no_checkbox"><input type="checkbox" name="" value=""
-                                                        id="search_by_invoice_no_checkbox">
+                                        <div class="col-md-3">
+                                            <label>From:</label>
+                                            <input type="date" name="" value="" disabled id="search_by_entry_date_from">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>To:</label>
+                                            <input type="date" name="" value="" disabled id="search_by_entry_date_to">
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-bottom: 10px">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="search_by_invoice_no_checkbox"><input type="checkbox"
+                                                        name="" value="" id="search_by_invoice_no_checkbox">
                                                     Invoice No:</label>
-                                                </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <select style="width: 477px; height: 31px;" disabled
-                                                    id="search_by_invoice_no">
-                                                    <option selected disabled value="">Please select Invoice No</option>
-                                                    <?php
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select style="width: 477px; height: 31px;" disabled
+                                                id="search_by_invoice_no">
+                                                <option selected disabled value="">Please select Invoice No</option>
+                                                <?php
     $sql = 'SELECT * FROM invoice';
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
@@ -474,33 +481,33 @@ if ($result->num_rows > 0) {
         }
     }
     ?>
-                                                </select>
-                                            </div>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row" id="search_results" style="display: none;">
-                                <div class="col-md-12 mt-2" style="border: 1px solid black;">
-                                    <h5><b>Search Result</b></h5>
-                                    <table id="tbl_search_results" class="hover" style="width:100%">
-                                        <thead>
-                                            <th>S. No.</th>
-                                            <th>Test No</th>
-                                            <th>Invoice No</th>
-                                            <th>Emp ID</th>
-                                            <th>Location</th>
-                                            <th>Test Reason</th>
-                                            <th>Sample Type</th>
-                                            <th>Test Type</th>
-                                            <th>Fee Amount</th>
-                                        </thead>
-                                        <tbody id="tbl_search_results_body">
-                                        
-                                        </tbody>
-                                    </table>
-                                </div>
+                        </div>
+                        <div class="row" id="search_results" style="display: none;">
+                            <div class="col-md-12 mt-2" style="border: 1px solid black;">
+                                <h5><b>Search Result</b></h5>
+                                <table id="tbl_search_results" class="hover" style="width:100%">
+                                    <thead>
+                                        <th>S. No.</th>
+                                        <th>Test No</th>
+                                        <th>Invoice No</th>
+                                        <th>Emp ID</th>
+                                        <th>Location</th>
+                                        <th>Test Reason</th>
+                                        <th>Sample Type</th>
+                                        <th>Test Type</th>
+                                        <th>Fee Amount</th>
+                                    </thead>
+                                    <tbody id="tbl_search_results_body">
+
+                                    </tbody>
+                                </table>
                             </div>
+                        </div>
                         <!-- </form> -->
                         <br><br>
                     </div>
@@ -554,27 +561,26 @@ if ($result->num_rows > 0) {
             /* Toggle between hiding and showing the active panel */
             var panel = this.nextElementSibling;
             if (panel.style.display === "block") {
-            panel.style.display = "none";
+                panel.style.display = "none";
             } else {
-            panel.style.display = "block";
+                panel.style.display = "block";
             }
         });
     }
     </script>
     <script>
-
     $(document).ready(function() {
         // setTimeout(() => {
-            $("#accounts_select").children().eq(1).attr('selected', 'selected');
-            $.ajax({
-                type: "GET",
-                url: "getEmployeesFromAccount.php",
-                data: 'account_id_location=' + $("#accounts_select").val(),
-                success: function(resultData) {
-                    $('#search_by_employee_id').html(resultData);
-                    // window.open("accounts.php", "_self");
-                }
-            });
+        $("#accounts_select").children().eq(1).attr('selected', 'selected');
+        $.ajax({
+            type: "GET",
+            url: "getEmployeesFromAccount.php",
+            data: 'account_id_location=' + $("#accounts_select").val(),
+            success: function(resultData) {
+                $('#search_by_employee_id').html(resultData);
+                // window.open("accounts.php", "_self");
+            }
+        });
         // }, 500);
     })
 
@@ -589,7 +595,6 @@ if ($result->num_rows > 0) {
             }
         });
     })
-    
     </script>
     <script>
     $('#retrieve_tests').on('change', function() {
@@ -717,7 +722,7 @@ if ($result->num_rows > 0) {
             $('.panel').css('display', "none");
         }
         console.log("retrieve_tests", $('#retrieve_tests').val());
-        if($('#retrieve_tests').val() == 'All_test_results') {
+        if ($('#retrieve_tests').val() == 'All_test_results') {
             retrieveAllTests();
         } else if ($('#retrieve_tests').val() == 'Unbilled_test_results') {
             retrieveUnbilledTests();
@@ -735,9 +740,9 @@ if ($result->num_rows > 0) {
 
         $.ajax({
             type: "GET",
-            url: "retrieveAllTests.php",
+            url: "retrieveAllTests.php?account_id=" + $('#accounts_select').val(),
             success: function(resultData) {
-                // console.log(resultData);
+                console.log(resultData);
                 $('#tbl_search_results_body').html(resultData);
                 $('#tbl_search_results').DataTable();
 
@@ -749,10 +754,10 @@ if ($result->num_rows > 0) {
         $('#search_results').css('display', '');
         $('#test_no_retrieve').val('0');
         $('#test_no_retrieve').prop('disabled', true);
-        
+
         $.ajax({
             type: "GET",
-            url: "retrieveUnbilledTests.php",
+            url: "retrieveUnbilledTests.php?account_id=" + $('#accounts_select').val(),
             success: function(resultData) {
                 // console.log(resultData);
                 $('#tbl_search_results_body').html(resultData);
@@ -764,10 +769,11 @@ if ($result->num_rows > 0) {
 
     function retrieveByTestNo() {
         $('#search_results').css('display', '');
-        
+
         $.ajax({
             type: "GET",
-            url: "retrieveByTestNo.php?test_id=" + $('#test_no_retrieve').val(),
+            url: "retrieveByTestNo.php?account_id=" + $('#accounts_select').val() + "&test_id=" + $(
+                '#test_no_retrieve').val(),
             success: function(resultData) {
                 // console.log(resultData);
                 $('#tbl_search_results_body').html(resultData);
@@ -782,25 +788,35 @@ if ($result->num_rows > 0) {
         $('#test_no_retrieve').prop('disabled', true);
         var data = {};
         data['emp_id'] = ($('#search_by_employee_id_checkbox').is(':checked')) ? $('#search_by_employee_id').val() : '';
-        data['test_date_from'] = ($('#search_by_test_date_checkbox').is(':checked')) ? $('#search_by_from_test_date').val() : '';
-        data['test_date_to'] = ($('#search_by_test_date_checkbox').is(':checked')) ? $('#search_by_to_test_date').val() : '';
-        data['collection_date_from'] = ($('#search_by_collection_date_checkbox').is(':checked')) ? $('#search_by_from_collection_date').val() : '';
-        data['collection_date_to'] = ($('#search_by_collection_date_checkbox').is(':checked')) ? $('#search_by_to_collection_date').val() : '';
+        data['test_date_from'] = ($('#search_by_test_date_checkbox').is(':checked')) ? $('#search_by_from_test_date')
+            .val() : '';
+        data['test_date_to'] = ($('#search_by_test_date_checkbox').is(':checked')) ? $('#search_by_to_test_date')
+            .val() : '';
+        data['collection_date_from'] = ($('#search_by_collection_date_checkbox').is(':checked')) ? $(
+            '#search_by_from_collection_date').val() : '';
+        data['collection_date_to'] = ($('#search_by_collection_date_checkbox').is(':checked')) ? $(
+            '#search_by_to_collection_date').val() : '';
         data['status'] = ($('#search_by_complete_checkbox').is(':checked')) ? $('#search_by_complete').val() : '';
-        data['result'] = ($('#search_by_test_results_checkbox').is(':checked')) ? $('#search_by_test_results').val() : '';
+        data['result'] = ($('#search_by_test_results_checkbox').is(':checked')) ? $('#search_by_test_results').val() :
+            '';
         data['type_id'] = ($('#search_by_test_type_checkbox').is(':checked')) ? $('#search_by_test_type').val() : '';
-        data['reason_id'] = ($('#search_by_test_reason_checkbox').is(':checked')) ? $('#search_by_test_reason').val() : '';
+        data['reason_id'] = ($('#search_by_test_reason_checkbox').is(':checked')) ? $('#search_by_test_reason').val() :
+            '';
         data['batch_id'] = ($('#search_by_group_no_checkbox').is(':checked')) ? $('#search_by_group_no').val() : '';
         data['form_id'] = ($('#search_by_form_checkbox').is(':checked')) ? $('#search_by_form').val() : '';
-        data['insert_user_id'] = ($('#search_by_entry_user_checkbox').is(':checked')) ? $('#search_by_entry_user').val() : '';
-        data['insert_date_from'] = ($('#search_by_entry_date_checkbox').is(':checked')) ? $('#search_by_entry_date_from').val() : '';
-        data['insert_date_to'] = ($('#search_by_entry_date_checkbox').is(':checked')) ? $('#search_by_entry_date_to').val() : '';
-        data['invoice_id'] = ($('#search_by_invoice_no_checkbox').is(':checked')) ? $('#search_by_invoice_no').val() : '';
+        data['insert_user_id'] = ($('#search_by_entry_user_checkbox').is(':checked')) ? $('#search_by_entry_user')
+            .val() : '';
+        data['insert_date_from'] = ($('#search_by_entry_date_checkbox').is(':checked')) ? $(
+            '#search_by_entry_date_from').val() : '';
+        data['insert_date_to'] = ($('#search_by_entry_date_checkbox').is(':checked')) ? $('#search_by_entry_date_to')
+            .val() : '';
+        data['invoice_id'] = ($('#search_by_invoice_no_checkbox').is(':checked')) ? $('#search_by_invoice_no').val() :
+            '';
         // if()
         $.ajax({
             type: "POST",
-            url: "retrieveOther.php",
-            data: 'data='+JSON.stringify(data),
+            url: "retrieveOther.php?account_id=" + $('#accounts_select').val(),
+            data: 'data=' + JSON.stringify(data),
             contentType: 'application/x-www-form-urlencoded',
             success: function(resultData) {
                 console.log(resultData);

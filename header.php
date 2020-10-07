@@ -134,7 +134,7 @@ if (!isset($_SESSION['userid'])) {
                         <!-- <a href="" class="nav-link"> -->
                         <i class="nav-icon fas fa-home"></i>
                         <p>
-                            Home
+                            MRO review / New Test
                         </p>
                     </a>
                 </li>
@@ -196,7 +196,7 @@ if (!isset($_SESSION['userid'])) {
                         <!-- <a href="" class="nav-link"> -->
                         <i class="nav-icon fas fa-home"></i>
                         <p>
-                            Home
+                            MRO review / New Test
                         </p>
                     </a>
                 </li>
