@@ -36,14 +36,14 @@ include_once '../conn.php'; ?>
                         <select type="text" name="client" id="client" class="form-control">
                             <option selected disabled>Please Select Client</option>
                             <?php
-                            $sql = 'SELECT * FROM `accounts`';
+                            $sql = 'SELECT * FROM `LSUDRUGTESTCONTACTS`';
                             $result = mysqli_query($conn, $sql);
                             while ($row = mysqli_fetch_assoc($result)) {
                                 echo '
                             <option value="' .
-                                    $row['account_code'] .
+                                    $row['LSUSiteName'] .
                                     '">' .
-                                    $row['account_nm'] .
+                                    $row['LSUSiteName'] .
                                     '</option>';
                             }
                             ?>
@@ -117,16 +117,14 @@ include_once '../conn.php'; ?>
                             <option selected disabled>Please Select Collection Site</option>
                             <?php
                             $sql =
-                                'SELECT * FROM `divisions` JOIN accounts ON accounts.account_id = divisions.account_id';
+                                'SELECT * FROM `CollectionSites`';
                             $result = mysqli_query($conn, $sql);
                             while ($row = mysqli_fetch_assoc($result)) {
                                 echo '
                             <option value="' .
-                                    $row['division_id'] .
+                                    $row['CollectionSiteName'] .
                                     '">' .
-                                    $row['account_nm'] .
-                                    ' - ' .
-                                    $row['division_nm'] .
+                                    $row['CollectionSiteName'] .
                                     '</option>';
                             }
                             ?>
@@ -141,8 +139,7 @@ include_once '../conn.php'; ?>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>Account</label>
-                        <input type="text" name="account" id="account" placeholder="533020" class="form-control"
-                            readonly>
+                        <input type="text" name="account" id="account" value="533020" class="form-control" readonly>
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -355,7 +352,8 @@ include_once '../conn.php'; ?>
                 <div class="col-md-4"></div>
                 <div class="col-md-4" style="margin-left: 50px;">
                     <button type="submit" class="btn btn-secondary">Submit</button>
-                    <button type="submit" class="btn btn-secondary">Cancel</button>
+                    <button type="button" onclick="window.open('LSU_Table.php', '_self');"
+                        class="btn btn-secondary">Cancel</button>
                 </div>
             </div>
         </form>

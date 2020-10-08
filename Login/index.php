@@ -10,12 +10,29 @@ if (isset($_POST['submit'])) {
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $_SESSION['userid'] = $row['user_id'];
+        $_SESSION['usertype'] = ($row['admin'] == 'T') ? 'admin' : 'guest';
         $_SESSION['username'] = $row['first_nm'] . ' ' . $row['last_nm'];
 
             header("location: ../landingscreen.php");        
     } else {
         // echo '<script>alert("Not found");</script>';
-        header("location: index.php");
+        // header("location: index.php");
+        $sql = 'SELECT * FROM accounts WHERE BINARY user_id = "' . $username . '" AND BINARY password = "' . $pass . '"';
+        // echo $sql;
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $_SESSION['userid'] = $row['user_id'];
+            $_SESSION['accountid'] = $row['account_id'];
+            $_SESSION['usertype'] = 'accounts';
+            $_SESSION['username'] = $row['account_nm'];
+
+                header("location: ../landingscreen.php");        
+        } else {
+            echo '<script>alert("Username / Password is not correct");window.open("index.php", "_self");</script>';
+            // header("location: index.php");
+        }
+
     }
 
 }
@@ -82,7 +99,8 @@ if (isset($_POST['submit'])) {
                         <button name='submit' id="submit" type="submit" class="login100-form-btn">Login</button>
                     </div>
                     <br>
-                    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="loginLSU.php" style="color: blue; text-decoration: underline; text-align: center;"><b>Login with LSU</b></a>
+                    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="loginLSU.php"
+                        style="color: blue; text-decoration: underline; text-align: center;"><b>Login with LSU</b></a>
 
                     <!-- <div class="text-center p-t-12">
 						<span class="txt1">

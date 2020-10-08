@@ -209,8 +209,8 @@ if ($result->num_rows > 0) {
                             </div><!-- /.col -->
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
-                                    <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="landingscreen.php">Home</a></li>
+                                    
                                     <li class="breadcrumb-item active">Random Employee List History</li>
                                 </ol>
                             </div><!-- /.col -->

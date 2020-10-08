@@ -1,3 +1,7 @@
+<?php
+include_once '../conn.php';
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,10 +33,29 @@
 
                 <?php
                 // $conn = mysqli_connect("localhost","root","","etest");
-                include_once '../conn.php';
                 $sql = 'SELECT * FROM lsuform WHERE Id = ' . $_GET['id'];
                 $result = $conn->query($sql);
                 $row = $result->fetch_assoc();
+
+                $sql1 = 'SELECT * FROM testtype WHERE type_id = ' . $row['TestType'];
+                // echo $sql1;
+                $result1 = $conn->query($sql1);
+                $row1 = $result1->fetch_assoc();
+
+                $sql2 = 'SELECT * FROM testtype WHERE type_id = ' . $row['Type2'];
+                // echo $sql2;
+                $result2 = $conn->query($sql2);
+                $row2 = $result2->fetch_assoc();
+
+                $sql3 = 'SELECT * FROM testtype WHERE type_id = ' . $row['Type3'];
+                // echo $sql3;
+                $result3 = $conn->query($sql3);
+                $row3 = $result3->fetch_assoc();
+
+                $sql4 = 'SELECT * FROM reasons WHERE reason_code = "' . $row['Reason'] . '"';
+                // echo $sql4;
+                $result4 = $conn->query($sql4);
+                $row4 = $result4->fetch_assoc();
                 ?>
 
                 <label class="mt-2" style="font-size: 13px; margin-right: 188px;"><b>Client</b></label>
@@ -234,8 +257,8 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <select disabled type="text" name="type" id="type" class="form-control">
-                            <option selected><?php echo $row[
-                                'TestType'
+                            <option selected><?php echo $row1[
+                                'type_nm'
                             ]; ?></option>
                         </select>
                     </div>
@@ -248,8 +271,8 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <select disabled type="text" name="reason" id="reason" class="form-control">
-                            <option selected><?php echo $row[
-                                'Reason'
+                            <option selected><?php echo $row4[
+                                'reason_code'
                             ]; ?></option>
                         </select>
                     </div>
@@ -262,8 +285,8 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <select disabled type="text" name="type2" id="type2" class="form-control">
-                            <option selected><?php echo $row[
-                                'Type2'
+                            <option selected><?php echo $row2[
+                                'type_nm'
                             ]; ?></option>
                         </select>
                     </div>
@@ -276,8 +299,8 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <select disabled type="text" name="type3" id="type3" class="form-control">
-                            <option selected><?php echo $row[
-                                'Type3'
+                            <option selected><?php echo $row3[
+                                'type_nm'
                             ]; ?></option>
                         </select>
                     </div>
@@ -289,8 +312,7 @@
                         Position</b></label>
                 <div class="col-md-6">
                     <div class="form-check">
-                        <input class="form-check-input" disabled type="checkbox" value="1" name="safety" id="safety"
-                            <?php if ($row['Safety'] == 1) {
+                        <input class="form-check-input" disabled type="checkbox" value="1" name="safety" id="safety" <?php if ($row['Safety'] == 1) {
                                 echo 'checked';
                             } ?>>
                         <label class="form-check-label" for="defaultCheck1"></br>
@@ -310,19 +332,19 @@
                     <div class="form-group">
                         <textarea disabled type="text" name="comments" id="comments" class="form-control"
                             style="height: 150px;"><?php echo $row[
-                                'Comments'
-                            ]; ?></textarea>
+                                'Comments'    ]; ?></textarea>
                     </div>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-4"></div>
                 <div class="col-md-4" style="margin-left: 50px;">
-                    <button type="submit" class="btn btn-secondary">Submit</button>
+                    <!-- <button type="submit" class="btn btn-secondary">Submit</button> -->
                     <button type="button" class="btn btn-secondary" onclick="downloadPDF();"><i
                             class="fa fa-download"></i> Reprint
                         Form</button>
-                    <button type="submit" class="btn btn-secondary">Cancel</button>
+                    <button type="button" onclick="window.open('LSU_Table.php', '_self');"
+                        class="btn btn-secondary">Cancel</button>
                 </div>
             </div>
         </form>
@@ -360,7 +382,7 @@
         //     .save().then(() => {
         //         $('.btn').css('display', '')
         //     });
-        
+
     }
     </script>
 

@@ -547,16 +547,17 @@ include_once "conn.php";
     }
 
     function accountSelected(id) {
-        $('#table_accounts > tbody  > tr').each(function(index, tr) {
-            tr.style.background = 'rgba(0,0,0,.05)';
-        });
+        // $('#table_accounts > tbody  > tr').each(function(index, tr) {
+        //     tr.style.background = 'rgba(0,0,0,.05)';
+        // });
 
-        selected_accounts = id;
+        // selected_accounts = id;
 
-        // alert("#" + id);
-        $('#deleteButton').prop('disabled', false);
-        $('#propertiesButton').prop('disabled', false);
-        $("#" + id).css('background', 'rgba(0,0,0,.35)');
+        // // alert("#" + id);
+        // $('#deleteButton').prop('disabled', false);
+        // $('#propertiesButton').prop('disabled', false);
+        // $("#" + id).css('background', 'rgba(0,0,0,.35)');
+        window.open('editAccount.php?id=' + id, '_self');
     }
     </script>
 
@@ -613,13 +614,13 @@ to get the desired effect
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1 class="m-0 text-dark"><b><u>Account Maintenance</u></b></h1>
+                                <h1 class="m-0 text-dark"><b><u>Account Management</u></b></h1>
                             </div><!-- /.col -->
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="landingscreen.php">Home</a></li>
                                     
-                                    <li class="breadcrumb-item active">Account Maintenance</li>
+                                    <li class="breadcrumb-item active">Account Management</li>
                                 </ol>
                             </div><!-- /.col -->
                         </div><!-- /.row -->
@@ -631,12 +632,15 @@ to get the desired effect
                     <div class="container-fluid">
                         <form action="" method="POST" class="">
                             <div class="row">
-                                <div class="col-md-8" style="overflow-y:scroll; overflow-x:scroll;">
+                                <div class="col-md-12" style="overflow-y:scroll; overflow-x:scroll;">
                                     <table class="table table-striped" id="table_accounts">
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
+                                                <th scope="col">User ID</th>
                                                 <th scope="col">Account Name</th>
+                                                <th scope="col">Account Code</th>
+                                                <th scope="col">Password</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -649,14 +653,17 @@ while ($row = mysqli_fetch_assoc($result)) {
     echo '
                                                     <tr id="' . $id . '" onclick = "accountSelected(' . $id . ');">
                                                         <th scope="row">' . $count++ . '</th>
+                                                        <td>' . $row['user_id'] . '</td>
                                                         <td>' . $row['account_nm'] . '</td>
+                                                        <td>' . $row['account_code'] . '</td>
+                                                        <td>' . $row['password'] . '</td>
                                                     </tr>';
 }
 ?>
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="col-md-1">
+                                <!-- <div class="col-md-1">
                                     <button type="button" name="" class="btn mt-2" data-toggle="modal"
                                         data-target="#myModal" onclick="addClicked();"
                                         style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Add</button>
@@ -667,7 +674,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                                         style="background-color:#E7D7B7; border-radius:5px; width: 100px;"
                                         data-toggle="modal" data-target="#myModal" onclick="propertiesClicked();"
                                         disabled>Properties</button>
-                                </div>
+                                </div> -->
                             </div>
                         </form>
                         <br><br>
@@ -677,364 +684,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                 <!-- /.content -->
             </div>
             <!-- /.content-wrapper -->
-            <!-- Modal -->
-            <div id="myModal" class="modal fade" role="dialog">
-                <div class="modal-dialog modal-lg">
 
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Account Properties</h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-                        <div class="modal-body" style="display: inline-block">
-
-                            <div class="tab">
-                                <button class="tablinks active" onclick="openTab(event, 'General')">General</button>
-                                <button class="tablinks" onclick="openTab(event, 'Fees')">Fees</button>
-                                <button class="tablinks" onclick="openTab(event, 'Employees')">Employees</button>
-                            </div>
-                            <br><br>
-
-                            <div id="General" class="tabcontent" style="display: block;">
-                                <br>
-                                <div class="row">
-                                    <div class="col-3">Account Name: </div>
-                                    <div class="col-9">
-                                        <input type="hidden" id="account_id" name="account_id">
-                                        <input class="form-control" id="account_nm" name="account_nm">
-                                    </div>
-                                </div>
-                                <div class="row mt-1">
-                                    <div class="col-3">AR Funding Code: </div>
-                                    <div class="col-4"><input class="form-control" id="ar_funding_code"
-                                            name="account_code">
-                                    </div>
-                                    <div class="col-1">Code: </div>
-                                    <div class="col-4"><input class="form-control" id="account_code"
-                                            name="account_code">
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Location</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="table_locations">
-                                            <!-- <tr>
-                                                <th scope="row">1</th>
-                                                <td>Location 1</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">2</th>
-                                                <td>Location 2</td>
-                                            </tr> -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-toggle="modal"
-                                        data-target="#myModal_General" onclick="addClicked_General();">Add</button>
-                                    <button type="button" class="btn btn-default" id="btn_delete_location"
-                                        onclick="removeClicked_General();" disabled>Remove</button>
-                                    <button type="button" class="btn btn-default" data-toggle="modal"
-                                        data-target="#myModal_General" onclick="propertiesClicked_General();"
-                                        id="btn_properties_location" data-dismiss="modal" disabled>Properties</button>
-                                </div>
-
-
-                            </div>
-
-                            <div id="Fees" class="tabcontent">
-                                <br>
-                                <div class="row">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Test Type</th>
-                                                <th scope="col">Amount</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="table_fees">
-                                            <!-- <tr>
-                                                <th scope="row">1</th>
-                                                <td>Test Type 1</td>
-                                                <td>100.00</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">2</th>
-                                                <td>Test Type 2</td>
-                                                <td>100.00</td>
-                                            </tr> -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-toggle="modal"
-                                        data-target="#myModal_Fees" onclick="addClicked_Fees();">Add</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal"
-                                        id="btn_delete_fee" onclick="removeClicked_Fees();" disabled>Remove</button>
-                                    <button type="button" class="btn btn-default" data-toggle="modal"
-                                        data-target="#myModal_Fees" id="btn_properties_fee"
-                                        onclick="propertiesClicked_Fees();" disabled>Properties</button>
-                                </div>
-
-                            </div>
-
-                            <div id="Employees" class="tabcontent">
-                                <br>
-                                <div class="row">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Employee ID</th>
-                                                <th scope="col">Location</th>
-                                                <th scope="col">First / Req No.</th>
-                                                <th scope="col">Last Name</th>
-                                                <th scope="col">Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="table_employees">
-                                            <!-- <tr>
-                                                <th scope="row">1</th>
-                                                <td>4545646</td>
-                                                <td>Location 1</td>
-                                                <td>ABC</td>
-                                                <td>User 1</td>
-                                                <td>Active</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">2</th>
-                                                <td>8798456</td>
-                                                <td>Location 2</td>
-                                                <td>XYZ</td>
-                                                <td>User 2</td>
-                                                <td>Terminated</td>
-                                            </tr> -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-toggle="modal"
-                                        data-target="#myModal_Employee" onclick="addClicked_Employees();"
-                                        id="btn_add_employees">Add</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal"
-                                        id="btn_delete_employees" onclick="removeClicked_Employees();"
-                                        disabled>Remove</button>
-                                    <button type="button" class="btn btn-default" data-toggle="modal"
-                                        data-target="#myModal_Employee" id="btn_properties_employees"
-                                        onclick="propertiesClicked_Employees();" disabled>Properties</button>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal"
-                                onclick="saveAccount();">OK</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Help</button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Modal -->
-            <div id="myModal_General" class="modal fade" role="dialog">
-                <div class="modal-dialog modal-lg">
-
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title"></h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-                        <div class="modal-body" style="display: inline-block">
-                            <div class="row">
-                                <div class="col-md-2" style="display: inline-block">Location Name: </div>
-                                <div class="col-md-8" style="display: inline-block">
-                                    <input type="hidden" id="locationindex" name="locationindex" value="">
-                                    <input class="form-control" id="division_nm" name="division_nm">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2" style="display: inline-block">Address: </div>
-                                <div class="col-md-8" style="display: inline-block"><input class="form-control"
-                                        id="address" name="address"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2" style="display: inline-block">City: </div>
-                                <div class="col-md-3" style="display: inline-block"><input class="form-control"
-                                        id="city" name="city"></div>
-                                <div class="col-md-1" style="display: inline-block">State: </div>
-                                <div class="col-md-1" style="display: inline-block"><input class="form-control"
-                                        id="state" name="state"></div>
-                                <div class="col-md-1" style="display: inline-block">Zip: </div>
-                                <div class="col-md-2" style="display: inline-block"><input class="form-control" id="zip"
-                                        name="zip"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2" style="display: inline-block">Phone: </div>
-                                <div class="col-md-3" style="display: inline-block"><input class="form-control"
-                                        id="phone" name="phone"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2" style="display: inline-block">Fax: </div>
-                                <div class="col-md-3" style="display: inline-block"><input class="form-control" id="fax"
-                                        name="fax"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2" style="display: inline-block">Contact: </div>
-                                <div class="col-md-8" style="display: inline-block"><input class="form-control"
-                                        id="contact" name="contact"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2" style="display: inline-block">Email Address: </div>
-                                <div class="col-md-8" style="display: inline-block"><input class="form-control"
-                                        id="email" name="email"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2" style="display: inline-block">Comments: </div>
-                                <div class="col-md-8" style="display: inline-block"><textarea class="form-control"
-                                        id="comments" name="comments"></textarea></div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal"
-                                onclick="addLocation();">OK</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"
-                                onclick="selected_location = -1;">Close</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Help</button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Modal -->
-            <div id="myModal_Fees" class="modal fade" role="dialog">
-                <div class="modal-dialog modal-lg">
-
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title"></h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-                        <div class="modal-body" style="display: inline-block">
-                            <div class="row">
-                                <div class="col-md-2" style="display: inline-block">Test Type: </div>
-                                <div class="col-md-7" style="display: inline-block">
-                                    <input type="hidden" id="feesindex" name="feesindex" value="">
-                                    <select class="form-control" id="type_id" name="type_id">
-                                        <option value="">Select Test Type</option>
-                                        <?php
-                                        $sql = 'SELECT * FROM testtype';
-                                        $result = mysqli_query($conn, $sql);
-                                        while ($row = mysqli_fetch_assoc($result)) {
-                                            echo '<option value="' . $row['type_id'] . '">' . $row['type_nm'] . '</option>';
-                                        }
-
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2" style="display: inline-block">Amount: </div>
-                                <div class="col-md-7" style="display: inline-block"><input id="amount" name="amount"
-                                        type="number" min="0" step="0.01" class="form-control"></div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal"
-                                onclick="addFees();">OK</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"
-                                onclick="selected_fees = -1;">Close</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Help</button>
-                        </div>
-                        <!-- <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Help</button>
-                        </div> -->
-                    </div>
-
-                </div>
-            </div>
-
-
-            <!-- Modal -->
-            <div id="myModal_Employee" class="modal fade" role="dialog">
-                <div class="modal-dialog modal-lg">
-
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title"></h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-                        <div class="modal-body" style="display: inline-block">
-                            <div class="row">
-                                <div class="col-md-2" style="display: inline-block">Employee ID (SSN): </div>
-                                <div class="col-md-7" style="display: inline-block">
-                                    <input type="hidden" id="employeesindex" name="employeesindex" value="">
-                                    <input class="form-control" id="emp_id" name="emp_id">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2" style="display: inline-block">First Name / Req No: </div>
-                                <div class="col-md-7" style="display: inline-block">
-                                    <input class="form-control" id="first_nm" name="first_nm">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2" style="display: inline-block">Last Name: </div>
-                                <div class="col-md-7" style="display: inline-block">
-                                    <input class="form-control" id="last_nm" name="last_nm">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2" style="display: inline-block">Location: </div>
-                                <div class="col-md-7" style="display: inline-block">
-                                    <select class="form-control" id="division_id" name="division_id">
-                                        <option value="">Select Location</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2" style="display: inline-block"></div>
-                                <div class="col-md-7" style="display: inline-block">
-                                    <fieldset style="border: 1px solid lightgray; padding: 10px">
-                                        <legend>Status</legend>
-                                        <label for="preEmployment"><input type="radio" id="status_pre_employment"
-                                                name="status">&emsp;Pre-Employment</label><br>
-                                        <label for="active"><input type="radio" id="status_active"
-                                                name="status">&emsp;Active</label><br>
-                                        <label for="terminated"><input type="radio" id="status_terminated"
-                                                name="status">&emsp;Terminated</label><br>
-                                    </fieldset>
-                                </div>
-                                <!-- <div class="col-md-2" style="display: inline-block">Location: </div><div class="col-md-7" style="display: inline-block"><select class="form-control"><option value="">Select Location</option></select></div> -->
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal"
-                                onclick="addEmployees();">OK</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"
-                                onclick="selected_fees = -1;">Close</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Help</button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
             <!-- Control Sidebar -->
             <aside class="control-sidebar control-sidebar-dark">
                 <!-- Control sidebar content goes here -->

@@ -159,18 +159,54 @@ to get the desired effect
             </form> -->
             <div class="col-md-6 col-sm-6">
                 <div class="input-group input-group-sm">
+                    <!-- <select class="form-control" id="accounts_select">
+                        <option selected disabled>Please select Account</option>
+                        <?php
+                        // $sql = 'SELECT * FROM accounts';
+                        // $result = $conn->query($sql);
+                        // if ($result->num_rows > 0) {
+                        //     while ($row = $result->fetch_assoc()) {
+                        //         echo '<option value="' . $row['account_id'] . '">' . $row['account_nm'] . '</option>';
+                        //     }
+                        // }
+?>
+                    </select> -->
+                    <?php if ($_SESSION['usertype'] == 'admin') { ?>
+
                     <select class="form-control" id="accounts_select">
                         <option selected disabled>Please select Account</option>
                         <?php
-$sql = 'SELECT * FROM accounts';
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        echo '<option value="' . $row['account_id'] . '">' . $row['account_nm'] . '</option>';
-    }
-}
-?>
+                                    $sql = 'SELECT * FROM accounts';
+                                    $result = $conn->query($sql);
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            echo '<option value="' .
+                                                $row['account_id'] .
+                                                '">' .
+                                                $row['account_nm'] .
+                                                '</option>';
+                                        }
+                                    }
+                                    ?>
                     </select>
+                    <?php } else if ($_SESSION['usertype'] == 'accounts') { ?>
+                    <select class="form-control" id="accounts_select">
+                        <?php
+                                    $sql = 'SELECT * FROM accounts WHERE account_id=' . $_SESSION['accountid'];
+                                    $result = $conn->query($sql);
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            echo '<option selected value="' .
+                                                $row['account_id'] .
+                                                '">' .
+                                                $row['account_nm'] .
+                                                '</option>';
+                                        }
+                                    }
+                                    ?>
+                    </select>
+
+                    <?php } ?>
                 </div>
             </div>
             <?php include "header.php";?>
@@ -186,8 +222,8 @@ if ($result->num_rows > 0) {
                             </div><!-- /.col -->
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
-                                    <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="landingscreen.php">Home</a></li>
+                                    
                                     <li class="breadcrumb-item active">Retrieve Test</li>
                                 </ol>
                             </div><!-- /.col -->
