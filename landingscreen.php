@@ -104,6 +104,7 @@ to get the desired effect
                             </div>
                         </div>
                         <br>
+                        <?php if($_SESSION['userid'] === 'admin') { ?>
                         <div class="row">
                             <div class="col-md-3">
                                 <button type="button" name="" class="btn ml-1"
@@ -113,6 +114,7 @@ to get the desired effect
                                 <br><br>
                             </div>
                         </div>
+                        <?php } ?>
                     </div>
                     <!-- /.container-fluid -->
                 </div>
