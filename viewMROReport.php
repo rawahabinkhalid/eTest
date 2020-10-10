@@ -296,6 +296,11 @@ $html = <<<EOD
 		<tr>
 			<td style="font-size: 9.5px; font-weight: bold; width: 70%">
 			Signature:
+			<span style="width: 5%; text-align: center;">
+			</span>
+			<span style="width: 100%; text-align: center;">
+			<img src="uploads/signature.png" style="width: 150px;">
+			</span>
 			</td>
 			<td style="font-size: 9.5px; font-weight: bold; width: 10%">
 			Date:

@@ -50,9 +50,9 @@ to get the desired effect
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <!-- Left navbar links -->
             <ul class="navbar-nav">
-                <!-- <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
-                </li> -->
+                </li>
                 <!-- <li class="nav-item d-none d-sm-inline-block">
                     <a href="index.html" class="nav-link">Home</a>
                 </li>
@@ -87,7 +87,7 @@ to get the desired effect
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="landingscreen.php">Home</a></li>
-                                    
+
                                     <li class="breadcrumb-item active">eTest</li>
                                 </ol>
                             </div><!-- /.col -->

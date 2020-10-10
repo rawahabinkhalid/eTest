@@ -1,6 +1,7 @@
 <?php
 
 date_default_timezone_set('Asia/Karachi');
+include_once '../conn.php';
 
 // if (isset($_POST['clientNameFilter'])) {
 include_once '../vendor/tecnickcom/tcpdf/tcpdf.php';
@@ -27,11 +28,15 @@ $pdf->SetFont('helvetica', '', 10, '', true);
 $pdf->AddPage();
 // $pdf->setCellPaddings(1, 1, 1, 1);
 // $pdf->setCellMargins(0, 0, 0, 0);
-
-$html = '';
-$invoiceNo = 0;
-$tbl = '';
-$html = <<<EOD
+$sql = 'SELECT * FROM lsuform WHERE Id = ' . $_GET['id'];
+$result = $conn->query($sql);
+if($result->num_rows > 0) {
+	$row = $result->fetch_assoc();
+	// print_r($row);
+	$html = '';
+	$invoiceNo = 0;
+	$tbl = '';
+	$html = <<<EOD
                     <table cellspacing="0" cellpadding="3" border="0">
                         <tr>
                             <td>
@@ -44,37 +49,41 @@ $html = <<<EOD
                             </td>
 						</tr>
 						<tr>
-                            <td style="font-size: 9.5px;">
+                            <td style="font-size: 9px;">
 							I have been informed and I understand that my agreement to submit to the requested alcohol and/or drug test is completely voluntary on my part and that I have the right to refuse to submit to the test(s). I am aware and have been told that my refusal to submit to the tests will make me ineligible to be considered for employment and I will be disqualified from employment to an LSUHSC facility for up to one year or may be grounds for disciplinary action against me up to and including termination/expulsion. I am aware that if I refuse to submit to drug screening or if my test is positive, I will be disqualified for employment or appointment. Additionally, a prospective employee who intentionally tampers with the sample, the chain of custody (COC), identification procedures, or test results may be disqualified from employment for a period of three years.
                             </td>
 						</tr>
 						<tr>
-                            <td style="font-size: 9.5px;">
+                            <td style="font-size: 9px;">
 							I understand that if the Medical Review Officer (MRO) (and/or the MRO agent and/or staff) or Drug Testing Coordinator (DTC) calls me about my drug test results I should call them back immediately. <b>I understand that if I do not contact and talk with the MRO</b> (and/or the MRO agent and/or staff) <b>then I have turned down the opportunity to discuss the results and the MRO</b> (and/or the MRO agent and/or staff) <b>will report my drug test as a positive.</b>
 							</td>
 						</tr>
 						<tr>
-							<td style="font-size: 9.5px;">
+							<td style="font-size: 9px;">
 							I have been informed and am aware that the results of the alcohol and/or drug test(s) are protected by confidentiality requirements for alcohol and drug patient records under Federal laws and regulations. Therefore, I voluntarily agree to the below stated release of the test results.
                             </td>
 						</tr>
 						<tr>
-							<td style="font-size: 9.5px;">
-							I, _____________________________________(please print), authorize the MRO (and/or the MRO agent and/or staff) and the DTC who will receive the results of my alcohol and/or drug test to disclose the results of the test(s) to the appropriate Human Resource Director, my supervisor (as appropriate for employees, students, non-employees, or job applicants), the Administrative Body over me, and/or their designee for the purpose of determining the appropriateness of my eligibility for continued employment/enrollment. I authorize the above individuals and/or their designee to disclose those results to other Human Resource Directors, divisions, hospitals, facilities or their designees within the LSUHSC, and to other state and federal agencies, including the Department of State Civil Service, and LSU Health Care Network if appropriate, and /or to the above mentioned referring source.
+							<td style="font-size: 9px;">
+							I, <u style="font-size: 8px; padding-bottom: 10px">
+EOD;
+	$html .= $row['FirstName'] . ' ' . $row['LastName'] . '_____________';
+	$html .= <<<EOD
+							</u>(please print), authorize the MRO (and/or the MRO agent and/or staff) and the DTC who will receive the results of my alcohol and/or drug test to disclose the results of the test(s) to the appropriate Human Resource Director, my supervisor (as appropriate for employees, students, non-employees, or job applicants), the Administrative Body over me, and/or their designee for the purpose of determining the appropriateness of my eligibility for continued employment/enrollment. I authorize the above individuals and/or their designee to disclose those results to other Human Resource Directors, divisions, hospitals, facilities or their designees within the LSUHSC, and to other state and federal agencies, including the Department of State Civil Service, and LSU Health Care Network if appropriate, and /or to the above mentioned referring source.
 							</td>
 						</tr>
 						<tr>
-							<td style="font-size: 9.5px;">
+							<td style="font-size: 9px;">
 							I understand that the MRO (and/or the MRO staff) may inform the Human Resource Director, my supervisor (as appropriate for employees, students, non-employees, or job applicants), the Administrative Body over me, their designee and/or above referring source of any legally obtained prescription medication I may be taking if it is felt that the usage of this medication(s) can or has compromised my fitness for duty in my capacity as an employee, student, or non-employee.
 							</td>
 						</tr>
 						<tr>
-							<td style="font-size: 9.5px;">
+							<td style="font-size: 9px;">
 							I also understand that withdrawal of this permission prior to, or any time after, the release of the results of the alcohol and/or drug test to the above named individuals is grounds for terminating my employment/enrollment.
 							</td>
 						</tr>
 						<tr>
-							<td style="font-size: 9.5px;">
+							<td style="font-size: 9px;">
 							I also understand that withdrawal of this permission prior to, or any time after, the release of the results of the alcohol and/or drug test to the above named individuals is grounds for terminating my employment/enrollment.
 							</td>
                         </tr>
@@ -85,8 +94,15 @@ $html = <<<EOD
                         </tr>
 						<tr>
 							<td>
-							Date of Birth _________________________________ Social Security # ______________________________
-							</td>
+							Date of Birth _________________________________ Social Security # <u style="font-size: 8px;">__
+EOD;
+	$html .= $row['SSN'];
+	// $html .= '<span style="font-color; black">';
+	for ($i = strlen($row['SSN']); $i < 35; $i++)
+		$html .= '_';
+	// $html .= '</span>';
+	$html .= <<<EOD
+							</u></td>
                         </tr>
 						<tr>
 							<td>
@@ -109,28 +125,57 @@ $html = <<<EOD
 							</td>
 						</tr>
 						<tr>
-							<td><b>
+							<td style="font-size: 9px"><b>
 							* * * * * * * * * * TO BE COMPLETED BY LSUHSC-NO DESIGNATED AUTHORITY ONLY ** * * * * * * * *
 							</b></td>
 						</tr>
 						<tr>
 							<td>
-							Collection Deadline: _____________________________________________
+							Collection Deadline: <u style="font-size: 8px;">__
+EOD;
+	$html .= date('m/d/Y', strtotime($row['Deadline']));
+	for ($i = strlen(date('m/d/Y', strtotime($row['Deadline']))); $i < 50; $i++)
+		$html .= '_';
+	$html .= <<<EOD
+							</u></td>
+						</tr>
+						<tr>
+							<td>
+							Dept: <u style="font-size: 8px;">__
+EOD;
+	$html .= $row['Dept'];
+	for ($i = strlen($row['Dept']); $i < 45; $i++)
+		$html .= '_';
+	$html .= <<<EOD
+							</u> Peoplesoft # <u style="font-size: 8px;">__
+EOD;
+	$peopleSoft = $row['Account'] . '-' . $row['Fund'] . '-' . $row['Department'] . '-' . $row['Program'] . '-' . $row['Class'] . '-' . $row['Project'];
+	$html .= $peopleSoft;
+	for ($i = strlen($peopleSoft); $i < 45; $i++)
+		$html .= '_';
+	$html .= <<<EOD
+							</u>
 							</td>
 						</tr>
 						<tr>
 							<td>
-							Dept: _____________________________________ Peoplesoft # _____________________________________
-							</td>
-						</tr>
-						<tr>
-							<td>
-							Designated Administrative Body: _____________________________________________
-							</td>
+							Designated Administrative Body:  <u style="font-size: 8px;">__
+EOD;
+	$html .= $row['Contact'];
+	for ($i = strlen($row['Contact']); $i < 55; $i++)
+		$html .= '_';
+	$html .= <<<EOD
+							</u></td>
                         </tr>
 						<tr>
 							<td>
-							Email Address for Results: _____________________________________________
+							Email Address for Results: <u style="font-size: 8px;">__
+EOD;
+	$html .= $row['Email'];
+	for ($i = strlen($row['Email']); $i < 60; $i++)
+		$html .= '_';
+	$html .= <<<EOD
+							</u>
 							</td>
                         </tr>
 						<tr>
@@ -151,11 +196,11 @@ $html = <<<EOD
 
 
 EOD;
-$pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+	$pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
 
-$pdf->AddPage();
-$pdf->SetMargins(5, 0, 5);
-$html = <<<EOD
+	$pdf->AddPage();
+	$pdf->SetMargins(5, 0, 5);
+	$html = <<<EOD
 	<table cellspacing="0" cellpadding="3" border="0">
 		<tr>
 			<td>
@@ -238,12 +283,23 @@ $html = <<<EOD
 		</tr>
 		<tr>
 			<td>
-			Contact Name: __________________________________ Department: ________________________________
-			</td>
+			Contact Name: __________________________________ Department: <u style="font-size: 8px;">__
+EOD;
+	$html .= $row['Dept'];
+	for ($i = strlen($row['Dept']); $i < 40; $i++)
+		$html .= '_';
+	$html .= <<<EOD
+							</u></td>
 		</tr>
 		<tr>
 			<td>
-			Phone: _______________________ Fax: ________________________ Email: ___________________________
+			Phone: _______________________ Fax: ________________________ Email: <u style="font-size: 8px;">__
+EOD;
+	$html .= $row['Email'];
+	for ($i = strlen($row['Email']); $i < 32; $i++)
+		$html .= '_';
+	$html .= <<<EOD
+							</u>
 			</td>
 		</tr>
 		<tr>
@@ -267,11 +323,11 @@ $html = <<<EOD
 
 
 EOD;
-$pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
-$pdf->AddPage();
+	$pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+	$pdf->AddPage();
 
-$pdf->SetMargins(5, 0, 5);
-$html = <<<EOD
+	$pdf->SetMargins(5, 0, 5);
+	$html = <<<EOD
 	<table cellspacing="0" cellpadding="3" border="0">
 		<tr>
 			<td>
@@ -348,28 +404,53 @@ $html = <<<EOD
 		</tr>
 		<tr>
 			<td>
-			Applicant/Employee Name: ____________________________________
-			</td>
+			Applicant/Employee Name: <u style="font-size: 8px; padding-bottom: 10px">__
+EOD;
+	$html .= $row['FirstName'] . ' ' . $row['LastName'];
+	for ($i = strlen($row['FirstName'] . ' ' . $row['LastName']); $i < 45; $i++)
+		$html .= '_';
+	$html .= <<<EOD
+			</u></td>
 		</tr>
 		<tr>
 			<td>
-			Chain of Custody #: __________________________________________
-			</td>
+			Chain of Custody #:<u style="font-size: 8px; padding-bottom: 10px">__
+EOD;
+	$html .= $row['Specimen'];
+	for ($i = strlen($row['Specimen']); $i < 45; $i++)
+		$html .= '_';
+	$html .= <<<EOD
+			</u></td>
 		</tr>
 		<tr>
 			<td>
-			Social Security Number: _______________________________________
-			</td>
+			Social Security Number:<u style="font-size: 8px; padding-bottom: 10px">__
+EOD;
+	$html .= $row['SSN'];
+	for ($i = strlen($row['SSN']); $i < 45; $i++)
+		$html .= '_';
+	$html .= <<<EOD
+			</u></td>
 		</tr>
 		<tr>
 			<td>
-			Name & Location of Collection: __________________________________
-			</td>
+			Name & Location of Collection: <u style="font-size: 8px; padding-bottom: 10px">__
+EOD;
+	$html .= $row['Collection'];
+	for ($i = strlen($row['Collection']); $i < 45; $i++)
+		$html .= '_';
+	$html .= <<<EOD
+			</u></td>
 		</tr>
 		<tr>
 			<td>
-			Collection Deadline* __________________________________________
-			</td>
+			Collection Deadline* <u style="font-size: 8px;">__
+EOD;
+	$html .= date('m/d/Y', strtotime($row['Deadline']));
+	for ($i = strlen(date('m/d/Y', strtotime($row['Deadline']))); $i < 45; $i++)
+		$html .= '_';
+	$html .= <<<EOD
+							</u></td>
 		</tr>
 		<tr>
 			<td style="text-align: center">
@@ -505,13 +586,13 @@ $html = <<<EOD
 		
 
 EOD;
-$pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
-$pdf->AddPage();
+	$pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+	$pdf->AddPage();
 
-$pdf->deletePage(intval($pdf->getPage() . '/' . $pdf->getNumPages()));
-// <td border="1" style="width: 44%; border-left: 0px solid white"><br><br>
-// <td border="1" style="width: 18%; border-right: 0px solid white">
+	$pdf->deletePage(intval($pdf->getPage() . '/' . $pdf->getNumPages()));
+	// <td border="1" style="width: 44%; border-left: 0px solid white"><br><br>
+	// <td border="1" style="width: 18%; border-right: 0px solid white">
 
-$pdf->Output('Invoice No - ' . '.pdf');
-// }
+	$pdf->Output('Invoice No - ' . '.pdf');
+}
 ?>

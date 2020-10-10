@@ -340,7 +340,7 @@ include_once '../conn.php';
                 <div class="col-md-4"></div>
                 <div class="col-md-4" style="margin-left: 50px;">
                     <!-- <button type="submit" class="btn btn-secondary">Submit</button> -->
-                    <button type="button" class="btn btn-secondary" onclick="downloadPDF();"><i
+                    <button type="button" class="btn btn-secondary" onclick="downloadPDF(<?php echo $row['Id']; ?>);"><i
                             class="fa fa-download"></i> Reprint
                         Form</button>
                     <button type="button" onclick="window.open('LSU_Table.php', '_self');"
@@ -356,8 +356,8 @@ include_once '../conn.php';
     <!-- DOWNLOAD PDF WORK-->
     <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
     <script>
-    function downloadPDF() {
-        window.open("printForm.php", "_self");
+    function downloadPDF(Id) {
+        window.open("printForm.php?id=" + Id, "_self");
 
         // $('.btn').css('display', 'none')
 

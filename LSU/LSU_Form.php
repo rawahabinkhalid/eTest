@@ -122,9 +122,9 @@ include_once '../conn.php'; ?>
                             while ($row = mysqli_fetch_assoc($result)) {
                                 echo '
                             <option value="' .
-                                    $row['CollectionSiteName'] .
+                                    $row['CollectionSiteName'] . ' ' . $row['Address'] . ' ' . $row['City'] . ' ' . $row['State'] .
                                     '">' .
-                                    $row['CollectionSiteName'] .
+                                    $row['CollectionSiteName'] . ' ' . $row['Address'] . ' ' . $row['City'] . ' ' . $row['State'] .
                                     '</option>';
                             }
                             ?>
