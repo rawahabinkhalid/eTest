@@ -409,7 +409,7 @@ if (!isset($_SESSION['userid'])) {
                         </li>
                         <li class="nav-item">
                             <a href="" class="nav-link" data-toggle="modal" data-target="#myModal_Preferences"
-                                        id="btn_add_preferences">
+                                id="btn_add_preferences">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Preferences</p>
                             </a>
@@ -816,7 +816,7 @@ if (!isset($_SESSION['userid'])) {
                         <div class="row">
                             <div class="col-md-2" style="display: inline-block">Practitioner: </div>
                             <div class="col-md-7" style="display: inline-block">
-                                <select class="form-control" name="practitioner_default">
+                                <select class="form-control" id="practitioner_default" name="practitioner_default">
                                     <option selected disabled value="">Please select a Practitioner</option>
                                     <?php
                                         $sqlPractitioner = 'SELECT * FROM `practitioner` ORDER BY `practitioner`.`practitioner_nm` ASC';
@@ -837,7 +837,7 @@ if (!isset($_SESSION['userid'])) {
                         <div class="row">
                             <div class="col-md-2" style="display: inline-block">Lab: </div>
                             <div class="col-md-7" style="display: inline-block">
-                                <select class="form-control" name="lab_default">
+                                <select class="form-control" id="lab_default" name="lab_default">
                                     <option selected disabled value="">Please select a Lab</option>
                                     <?php
                                         $sqlLab = 'SELECT * FROM `lab` ORDER BY `lab`.`lab_nm` ASC';
@@ -858,7 +858,7 @@ if (!isset($_SESSION['userid'])) {
                         <div class="row">
                             <div class="col-md-2" style="display: inline-block">Sample Type: </div>
                             <div class="col-md-7" style="display: inline-block">
-                                <select class="form-control" name="sampleType_default">
+                                <select class="form-control" id="sampleType_default" name="sampleType_default">
                                     <option selected disabled value="">Please select a Sample Type</option>
                                     <?php
                                         $sqlSampleType = 'SELECT * FROM `sampletype` ORDER BY `sampletype`.`sample_nm` ASC';
@@ -879,7 +879,7 @@ if (!isset($_SESSION['userid'])) {
                         <div class="row">
                             <div class="col-md-2" style="display: inline-block">Test Type: </div>
                             <div class="col-md-7" style="display: inline-block">
-                                <select class="form-control" name="testType_default">
+                                <select class="form-control" id="testType_default" name="testType_default">
                                     <option selected disabled value="">Please select a Test Type</option>
                                     <?php
                                         $sqlTestType = 'SELECT * FROM `testtype` ORDER BY `testtype`.`type_nm` ASC';
@@ -900,7 +900,7 @@ if (!isset($_SESSION['userid'])) {
                         <div class="row">
                             <div class="col-md-2" style="display: inline-block">Test Reason: </div>
                             <div class="col-md-7" style="display: inline-block">
-                                <select class="form-control" name="testReason_default">
+                                <select class="form-control" id="testReason_default" name="testReason_default">
                                     <option selected disabled value="">Please select a Test Reason</option>
                                     <?php
                                         $sqlTestReason = 'SELECT * FROM `reasons` ORDER BY `reasons`.`reason_nm` ASC';
@@ -921,7 +921,7 @@ if (!isset($_SESSION['userid'])) {
                 </fieldset>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" onclick="addEmployees();">OK</button>
+                <button type="button" class="btn btn-default" onclick="addPreferences();">OK</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal"
                     onclick="selected_fees = -1;">Close</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Help</button>
@@ -965,8 +965,7 @@ if (!isset($_SESSION['userid'])) {
                         <div class="col-md-2" style="display: inline-block">Location: </div>
                         <div class="col-md-7" style="display: inline-block">
                             <select class="form-control" id="division_id" name="division_id">
-                                <option value="">Select Location</option>
-                                <?php $sql = 'SELECT * FROM '; ?>
+                                <!-- <option value="">Select Location</option> -->
                             </select>
                         </div>
                     </div>
@@ -1002,7 +1001,8 @@ if (!isset($_SESSION['userid'])) {
 
 
 <script>
-if(sessionStorage.getItem('account_selected') != undefined && sessionStorage.getItem('account_selected') != null && sessionStorage.getItem('account_selected') != '') {
+if (sessionStorage.getItem('account_selected') != undefined && sessionStorage.getItem('account_selected') != null &&
+    sessionStorage.getItem('account_selected') != '') {
     $.ajax({
         type: "GET",
         url: "get_location_testinfo.php",
@@ -1053,6 +1053,28 @@ function addEmployees() {
         }
     });
 }
+
+function addPreferences() {
+    $('#myModal_Preferences').modal('hide');
+    var temp = {};
+    temp['practitioner_default'] = $('#practitioner_default').val();
+    temp['lab_default'] = $('#lab_default').val();
+    temp['sampleType_default'] = $('#sampleType_default').val();
+    temp['testType_default'] = $('#testType_default').val();
+    temp['testReason_default'] = $('#testReason_default').val();
+    console.log(temp);
+    $.ajax({
+        type: "POST",
+        url: "insert_preferences.php",
+        data: 'preferencesData=' + JSON.stringify(temp),
+        success: function(resultData) {
+            console.log(resultData);
+            alert(resultData);
+            location.reload();
+            // window.open("accounts.php", "_self");
+        }
+    });
+}
 </script>
 
 
@@ -1083,21 +1105,23 @@ function addEmployees() {
 <script src="dist/js/pages/dashboard2.js"></script>
 <script src="dist/js/owl.carousel.min.js"></script>
 <script>
-if(sessionStorage.getItem('account_selected') != undefined && sessionStorage.getItem('account_selected') != null && sessionStorage.getItem('account_selected') != '')
+if (sessionStorage.getItem('account_selected') != undefined && sessionStorage.getItem('account_selected') != null &&
+    sessionStorage.getItem('account_selected') != '')
     $('#accounts_select').val(sessionStorage.getItem('account_selected'));
 $('#accounts_select').on('change', function() {
     sessionStorage.setItem('account_selected', $(this).val());
     // console.log(location)
-    window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' + sessionStorage.getItem('account_selected'), '_self');
+    window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' +
+        sessionStorage.getItem('account_selected'), '_self');
 
 })
 </script>
 <script>
 function openURL(url) {
-    if(sessionStorage.getItem('account_selected') != undefined && sessionStorage.getItem('account_selected') != null && sessionStorage.getItem('account_selected') != '')
+    if (sessionStorage.getItem('account_selected') != undefined && sessionStorage.getItem('account_selected') != null &&
+        sessionStorage.getItem('account_selected') != '')
         window.open(url + '?account=' + sessionStorage.getItem('account_selected'), '_self');
     else
         window.open(url, '_self');
 }
-
 </script>

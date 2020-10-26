@@ -177,11 +177,14 @@ to get the desired effect
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <input type="text" value="New Test" disabled
                                         style="width: 240px; height: 31px; text-align:center">
+                                    <label for="record_complete">
+                                        <input type="checkbox" id="record_complete" name="" value="">
+                                        &emsp;complete
+                                    </label>
                                 </div>
                                 <div class="form-group">
-                                    <label>Invoice No:</label>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input disabled type="text" placeholder=""
+                                    <label>Requisition No:</label>
+                                    <input type="text" placeholder="" name="requisitionNo"
                                         style="width: 240px; height: 31px; text-align:center">
                                 </div>
                                 <div class="form-group">
@@ -246,7 +249,7 @@ to get the desired effect
                                                         $row['sample_id'] .
                                                         '"';
                                                     if(isset($rowPreferences['sample_id']))
-                                                        if($row['sample_id'] == $rowPreferences['reason_id'])
+                                                        if($row['sample_id'] == $rowPreferences['sample_id'])
                                                             echo 'selected';
                                                     
                                                     echo '>' .
@@ -273,7 +276,7 @@ to get the desired effect
                                                         $row['type_id'] .
                                                         '"';
                                                     if(isset($rowPreferences['type_id']))
-                                                        if($row['type_id'] == $rowPreferences['reason_id'])
+                                                        if($row['type_id'] == $rowPreferences['type_id'])
                                                             echo 'selected';
                                                     
                                                     echo '>' .
@@ -287,12 +290,10 @@ to get the desired effect
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="record_complete">
-                                        <input type="checkbox" id="record_complete" name="" value="">
-                                        &emsp;&emsp;This record is complete
-                                    </label>
+                                    <label>Invoice No:</label>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="text" disabled style="width: 240px; height: 31px; text-align:center">
                                 </div>
-                                <br>
                                 <div class="form-group">
                                     <label>Group No:</label>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
