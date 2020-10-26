@@ -177,14 +177,10 @@ to get the desired effect
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <input type="text" value="New Test" disabled
                                         style="width: 240px; height: 31px; text-align:center">
-                                    <label for="record_complete">
-                                        <input type="checkbox" id="record_complete" name="" value="">
-                                        &emsp;complete
-                                    </label>
                                 </div>
                                 <div class="form-group">
                                     <label>Requisition No:</label>
-                                    <input type="text" placeholder="" name="requisitionNo"
+                                    <input type="number" placeholder="" id="requisitionNo" name="requisitionNo"
                                         style="width: 240px; height: 31px; text-align:center">
                                 </div>
                                 <div class="form-group">
@@ -290,6 +286,13 @@ to get the desired effect
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label for="record_complete">
+                                        <input type="checkbox" id="record_complete" name="" value="">
+                                        &emsp;&emsp;This record is complete
+                                    </label>
+                                </div>
+                                <br>
+                                <div class="form-group">
                                     <label>Invoice No:</label>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <input type="text" disabled style="width: 240px; height: 31px; text-align:center">
@@ -362,7 +365,7 @@ to get the desired effect
                                         <div class="form-group">
                                             <label>Form:</label>
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <select style="width: 240px; height: 31px;" disabled id="selectForm">
+                                            <select style="width: 240px; height: 31px;" id="selectForm">
                                                 <option selected disabled value="">Please select Form</option>
                                                 <?php
                                                     $sql =
@@ -577,25 +580,25 @@ to get the desired effect
 
     $('#negative_pos').on('click', function() {
         if ($('#negative_pos').is(':checked')) {
-            $('#selectForm').val('');
-            $('#drugsOfForm').html('');
+            // $('#selectForm').val('');
+            // $('#drugsOfForm').html('');
             $('.positiveForCheckBox').prop('checked', false);
             $('.positiveForCheckBox').prop('disabled', true);
-            $('#selectForm').prop('disabled', true);
+            // $('#selectForm').prop('disabled', true);
         } else {
-            $('#selectForm').prop('disabled', false);
-            $('#selectForm').val('');
+            // $('#selectForm').prop('disabled', false);
+            // $('#selectForm').val('');
             $('.positiveForCheckBox').prop('disabled', false);
         }
     })
 
     $('#negative_positive').on('click', function() {
         if ($('#negative_positive').is(':checked')) {
-            $('#selectForm').val('');
-            $('#selectForm').prop('disabled', false);
+            // $('#selectForm').val('');
+            // $('#selectForm').prop('disabled', false);
             $('.positiveForCheckBox').prop('disabled', false);
         } else {
-            $('#selectForm').prop('disabled', true);
+            // $('#selectForm').prop('disabled', true);
             $('.positiveForCheckBox').prop('checked', false);
             $('.positiveForCheckBox').prop('disabled', true);
 
@@ -637,6 +640,7 @@ to get the desired effect
             }
 
             var data = {
+                'requisition_no': $('#requisitionNo').val(),
                 'accounts_select': $('#accounts_select').val(),
                 'employee_select': $('#employee_select').val(),
                 'location_select': $('#location_select').val(),
@@ -677,6 +681,11 @@ to get the desired effect
     })
 
     function validateForm() {
+        if ($('#requisitionNo').val() == '' || $('#requisitionNo').val() == null) {
+            $('#requisitionNo').focus();
+            alert("Please enter Requisition No");
+            return false;
+        }
         if ($('#employee_select').val() == '' || $('#employee_select').val() == null) {
             $('#employee_select').focus();
             alert("Please Select Employee");

@@ -11,12 +11,12 @@ if ($result->num_rows > 0) {
         echo '    <label for="drug_' .
             $row['drug_id'] .
             '">
-            <input type="hidden" class="positiveForCheckBox" name="positiveForCheckBoxName" id="drugName_' .
+            <input type="hidden" disabled class="positiveForCheckBox" name="positiveForCheckBoxName" id="drugName_' .
             $row['drug_id'] .
             '" value="' .
             $row['drug_id'] .
             '">
-            <input type="checkbox" class="positiveForCheckBox" name="positiveForCheckBox" id="drug_' .
+            <input type="checkbox" disabled class="positiveForCheckBox" name="positiveForCheckBox" id="drug_' .
             $row['drug_id'] .
             '" value="' .
             $row['drug_id'] .

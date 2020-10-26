@@ -1,5 +1,6 @@
 <?php
 include 'conn.php';
+$requisition_no = $_POST['requisition_no'];
 $account = $_POST['accounts_select'];
 $location = $_POST['location_select'];
 $emp = $_POST['employee_select'];
@@ -43,8 +44,9 @@ $rowLab = $resultLab->fetch_assoc();
 $labId = $rowLab['lab_id'];
 $prac = $rowLab['practitioner_id'];
 
+if(isset($formId) && $formId != '') {
 $sql =
-    'INSERT INTO `test`( `account_id`, `division_id`, `emp_id`, `collection_date`, `reported_date`, `mro_received_date`, `company_id`, `lab_id`, `reason_id`, `result`, `practitioner_id`, `test_date`, `type_id`, `sample_id`, `amount`,  `batch_id`, `insert_user_id`, `form_id`, `other`, `other_nm`) VALUES (' .
+    'INSERT INTO `test`( `account_id`, `division_id`, `emp_id`, `collection_date`, `reported_date`, `mro_received_date`, `company_id`, `lab_id`, `reason_id`, `result`, `practitioner_id`, `test_date`, `type_id`, `sample_id`, `amount`,  `batch_id`, `insert_user_id`, `form_id`, `other`, `other_nm`, `req_no`) VALUES (' .
     $account .
     ',' .
     $location .
@@ -82,7 +84,51 @@ $sql =
     $other .
     '","' .
     $otherName .
+    '","' .
+    $requisition_no .
     '")';
+} else {
+$sql =
+    'INSERT INTO `test`( `account_id`, `division_id`, `emp_id`, `collection_date`, `reported_date`, `mro_received_date`, `company_id`, `lab_id`, `reason_id`, `result`, `practitioner_id`, `test_date`, `type_id`, `sample_id`, `amount`,  `batch_id`, `insert_user_id`, `other`, `other_nm`, `req_no`) VALUES (' .
+    $account .
+    ',' .
+    $location .
+    ',"' .
+    $emp .
+    '","' .
+    $collection .
+    '","' .
+    $date_reported .
+    '","' .
+    $date_mro_recvd .
+    '",' .
+    $compId .
+    ',' .
+    $labId .
+    ',' .
+    $reason .
+    ',"' .
+    $result .
+    '",' .
+    $prac .
+    ',"' .
+    $testdate .
+    '",' .
+    $type .
+    ',' .
+    $stype .
+    ',"' .
+    $amount .
+    '",2,"' .
+    $_SESSION['userid'] .
+    ',"' .
+    $other .
+    '","' .
+    $otherName .
+    '","' .
+    $requisition_no .
+    '")';
+}
 if ($conn->query($sql)) {
     $id = mysqli_insert_id($conn);
 
