@@ -329,6 +329,7 @@ include_once "conn.php";
     function addEmployees() {
         var temp = {};
         temp['emp_id'] = $('#emp_id').val();
+        temp['specimen_id'] = $('#specimen_id').val();
         temp['first_nm'] = $('#first_nm').val();
         temp['last_nm'] = $('#last_nm').val();
         temp['division_id'] = $('#division_id').val();
@@ -347,6 +348,7 @@ include_once "conn.php";
         }
 
         $('#emp_id').val('');
+        $('#specimen_id').val('');
         $('#first_nm').val('');
         $('#last_nm').val('');
         $('#division_id').val('');
@@ -369,6 +371,7 @@ include_once "conn.php";
             content += (i + 1);
             content += '</td>';
             content += '<td>' + employees[i].emp_id + '</td>';
+            content += '<td>' + employees[i].specimen_id + '</td>';
             content += '<td>' + employees[i].division_id + '</td>';
             // content += '<td>';
             // locations.find(item => {
@@ -429,6 +432,7 @@ include_once "conn.php";
         $('#employeesindex').val(selected_employees);
 
         $('#emp_id').val(employees[selected_employees].emp_id);
+        $('#specimen_id').val(employees[selected_employees].specimen_id);
         $('#first_nm').val(employees[selected_employees].first_nm);
         $('#last_nm').val(employees[selected_employees].last_nm);
         $('#division_id').val(employees[selected_employees].division_id);
@@ -533,6 +537,7 @@ include_once "conn.php";
                 for (i = 0; i < data.accounts_employees.length; i++) {
                     var temp = {};
                     temp['emp_id'] = data.accounts_employees[i].emp_id;
+                    temp['specimen_id'] = data.accounts_employees[i].specimen_id;
                     temp['first_nm'] = data.accounts_employees[i].first_nm;
                     temp['last_nm'] = data.accounts_employees[i].last_nm;
                     temp['division_id'] = data.accounts_employees[i].division_id;
@@ -618,7 +623,7 @@ to get the desired effect
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="landingscreen.php">Home</a></li>
-                                    
+
                                     <li class="breadcrumb-item active">Account Maintenance</li>
                                 </ol>
                             </div><!-- /.col -->
@@ -678,7 +683,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             </div>
             <!-- /.content-wrapper -->
             <!-- Modal -->
-            <div id="myModal" class="modal fade" role="dialog">
+            <div id="myModal" class="modal fade" role="dialog" style="z-index:1400;">
                 <div class="modal-dialog modal-lg">
 
                     <!-- Modal content-->
@@ -822,13 +827,13 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-toggle="modal"
-                                        data-target="#myModal_Employee" onclick="addClicked_Employees();"
+                                        data-target="#myModal_Employee1" onclick="addClicked_Employees();"
                                         id="btn_add_employees">Add</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal"
                                         id="btn_delete_employees" onclick="removeClicked_Employees();"
                                         disabled>Remove</button>
                                     <button type="button" class="btn btn-default" data-toggle="modal"
-                                        data-target="#myModal_Employee" id="btn_properties_employees"
+                                        data-target="#myModal_Employee1" id="btn_properties_employees"
                                         onclick="propertiesClicked_Employees();" disabled>Properties</button>
                                 </div>
                             </div>
@@ -846,7 +851,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             </div>
 
             <!-- Modal -->
-            <div id="myModal_General" class="modal fade" role="dialog">
+            <div id="myModal_General" class="modal fade" role="dialog" style="z-index:9996;">
                 <div class="modal-dialog modal-lg">
 
                     <!-- Modal content-->
@@ -918,7 +923,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             </div>
 
             <!-- Modal -->
-            <div id="myModal_Fees" class="modal fade" role="dialog">
+            <div id="myModal_Fees" class="modal fade" role="dialog" style="z-index:9997;">
                 <div class="modal-dialog modal-lg">
 
                     <!-- Modal content-->
@@ -970,7 +975,8 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 
             <!-- Modal -->
-            <div id="myModal_Employee" class="modal fade" role="dialog">
+            <div id="myModal_Employee1" class="modal fade" role="dialog" style="z-index:9997;">
+                <!-- <div id="myModal_Employee" class="modal fade" role="dialog" style="z-index:9998;"> -->
                 <div class="modal-dialog modal-lg">
 
                     <!-- Modal content-->
@@ -980,6 +986,12 @@ while ($row = mysqli_fetch_assoc($result)) {
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <div class="modal-body" style="display: inline-block">
+                            <div class="row">
+                                <div class="col-md-2" style="display: inline-block">Specimen ID: </div>
+                                <div class="col-md-7" style="display: inline-block">
+                                    <input class="form-control" id="specimen_id" name="specimen_id">
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-2" style="display: inline-block">Employee ID (SSN): </div>
                                 <div class="col-md-7" style="display: inline-block">
@@ -1059,9 +1071,9 @@ while ($row = mysqli_fetch_assoc($result)) {
     <!-- Bootstrap -->
     <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE -->
-    <script src="dist/js/jquery-3.5.1.js"></script>
-    <script src="dist/js/jquery.dataTables.min.js"></script>
-    <script src="dist/js/dataTables.bootstrap4.min.js"></script>
+    <!-- <script src="dist/js/jquery-3.5.1.js"></script> -->
+    <!-- <script src="dist/js/jquery.dataTables.min.js"></script> -->
+    <!-- <script src="dist/js/dataTables.bootstrap4.min.js"></script> -->
     <script src="dist/js/adminlte.js"></script>
 
     <!-- OPTIONAL SCRIPTS -->

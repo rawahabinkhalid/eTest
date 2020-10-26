@@ -317,13 +317,13 @@ if (!isset($_SESSION['userid'])) {
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item" style="pointer-events: none;">
-                            <a href="" class="nav-link">
+                        <li class="nav-item">
+                            <a href="" class="nav-link" id="new_form" style="pointer-events: none;">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>New</p>
                             </a>
                         </li>
-                        <li class="nav-item" style="pointer-events: none;">
+                        <!-- <li class="nav-item" style="pointer-events: none;">
                             <a href="" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Delete</p>
@@ -334,9 +334,9 @@ if (!isset($_SESSION['userid'])) {
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Save</p>
                             </a>
-                        </li>
-                        <li class="nav-item" style="pointer-events: none;">
-                            <a href="" class="nav-link">
+                        </li> -->
+                        <li class="nav-item">
+                            <a href="landingscreen.php" class="nav-link" id="cancel_form" style="pointer-events: none;">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Cancel</p>
                             </a>
@@ -383,13 +383,13 @@ if (!isset($_SESSION['userid'])) {
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item" style="pointer-events: none;">
-                            <a href="" class="nav-link">
+                        <li class="nav-item">
+                            <a href="retrievetest.php" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Retrieve...</p>
                             </a>
                         </li>
-                        <li class="nav-item" style="pointer-events: none;">
+                        <!-- <li class="nav-item" style="pointer-events: none;">
                             <a href="" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Clear Results</p>
@@ -400,13 +400,13 @@ if (!isset($_SESSION['userid'])) {
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Print...</p>
                             </a>
-                        </li>
-                        <li class="nav-item" style="pointer-events: none;">
+                        </li> -->
+                        <!-- <li class="nav-item" style="pointer-events: none;">
                             <a href="" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Printer Setup...</p>
                             </a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a href="" class="nav-link" data-toggle="modal" data-target="#myModal_Preferences"
                                 id="btn_add_preferences">
@@ -414,8 +414,8 @@ if (!isset($_SESSION['userid'])) {
                                 <p>Preferences</p>
                             </a>
                         </li>
-                        <li class="nav-item" style="pointer-events: none;">
-                            <a href="" class="nav-link">
+                        <li class="nav-item">
+                            <a href="signout.php" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Exit</p>
                             </a>
@@ -943,6 +943,13 @@ if (!isset($_SESSION['userid'])) {
             <div class="modal-body" style="display: inline-block">
                 <div id="main_div">
                     <div class="row">
+                        <div class="col-md-2" style="display: inline-block">Specimen ID: </div>
+                        <div class="col-md-7" style="display: inline-block">
+                            <input class="form-control" id="specimen_id" name="specimen_id">
+                        </div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-md-2" style="display: inline-block">Employee ID (SSN): </div>
                         <div class="col-md-7" style="display: inline-block">
                             <input type="hidden" id="employeesindex" name="employeesindex" value="">
@@ -1020,6 +1027,7 @@ function addEmployees() {
     $('#myModal_Employee').modal('hide');
     var temp = {};
     temp['emp_id'] = $('#emp_id').val();
+    temp['specimen_id'] = $('#specimen_id').val();
     temp['first_nm'] = $('#first_nm').val();
     temp['last_nm'] = $('#last_nm').val();
     temp['division_id'] = $('#division_id').val();
@@ -1033,6 +1041,7 @@ function addEmployees() {
         temp['status'] = 'T';
 
     $('#emp_id').val('');
+    $('#specimen_id').val('');
     $('#first_nm').val('');
     $('#last_nm').val('');
     $('#division_id').val('');

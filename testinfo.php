@@ -505,6 +505,8 @@ to get the desired effect
     <script src="dist/js/pages/dashboard3.js"></script>
     <script>
     $(document).ready(function() {
+        $('#new_form').css('pointer-events', 'all');
+        $('#cancel_form').css('pointer-events', 'all');
         // setTimeout(() => {
         // $("#accounts_select").children().eq(1).attr('selected', 'selected');
         $('#select_account_div').css('display', 'none');

@@ -50,7 +50,7 @@ if(isset($_GET['delete_account_id'])) {
                 $result3 = $conn->query($sql3);
                 if($result3->num_rows > 0) {
                     $row3 = $result3->fetch_assoc();
-                    $sql2 = 'INSERT INTO `employees` (`emp_id`, `account_id`, `division_id`, `first_nm`, `last_nm`, `status`, `insert_user_id`, `insert_date`) VALUES ("'.$accountsData->employees[$i]->emp_id.'", '.$account_id.', "'.$row3['division_id'].'", "'.$accountsData->employees[$i]->first_nm.'", "'.$accountsData->employees[$i]->last_nm.'", "'.$accountsData->employees[$i]->status.'", "'.$_SESSION['userid'].'", "'.date('Y-m-d H:i:s').'")';
+                    $sql2 = 'INSERT INTO `employees` (`emp_id`, `account_id`, `division_id`, `first_nm`, `last_nm`, `status`, `specimen_id`, `insert_user_id`, `insert_date`) VALUES ("'.$accountsData->employees[$i]->emp_id.'", '.$account_id.', "'.$row3['division_id'].'", "'.$accountsData->employees[$i]->first_nm.'", "'.$accountsData->employees[$i]->last_nm.'", "'.$accountsData->employees[$i]->status.'", "'.$accountsData->employees[$i]->specimen_id.'", "'.$_SESSION['userid'].'", "'.date('Y-m-d H:i:s').'")';
                     echo $sql2;
                     if($conn->query($sql2)) {
                         echo "<script>alert('The data has been uploaded.');</script>";
@@ -104,7 +104,7 @@ if(isset($_GET['delete_account_id'])) {
                             $result3 = $conn->query($sql3);
                             if($result3->num_rows > 0) {
                                 $row3 = $result3->fetch_assoc();
-                                $sql2 = 'INSERT INTO `employees` (`emp_id`, `account_id`, `division_id`, `first_nm`, `last_nm`, `random_marker`, `status`, `insert_user_id`, `insert_date`) VALUES ("'.$accountsData->employees[$K]->emp_id.'", '.$account_id.', "'.$row3['division_id'].'", "'.$accountsData->employees[$K]->first_nm.'", "'.$accountsData->employees[$K]->last_nm.'", "", "'.$accountsData->employees[$K]->status.'", "'.$_SESSION['userid'].'", "'.date('Y-m-d H:i:s').'")';
+                                $sql2 = 'INSERT INTO `employees` (`emp_id`, `account_id`, `division_id`, `first_nm`, `last_nm`, `random_marker`, `status`, `specimen_id`, `insert_user_id`, `insert_date`) VALUES ("'.$accountsData->employees[$K]->emp_id.'", '.$account_id.', "'.$row3['division_id'].'", "'.$accountsData->employees[$K]->first_nm.'", "'.$accountsData->employees[$K]->last_nm.'", "", "'.$accountsData->employees[$K]->status.'", "'.$accountsData->employees[$K]->specimen_id.'", "'.$_SESSION['userid'].'", "'.date('Y-m-d H:i:s').'")';
                                 echo $sql2;
                                 if($conn->query($sql2)) {
                                     echo "<script>alert('The data has been uploaded.');</script>";
