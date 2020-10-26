@@ -89,50 +89,8 @@ to get the desired effect
                         </div><!-- /.row -->
                         <br>
                         <form action="" method="POST" class="">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    Account&emsp;
-                                    <select name="account_filter" class="form-control" required style="width: calc(100% - 80px); display: inline-block;"><option value="">Please select an Account</option>
-                                    <?php
-                                    $sql = 'SELECT * FROM accounts';
-                                    $result = $conn->query($sql);
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            echo '<option value="' .
-                                                $row['account_id'] .
-                                                '"';
-                                            if (
-                                                isset(
-                                                    $_POST['account_filter']
-                                                ) &&
-                                                $row['account_id'] ==
-                                                    $_POST['account_filter']
-                                            ) {
-                                                echo ' selected ';
-                                            }
-                                            echo '>' .
-                                                $row['account_nm'] .
-                                                '</option>';
-                                        }
-                                    }
-                                    ?>
-                                    </select>
-                                </div>
-                                <div class="col-md-5" style="text-align: right">
-                                </div>
-                                <div class="col-md-3" style="text-align: right">
-                                    <button type="submit" name="filterData" class="btn mt-2"
-                                        style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Filter</button>
-                                    <button type="button" class="btn mt-2"
-                                    onclick="window.open('labelsBillingReport.php', '_self');" style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Reset</button>
-                                </div>
-                            </div>
-                            
-                        <!-- </form> -->
-                        <!-- <br><br> -->
                         <?php if (
-                            isset($_POST['filterData']) &&
-                            isset($_POST['account_filter'])
+                            isset($_GET['account'])
                         ) { ?>
                         <!-- <form action="" method="POST" class=""> -->
                             <div class="row">
@@ -150,7 +108,7 @@ to get the desired effect
                             <div class="row">
                                 <div class="col-md-12">
                                     <?php $account_filter =
-                                        $_POST['account_filter']; ?>
+                                        $_GET['account']; ?>
                                 </div>
                             </div>
                             <div class="row" id="DivIdToPrint">

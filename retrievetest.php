@@ -157,58 +157,7 @@ to get the desired effect
                     </div>
                 </div>
             </form> -->
-            <div class="col-md-6 col-sm-6">
-                <div class="input-group input-group-sm">
-                    <!-- <select class="form-control" id="accounts_select">
-                        <option selected disabled>Please select Account</option>
-                        <?php
-                        // $sql = 'SELECT * FROM accounts';
-                        // $result = $conn->query($sql);
-                        // if ($result->num_rows > 0) {
-                        //     while ($row = $result->fetch_assoc()) {
-                        //         echo '<option value="' . $row['account_id'] . '">' . $row['account_nm'] . '</option>';
-                        //     }
-                        // }
-?>
-                    </select> -->
-                    <?php if ($_SESSION['usertype'] == 'admin') { ?>
-
-                    <select class="form-control" id="accounts_select">
-                        <option selected disabled>Please select Account</option>
-                        <?php
-                                    $sql = 'SELECT * FROM accounts';
-                                    $result = $conn->query($sql);
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            echo '<option value="' .
-                                                $row['account_id'] .
-                                                '">' .
-                                                $row['account_nm'] .
-                                                '</option>';
-                                        }
-                                    }
-                                    ?>
-                    </select>
-                    <?php } else if ($_SESSION['usertype'] == 'accounts') { ?>
-                    <select class="form-control" id="accounts_select">
-                        <?php
-                                    $sql = 'SELECT * FROM accounts WHERE account_id=' . $_SESSION['accountid'];
-                                    $result = $conn->query($sql);
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            echo '<option selected value="' .
-                                                $row['account_id'] .
-                                                '">' .
-                                                $row['account_nm'] .
-                                                '</option>';
-                                        }
-                                    }
-                                    ?>
-                    </select>
-
-                    <?php } ?>
-                </div>
-            </div>
+            
             <?php include "header.php";?>
 
             <!-- Content Wrapper. Contains page content -->
@@ -607,7 +556,8 @@ to get the desired effect
     <script>
     $(document).ready(function() {
         // setTimeout(() => {
-        $("#accounts_select").children().eq(1).attr('selected', 'selected');
+        // $("#accounts_select").children().eq(1).attr('selected', 'selected');
+        $("#accounts_select").val(sessionStorage.getItem('account_selected'));
         $.ajax({
             type: "GET",
             url: "getEmployeesFromAccount.php",
@@ -783,7 +733,6 @@ to get the desired effect
                 $('#tbl_search_results_body').html("");
                 $('#tbl_search_results_body').html(resultData);
                 $('#tbl_search_results').DataTable();
-
             }
         });
     }

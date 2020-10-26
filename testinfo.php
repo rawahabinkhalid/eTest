@@ -116,26 +116,7 @@ to get the desired effect
                 </form> -->
             <!-- <div class="col-md-1 col-sm-1">
                 </div> -->
-            <div class="col-md-6 col-sm-6">
-                <div class="input-group input-group-sm">
-                    <select class="form-control" id="accounts_select">
-                        <option selected disabled>Please select Account</option>
-                        <?php
-                        $sql = 'SELECT * FROM accounts';
-                        $result = $conn->query($sql);
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                echo '<option value="' .
-                                    $row['account_id'] .
-                                    '">' .
-                                    $row['account_nm'] .
-                                    '</option>';
-                            }
-                        }
-                        ?>
-                    </select>
-                </div>
-            </div>
+           
             <?php include 'header.php'; ?>
             <div class="content-wrapper" id="select_account_div">
                 <!-- Content Header (Page header) -->
@@ -338,7 +319,7 @@ to get the desired effect
                                     <div class="col-md-3">
                                         <label for="negative_pos" style="display: inline-block">
                                             <div class="form-group">
-                                                <input type="radio" id="negative_pos" name="negative_positive"
+                                                <input type="radio" checked id="negative_pos" name="negative_positive"
                                                     value="neg">
                                                 Negative
                                             </div>
@@ -490,7 +471,7 @@ to get the desired effect
     <script>
     $(document).ready(function() {
         // setTimeout(() => {
-        $("#accounts_select").children().eq(1).attr('selected', 'selected');
+        // $("#accounts_select").children().eq(1).attr('selected', 'selected');
         $('#select_account_div').css('display', 'none');
         $('#main_div_main').css('display', 'block');
         $.ajax({
@@ -553,9 +534,9 @@ to get the desired effect
         if ($('#negative_pos').is(':checked')) {
             $('.positiveForCheckBox').prop('checked', false);
             $('.positiveForCheckBox').prop('disabled', true);
-            $('#selectForm').prop('disabled', false);
-        } else {
             $('#selectForm').prop('disabled', true);
+        } else {
+            $('#selectForm').prop('disabled', false);
             $('#selectForm').val('');
             $('.positiveForCheckBox').prop('disabled', false);
         }
@@ -564,10 +545,10 @@ to get the desired effect
     $('#negative_positive').on('click', function() {
         if ($('#negative_positive').is(':checked')) {
             $('#selectForm').val('');
-            $('#selectForm').prop('disabled', true);
+            $('#selectForm').prop('disabled', false);
             $('.positiveForCheckBox').prop('disabled', false);
         } else {
-            $('#selectForm').prop('disabled', false);
+            $('#selectForm').prop('disabled', true);
             $('.positiveForCheckBox').prop('checked', false);
             $('.positiveForCheckBox').prop('disabled', true);
 

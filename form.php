@@ -273,7 +273,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2" style="display: inline-block"></div>
-                                    <div class="col-md-7" style="display: inline-block">
+                                    <div class="col-md-7" style="display: inline-block; height: 400px; overflow-y: auto;">
                                         <fieldset style="border: 1px solid lightgray; padding: 10px">
                                             <legend>Form Drugs</legend>
                                             <?php

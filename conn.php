@@ -1,14 +1,14 @@
 <?php
 session_start();
-// $servername = 'matzgroup17.ipagemysql.com';
-// $username = 'etest_matz';
-// $password = 'etest_matz';
-// $dbname = 'etest_matz';
+$servername = 'matzgroup17.ipagemysql.com';
+$username = 'etest_matz';
+$password = 'etest_matz';
+$dbname = 'etest_matz';
 
 $servername = 'localhost';
 $username = 'root';
 $password = '';
-$dbname = 'etest';
+$dbname = 'etest_matz';
 
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);

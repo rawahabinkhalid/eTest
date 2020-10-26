@@ -204,49 +204,17 @@ to get the desired effect
                         </div><!-- /.row -->
                         <form action="" method="POST" class="">
                             <div class="row no-print">
-                                <div class="col-md-4">
-                                    Account&emsp;
-                                    <select name="account_filter" class="form-control" required
-                                        style="width: calc(100% - 80px); display: inline-block;">
-                                        <option value="">Please select an Account</option>
-                                        <?php
-                                    $sql = 'SELECT * FROM accounts';
-                                    $result = $conn->query($sql);
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            echo '<option value="' .
-                                                $row['account_id'] .
-                                                '"';
-                                            if (
-                                                isset(
-                                                    $_POST['account_filter']
-                                                ) &&
-                                                $row['account_id'] ==
-                                                    $_POST['account_filter']
-                                            ) {
-                                                echo ' selected ';
-                                            }
-                                            echo '>' .
-                                                $row['account_nm'] .
-                                                '</option>';
-                                        }
-                                    }
-                                    ?>
-                                    </select>
-                                </div>
                                 <div class="col-md-5">
                                     <!-- Date Range&emsp; -->
                                     <!-- <select class="form-control" style="width: calc(100% - 100px); display: inline-block;"><option>Please select Date Range</option> -->
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
-                                                <input type="checkbox"
-                                                    style="height: calc(1.25rem); width: calc(1.25rem);" <?php echo isset(
+                                            <input type="checkbox" style="height: calc(1.25rem); width: calc(1.25rem);" <?php echo isset(
                                                 $_POST['daterangeCheck']
                                             )
                                                 ? 'checked'
-                                                : ''; ?> name="daterangeCheck" id="daterangeCheck"
-                                                    aria-label="Checkbox for following text input">
+                                                : ''; ?> name="daterangeCheck" id="daterangeCheck" aria-label="Checkbox for following text input">
                                             </div>
                                         </div>
                                         <div id="reportrange" style="width: calc(100% - 100px) !important; display: inline-block; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%; <?php echo isset(
@@ -254,17 +222,17 @@ to get the desired effect
                                         )
                                             ? ''
                                             : 'pointer-events: none; background-color: #e9ecef;'; ?>">
-                                            <i class="fa fa-calendar"></i>&nbsp;
-                                            <span></span> <i class="fa fa-caret-down"></i>
-                                        </div>
-                                    </div>
+                                        <i class="fa fa-calendar"></i>&nbsp;
+                                        <span></span> <i class="fa fa-caret-down"></i>
+                                    </div>                                    </div>
                                     <input type="hidden" class="form-control" value="<?php echo isset(
                                         $_POST['daterange']
                                     )
                                         ? $_POST['daterange']
-                                        : ''; ?>" name="daterange" id="daterange"
-                                        style="width: calc(100% - 100px); display: inline-block;" />
-
+                                        : ''; ?>" name="daterange" id="daterange" style="width: calc(100% - 100px); display: inline-block;" />
+                                    
+                                </div>
+                                <div class="col-md-4">
                                 </div>
                                 <div class="col-md-3" style="text-align: right">
                                     <button type="submit" name="filterData" class="btn mt-2"
@@ -278,8 +246,7 @@ to get the desired effect
                             <!-- </form> -->
                             <!-- <br><br> -->
                             <?php if (
-                            isset($_POST['filterData']) &&
-                            isset($_POST['account_filter'])
+                            isset($_GET['account'])
                         ) { ?>
                             <!-- <form action="" method="POST" class=""> -->
                             <div class="row no-print">
@@ -297,7 +264,7 @@ to get the desired effect
                             <div class="row">
                                 <div class="col-md-12">
                                     <?php
-                                    $account_filter = $_POST['account_filter'];
+                                    $account_filter = $_GET['account'];
                                     $sqlDate = '';
                                     if (
                                         isset($_POST['daterangeCheck']) &&

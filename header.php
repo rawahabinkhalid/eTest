@@ -15,7 +15,46 @@ if (!isset($_SESSION['userid'])) {
 <link rel="stylesheet" href="dist/css/owl.carousel.min.css">
 <!-- <script src="jquery-3.4.1.min.js"></script> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<div class="col-md-6 col-sm-6">
+    <div class="input-group input-group-sm">
+        <?php if ($_SESSION['usertype'] == 'admin') { ?>
 
+        <select class="form-control" id="accounts_select">
+            <option selected disabled>Please select Account</option>
+            <?php
+                        $sql = 'SELECT * FROM accounts ORDER BY account_nm';
+                        $result = $conn->query($sql);
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' .
+                                    $row['account_id'] .
+                                    '">' .
+                                    $row['account_nm'] .
+                                    '</option>';
+                            }
+                        }
+                        ?>
+        </select>
+        <?php } else if ($_SESSION['usertype'] == 'accounts') { ?>
+        <select class="form-control" id="accounts_select">
+            <?php
+                        $sql = 'SELECT * FROM accounts WHERE account_id=' . $_SESSION['accountid'];
+                        $result = $conn->query($sql);
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option selected value="' .
+                                    $row['account_id'] .
+                                    '">' .
+                                    $row['account_nm'] .
+                                    '</option>';
+                            }
+                        }
+                        ?>
+        </select>
+
+        <?php } ?>
+    </div>
+</div>
 <!-- Right navbar links -->
 <ul class="navbar-nav ml-auto">
     <!-- <li class="nav-item dropdown">
@@ -368,8 +407,9 @@ if (!isset($_SESSION['userid'])) {
                                 <p>Printer Setup...</p>
                             </a>
                         </li>
-                        <li class="nav-item" style="pointer-events: none;">
-                            <a href="" class="nav-link">
+                        <li class="nav-item">
+                            <a href="" class="nav-link" data-toggle="modal" data-target="#myModal_Preferences"
+                                        id="btn_add_preferences">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Preferences</p>
                             </a>
@@ -591,7 +631,7 @@ if (!isset($_SESSION['userid'])) {
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="accounts_fees.php" class="nav-link">
+                            <a onclick="openURL('accounts_fees.php');" href="javascript:void();" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Accounts Fees Report</p>
                             </a>
@@ -599,7 +639,7 @@ if (!isset($_SESSION['userid'])) {
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="bedsReport.php" class="nav-link">
+                            <a onclick="openURL('bedsReport.php');" href="javascript:void();" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Monthly Beds Report</p>
                             </a>
@@ -607,7 +647,7 @@ if (!isset($_SESSION['userid'])) {
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="notBilledReport.php" class="nav-link">
+                            <a onclick="openURL('notBilledReport.php');" href="javascript:void();" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Items Not Billed</p>
                             </a>
@@ -615,7 +655,7 @@ if (!isset($_SESSION['userid'])) {
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="weeklyReport.php" class="nav-link">
+                            <a onclick="openURL('weeklyReport.php');" href="javascript:void();" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Weekly Funding Test</p>
                             </a>
@@ -623,7 +663,7 @@ if (!isset($_SESSION['userid'])) {
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="billingReport.php" class="nav-link">
+                            <a onclick="openURL('billingReport.php');" href="javascript:void();" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Billing Report</p>
                             </a>
@@ -631,7 +671,7 @@ if (!isset($_SESSION['userid'])) {
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="labelsBillingReport.php" class="nav-link">
+                            <a onclick="openURL('labelsBillingReport.php');" href="javascript:void();" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Labels For Billing Report</p>
                             </a>
@@ -639,7 +679,7 @@ if (!isset($_SESSION['userid'])) {
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="postBilledReport.php" class="nav-link">
+                            <a onclick="openURL('postBilledReport.php');" href="javascript:void();" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Post Billed Report</p>
                             </a>
@@ -647,7 +687,7 @@ if (!isset($_SESSION['userid'])) {
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="frandReport.php" class="nav-link">
+                            <a onclick="openURL('frandReport.php');" href="javascript:void();" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Frandomdotemplqry</p>
                             </a>
@@ -655,7 +695,7 @@ if (!isset($_SESSION['userid'])) {
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="unpaidInvoiceReport.php" class="nav-link">
+                            <a onclick="openURL('unpaidInvoiceReport.php');" href="javascript:void();" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Unpaid Invoice Report</p>
                             </a>
@@ -663,7 +703,7 @@ if (!isset($_SESSION['userid'])) {
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="misReport.php" class="nav-link">
+                            <a onclick="openURL('misReport.php');" href="javascript:void();" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>MIS Report</p>
                             </a>
@@ -671,7 +711,7 @@ if (!isset($_SESSION['userid'])) {
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="revenueReport.php" class="nav-link">
+                            <a onclick="openURL('revenueReport.php');" href="javascript:void();" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Revenue Report</p>
                             </a>
@@ -679,7 +719,7 @@ if (!isset($_SESSION['userid'])) {
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="testResult.php" class="nav-link">
+                            <a onclick="openURL('testResult.php');" href="javascript:void();" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Alere Report</p>
                             </a>
@@ -687,7 +727,7 @@ if (!isset($_SESSION['userid'])) {
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="peopleSoftInfo.php" class="nav-link">
+                            <a onclick="openURL('peopleSoftInfo.php');" href="javascript:void();" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>WP Peoplesoft Info</p>
                             </a>
@@ -695,7 +735,7 @@ if (!isset($_SESSION['userid'])) {
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="mroReport.php" class="nav-link">
+                            <a onclick="openURL('mroReport.php');" href="javascript:void();" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>MRO Reports</p>
                             </a>
@@ -752,6 +792,145 @@ if (!isset($_SESSION['userid'])) {
 <?php
 }?>
 
+<div id="myModal_Preferences" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Preferences</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" style="display: inline-block">
+                <fieldset style="border: 1px solid lightgray; padding: 10px;">
+                    <legend>Test Defaults</legend>
+                    <?php
+                    $sqlPreferences = 'SELECT * FROM `preferences`';
+                    $resultPreferences = $conn->query($sqlPreferences);
+                    if($resultPreferences->num_rows > 0) {
+                        $rowPreferences = $resultPreferences->fetch_assoc();
+                        // print_r($rowPreferences);
+                    }
+                    ?>
+                    <div id="main_div">
+                        <div class="row">
+                            <div class="col-md-2" style="display: inline-block">Practitioner: </div>
+                            <div class="col-md-7" style="display: inline-block">
+                                <select class="form-control" name="practitioner_default">
+                                    <option selected disabled value="">Please select a Practitioner</option>
+                                    <?php
+                                        $sqlPractitioner = 'SELECT * FROM `practitioner` ORDER BY `practitioner`.`practitioner_nm` ASC';
+                                        $resultPractitioner = $conn->query($sqlPractitioner);
+                                        if($resultPractitioner->num_rows > 0) {
+                                            while($rowPractitioner = $resultPractitioner->fetch_assoc()) {
+                                                echo '<option value="'.$rowPractitioner['practitioner_id'].'"';
+                                                if(isset($rowPreferences['practitioner_id']))
+                                                    if($rowPractitioner['practitioner_id'] == $rowPreferences['practitioner_id'])
+                                                        echo 'selected';
+                                                echo '>'.$rowPractitioner['practitioner_nm'].'</option>';
+                                            }
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2" style="display: inline-block">Lab: </div>
+                            <div class="col-md-7" style="display: inline-block">
+                                <select class="form-control" name="lab_default">
+                                    <option selected disabled value="">Please select a Lab</option>
+                                    <?php
+                                        $sqlLab = 'SELECT * FROM `lab` ORDER BY `lab`.`lab_nm` ASC';
+                                        $resultLab = $conn->query($sqlLab);
+                                        if($resultLab->num_rows > 0) {
+                                            while($rowLab = $resultLab->fetch_assoc()) {
+                                                echo '<option value="'.$rowLab['lab_id'].'"';
+                                                if(isset($rowPreferences['lab_id']))
+                                                    if($rowLab['lab_id'] == $rowPreferences['lab_id'])
+                                                        echo 'selected';
+                                                echo '>'.$rowLab['lab_nm'].'</option>';
+                                            }
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2" style="display: inline-block">Sample Type: </div>
+                            <div class="col-md-7" style="display: inline-block">
+                                <select class="form-control" name="sampleType_default">
+                                    <option selected disabled value="">Please select a Sample Type</option>
+                                    <?php
+                                        $sqlSampleType = 'SELECT * FROM `sampletype` ORDER BY `sampletype`.`sample_nm` ASC';
+                                        $resultSampleType = $conn->query($sqlSampleType);
+                                        if($resultSampleType->num_rows > 0) {
+                                            while($rowSampleType = $resultSampleType->fetch_assoc()) {
+                                                echo '<option value="'.$rowSampleType['sample_id'].'"';
+                                                if(isset($rowPreferences['sample_id']))
+                                                    if($rowSampleType['sample_id'] == $rowPreferences['sample_id'])
+                                                        echo 'selected';
+                                                echo '>'.$rowSampleType['sample_nm'].'</option>';
+                                            }
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2" style="display: inline-block">Test Type: </div>
+                            <div class="col-md-7" style="display: inline-block">
+                                <select class="form-control" name="testType_default">
+                                    <option selected disabled value="">Please select a Test Type</option>
+                                    <?php
+                                        $sqlTestType = 'SELECT * FROM `testtype` ORDER BY `testtype`.`type_nm` ASC';
+                                        $resultTestType = $conn->query($sqlTestType);
+                                        if($resultTestType->num_rows > 0) {
+                                            while($rowTestType = $resultTestType->fetch_assoc()) {
+                                                echo '<option value="'.$rowTestType['type_id'].'"';
+                                                if(isset($rowPreferences['type_id']))
+                                                    if($rowTestType['type_id'] == $rowPreferences['type_id'])
+                                                        echo 'selected';
+                                                echo '>'.$rowTestType['type_nm'].'</option>';
+                                            }
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2" style="display: inline-block">Test Reason: </div>
+                            <div class="col-md-7" style="display: inline-block">
+                                <select class="form-control" name="testReason_default">
+                                    <option selected disabled value="">Please select a Test Reason</option>
+                                    <?php
+                                        $sqlTestReason = 'SELECT * FROM `reasons` ORDER BY `reasons`.`reason_nm` ASC';
+                                        $resultTestReason = $conn->query($sqlTestReason);
+                                        if($resultTestReason->num_rows > 0) {
+                                            while($rowTestReason = $resultTestReason->fetch_assoc()) {
+                                                echo '<option value="'.$rowTestReason['reason_id'].'"';
+                                                if(isset($rowPreferences['reason_id']))
+                                                    if($rowTestReason['reason_id'] == $rowPreferences['reason_id'])
+                                                        echo 'selected';
+                                                echo '>'.$rowTestReason['reason_nm'].'</option>';
+                                            }
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                </fieldset>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="addEmployees();">OK</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"
+                    onclick="selected_fees = -1;">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Help</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 <div id="myModal_Employee" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
 
@@ -762,31 +941,7 @@ if (!isset($_SESSION['userid'])) {
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body" style="display: inline-block">
-                <div class="row">
-                    <div class="col-md-2" style="display: inline-block">Account: </div>
-                    <div class="col-md-7" style="display: inline-block">
-                        <div class="input-group input-group-sm">
-                            <select class="form-control" id="accounts_select">
-                                <option selected disabled>Please select Account</option>
-                                <?php
-                                    $sql = 'SELECT * FROM accounts';
-                                    $result = $conn->query($sql);
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            echo '<option value="' .
-                                                $row['account_id'] .
-                                                '">' .
-                                                $row['account_nm'] .
-                                                '</option>';
-                                        }
-                                    }
-                                    ?>
-                            </select>
-
-                        </div>
-                    </div>
-                </div>
-                <div id="main_div" style="display: none">
+                <div id="main_div">
                     <div class="row">
                         <div class="col-md-2" style="display: inline-block">Employee ID (SSN): </div>
                         <div class="col-md-7" style="display: inline-block">
@@ -820,11 +975,11 @@ if (!isset($_SESSION['userid'])) {
                         <div class="col-md-7" style="display: inline-block">
                             <fieldset style="border: 1px solid lightgray; padding: 10px">
                                 <legend>Status</legend>
-                                <label for="preEmployment"><input type="radio" id="status_pre_employment"
+                                <label for="status_pre_employment"><input type="radio" id="status_pre_employment"
                                         name="status">&emsp;Pre-Employment</label><br>
-                                <label for="active"><input type="radio" id="status_active"
+                                <label for="status_active"><input type="radio" id="status_active"
                                         name="status">&emsp;Active</label><br>
-                                <label for="terminated"><input type="radio" id="status_terminated"
+                                <label for="status_terminated"><input type="radio" id="status_terminated"
                                         name="status">&emsp;Terminated</label><br>
                             </fieldset>
                         </div>
@@ -834,7 +989,7 @@ if (!isset($_SESSION['userid'])) {
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="addEmployees();">OK</button>
+                <button type="button" class="btn btn-default" onclick="addEmployees();">OK</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal"
                     onclick="selected_fees = -1;">Close</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Help</button>
@@ -847,26 +1002,28 @@ if (!isset($_SESSION['userid'])) {
 
 
 <script>
-$('#accounts_select').on('change', function() {
-    $('#select_account_div').css('display', 'none');
-    $('#main_div').css('display', '');
+if(sessionStorage.getItem('account_selected') != undefined && sessionStorage.getItem('account_selected') != null && sessionStorage.getItem('account_selected') != '') {
     $.ajax({
         type: "GET",
         url: "get_location_testinfo.php",
-        data: 'account_id_location=' + $(this).val(),
+        data: 'account_id_location=' + sessionStorage.getItem('account_selected'),
         success: function(resultData) {
             $('#division_id').html(resultData);
             // window.open("accounts.php", "_self");
         }
     });
-})
+
+}
+// })
 
 function addEmployees() {
+    $('#myModal_Employee').modal('hide');
     var temp = {};
     temp['emp_id'] = $('#emp_id').val();
     temp['first_nm'] = $('#first_nm').val();
     temp['last_nm'] = $('#last_nm').val();
     temp['division_id'] = $('#division_id').val();
+    temp['account_id'] = $('#accounts_select').val();
     temp['status'] = '';
     if ($('#status_pre_employment').is(':checked'))
         temp['status'] = 'P';
@@ -874,12 +1031,6 @@ function addEmployees() {
         temp['status'] = 'A';
     else if ($('#status_terminated').is(':checked'))
         temp['status'] = 'T';
-
-    if ($('#employeesindex').val() == '')
-        employees.push(temp);
-    else {
-        employees[selected_employees] = temp;
-    }
 
     $('#emp_id').val('');
     $('#first_nm').val('');
@@ -890,10 +1041,17 @@ function addEmployees() {
     $('#status_terminated').prop('checked', false);
     $('#employeesindex').val('');
 
-    refreshEmployeesTable();
-
-    selected_employees = -1;
-
+    $.ajax({
+        type: "POST",
+        url: "insert_employee.php",
+        data: 'employeeData=' + JSON.stringify(temp),
+        success: function(resultData) {
+            console.log(resultData);
+            alert(resultData);
+            location.reload();
+            // window.open("accounts.php", "_self");
+        }
+    });
 }
 </script>
 
@@ -924,3 +1082,22 @@ function addEmployees() {
 <!-- PAGE SCRIPTS -->
 <script src="dist/js/pages/dashboard2.js"></script>
 <script src="dist/js/owl.carousel.min.js"></script>
+<script>
+if(sessionStorage.getItem('account_selected') != undefined && sessionStorage.getItem('account_selected') != null && sessionStorage.getItem('account_selected') != '')
+    $('#accounts_select').val(sessionStorage.getItem('account_selected'));
+$('#accounts_select').on('change', function() {
+    sessionStorage.setItem('account_selected', $(this).val());
+    // console.log(location)
+    window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' + sessionStorage.getItem('account_selected'), '_self');
+
+})
+</script>
+<script>
+function openURL(url) {
+    if(sessionStorage.getItem('account_selected') != undefined && sessionStorage.getItem('account_selected') != null && sessionStorage.getItem('account_selected') != '')
+        window.open(url + '?account=' + sessionStorage.getItem('account_selected'), '_self');
+    else
+        window.open(url, '_self');
+}
+
+</script>
