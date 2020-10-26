@@ -116,7 +116,7 @@ to get the desired effect
                 </form> -->
             <!-- <div class="col-md-1 col-sm-1">
                 </div> -->
-           
+
             <?php include 'header.php'; ?>
             <div class="content-wrapper" id="select_account_div">
                 <!-- Content Header (Page header) -->
@@ -129,7 +129,7 @@ to get the desired effect
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="landingscreen.php">Home</a></li>
-                                    
+
                                     <li class="breadcrumb-item active">Test No</li>
                                 </ol>
                             </div><!-- /.col -->
@@ -149,7 +149,7 @@ to get the desired effect
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="landingscreen.php">Home</a></li>
-                                    
+
                                     <li class="breadcrumb-item active">Test No</li>
                                 </ol>
                             </div><!-- /.col -->
@@ -158,6 +158,15 @@ to get the desired effect
                 </div>
                 <!-- /.content-header -->
                 <!-- Main content -->
+
+                <?php
+                $sqlPreferences = 'SELECT * FROM `preferences`';
+                $resultPreferences = $conn->query($sqlPreferences);
+                if($resultPreferences->num_rows > 0) {
+                    $rowPreferences = $resultPreferences->fetch_assoc();
+                    // print_r($rowPreferences);
+                }
+                ?>
                 <div class="content">
                     <div class="container-fluid">
                         <!-- <form action="" method="POST" class=""> -->
@@ -197,7 +206,12 @@ to get the desired effect
                                                 ) {
                                                     echo '<option value="' .
                                                         $row['reason_id'] .
-                                                        '">' .
+                                                        '"';
+                                                    if(isset($rowPreferences['reason_id']))
+                                                        if($row['reason_id'] == $rowPreferences['reason_id'])
+                                                            echo 'selected';
+                                                    
+                                                    echo '>' .
                                                         $row['reason_code'] .
                                                         ' - ' .
                                                         $row['reason_nm'] .
@@ -209,7 +223,9 @@ to get the desired effect
                                 </div>
                                 <div class="form-group">
                                     <label>Date Reported:</label>
-                                    <input type="date" max="<?php echo date(
+                                    <input type="date" value="<?php echo date(
+                                            'Y-m-d'
+                                        ); ?>" max="<?php echo date(
                                             'Y-m-d'
                                         ); ?>" name="date_reported" id="date_reported" placeholder=""
                                         style="width: 240px; height: 31px; text-align:center">
@@ -228,7 +244,12 @@ to get the desired effect
                                                 ) {
                                                     echo '<option value="' .
                                                         $row['sample_id'] .
-                                                        '">' .
+                                                        '"';
+                                                    if(isset($rowPreferences['sample_id']))
+                                                        if($row['sample_id'] == $rowPreferences['reason_id'])
+                                                            echo 'selected';
+                                                    
+                                                    echo '>' .
                                                         $row['sample_nm'] .
                                                         '</option>';
                                                 }
@@ -250,7 +271,12 @@ to get the desired effect
                                                 ) {
                                                     echo '<option value="' .
                                                         $row['type_id'] .
-                                                        '">' .
+                                                        '"';
+                                                    if(isset($rowPreferences['type_id']))
+                                                        if($row['type_id'] == $rowPreferences['reason_id'])
+                                                            echo 'selected';
+                                                    
+                                                    echo '>' .
                                                         $row['type_nm'] .
                                                         '</option>';
                                                 }
@@ -284,13 +310,17 @@ to get the desired effect
                                 <div class="form-group">
                                     <label>Collection Date:</label>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input type="date" placeholder="" style="width: 240px; height: 31px;
+                                    <input type="date" placeholder="" value="<?php echo date(
+                                            'Y-m-d'
+                                        ); ?>" style="width: 240px; height: 31px;
                                             text-align:center" id="collectiondate">
                                 </div>
                                 <div class="form-group">
                                     <label>Date MRO Copy Recvd:</label>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input type="date" max="<?php echo date(
+                                    <input type="date" value="<?php echo date(
+                                            'Y-m-d'
+                                        ); ?>" max="<?php echo date(
                                             'Y-m-d'
                                         ); ?>" name="date_mro_recvd" id="date_mro_recvd" placeholder=""
                                         style="width: 240px; height: 31px; text-align:center">
@@ -299,8 +329,9 @@ to get the desired effect
                                     <label>Test Date:</label>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input type="date" placeholder=""
-                                        style=" width: 240px; height: 31px; text-align:center" id="testdate">
+                                    <input type="date" placeholder="" value="<?php echo date(
+                                            'Y-m-d'
+                                        ); ?>" style=" width: 240px; height: 31px; text-align:center" id="testdate">
                                 </div>
                                 <div class="form-group">
                                     <label>Fee Amount:</label>
@@ -367,33 +398,33 @@ to get the desired effect
                                         </label>
                                     </div>
                                     <div class="col-md-9" style="display: inline-block">
-                                        <div class="row">
+                                        <div class="row" id="drugsOfForm">
                                             <?php
-                                                $sql = 'SELECT * FROM drugs';
-                                                $result = $conn->query($sql);
-                                                if ($result->num_rows > 0) {
-                                                    while (
-                                                        $row = $result->fetch_assoc()
-                                                    ) {
-                                                        echo '<div class="form-group ml-3">';
-                                                        echo '    <label for="drug_' .
-                                                            $row['drug_id'] .
-                                                            '">
-                                                            <input type="hidden" disabled class="positiveForCheckBox" name="positiveForCheckBoxName" id="drugName_' .
-                                                            $row['drug_id'] .
-                                                            '" value="' .
-                                                            $row['drug_id'] .
-                                                            '">
-                                                            <input type="checkbox" disabled class="positiveForCheckBox" name="positiveForCheckBox" id="drug_' .
-                                                            $row['drug_id'] .
-                                                            '" value="' .
-                                                            $row['drug_id'] .
-                                                            '">';
-                                                        echo '&emsp;' .
-                                                            $row['drug_nm'];
-                                                        echo '</label></div>';
-                                                    }
-                                                }
+                                                // $sql = 'SELECT * FROM drugs';
+                                                // $result = $conn->query($sql);
+                                                // if ($result->num_rows > 0) {
+                                                //     while (
+                                                //         $row = $result->fetch_assoc()
+                                                //     ) {
+                                                //         echo '<div class="form-group ml-3">';
+                                                //         echo '    <label for="drug_' .
+                                                //             $row['drug_id'] .
+                                                //             '">
+                                                //             <input type="hidden" disabled class="positiveForCheckBox" name="positiveForCheckBoxName" id="drugName_' .
+                                                //             $row['drug_id'] .
+                                                //             '" value="' .
+                                                //             $row['drug_id'] .
+                                                //             '">
+                                                //             <input type="checkbox" disabled class="positiveForCheckBox" name="positiveForCheckBox" id="drug_' .
+                                                //             $row['drug_id'] .
+                                                //             '" value="' .
+                                                //             $row['drug_id'] .
+                                                //             '">';
+                                                //         echo '&emsp;' .
+                                                //             $row['drug_nm'];
+                                                //         echo '</label></div>';
+                                                //     }
+                                                // }
 ?>
 
                                         </div>
@@ -530,8 +561,23 @@ to get the desired effect
             $(this).val($(this).attr('min'));
     })
 
+    $('#selectForm').on('change', function() {
+        $.ajax({
+            type: "GET",
+            url: "get_drugs_from_form.php?form_id=" + $('#selectForm')
+                .val(),
+            success: function(resultData) {
+                console.log(resultData);
+                $('#drugsOfForm').html(resultData);
+                // window.open("accounts.php", "_self");
+            }
+        });
+    })
+
     $('#negative_pos').on('click', function() {
         if ($('#negative_pos').is(':checked')) {
+            $('#selectForm').val('');
+            $('#drugsOfForm').html('');
             $('.positiveForCheckBox').prop('checked', false);
             $('.positiveForCheckBox').prop('disabled', true);
             $('#selectForm').prop('disabled', true);
