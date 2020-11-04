@@ -10,6 +10,9 @@ if($resultFees->num_rows > 0) {
     // print_r($rowPreferences);
     $fees = $rowFees['amount'];
 }
+if($fees != '')
 echo $fees;
+else
+echo 0;
 
 ?>
