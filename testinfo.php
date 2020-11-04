@@ -162,9 +162,18 @@ to get the desired effect
                 <?php
                 $sqlPreferences = 'SELECT * FROM `preferences`';
                 $resultPreferences = $conn->query($sqlPreferences);
+                $fees = 0;
                 if($resultPreferences->num_rows > 0) {
                     $rowPreferences = $resultPreferences->fetch_assoc();
                     // print_r($rowPreferences);
+                    $sqlFees = 'SELECT * FROM `fees` WHERE account_id = ' . $_GET['account'] . ' AND type_id = ' . $rowPreferences['type_id'];
+                    // echo $sqlFees;
+                    $resultFees = $conn->query($sqlFees);
+                    if($resultFees->num_rows > 0) {
+                        $rowFees = $resultFees->fetch_assoc();
+                        // print_r($rowPreferences);
+                        $fees = $rowFees['amount'];
+                    }
                 }
                 ?>
                 <div class="content">
@@ -189,6 +198,11 @@ to get the desired effect
                                     <select style="width: 240px; height: 31px;" id="employee_select">
                                         <option selected disabled value="">Please select Location first....</option>
                                     </select>
+                                    <a href="" class="nav-link" data-toggle="modal" data-target="#myModal_Employee"
+                                        id="btn_add_employees" style="width: 0px; display: inline; padding: 0px;">
+                                        &emsp;&emsp;<i class="fas fa-plus"></i>
+                                    </a>
+
                                 </div>
                                 <div class="form-group">
                                     <label>Test Reason:</label>
@@ -473,6 +487,81 @@ to get the desired effect
             </div>
             <!-- /.content-wrapper -->
 
+            <div id="myModal_Employee" class="modal fade" role="dialog">
+                <div class="modal-dialog modal-lg">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">New Employee</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body" style="display: inline-block">
+                            <div id="main_div">
+                                <div class="row">
+                                    <div class="col-md-2" style="display: inline-block">Specimen ID: </div>
+                                    <div class="col-md-7" style="display: inline-block">
+                                        <input class="form-control" id="specimen_id" name="specimen_id">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2" style="display: inline-block">Employee ID (SSN): </div>
+                                    <div class="col-md-7" style="display: inline-block">
+                                        <input type="hidden" id="employeesindex" name="employeesindex" value="">
+                                        <input class="form-control" id="emp_id" name="emp_id">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2" style="display: inline-block">First Name / Req No: </div>
+                                    <div class="col-md-7" style="display: inline-block">
+                                        <input class="form-control" id="first_nm" name="first_nm">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2" style="display: inline-block">Last Name: </div>
+                                    <div class="col-md-7" style="display: inline-block">
+                                        <input class="form-control" id="last_nm" name="last_nm">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2" style="display: inline-block">Location: </div>
+                                    <div class="col-md-7" style="display: inline-block">
+                                        <select class="form-control" id="division_id" name="division_id">
+                                            <!-- <option value="">Select Location</option> -->
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2" style="display: inline-block"></div>
+                                    <div class="col-md-7" style="display: inline-block">
+                                        <fieldset style="border: 1px solid lightgray; padding: 10px">
+                                            <legend>Status</legend>
+                                            <label for="status_pre_employment"><input type="radio"
+                                                    id="status_pre_employment"
+                                                    name="status">&emsp;Pre-Employment</label><br>
+                                            <label for="status_active"><input type="radio" id="status_active"
+                                                    name="status">&emsp;Active</label><br>
+                                            <label for="status_terminated"><input type="radio" id="status_terminated"
+                                                    name="status">&emsp;Terminated</label><br>
+                                        </fieldset>
+                                    </div>
+                                    <!-- <div class="col-md-2" style="display: inline-block">Location: </div><div class="col-md-7" style="display: inline-block"><select class="form-control"><option value="">Select Location</option></select></div> -->
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" onclick="addEmployees();">OK</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"
+                                onclick="selected_fees = -1;">Close</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Help</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
             <!-- Control Sidebar -->
             <aside class="control-sidebar control-sidebar-dark">
                 <!-- Control sidebar content goes here -->
@@ -503,8 +592,50 @@ to get the desired effect
     <script src="plugins/chart.js/Chart.min.js"></script>
     <script src="dist/js/demo.js"></script>
     <script src="dist/js/pages/dashboard3.js"></script>
+
     <script>
+    function addEmployees() {
+        $('#myModal_Employee').modal('hide');
+        var temp = {};
+        temp['emp_id'] = $('#emp_id').val();
+        temp['specimen_id'] = $('#specimen_id').val();
+        temp['first_nm'] = $('#first_nm').val();
+        temp['last_nm'] = $('#last_nm').val();
+        temp['division_id'] = $('#division_id').val();
+        temp['account_id'] = $('#accounts_select').val();
+        temp['status'] = '';
+        if ($('#status_pre_employment').is(':checked'))
+            temp['status'] = 'P';
+        else if ($('#status_active').is(':checked'))
+            temp['status'] = 'A';
+        else if ($('#status_terminated').is(':checked'))
+            temp['status'] = 'T';
+
+        $('#emp_id').val('');
+        $('#specimen_id').val('');
+        $('#first_nm').val('');
+        $('#last_nm').val('');
+        $('#division_id').val('');
+        $('#status_pre_employment').prop('checked', false);
+        $('#status_active').prop('checked', false);
+        $('#status_terminated').prop('checked', false);
+        $('#employeesindex').val('');
+
+        $.ajax({
+            type: "POST",
+            url: "insert_employee.php",
+            data: 'employeeData=' + JSON.stringify(temp),
+            success: function(resultData) {
+                console.log(resultData);
+                alert(resultData);
+                location.reload();
+                // window.open("accounts.php", "_self");
+            }
+        });
+    }
+
     $(document).ready(function() {
+        $('#status_pre_employment').prop('checked', true);
         $('#new_form').css('pointer-events', 'all');
         $('#cancel_form').css('pointer-events', 'all');
         // setTimeout(() => {
@@ -680,6 +811,18 @@ to get the desired effect
             });
             console.log('form_validated', data);
         }
+    })
+
+    $('#testtype').on('change', function() {
+        $.ajax({
+            type: 'GET',
+            url: 'getFeesFromTestType.php?account=' + $('#accounts_select').val() + '&type_id=' + $(
+                this).val(),
+            success: function(response) {
+                console.log(response);
+                $('#fee_amount').val(response);
+            }
+        });
     })
 
     function validateForm() {
