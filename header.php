@@ -444,7 +444,7 @@ if (!isset($_SESSION['userid'])) {
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item" style="pointer-events: none;">
+                        <!-- <li class="nav-item" style="pointer-events: none;">
                             <a href="" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Select All</p>
@@ -467,19 +467,19 @@ if (!isset($_SESSION['userid'])) {
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Ungroup</p>
                             </a>
-                        </li>
-                        <li class="nav-item" style="pointer-events: none;">
+                        </li> -->
+                        <li class="nav-item">
                             <a href="" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Refresh</p>
                             </a>
                         </li>
-                        <li class="nav-item" style="pointer-events: none;">
+                        <!-- <li class="nav-item" style="pointer-events: none;">
                             <a href="" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Sort</p>
                             </a>
-                        </li>
+                        </li> -->
                         <li class="nav-item" style="pointer-events: none;">
                             <a href="" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
