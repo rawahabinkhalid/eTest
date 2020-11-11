@@ -22,6 +22,7 @@ if ($_SESSION['usertype'] == 'guest') {
     <link rel="stylesheet" href="dist/css/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link href="plugins/select2/css/select2.min.css" rel="stylesheet">
 
     <style>
     label {
@@ -80,7 +81,7 @@ to get the desired effect
                             <div class="col-md-3">
                                 <button type="button" name="" class="btn ml-1"
                                     style="background-color:#E7D7B7; border-radius:5px; width: 100%;"
-                                    onclick="window.open('retrievetest.php', '_self');">Retrieve
+                                    onclick="window.open('retrievetest.php?account=<?php echo isset($_GET['account'])?$_GET['account']:'';?>', '_self');">Retrieve
                                     Tests</button>
                             </div>
                         </div>
@@ -90,7 +91,7 @@ to get the desired effect
                             <div class="col-md-3">
                                 <button type="button" name="" class="btn ml-1"
                                     style="background-color:#E7D7B7; border-radius:5px; width: 100%;"
-                                    onclick="window.open('testinfo.php', '_self');">Enter a new
+                                    onclick="window.open('testinfo.php?account=<?php echo isset($_GET['account'])?$_GET['account']:'';?>', '_self');">Enter a new
                                     test</button>
                                 <br><br>
                             </div>
@@ -127,12 +128,16 @@ to get the desired effect
     <!-- Bootstrap -->
     <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE -->
-    <script src="dist/js/adminlte.js"></script>
+    <!-- <script src="dist/js/adminlte.js"></script> -->
 
     <!-- OPTIONAL SCRIPTS -->
     <script src="plugins/chart.js/Chart.min.js"></script>
     <script src="dist/js/demo.js"></script>
     <script src="dist/js/pages/dashboard3.js"></script>
+    <script src="plugins/select2/js/select2.min.js"></script>
+    <script>
+        $('#accounts_select').select2();
+    </script>
 </body>
 
 </html>

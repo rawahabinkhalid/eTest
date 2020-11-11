@@ -15,8 +15,74 @@ if (!isset($_SESSION['userid'])) {
 <link rel="stylesheet" href="dist/css/owl.carousel.min.css">
 <!-- <script src="jquery-3.4.1.min.js"></script> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<div class="col-md-6 col-sm-6">
-    <div class="input-group input-group-sm">
+<script src="dist/js/adminlte_sidebar_responsive.js"></script>
+<style>
+@media only screen and (min-width: 800px) {
+    #nav-menu {
+         display: none;
+         
+    }
+
+    #desktop_emp {
+        display: block;
+    }
+
+    #desktop_pref {
+        display: block;
+    }
+
+    #mobile_emp {
+        display: none;
+    }
+
+    #mobile_pref {
+        display: none;
+    }
+}
+@media only screen and (max-width: 800px) {
+    #nav-menu {
+         /* display: none; */
+         
+    }
+
+    #desktop_emp {
+        display: none;
+        }
+
+    #desktop_pref {
+        display: none;
+    }
+
+    #mobile_emp {
+        display: block;
+    }
+
+    #mobile_pref {
+        display: block;
+    }
+/* 
+    #btn_add_employees {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    #btn_add_preferences {
+        padding-left: 5px;
+        padding-right: 5px;
+    } */
+
+    .nav-item .nav-link {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+
+}
+</style>
+<ul class="navbar-nav">
+    <li class="nav-item">
+        <a class="nav-link" id="nav-menu" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+    </li>
+    <li class="nav-item">        
         <?php if ($_SESSION['usertype'] == 'admin') { ?>
 
         <select class="form-control" id="accounts_select">
@@ -53,10 +119,26 @@ if (!isset($_SESSION['userid'])) {
         </select>
 
         <?php } ?>
-    </div>
-</div>
+    </li>
+</ul>
+
+
 <!-- Right navbar links -->
 <ul class="navbar-nav ml-auto">
+    
+    <li class="nav-item">
+            <a href="" class="nav-link" data-toggle="modal" data-target="#myModal_Employee" id="btn_add_employees">
+                <p id="desktop_emp">Employee</p>
+                <p id="mobile_emp">Emp</p>
+            </a>
+    </li>
+    <li class="nav-item">
+            <a href="" class="nav-link" data-toggle="modal" data-target="#myModal_Preferences" id="btn_add_preferences">
+                <p id="desktop_pref">Preferences</p>
+                <p id="mobile_pref">Pref</p>
+            </a>
+    </li>
+
     <!-- <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-comments"></i>
@@ -290,7 +372,7 @@ if (!isset($_SESSION['userid'])) {
                         </a>
                     </li> -->
                 <li class="nav-item has-treeview">
-                    <a href="landingscreen.php" class="nav-link">
+                    <a onclick="openURL('landingscreen.php');" href="javascript:void();" class="nav-link">
                         <!-- <a href="" class="nav-link"> -->
                         <i class="nav-icon fas fa-home"></i>
                         <p>
@@ -299,7 +381,7 @@ if (!isset($_SESSION['userid'])) {
                     </a>
                 </li>
                 <li class="nav-item has-treeview">
-                    <a href="viewInvoice.php" class="nav-link">
+                    <a onclick="openURL('viewInvoice.php');" href="javascript:void();" class="nav-link">
                         <!-- <a href="" class="nav-link"> -->
                         <i class="nav-icon fas fa-copy "></i>
                         <p>
@@ -376,7 +458,7 @@ if (!isset($_SESSION['userid'])) {
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="invoice.php" class="nav-link">
+                                    <a onclick="openURL('invoice.php');" href="javascript:void();" class="nav-link">
                                         &emsp;&emsp;<i class="far fa-circle nav-icon"></i>
                                         <p>&emsp;&emsp;Invoices</p>
                                     </a>
@@ -384,7 +466,7 @@ if (!isset($_SESSION['userid'])) {
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="retrievetest.php" class="nav-link">
+                            <a onclick="openURL('retrievetest.php');" href="javascript:void();" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Retrieve...</p>
                             </a>
@@ -1006,6 +1088,7 @@ if (!isset($_SESSION['userid'])) {
 </div>
 
 
+<script src="dist/js/adminlte.js"></script>
 
 <script>
 if (sessionStorage.getItem('account_selected') != undefined && sessionStorage.getItem('account_selected') != null &&
@@ -1133,4 +1216,22 @@ function openURL(url) {
     else
         window.open(url, '_self');
 }
+
+let account = new URL(location.href).searchParams.get("account");
+if(account != null && account != '') {
+} else if($('#accounts_select').val() != '') {
+    window.open('testinfo.php?account=' + $('#accounts_select').val(), '_self');
+}
+
+
+$(window).resize(function () {
+
+    if ($(window).width() > 800) {
+        $("body").removeClass('sidebar-collapse');
+        $("body").addClass('sidebar-expand');
+    } else {
+        $("body").removeClass('sidebar-expand');
+        $("body").addClass('sidebar-collapse');
+    }
+});
 </script>

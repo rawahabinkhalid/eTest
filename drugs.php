@@ -288,7 +288,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     <script src="dist/js/jquery-3.5.1.js"></script>
     <script src="dist/js/jquery.dataTables.min.js"></script>
     <script src="dist/js/dataTables.bootstrap4.min.js"></script>
-    <script src="dist/js/adminlte.js"></script>
+    <!-- <script src="dist/js/adminlte.js"></script> -->
 
     <!-- OPTIONAL SCRIPTS -->
     <script src="plugins/chart.js/Chart.min.js"></script>

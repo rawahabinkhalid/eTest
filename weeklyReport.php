@@ -428,7 +428,7 @@ to get the desired effect
     <!-- Bootstrap -->
     <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE -->
-    <script src="dist/js/adminlte.js"></script>
+    <!-- <script src="dist/js/adminlte.js"></script> -->
     <script src="dist/js/jquery-3.5.1.js"></script>
     <script src="dist/js/jquery.dataTables.min.js"></script>
     <script src="dist/js/dataTables.bootstrap4.min.js"></script>

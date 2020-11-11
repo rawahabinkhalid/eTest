@@ -20,6 +20,7 @@ include_once 'conn.php'; ?>
     <link rel="stylesheet" href="dist/css/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link href="plugins/select2/css/select2.min.css" rel="stylesheet">
 
     <style>
     label {
@@ -211,7 +212,7 @@ to get the desired effect
                                     <select style="width: 240px; height: 31px;" id="testreason">
                                         <option selected disabled value="">Please select Test Reason</option>
                                         <?php
-                                            $sql = 'SELECT * FROM reasons';
+                                            $sql = 'SELECT * FROM reasons ORDER BY reason_code';
                                             $result = $conn->query($sql);
                                             if ($result->num_rows > 0) {
                                                 while (
@@ -586,14 +587,22 @@ to get the desired effect
     <!-- Bootstrap -->
     <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE -->
-    <script src="dist/js/adminlte.js"></script>
+    <!-- <script src="dist/js/adminlte.js"></script> -->
 
     <!-- OPTIONAL SCRIPTS -->
+    <script src="plugins/select2/js/select2.min.js"></script>
     <script src="plugins/chart.js/Chart.min.js"></script>
     <script src="dist/js/demo.js"></script>
     <script src="dist/js/pages/dashboard3.js"></script>
 
     <script>
+    $('#accounts_select').select2();
+    $('#testreason').select2();
+    $('#location_select').select2();
+    $('#sampletype').select2();
+    $('#testtype').select2();
+    $('#selectForm').select2();
+    $('#employee_select').select2();
     function addEmployees() {
         $('#myModal_Employee').modal('hide');
         var temp = {};
@@ -635,22 +644,28 @@ to get the desired effect
     }
 
     $(document).ready(function() {
+        // $('#select_account_div').css('display', 'none');
         $('#status_pre_employment').prop('checked', true);
         $('#new_form').css('pointer-events', 'all');
         $('#cancel_form').css('pointer-events', 'all');
         // setTimeout(() => {
         // $("#accounts_select").children().eq(1).attr('selected', 'selected');
-        $('#select_account_div').css('display', 'none');
-        $('#main_div_main').css('display', 'block');
-        $.ajax({
-            type: "GET",
-            url: "get_location_testinfo.php",
-            data: 'account_id_location=' + $("#accounts_select").val(),
-            success: function(resultData) {
-                $('#location_select').html(resultData);
-                // window.open("accounts.php", "_self");
-            }
-        });
+        let account = new URL(location.href).searchParams.get("account");
+        if(account != null && account != '') {
+            $('#select_account_div').css('display', 'none');
+            $('#main_div_main').css('display', 'block');
+            $.ajax({
+                type: "GET",
+                url: "get_location_testinfo.php",
+                data: 'account_id_location=' + $("#accounts_select").val(),
+                success: function(resultData) {
+                    $('#location_select').html(resultData);
+                    // window.open("accounts.php", "_self");
+                }
+            });
+        } else if($('#accounts_select').val() != '') {
+            // window.open('testinfo.php?account=' + $('#accounts_select').val(), '_self');
+        }
         // }, 500);
     })
 
@@ -667,6 +682,17 @@ to get the desired effect
             }
         });
     })
+
+    $.ajax({
+        type: "GET",
+        url: "get_location_testinfo.php?account_id_employee=" + $('#accounts_select')
+            .val(),
+        success: function(resultData) {
+            console.log(resultData);
+            $('#employee_select').html(resultData);
+            // window.open("accounts.php", "_self");
+        }
+    });
 
     $('#location_select').on('change', function() {
         console.log("get_location_testinfo.php?account_id_employee=" + $('#accounts_select').val() +
@@ -821,16 +847,18 @@ to get the desired effect
             success: function(response) {
                 console.log(response);
                 $('#fee_amount').val(response);
+                if(response == '')
+                    $('#fee_amount').val('0.00');
             }
         });
     })
 
     function validateForm() {
-        if ($('#requisitionNo').val() == '' || $('#requisitionNo').val() == null) {
-            $('#requisitionNo').focus();
-            alert("Please enter Requisition No");
-            return false;
-        }
+        // if ($('#requisitionNo').val() == '' || $('#requisitionNo').val() == null) {
+        //     $('#requisitionNo').focus();
+        //     alert("Please enter Requisition No");
+        //     return false;
+        // }
         if ($('#employee_select').val() == '' || $('#employee_select').val() == null) {
             $('#employee_select').focus();
             alert("Please Select Employee");
