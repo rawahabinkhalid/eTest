@@ -30,6 +30,12 @@ include_once 'conn.php'; ?>
         float: left;
         margin-right: 15px;
     }
+
+    #div {
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 5px;
+    }
     </style>
 </head>
 <!--
@@ -99,8 +105,12 @@ to get the desired effect
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12">
-                                <textarea name="" id="query" class="form-control"
-                                    ></textarea>
+                                <!-- <div id="div"> -->
+                                    <!-- <span contenteditable=true>SELECT </span>
+                                    <span class="some-class" contenteditable=false></span>
+                                    <span contenteditable=true> </span></div> -->
+                                    <textarea name="" id="query" class="form-control"></textarea>
+                                <!-- </div> -->
                             </div>
                         </div>
                         <br>
@@ -158,24 +168,36 @@ to get the desired effect
     <script src="dist/js/jquery.dataTables.min.js"></script>
     <script src="dist/js/dataTables.bootstrap4.min.js"></script>
     <script>
+    $('.some-class').html(' account = ' + sessionStorage.getItem('account_selected'))
     $(document).ready(function() {
         $('.table').DataTable();
     });
     </script>
     <script>
     $('#btn_query').on('click', function() {
-        $('#dataDiv').html('');
-        $.ajax({
-            type: "POST",
-            url: "getQueryData.php",
-            data: "query=" + encodeURIComponent($('#query').val()),
-            success: function(resultData) {
-                console.log(resultData);
-                $('#dataDiv').html(resultData);
-                $('.table').DataTable();
-            }
-        });
+        console.log($('#query').val().split(' ')[0].toLowerCase())
+        if($('#query').val().split(' ')[0].toLowerCase() === 'select') {
+            $('#dataDiv').html('');
+            $.ajax({
+                type: "POST",
+                url: "getQueryData.php",
+                data: "query=" + encodeURIComponent($('#query').val()),
+                success: function(resultData) {
+                    console.log(resultData);
+                    $('#dataDiv').html(resultData);
+                    $('.table').DataTable();
+                }
+            });
+        } else {
+            alert("Sorry, you only have permission to view data");
+        }
     })
+    // $('#div').on('input', function() {
+    //     var span = $('.some-class').text();
+    //     if (span.indexOf('account = ' + sessionStorage.getItem('account_selected')) < 0) {
+    //         $('.some-class').text('account = ' + sessionStorage.getItem('account_selected'));
+    //     }
+    // });
     </script>
 </body>
 
