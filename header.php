@@ -75,7 +75,6 @@ if (!isset($_SESSION['userid'])) {
         padding-left: 5px !important;
         padding-right: 5px !important;
     }
-
 }
 </style>
 <ul class="navbar-nav">
@@ -127,13 +126,13 @@ if (!isset($_SESSION['userid'])) {
 <ul class="navbar-nav ml-auto">
     
     <li class="nav-item">
-            <a href="" class="nav-link" data-toggle="modal" data-target="#myModal_Employee" id="btn_add_employees">
+            <a href="" class="nav-link nav-link-disabler" data-toggle="modal" data-target="#myModal_Employee" id="btn_add_employees">
                 <p id="desktop_emp">Employee</p>
                 <p id="mobile_emp">Emp</p>
             </a>
     </li>
     <li class="nav-item">
-            <a href="" class="nav-link" data-toggle="modal" data-target="#myModal_Preferences" id="btn_add_preferences">
+            <a href="" class="nav-link nav-link-disabler" data-toggle="modal" data-target="#myModal_Preferences" id="btn_add_preferences">
                 <p id="desktop_pref">Preferences</p>
                 <p id="mobile_pref">Pref</p>
             </a>
@@ -227,7 +226,7 @@ if (!isset($_SESSION['userid'])) {
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="#" class="brand-link">
         <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">RN Expertise</span>
     </a>
@@ -280,7 +279,7 @@ if (!isset($_SESSION['userid'])) {
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="#" class="brand-link">
         <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">RN Expertise</span>
     </a>
@@ -337,7 +336,7 @@ if (!isset($_SESSION['userid'])) {
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="#" class="brand-link">
         <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">RN Expertise</span>
     </a>
@@ -497,7 +496,7 @@ if (!isset($_SESSION['userid'])) {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="signout.php" class="nav-link">
+                            <a href="signout.php" class="nav-link nav-link-signout">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Exit</p>
                             </a>
@@ -1079,7 +1078,7 @@ if (!isset($_SESSION['userid'])) {
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" onclick="addEmployees();">OK</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal"
-                    onclick="selected_fees = -1;">Close</button>
+                    onclick="selected_fees = -1;" id="closeButton">Close</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Help</button>
             </div>
         </div>
@@ -1089,8 +1088,10 @@ if (!isset($_SESSION['userid'])) {
 
 
 <script src="dist/js/adminlte.js"></script>
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <script>
+$('#status_pre_employment').prop('checked', true);
 if (sessionStorage.getItem('account_selected') != undefined && sessionStorage.getItem('account_selected') != null &&
     sessionStorage.getItem('account_selected') != '') {
     $.ajax({
@@ -1107,7 +1108,42 @@ if (sessionStorage.getItem('account_selected') != undefined && sessionStorage.ge
 // })
 
 function addEmployees() {
-    $('#myModal_Employee').modal('hide');
+    // $('#myModal_Employee').modal('hide');
+    if($('#specimen_id').val() == '') {
+        $('#specimen_id').focus();
+        alert('Kindly enter Specimen Id.');
+        return;
+    }
+    if($('#emp_id').val() == '') {
+        $('#emp_id').focus();
+        alert('Kindly enter Employee Id.');
+        return;
+    }
+    if($('#first_nm').val() == '') {
+        $('#first_nm').focus();
+        alert('Kindly enter First Name.');
+        return;
+    }
+    if($('#last_nm').val() == '') {
+        $('#last_nm').focus();
+        alert('Kindly enter Last Name.');
+        return;
+    }
+    if($('#division_id').val() == '') {
+        $('#division_id').focus();
+        alert('Kindly select Location.');
+        return;
+    }
+    if($('#accounts_select').val() == '') {
+        $('#accounts_select').focus();
+        alert('Kindly select Account.');
+        return;
+    }
+    if(!$('#status_pre_employment').is(':checked') && !$('#status_active').is(':checked') && !$('#status_terminated').is(':checked')) {
+        $('#status_pre_employment').focus();
+        alert('Kindly select status of Employee.');
+        return;
+    }
     var temp = {};
     temp['emp_id'] = $('#emp_id').val();
     temp['specimen_id'] = $('#specimen_id').val();
@@ -1123,24 +1159,34 @@ function addEmployees() {
     else if ($('#status_terminated').is(':checked'))
         temp['status'] = 'T';
 
-    $('#emp_id').val('');
-    $('#specimen_id').val('');
-    $('#first_nm').val('');
-    $('#last_nm').val('');
-    $('#division_id').val('');
-    $('#status_pre_employment').prop('checked', false);
-    $('#status_active').prop('checked', false);
-    $('#status_terminated').prop('checked', false);
-    $('#employeesindex').val('');
+    // $('#emp_id').val('');
+    // $('#specimen_id').val('');
+    // $('#first_nm').val('');
+    // $('#last_nm').val('');
+    // $('#division_id').val('');
+    // $('#status_pre_employment').prop('checked', false);
+    // $('#status_active').prop('checked', false);
+    // $('#status_terminated').prop('checked', false);
+    // $('#employeesindex').val('');
 
     $.ajax({
         type: "POST",
         url: "insert_employee.php",
         data: 'employeeData=' + JSON.stringify(temp),
         success: function(resultData) {
+            resultData = JSON.parse(resultData);
             console.log(resultData);
-            alert(resultData);
-            location.reload();
+            console.log("" + resultData.id);
+            alert(resultData.message);
+            if(resultData.id !== undefined)
+                window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' + sessionStorage.getItem('account_selected') + '&employee=' + resultData.id, '_self');
+            else {
+                // $('#closeButton').click();
+            //    $('#myModal_Employee').modal('toggle');
+            //     $('#myModal_Employee').css('display', 'block');
+            }
+            
+            // location.reload();
             // window.open("accounts.php", "_self");
         }
     });
@@ -1163,6 +1209,7 @@ function addPreferences() {
             console.log(resultData);
             alert(resultData);
             location.reload();
+            // window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' + sessionStorage.getItem('account_selected'), '_self') + '&employee=' + resultData;
             // window.open("accounts.php", "_self");
         }
     });
@@ -1175,37 +1222,44 @@ function addPreferences() {
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap -->
-<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script> -->
 <!-- overlayScrollbars -->
-<script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script> -->
 <!-- AdminLTE App -->
-<script src="dist/js/adminlte.js"></script>
+<!-- <script src="dist/js/adminlte.js"></script> -->
 
 <!-- OPTIONAL SCRIPTS -->
-<script src="dist/js/demo.js"></script>
+<!-- <script src="dist/js/demo.js"></script> -->
 
 <!-- PAGE PLUGINS -->
 <!-- jQuery Mapael -->
-<script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-<script src="plugins/raphael/raphael.min.js"></script>
-<script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
-<script src="plugins/jquery-mapael/maps/world_countries.min.js"></script>
+<!-- <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script> -->
+<!-- <script src="plugins/raphael/raphael.min.js"></script> -->
+<!-- <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script> -->
+<!-- <script src="plugins/jquery-mapael/maps/world_countries.min.js"></script> -->
 <!-- ChartJS -->
-<script src="plugins/chart.js/Chart.min.js"></script>
+<!-- <script src="plugins/chart.js/Chart.min.js"></script> -->
 
 <!-- PAGE SCRIPTS -->
-<script src="dist/js/pages/dashboard2.js"></script>
-<script src="dist/js/owl.carousel.min.js"></script>
+<!-- <script src="dist/js/pages/dashboard2.js"></script> -->
+<!-- <script src="dist/js/owl.carousel.min.js"></script> -->
+<script src="plugins/select2/js/select2.min.js"></script>
 <script>
-if (sessionStorage.getItem('account_selected') != undefined && sessionStorage.getItem('account_selected') != null &&
+    console.log(sessionStorage.getItem('account_selected'))
+if (sessionStorage.getItem('account_selected') != undefined && sessionStorage.getItem('account_selected') != null && sessionStorage.getItem('account_selected') != 'null' &&
     sessionStorage.getItem('account_selected') != '')
     $('#accounts_select').val(sessionStorage.getItem('account_selected'));
+else {
+    $('.btn').css('pointer-events', 'none');
+    $('.sidebar').css('pointer-events', 'none');
+    $('.nav-link-disabler').css('pointer-events', 'none');
+}
 $('#accounts_select').on('change', function() {
     sessionStorage.setItem('account_selected', $(this).val());
-    // console.log(location)
+    console.log($(this).val())
+    console.log(location.pathname)
     window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' +
-        sessionStorage.getItem('account_selected'), '_self');
-
+    sessionStorage.getItem('account_selected'), '_self');
 })
 </script>
 <script>
@@ -1218,9 +1272,8 @@ function openURL(url) {
 }
 
 let account = new URL(location.href).searchParams.get("account");
-if(account != null && account != '') {
-} else if($('#accounts_select').val() != '') {
-    window.open('testinfo.php?account=' + $('#accounts_select').val(), '_self');
+if((account == null || account == '') && $('#accounts_select').val() != '') {
+    window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' + $('#accounts_select').val(), '_self');
 }
 
 

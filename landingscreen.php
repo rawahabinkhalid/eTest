@@ -136,7 +136,42 @@ to get the desired effect
     <script src="dist/js/pages/dashboard3.js"></script>
     <script src="plugins/select2/js/select2.min.js"></script>
     <script>
-        $('#accounts_select').select2();
+if (sessionStorage.getItem('account_selected') != undefined && sessionStorage.getItem('account_selected') != null && sessionStorage.getItem('account_selected') != 'null' &&
+    sessionStorage.getItem('account_selected') != '')
+    $('#accounts_select').val(sessionStorage.getItem('account_selected'));
+else {
+    // $('.btn').css('pointer-events', 'none');
+    // $('.sidebar').css('pointer-events', 'none');
+    // $('.nav-link').css('pointer-events', 'none');
+    
+}
+
+    </script>
+    <script>
+    
+    $('#accounts_select').select2().on("change", function(e) {
+        sessionStorage.setItem('account_selected', $(this).val());
+        console.log($(this).val())
+        console.log(location.pathname)
+        window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' +
+        sessionStorage.getItem('account_selected'), '_self');
+    });
+
+    $('#practitioner_default').select2({
+        width: '100%'
+    });
+    $('#lab_default').select2({
+        width: '100%'
+    });
+    $('#sampleType_default').select2({
+        width: '100%'
+    });
+    $('#testType_default').select2({
+        width: '100%'
+    });
+    $('#testReason_default').select2({
+        width: '100%'
+    });
     </script>
 </body>
 

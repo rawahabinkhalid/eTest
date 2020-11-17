@@ -197,13 +197,12 @@ to get the desired effect
                                     <label>Emp ID:</label>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <select style="width: 240px; height: 31px;" id="employee_select">
-                                        <option selected disabled value="">Please select Location first....</option>
+                                        <option selected disabled value="">Please select Employee</option>
                                     </select>
                                     <a href="" class="nav-link" data-toggle="modal" data-target="#myModal_Employee"
                                         id="btn_add_employees" style="width: 0px; display: inline; padding: 0px;">
                                         &emsp;&emsp;<i class="fas fa-plus"></i>
                                     </a>
-
                                 </div>
                                 <div class="form-group">
                                     <label>Test Reason:</label>
@@ -487,11 +486,10 @@ to get the desired effect
                 <!-- /.content -->
             </div>
             <!-- /.content-wrapper -->
-
+<!-- 
             <div id="myModal_Employee" class="modal fade" role="dialog">
                 <div class="modal-dialog modal-lg">
 
-                    <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title">New Employee</h4>
@@ -529,7 +527,6 @@ to get the desired effect
                                     <div class="col-md-2" style="display: inline-block">Location: </div>
                                     <div class="col-md-7" style="display: inline-block">
                                         <select class="form-control" id="division_id" name="division_id">
-                                            <!-- <option value="">Select Location</option> -->
                                         </select>
                                     </div>
                                 </div>
@@ -547,7 +544,6 @@ to get the desired effect
                                                     name="status">&emsp;Terminated</label><br>
                                         </fieldset>
                                     </div>
-                                    <!-- <div class="col-md-2" style="display: inline-block">Location: </div><div class="col-md-7" style="display: inline-block"><select class="form-control"><option value="">Select Location</option></select></div> -->
                                 </div>
 
                             </div>
@@ -561,7 +557,7 @@ to get the desired effect
                     </div>
 
                 </div>
-            </div>
+            </div> -->
 
             <!-- Control Sidebar -->
             <aside class="control-sidebar control-sidebar-dark">
@@ -596,52 +592,83 @@ to get the desired effect
     <script src="dist/js/pages/dashboard3.js"></script>
 
     <script>
-    $('#accounts_select').select2();
+    $('#accounts_select').select2().on("change", function(e) {
+        sessionStorage.setItem('account_selected', $(this).val());
+        console.log($(this).val())
+        console.log(location.pathname)
+        window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' +
+        sessionStorage.getItem('account_selected'), '_self');
+    });
     $('#testreason').select2();
     $('#location_select').select2();
     $('#sampletype').select2();
     $('#testtype').select2();
     $('#selectForm').select2();
     $('#employee_select').select2();
-    function addEmployees() {
-        $('#myModal_Employee').modal('hide');
-        var temp = {};
-        temp['emp_id'] = $('#emp_id').val();
-        temp['specimen_id'] = $('#specimen_id').val();
-        temp['first_nm'] = $('#first_nm').val();
-        temp['last_nm'] = $('#last_nm').val();
-        temp['division_id'] = $('#division_id').val();
-        temp['account_id'] = $('#accounts_select').val();
-        temp['status'] = '';
-        if ($('#status_pre_employment').is(':checked'))
-            temp['status'] = 'P';
-        else if ($('#status_active').is(':checked'))
-            temp['status'] = 'A';
-        else if ($('#status_terminated').is(':checked'))
-            temp['status'] = 'T';
+    $('#practitioner_default').select2({
+        width: '100%'
+    });
+    $('#lab_default').select2({
+        width: '100%'
+    });
+    $('#sampleType_default').select2({
+        width: '100%'
+    });
+    $('#testType_default').select2({
+        width: '100%'
+    });
+    $('#testReason_default').select2({
+        width: '100%'
+    });
+    // function addEmployees() {
+    //     $('#myModal_Employee').modal('hide');
+    //     var temp = {};
+    //     temp['emp_id'] = $('#emp_id').val();
+    //     temp['specimen_id'] = $('#specimen_id').val();
+    //     temp['first_nm'] = $('#first_nm').val();
+    //     temp['last_nm'] = $('#last_nm').val();
+    //     temp['division_id'] = $('#division_id').val();
+    //     temp['account_id'] = $('#accounts_select').val();
+    //     temp['status'] = '';
+    //     if ($('#status_pre_employment').is(':checked'))
+    //         temp['status'] = 'P';
+    //     else if ($('#status_active').is(':checked'))
+    //         temp['status'] = 'A';
+    //     else if ($('#status_terminated').is(':checked'))
+    //         temp['status'] = 'T';
 
-        $('#emp_id').val('');
-        $('#specimen_id').val('');
-        $('#first_nm').val('');
-        $('#last_nm').val('');
-        $('#division_id').val('');
-        $('#status_pre_employment').prop('checked', false);
-        $('#status_active').prop('checked', false);
-        $('#status_terminated').prop('checked', false);
-        $('#employeesindex').val('');
+    //     $('#emp_id').val('');
+    //     $('#specimen_id').val('');
+    //     $('#first_nm').val('');
+    //     $('#last_nm').val('');
+    //     $('#division_id').val('');
+    //     $('#status_pre_employment').prop('checked', false);
+    //     $('#status_active').prop('checked', false);
+    //     $('#status_terminated').prop('checked', false);
+    //     $('#employeesindex').val('');
 
-        $.ajax({
-            type: "POST",
-            url: "insert_employee.php",
-            data: 'employeeData=' + JSON.stringify(temp),
-            success: function(resultData) {
-                console.log(resultData);
-                alert(resultData);
-                location.reload();
-                // window.open("accounts.php", "_self");
-            }
-        });
-    }
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "insert_employee.php",
+    //         data: 'employeeData=' + JSON.stringify(temp),
+    //         success: function(resultData) {
+    //             // console.log(resultData);
+    //             // alert(resultData);
+    //             // location.reload();
+    //             resultData = JSON.parse(resultData);
+    //             console.log(resultData);
+    //             console.log("" + resultData.id);
+    //             alert(resultData.message);
+    //             if(resultData.id !== undefined)
+    //                 window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' + sessionStorage.getItem('account_selected') + '&employee=' + resultData.id, '_self');
+    //             else
+    //                 $('#myModal_Employee').modal('show');
+    //             // else
+    //             //     location.reload();
+    //             // window.open("accounts.php", "_self");
+    //         }
+    //     });
+    // }
 
     $(document).ready(function() {
         // $('#select_account_div').css('display', 'none');
@@ -651,7 +678,14 @@ to get the desired effect
         // setTimeout(() => {
         // $("#accounts_select").children().eq(1).attr('selected', 'selected');
         let account = new URL(location.href).searchParams.get("account");
-        if(account != null && account != '') {
+        if(account != null && account != '' && account != 'null') {
+            let employee = new URL(location.href).searchParams.get("employee");
+            if(employee != undefined && employee != null && employee != '' && employee != 'null') {
+                $('#employee_select').val(employee);
+                $('#employee_select').trigger('change'); // Notify any JS components that the value changed
+
+            }
+
             $('#select_account_div').css('display', 'none');
             $('#main_div_main').css('display', 'block');
             $.ajax({
@@ -669,19 +703,19 @@ to get the desired effect
         // }, 500);
     })
 
-    $('#accounts_select').on('change', function() {
-        $('#select_account_div').css('display', 'none');
-        $('#main_div_main').css('display', 'block');
-        $.ajax({
-            type: "GET",
-            url: "get_location_testinfo.php",
-            data: 'account_id_location=' + $(this).val(),
-            success: function(resultData) {
-                $('#location_select').html(resultData);
-                // window.open("accounts.php", "_self");
-            }
-        });
-    })
+    // $('#accounts_select').on('change', function() {
+    //     $('#select_account_div').css('display', 'none');
+    //     $('#main_div_main').css('display', 'block');
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "get_location_testinfo.php",
+    //         data: 'account_id_location=' + $(this).val(),
+    //         success: function(resultData) {
+    //             $('#location_select').html(resultData);
+    //             // window.open("accounts.php", "_self");
+    //         }
+    //     });
+    // })
 
     $.ajax({
         type: "GET",
@@ -694,22 +728,22 @@ to get the desired effect
         }
     });
 
-    $('#location_select').on('change', function() {
-        console.log("get_location_testinfo.php?account_id_employee=" + $('#accounts_select').val() +
-            "&location_select=" + $(this)
-            .val())
-        $.ajax({
-            type: "GET",
-            url: "get_location_testinfo.php?account_id_employee=" + $('#accounts_select').val() +
-                "&location_select=" + $(this)
-                .val(),
-            success: function(resultData) {
-                console.log(resultData);
-                $('#employee_select').html(resultData);
-                // window.open("accounts.php", "_self");
-            }
-        });
-    })
+    // $('#location_select').on('change', function() {
+    //     console.log("get_location_testinfo.php?account_id_employee=" + $('#accounts_select').val() +
+    //         "&location_select=" + $(this)
+    //         .val())
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "get_location_testinfo.php?account_id_employee=" + $('#accounts_select').val() +
+    //             "&location_select=" + $(this)
+    //             .val(),
+    //         success: function(resultData) {
+    //             console.log(resultData);
+    //             $('#employee_select').html(resultData);
+    //             // window.open("accounts.php", "_self");
+    //         }
+    //     });
+    // })
 
     $('#other_substances').on('click', function() {
         if ($(this).is(":checked"))
@@ -913,6 +947,8 @@ to get the desired effect
             console.log("asdadsa");
         }
     })
+
+
     </script>
 </body>
 
