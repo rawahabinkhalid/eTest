@@ -1045,7 +1045,7 @@ to get the desired effect
             error_validateForm = true;
             // return false;
         }
-        if ($('#fee_amount').val() == '0.00') {
+        if ($('#fee_amount').val() == '0.00' || $('#fee_amount').val() == '' || $('#fee_amount').val() == '0') {
             // $('#fee_amount').focus();
             $('#fee_amount').addClass('validation-error')
             // alert("Please Select Fee Amount");
