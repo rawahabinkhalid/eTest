@@ -21,6 +21,7 @@ include_once "conn.php";
     <link rel="stylesheet" href="dist/css/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link href="plugins/select2/css/select2.min.css" rel="stylesheet">
 
     <style>
     label {
@@ -149,36 +150,36 @@ to get the desired effect
                         <!-- <form action="" method="POST" class=""> -->
 
                         <?php
-                            $sql = 'SELECT * FROM test LEFT JOIN reasons ON test.reason_id = reasons.reason_id LEFT JOIN sampletype ON test.sample_id = sampletype.sample_id LEFT JOIN testtype ON test.type_id = testtype.type_id LEFT JOIN divisions ON test.division_id = divisions.division_id LEFT JOIN drugform ON test.form_id = drugform.form_id WHERE test_id='.$_GET['id'];
+                            $sql = 'SELECT * FROM test LEFT JOIN reasons ON test.reason_id = reasons.reason_id LEFT JOIN sampletype ON test.sample_id = sampletype.sample_id LEFT JOIN testtype ON test.type_id = testtype.type_id LEFT JOIN divisions ON test.division_id = divisions.division_id LEFT JOIN drugform ON test.form_id = drugform.form_id JOIN employees ON employees.emp_id = test.emp_id WHERE test_id='.$_GET['id'];
                             $result = $conn->query($sql);
                             $row = $result->fetch_assoc();
                             ?>
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Test No:</label>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input type="text" value="<?php if(isset($row['test_id'])) echo $row['test_id']; ?>"
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="text" id="getTestNo" value="<?php if(isset($row['test_id'])) echo $row['test_id']; ?>"
                                         disabled style="width: 240px; height: 31px; text-align:center">
+
                                 </div>
                                 <div class="form-group">
-                                    <label>Invoice No:</label>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <label>Requisition No:</label>
                                     <input disabled type="text" placeholder=""
-                                        value="<?php if(isset($row['invoice_id'])) echo $row['invoice_id']; ?>"
+                                        value="<?php if(isset($row['req_no'])) echo $row['req_no']; ?>"
                                         style="width: 240px; height: 31px; text-align:center">
                                 </div>
                                 <div class="form-group">
                                     <label>Emp ID:</label>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <select style="width: 240px; height: 31px;" id="employee_select" disabled>
-                                        <option value="<?php if(isset($row['emp_id'])) echo $row['emp_id']; ?>">
-                                            <?php if(isset($row['emp_id'])) echo $row['emp_id']; ?></option>
+                                        <option id="getEmployee" value="<?php if(isset($row['emp_id'])) echo $row['emp_id']; ?>">
+                                            <?php if(isset($row['emp_id'])) echo $row['specimen_id'].' - '.$row['first_nm'].' '.$row['last_nm']; ?></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Test Reason:</label>
-                                    &nbsp;
+                                    &nbsp;&nbsp;&nbsp;
                                     <select style="width: 240px; height: 31px;" id="testreason" disabled>
                                         <option value="<?php if(isset($row['reason_id'])) echo $row['reason_id']; ?>">
                                             <?php if(isset($row['reason_id'])) echo $row['reason_nm']; ?></option>
@@ -189,10 +190,11 @@ to get the desired effect
                                     <input type="date" disabled
                                         value="<?php if(isset($row['reported_date'])) echo $row['reported_date']; ?>"
                                         name="date_reported" id="date_reported" placeholder=""
-                                        style="width: 230px; height: 31px; text-align:center">
+                                        style="width: 240px; height: 31px; text-align:center">
                                 </div>
                                 <div class="form-group">
                                     <label>Sample Type:</label>
+                                    &nbsp;&nbsp;&nbsp;
                                     <select style="width: 240px; height: 31px;" id="sampletype" disabled>
                                         <option value="<?php if(isset($row['sample_id'])) echo $row['sample_id']; ?>">
                                             <?php if(isset($row['sample_id'])) echo $row['sample_nm']; ?></option>
@@ -201,14 +203,14 @@ to get the desired effect
                                 </div>
                                 <div class="form-group">
                                     <label>Test Type:</label>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <select style="width: 240px; height: 31px;" id="testtype" disabled>
-                                        <option value="<?php if(isset($row['type_id'])) echo $row['type_id']; ?>">
+                                        <option id="getTestType" value="<?php if(isset($row['type_id'])) echo $row['type_id']; ?>">
                                             <?php if(isset($row['type_id'])) echo $row['type_nm']; ?></option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="record_complete">
                                         <input type="checkbox" id="record_complete" name="" value="">
@@ -217,14 +219,19 @@ to get the desired effect
                                 </div>
                                 <br>
                                 <div class="form-group">
+                                    <label>Invoice No:</label>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="text" disabled style="width: 240px; height: 31px; text-align:center">
+                                </div>
+                                <div class="form-group">
                                     <label>Group No:</label>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <input disabled style="width: 240px; height: 31px;" type="text"
                                         style="text-align:center">
                                 </div>
                                 <div class="form-group">
                                     <label>Location:</label>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <select style="width: 240px; height: 31px;" id="location_select" disabled>
                                         <option
                                             value="<?php if(isset($row['division_id'])) echo $row['division_id']; ?>">
@@ -233,6 +240,7 @@ to get the desired effect
                                 </div>
                                 <div class="form-group">
                                     <label>Collection Date:</label>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <input type="date" disabled placeholder="" style="width: 240px; height: 31px;
                                             text-align:center" id="collectiondate" value="<?php if(isset($row['collection_date'])) 
                                             $date = explode(" ",$row['collection_date']);
@@ -244,21 +252,23 @@ to get the desired effect
                                     <input type="date" disabled
                                         value="<?php if(isset($row['mro_received_date'])) echo $row['mro_received_date']; ?>"
                                         name="date_mro_recvd" id="date_mro_recvd" placeholder=""
-                                        style="width: 170px; height: 31px; text-align:center">
+                                        style="width: 240px; height: 31px; text-align:center">
                                 </div>
                                 <div class="form-group">
                                     <label>Test Date:</label>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input type="date" disabled placeholder=""
+                                    <input id="getTestDate" type="date" disabled placeholder=""
                                         style=" width: 240px; height: 31px; text-align:center" id="testdate" value="<?php if(isset($row['test_date'])) 
                                             $date = explode(" ",$row['test_date']);
                                             echo $date[0]; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Fee Amount:</label>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input disabled type="number" min="0" step="1"
-                                        value="<?php if(isset($row['amount'])) echo $row['amount']; ?>" id="fee_amount"
+                                    <input id="getFeeAmount" disabled type="number" min="0" step="1"
+                                        value="<?php if(isset($row['amount'])) echo number_format(floatval($row['amount']), 2); ?>" id="fee_amount"
                                         placeholder="" style="width: 240px; height: 31px; text-align:center">
                                 </div>
                             </div>
@@ -268,7 +278,7 @@ to get the desired effect
                             <div class="col-md-10" style="border: 1px solid black;">
                                 <h5><b>Test Result</b></h5>
                                 <div class="row">
-                                    <div class="col-md-2">
+                                    <div class="col-md-3">
                                         <label for="negative_pos" style="display: inline-block">
                                             <div class="form-group">
                                                 <input type="radio" id="negative_pos"
@@ -278,7 +288,7 @@ to get the desired effect
                                             </div>
                                         </label>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-9">
                                         <div class="form-group">
                                             <label>Form:</label>
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -292,7 +302,7 @@ to get the desired effect
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3" style="display: inline-block">
-                                        <label for="negative_positive" style="display: inline-block">
+                                        <label for="negative_positive" style="display: inline-block; text-align: left;">
                                             <input type="radio" id="negative_positive" name="negative_positive"
                                                 <?php if(isset($row['result']) && $row['result']=="P") echo "checked"; ?>>
                                             Positive for the Following:
@@ -304,7 +314,7 @@ to get the desired effect
                                     <div class="col-md-9" style="display: inline-block">
                                         <div class="row">
                                             <?php
-                                                    $sql = 'SELECT * FROM drugs';
+                                                    $sql = 'SELECT * FROM drugs JOIN formdrugs ON drugs.drug_id = formdrugs.drug_id WHERE form_id = ' . $row['form_id'];
                                                     $result = $conn->query($sql);
                                                     if ($result->num_rows > 0) {
                                                         while ($row = $result->fetch_assoc()) {
@@ -358,12 +368,11 @@ to get the desired effect
                             style="background-color:#E7D7B7; border-radius:12px; width: 100px;" onclick="window.open('viewMROReport.php?id=<?php echo $_GET['id']; ?>', '_blank'
                             );">Print</button>
                         <button type="button" name="" id="" class="btn ml-1"
-                            style="background-color:#E7D7B7; border-radius:12px; width: 100px;" onclick="window.open('viewMROReportEmail.php?id=<?php echo $_GET['id']; ?>', '_blank'
-                            );">Email</button>
-                        <button type="button" name="submitSave" id="submitSave" class="btn ml-1"
+                            style="background-color:#E7D7B7; border-radius:12px; width: 100px;" data-toggle="modal" data-target="#myModal_Send">Email</button>
+                        <!-- <button type="button" name="submitSave" id="submitSave" class="btn ml-1"
                             style="background-color:#E7D7B7; border-radius:12px; width: 100px;">Save</button>
                         <button type="button" name="submitDelete" id="submitDelete" class="btn ml-1"
-                            style="background-color:#E7D7B7; border-radius:12px; width: 100px;">Delete</button>
+                            style="background-color:#E7D7B7; border-radius:12px; width: 100px;">Delete</button> -->
                         <br>
                         <!-- </form> -->
                     </div>
@@ -403,11 +412,90 @@ to get the desired effect
     <!-- OPTIONAL SCRIPTS -->
     <script src="plugins/chart.js/Chart.min.js"></script>
     <script src="dist/js/demo.js"></script>
+        <script src="plugins/select2/js/select2.min.js"></script>
+
     <script src="dist/js/pages/dashboard3.js"></script>
     <script>
+    // $(document).ready(function() {
+    //     setTimeout(() => {
+    //         $("#accounts_select").children().eq(1).attr('selected', 'selected');
+    //         $('#select_account_div').css('display', 'none');
+    //         $('#main_div_main').css('display', 'block');
+    //         $.ajax({
+    //             type: "GET",
+    //             url: "get_location_testinfo.php",
+    //             data: 'account_id_location=' + $("#accounts_select").val(),
+    //             success: function(resultData) {
+    //                 // $('#location_select').html(resultData);
+    //                 // window.open("accounts.php", "_self");
+    //             }
+    //         });
+    //     }, 500);
+    // })
+
+    var invoices_data = [];
+
+    function refreshFormBilling() {
+        $('#invoiceNoBill').val("");
+        $('#invoiceDateBill').val("");
+        $('#division_id_bill').val("");
+        $('#invoiceReferenceBill').val("");
+        $('#invoiceTermsBill').val("");
+        $('#invoiceDueDateBill').val("");
+        $('#sentBillDate').val("");
+        $('#sentBill').attr("checked", false);
+        $('#invoiceAmountDueBill').val("");
+        $('#invoiceAmountPaidBill').val("0.00");
+        $('#invoiceCheckNoBill').val("");
+        $('#invoiceCheckDateBill').val("");
+        $('#invoicePayDateBill').val("");
+        $('#paidInFull').attr("checked", false);
+    }
+
+    function getDataForInvoice(invoices_data_temp, value) {
+        invoices_data = invoices_data_temp;
+        const invoice = invoices_data.find(invoice => invoice.invoice_id === $('#invoiceNoBilled').val())
+        console.log(invoice)
+        $('#invoiceNoBill').val(invoice.invoice_id);
+        $('#invoiceDateBill').val(invoice.invoice_date.split(' ')[0]);
+        $('#division_id_bill').val(invoice.division_id);
+        $('#invoiceReferenceBill').val(invoice.reference_nm);
+        $('#invoiceTermsBill').val(invoice.terms);
+        $('#invoiceDueDateBill').val(invoice.due_date.split(' ')[0]);
+        $('#sentBillDate').val(invoice.send_date.split(' ')[0]);
+        $('#sentBill').attr("checked", false);
+        $('#invoiceAmountDueBill').val(invoice.invoice_id);
+        $('#invoiceAmountPaidBill').val(invoice.invoice_id);
+        $('#invoiceCheckNoBill').val(invoice.invoice_id);
+        $('#invoiceCheckDateBill').val(invoice.invoice_date.split(' ')[0]);
+        $('#invoicePayDateBill').val(invoice.invoice_date.split(' ')[0]);
+        $('#paidInFull').attr("checked", false);
+    }
+
     $(document).ready(function() {
-        setTimeout(() => {
-            $("#accounts_select").children().eq(1).attr('selected', 'selected');
+        // $('#select_account_div').css('display', 'none');
+        $('#status_pre_employment').prop('checked', true);
+        $('#new_form').css('pointer-events', 'all');
+        $('#cancel_form').css('pointer-events', 'all');
+        $('#btn_add_send').css('pointer-events', 'all');
+        $('#btn_add_billing').css('pointer-events', 'all');
+        $('#accounts_select').attr('disabled', 'disabled');
+        $('#invoiceNoBilled').select2({
+            width: '100%'
+        });
+        // setTimeout(() => {
+        // $("#accounts_select").children().eq(1).attr('selected', 'selected');
+        let account = new URL(location.href).searchParams.get("account");
+        console.log(account)
+        if(account != null && account != '' && account != 'null') {
+            $('#account_select').val(account);
+            $('#account_select').trigger('change');
+            // let employee = new URL(location.href).searchParams.get("employee");
+            // if(employee != undefined && employee != null && employee != '' && employee != 'null') {
+            //     $('#employee_select').val(employee);
+            //     $('#employee_select').trigger('change'); 
+            // }
+
             $('#select_account_div').css('display', 'none');
             $('#main_div_main').css('display', 'block');
             $.ajax({
@@ -415,11 +503,15 @@ to get the desired effect
                 url: "get_location_testinfo.php",
                 data: 'account_id_location=' + $("#accounts_select").val(),
                 success: function(resultData) {
-                    // $('#location_select').html(resultData);
+                    $('#location_select').html(resultData);
+                    $('#division_id_send').html(resultData);
                     // window.open("accounts.php", "_self");
                 }
             });
-        }, 500);
+        } else if($('#accounts_select').val() != '') {
+            // window.open('testinfo.php?account=' + $('#accounts_select').val(), '_self');
+        }
+        // }, 500);
     })
 
     $('#accounts_select').on('change', function() {
@@ -511,8 +603,9 @@ to get the desired effect
 
     function validateForm() {
         if ($('#employee_select').val() == '' || $('#employee_select').val() == null) {
-            $('#employee_select').focus();
-            alert("Please Select Employee");
+            $('.select2-selection').css('border', '1px solid red !important;')
+            // $('#employee_select').focus();
+            // alert("Please Select Employee");
             return false;
         }
         if ($('#location_select').val() == '' || $('#location_select').val() == null) {

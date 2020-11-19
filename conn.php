@@ -8,7 +8,7 @@ $dbname = 'etest_matz';
 $servername = 'localhost';
 $username = 'root';
 $password = '';
-$dbname = 'etest_matz';
+$dbname = 'etest';
 
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);

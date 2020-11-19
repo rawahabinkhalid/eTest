@@ -30,6 +30,10 @@ include_once 'conn.php'; ?>
         float: left;
         margin-right: 15px;
     }
+
+    .validation-error {
+        border: 2px solid red !important;
+    }
     </style>
     <script>
     counter = 1;
@@ -599,6 +603,8 @@ to get the desired effect
         window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' +
         sessionStorage.getItem('account_selected'), '_self');
     });
+    </script>
+    <script>
     $('#testreason').select2();
     $('#location_select').select2();
     $('#sampletype').select2();
@@ -620,6 +626,56 @@ to get the desired effect
     $('#testReason_default').select2({
         width: '100%'
     });
+    </script>
+    <script>
+    $('#employee_select').on('select2:select', function (e) {
+        $('span[aria-labelledby ="select2-employee_select-container"]').removeClass('validation-error')
+        var data = e.params.data;
+        console.log(data);
+    });
+    $('#location_select').on('select2:select', function (e) {
+        $('span[aria-labelledby ="select2-location_select-container"]').removeClass('validation-error')
+        var data = e.params.data;
+        console.log(data);
+    });
+    $('#testreason').on('select2:select', function (e) {
+        $('span[aria-labelledby ="select2-testreason-container"]').removeClass('validation-error')
+        var data = e.params.data;
+        console.log(data);
+    });
+    $('#collectiondate').on('change', function () {
+        $('#collectiondate').removeClass('validation-error')
+    });
+    $('#date_reported').on('change', function () {
+        $('#date_reported').removeClass('validation-error')
+    });
+    $('#date_mro_recvd').on('change', function () {
+        $('#date_mro_recvd').removeClass('validation-error')
+    });
+    $('#testdate').on('change', function () {
+        $('#testdate').removeClass('validation-error')
+    });
+    $('#sampletype').on('select2:select', function (e) {
+        $('span[aria-labelledby ="select2-testtype-container"]').removeClass('validation-error')
+        var data = e.params.data;
+        console.log(data);
+    });
+    $('#testtype').on('select2:select', function (e) {
+        $('span[aria-labelledby ="select2-sampletype-container"]').removeClass('validation-error')
+        var data = e.params.data;
+        console.log(data);
+    });
+    $('#fee_amount').on('change', function () {
+        $('#fee_amount').removeClass('validation-error')
+    });
+    $('#selectForm').on('select2:select', function (e) {
+        $('span[aria-labelledby ="select2-selectForm-container"]').removeClass('validation-error')
+        var data = e.params.data;
+        console.log(data);
+    });
+    </script>
+    <script>
+
     // function addEmployees() {
     //     $('#myModal_Employee').modal('hide');
     //     var temp = {};
@@ -681,6 +737,7 @@ to get the desired effect
         if(account != null && account != '' && account != 'null') {
             let employee = new URL(location.href).searchParams.get("employee");
             if(employee != undefined && employee != null && employee != '' && employee != 'null') {
+                console.log(employee)
                 $('#employee_select').val(employee);
                 $('#employee_select').trigger('change'); // Notify any JS components that the value changed
 
@@ -694,6 +751,7 @@ to get the desired effect
                 data: 'account_id_location=' + $("#accounts_select").val(),
                 success: function(resultData) {
                     $('#location_select').html(resultData);
+                    $('#division_id_send').html(resultData);
                     // window.open("accounts.php", "_self");
                 }
             });
@@ -716,6 +774,8 @@ to get the desired effect
     //         }
     //     });
     // })
+    </script>
+    <script>
 
     $.ajax({
         type: "GET",
@@ -724,9 +784,17 @@ to get the desired effect
         success: function(resultData) {
             console.log(resultData);
             $('#employee_select').html(resultData);
+                        let employee = new URL(location.href).searchParams.get("employee");
+            if(employee != undefined && employee != null && employee != '' && employee != 'null') {
+
+            $('#employee_select').val(employee);
+            $('#employee_select').trigger('change'); // Notify any JS components that the value changed
+            }
             // window.open("accounts.php", "_self");
         }
     });
+    </script>
+    <script>
 
     // $('#location_select').on('change', function() {
     //     console.log("get_location_testinfo.php?account_id_employee=" + $('#accounts_select').val() +
@@ -744,6 +812,8 @@ to get the desired effect
     //         }
     //     });
     // })
+    </script>
+    <script>
 
     $('#other_substances').on('click', function() {
         if ($(this).is(":checked"))
@@ -751,12 +821,16 @@ to get the desired effect
         else
             $('#other_substances_input').prop('disabled', true);
     })
+    </script>
+    <script>
 
 
     $('#fee_amount').on('change', function() {
         if ($(this).val() < $(this).attr('min'))
             $(this).val($(this).attr('min'));
     })
+    </script>
+    <script>
 
     $('#selectForm').on('change', function() {
         $.ajax({
@@ -770,6 +844,8 @@ to get the desired effect
             }
         });
     })
+    </script>
+    <script>
 
     $('#negative_pos').on('click', function() {
         if ($('#negative_pos').is(':checked')) {
@@ -784,6 +860,8 @@ to get the desired effect
             $('.positiveForCheckBox').prop('disabled', false);
         }
     })
+    </script>
+    <script>
 
     $('#negative_positive').on('click', function() {
         if ($('#negative_positive').is(':checked')) {
@@ -797,6 +875,8 @@ to get the desired effect
 
         }
     })
+    </script>
+    <script>
 
     $('#submitSave').on('click', function() {
         if (validateForm()) {
@@ -858,12 +938,14 @@ to get the desired effect
                 data: data,
                 success: function(response) {
                     console.log(response);
-                    if (response == '') {
+                    if (response.split("id=").length > 0) {
                         alert('Test saved successfully.')
-                        window.open("testinfo.php", "_self");
+                        // window.open("testinfo.php", "_self");
+                        window.open("getTestInfo.php?account=" + $('#accounts_select').val() + "&id=" + response.split("id=")[1], "_self");
+                        // getTestInfo.php?account=1338
                     } else {
                         alert('Error occurred while saving test.')
-                        window.open("testinfo.php", "_self");
+                        // window.open("testinfo.php", "_self");
                     }
 
                     // alert(response);
@@ -872,6 +954,8 @@ to get the desired effect
             console.log('form_validated', data);
         }
     })
+    </script>
+    <script>
 
     $('#testtype').on('change', function() {
         $.ajax({
@@ -886,61 +970,107 @@ to get the desired effect
             }
         });
     })
+    </script>
+    <script>
 
     function validateForm() {
+        var error_validateForm = false;
         // if ($('#requisitionNo').val() == '' || $('#requisitionNo').val() == null) {
         //     $('#requisitionNo').focus();
         //     alert("Please enter Requisition No");
         //     return false;
         // }
         if ($('#employee_select').val() == '' || $('#employee_select').val() == null) {
-            $('#employee_select').focus();
-            alert("Please Select Employee");
-            return false;
+            // $('#employee_select').focus();
+            // alert("Please Select Employee");
+            $('span[aria-labelledby ="select2-employee_select-container"]').addClass('validation-error')
+            // console.log($('span[aria-labelledby ="select2-employee_select-container"]')[0])
+            // $('span[aria-labelledby ="select2-employee_select-container"]')[0].style.border = '1px solid red !important';
+            error_validateForm = true;
+            // return false;
         }
         if ($('#location_select').val() == '' || $('#location_select').val() == null) {
-            $('#location_select').focus();
-            alert("Please Select Location");
-            return false;
+            // $('#location_select').focus();
+            // alert("Please Select Location");
+            $('span[aria-labelledby ="select2-location_select-container"]').addClass('validation-error')
+            error_validateForm = true;
+            // return false;
         }
         if ($('#testreason').val() == '' || $('#testreason').val() == null) {
-            $('#testreason').focus();
-            alert("Please Select Test Reason");
-            return false;
+            // $('#testreason').focus();
+            $('span[aria-labelledby ="select2-testreason-container"]').addClass('validation-error')
+            // alert("Please Select Test Reason");
+            error_validateForm = true;
+            // return false;
         }
         if ($('#collectiondate').val() == '' || $('#collectiondate').val() == null) {
-            $('#collectiondate').focus();
-            alert("Please Select Collection Date");
-            return false;
+            // $('#collectiondate').focus();
+            $('#collectiondate').addClass('validation-error')
+            // alert("Please Select Collection Date");
+            error_validateForm = true;
+            // return false;
         }
-        if ($('#sampletype').val() == '' || $('#sampletype').val() == null) {
-            $('#sampletype').focus();
-            alert("Please Select Sample Type");
-            return false;
+        if ($('#date_reported').val() == '' || $('#date_reported').val() == null) {
+            // $('#date_reported').focus();
+            $('#date_reported').addClass('validation-error')
+            // alert("Please Select Collection Date");
+            error_validateForm = true;
+            // return false;
+        }
+        if ($('#date_mro_recvd').val() == '' || $('#date_mro_recvd').val() == null) {
+            // $('#date_mro_recvd').focus();
+            $('#date_mro_recvd').addClass('validation-error')
+            // alert("Please Select Collection Date");
+            error_validateForm = true;
+            // return false;
         }
         if ($('#testdate').val() == '' || $('#testdate').val() == null) {
-            $('#testdate').focus();
-            alert("Please Select Test Date");
-            return false;
+            // $('#testdate').focus();
+            $('#testdate').addClass('validation-error')
+            // alert("Please Select Collection Date");
+            error_validateForm = true;
+            // return false;
+        }
+        if ($('#sampletype').val() == '' || $('#sampletype').val() == null) {
+            // $('#sampletype').focus();
+            $('span[aria-labelledby ="select2-sampletype-container"]').addClass('validation-error')
+            // alert("Please Select Sample Type");
+            error_validateForm = true;
+            // return false;
         }
         if ($('#testtype').val() == '' || $('#testtype').val() == null) {
-            $('#testtype').focus();
-            alert("Please Select Test Type");
-            return false;
+            // $('#testtype').focus();
+            // alert("Please Select Test Type");
+            $('span[aria-labelledby ="select2-testtype-container"]').addClass('validation-error')
+            error_validateForm = true;
+            // return false;
         }
         if ($('#fee_amount').val() == '0.00') {
-            $('#fee_amount').focus();
-            alert("Please Select Fee Amount");
-            return false;
+            // $('#fee_amount').focus();
+            $('#fee_amount').addClass('validation-error')
+            // alert("Please Select Fee Amount");
+            error_validateForm = true;
+            // return false;
         }
-        return true;
+        if ($('#selectForm').val() == '' || $('#selectForm').val() == null) {
+            // $('#testtype').focus();
+            // alert("Please Select Test Type");
+            $('span[aria-labelledby ="select2-selectForm-container"]').addClass('validation-error')
+            error_validateForm = true;
+            // return false;
+        }
+        return !error_validateForm;
     }
+    </script>
+    <script>
 
     $('#negative_pos').on('click', function() {
         if ($('#negative_pos').is(":checked")) {
             console.log("asdadsa");
         }
     })
+    </script>
+    <script>
 
     $('#negative_positive').on('click', function() {
         if ($('#negative_positive').is(":checked")) {

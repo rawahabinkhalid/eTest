@@ -3,7 +3,7 @@
 date_default_timezone_set('Asia/Karachi');
 include 'conn.php';
 // if (isset($_POST['clientNameFilter'])) {
-$sql = 'SELECT employees.first_nm, employees.last_nm, employees.emp_id, account_nm, division_nm, divisions.address, divisions.city, divisions.state, divisions.zip, collection_date, reported_date, mro_received_date, type_nm, test.lab_id, result FROM test JOIN accounts ON accounts.account_id = test.account_id JOIN employees ON employees.emp_id = test.emp_id JOIN divisions ON divisions.division_id = employees.division_id JOIN testtype ON testtype.type_id = test.type_id LEFT JOIN invoice ON invoice.invoice_id = test.invoice_id WHERE test.test_id = ' . $_GET['id'];
+$sql = 'SELECT employees.first_nm, employees.last_nm, employees.emp_id, account_nm, division_nm, divisions.address, divisions.city, divisions.state, divisions.zip, collection_date, reported_date, mro_received_date, type_nm, test.lab_id, result, test.form_id FROM test JOIN accounts ON accounts.account_id = test.account_id JOIN employees ON employees.emp_id = test.emp_id JOIN divisions ON divisions.division_id = employees.division_id JOIN testtype ON testtype.type_id = test.type_id LEFT JOIN invoice ON invoice.invoice_id = test.invoice_id WHERE test.test_id = ' . $_GET['id'];
 $result = $conn->query($sql);
 if($result->num_rows > 0) {
     $row = $result->fetch_assoc();
@@ -231,7 +231,7 @@ $html = <<<EOD
 	<table cellspacing="0" cellpadding="2" border="0">
 EOD;
 $pdf->setCellHeightRatio(0.6);
-$sqlDrugs = 'SELECT * FROM drugs LIMIT 12';
+$sqlDrugs = 'SELECT * FROM drugs JOIN formdrugs ON drugs.drug_id = formdrugs.drug_id WHERE form_id = ' . $row['form_id'];
 $resultDrugs = $conn->query($sqlDrugs);
 if($resultDrugs->num_rows > 0) {
     while($rowDrugs = $resultDrugs->fetch_assoc()) {

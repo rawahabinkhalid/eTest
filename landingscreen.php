@@ -140,7 +140,7 @@ if (sessionStorage.getItem('account_selected') != undefined && sessionStorage.ge
     sessionStorage.getItem('account_selected') != '')
     $('#accounts_select').val(sessionStorage.getItem('account_selected'));
 else {
-    // $('.btn').css('pointer-events', 'none');
+    $('.btn').css('pointer-events', 'none');
     // $('.sidebar').css('pointer-events', 'none');
     // $('.nav-link').css('pointer-events', 'none');
     

@@ -153,6 +153,7 @@ if ($conn->query($sql)) {
     // 		$sqlResult = 'INSERT INTO testresult (test_id,account_id,drug_id,result) VALUES ('.$id.','.$account.','.$_POST['positiveForCheckBox'].')'
     // 	}
     // }
+    echo "id=" . $id;
 } else {
     echo $sql;
 }

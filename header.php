@@ -3,7 +3,8 @@
 // echo $_SESSION['userid'];
 if (!isset($_SESSION['userid'])) {
     echo '<script>window.open("Login/", "_self");</script>';
-} ?>
+}
+?>
 
 <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
 <!-- overlayScrollbars -->
@@ -13,7 +14,6 @@ if (!isset($_SESSION['userid'])) {
 <!-- Google Font: Source Sans Pro -->
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 <link rel="stylesheet" href="dist/css/owl.carousel.min.css">
-<!-- <script src="jquery-3.4.1.min.js"></script> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="dist/js/adminlte_sidebar_responsive.js"></script>
 <style>
@@ -75,6 +75,68 @@ if (!isset($_SESSION['userid'])) {
         padding-left: 5px !important;
         padding-right: 5px !important;
     }
+}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+.tabcontent {
+  animation: fadeEffect 0.5s; /* Fading effect takes 1 second */
+}
+
+/* Go from zero to full opacity */
+@keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+.my-row-4-label label, .my-row-5-label label {
+    font-size: 12px;
+    padding: 3px 0px;
+}
+
+.my-row-8-input input, .my-row-7-input input {
+    font-size: 12px !important;
+    height: calc(1.75rem + 0px) !important;
+    padding: 3px 10px !important;
+}
+.my-row-8-input select, .my-row-7-input select {
+    font-size: 12px !important;
+    height: calc(1.75rem + 0px) !important;
+    padding: 3px 10px !important;
 }
 </style>
 <ul class="navbar-nav">
@@ -562,7 +624,8 @@ if (!isset($_SESSION['userid'])) {
                             </a>
                         </li> -->
                         <li class="nav-item" style="pointer-events: none;">
-                            <a href="" class="nav-link">
+                            <a href="" class="nav-link" data-toggle="modal" data-target="#myModal_Send"
+                                id="btn_add_send">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Send</p>
                             </a>
@@ -574,7 +637,8 @@ if (!isset($_SESSION['userid'])) {
                             </a>
                         </li>
                         <li class="nav-item" style="pointer-events: none;">
-                            <a href="" class="nav-link">
+                            <a href="" class="nav-link" data-toggle="modal" data-target="#myModal_Billing"
+                                id="btn_add_billing">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Billing</p>
                             </a>
@@ -1087,10 +1151,413 @@ if (!isset($_SESSION['userid'])) {
 </div>
 
 
+<div id="myModal_Send" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Send Results</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <?php
+            $contact_send = '';
+            $email_send = '';
+            if(isset($_GET['account']) && $_GET['account'] != null && $_GET['account'] != 'null' && $_GET['account'] != '') {
+                $sqlSend = 'SELECT * FROM acctsforemail WHERE (contact IS NOT NULL OR email IS NOT NULL) AND account_id = ' . $_GET['account'];
+                // echo $sqlSend;
+                $resultSend = $conn->query($sqlSend);
+                if($resultSend->num_rows > 0) {
+                    $rowSend = $resultSend->fetch_assoc();
+                    $contact_send = $rowSend['contact'];
+                    $email_send = $rowSend['email'];
+                }
+            }
+            ?>
+            <form id="form_send_email">
+                <div class="modal-body" style="display: inline-block; width: 100%">
+                    <div id="main_div">
+                        <div class="row">
+                            <div class="col-md-2" style="display: inline-block">Location: </div>
+                            <div class="col-md-7" style="display: inline-block">
+                                <select class="form-control" id="division_id_send" name="division_id_send" required></select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2" style="display: inline-block">Contact: </div>
+                            <div class="col-md-7" style="display: inline-block">
+                                <input class="form-control" id="contact_send" name="contact_send" required value="<?php echo $contact_send; ?>">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2" style="display: inline-block">Email Address: </div>
+                            <div class="col-md-7" style="display: inline-block">
+                                <input class="form-control" id="email_send" name="email_send" required value="<?php echo $email_send; ?>">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2" style="display: inline-block">Message Subject: </div>
+                            <div class="col-md-7" style="display: inline-block">
+                                <input class="form-control" id="message_subject_send" required name="message_subject_send" value="Drug Test Results">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2" style="display: inline-block">Message Body: </div>
+                            <div class="col-md-7" style="display: inline-block">
+                                <textarea class="form-control" id="message_body_send" required name="message_body_send">(See Attached)</textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2" style="display: inline-block">Format: </div>
+                            <div class="col-md-7" style="display: inline-block">
+                                <select class="form-control" id="format_send" required name="format_send">
+                                    <option value="Text">Text</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default">OK</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                        onclick="selected_fees = -1;" id="closeButton">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Help</button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+<div id="myModal_Billing" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Billing Information</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <form id="form_send_billing">
+                <div class="modal-body" style="display: inline-block; width: 100%">
+                    <div id="main_div">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <fieldset style="border: 1px solid silver;padding: 0px 15px;">
+                                    <legend style="font-size: 1rem;width:auto;padding:0px 10px;">Options</legend>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="doNotBill"><input type="radio" checked id="doNotBill" name="billedType">&emsp;Do not bill selected tests</label>
+                                            <label for="billNewInvoice"><input type="radio" id="billNewInvoice" name="billedType">&emsp;Bill on a new invoice</label>
+                                            <label for="billExistingInvoice"><input type="radio" id="billExistingInvoice" name="billedType">&emsp;Bill on an existing invoice</label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-6">
+                                <fieldset style="border: 1px solid silver;padding: 0px 15px;">
+                                    <legend style="font-size: 1rem;width:auto;padding:0px 10px;">Select Invoice</legend>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <label for="invoiceNoBill">Invoice No:</label>
+                                            <select class="form-control" id="invoiceNoBilled" disabled>
+                                                <option selected disabled value="">Please select Invoice No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <br>
+                         <div class="row" id="rowBilledItemDiv" style="pointer-events: none; opacity: 0.7;">
+                            <div class="col-md-12">
+                                <!-- Tab links -->
+                                <div class="tab">
+                                    <button type="button" id="button_general" class="tablinks active" onclick="openCity(event, 'London')">General</button>
+                                    <button type="button" id="button_tests_billed" class="tablinks" onclick="openCity(event, 'Paris')">Tests billed on this invoice</button>
+                                </div>
+
+                                <!-- Tab content -->
+                                <div id="London" class="tabcontent" style="display: block; min-height: 200px;">
+                                    <div class="row" style="display: none;">
+                                        <div class="col-md-6" style="display: inline-block;">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <fieldset style="border: 1px solid silver;padding: 0px 15px;">
+                                                        <legend style="font-size: 1rem;width:auto;padding:0px 10px;">Details</legend>
+                                                        <div class="row">
+                                                            <div class="col-md-4 my-row-4-label">
+                                                                <label>Invoice No: </label>
+                                                            </div>
+                                                            <div class="col-md-8 my-row-8-input">
+                                                                <input class="form-control" id="invoiceNoBill" value="New Invoice" readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4 my-row-4-label">
+                                                                <label>Invoice Date: </label>
+                                                            </div>
+                                                            <div class="col-md-8 my-row-8-input">
+                                                                <input type="date" id="invoiceDateBill" class="form-control" value="<?php echo date('Y-m-d'); ?>">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4 my-row-4-label">
+                                                                <label>Location: </label>
+                                                            </div>
+                                                            <div class="col-md-8 my-row-8-input">
+                                                                <select class="form-control" id="division_id_bill" name="division_id_bill">
+                                                                    <!-- <option value="">Select Location</option> -->
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4 my-row-4-label">
+                                                                <label>Reference: </label>
+                                                            </div>
+                                                            <div class="col-md-8 my-row-8-input">
+                                                                <input id="invoiceReferenceBill" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <fieldset style="border: 1px solid silver;padding: 0px 15px;">
+                                                        <legend style="font-size: 1rem;width:auto;padding:0px 10px;">Due</legend>
+                                                        <div class="row">
+                                                            <div class="col-md-4 my-row-4-label">
+                                                                <label>Terms: </label>
+                                                            </div>
+                                                            <div class="col-md-8 my-row-8-input">
+                                                                <select id="invoiceTermsBill" class="form-control">
+                                                                    <option selected disabled value="">Please select Terms</option>
+                                                                    <option value="30">30 Days</option>
+                                                                    <option value="60">60 Days</option>
+                                                                    <option value="90">90 Days</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4 my-row-4-label">
+                                                                <label>Due Date: </label>
+                                                            </div>
+                                                            <div class="col-md-8 my-row-8-input">
+                                                                <input id="invoiceDueDateBill" type="date" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4 my-row-4-label">
+                                                                <label for="sentBill"><input type="checkbox" id="sentBill">&emsp;Sent</label>
+                                                            </div>
+                                                            <div class="col-md-8 my-row-8-input">
+                                                                <input type="date" class="form-control" id="sentBillDate" readonly>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5" style="display: inline-block;">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <fieldset style="border: 1px solid silver;padding: 0px 15px;">
+                                                        <legend style="font-size: 1rem;width:auto;padding:0px 10px;">Payment</legend>
+                                                        <div class="row">
+                                                            <div class="col-md-5 my-row-5-label">
+                                                                <label>Amount Due: </label>
+                                                            </div>
+                                                            <div class="col-md-7 my-row-7-input">
+                                                                <input type="number" id="invoiceAmountDueBill" class="form-control" readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-5 my-row-5-label">
+                                                                <label>Amount Paid: </label>
+                                                            </div>
+                                                            <div class="col-md-7 my-row-7-input">
+                                                                <input type="number" id="invoiceAmountPaidBill" class="form-control" value="0.00">
+                                                            </div>
+                                                        </div>
+                                                        <br><br>
+                                                        <div class="row">
+                                                            <div class="col-md-5 my-row-5-label">
+                                                                <label>Check No: </label>
+                                                            </div>
+                                                            <div class="col-md-7 my-row-7-input">
+                                                                <input type="number" id="invoiceCheckNoBill" class="form-control" >
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-5 my-row-5-label">
+                                                                <label>Check Date: </label>
+                                                            </div>
+                                                            <div class="col-md-7 my-row-7-input">
+                                                                <input type="date" id="invoiceCheckDateBill" class="form-control" >
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-5 my-row-5-label">
+                                                                <label>Pay Date: </label>
+                                                            </div>
+                                                            <div class="col-md-7 my-row-7-input">
+                                                                <input type="date" id="invoicePayDateBill" class="form-control" >
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-5 my-row-5-label">
+                                                            </div>
+                                                            <div class="col-md-7 my-row-7-input">
+                                                                <label for="paidInFull"><input type="checkbox" id="paidInFull">&emsp;Paid in Full</label>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="Paris" class="tabcontent" style="height: 250px;">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <th>S.No</th>
+                                                <th>Test No</th>
+                                                <th>Emp Id</th>
+                                                <th>First</th>
+                                                <th>Last</th>
+                                                <th>Type</th>
+                                                <th>Test Date</th>
+                                                <th>Amount</th>
+                                            </thead>
+                                            <tbody id="tbody_table_bill"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default">OK</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                        onclick="selected_fees = -1;" id="closeButton">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Help</button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>
 <script src="dist/js/adminlte.js"></script>
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-
 <script>
+    $('#btn_add_billing').click(function() {
+        let id = new URL(location.href).searchParams.get("id");
+        $.ajax({
+            type: "GET",
+            url: "getTestData.php?test_id=" + id,
+            success: function(resultData) {
+                $('#tbody_table_bill').html(resultData);
+            }
+        });
+
+    })
+</script>
+<script>
+var invoices_data = [];
+$('#sentBill').on('click', function() {
+    if($(this).is(':checked')) {
+        $('#sentBillDate').attr('readonly', false);
+    } else {
+        $('#sentBillDate').attr('readonly', true);
+        $('#sentBillDate').val('');
+    }
+})
+</script>
+<script>
+
+$('#doNotBill').click(function() {
+    $('#rowBilledItemDiv').css('pointer-events', 'none');
+    $('#rowBilledItemDiv').css('opacity', '0.7');
+    // $('#London').html('');
+    $('#London > .row').css('display', 'none');
+    $('#London').css('display', 'block');
+    $('#Paris').css('display', 'none');
+    $('#button_general').addClass('active');
+    $('#button_tests_billed').removeClass('active');
+    $('#invoiceNoBilled').attr('disabled', 'disabled');
+    $('#invoiceNoBilled').val('');
+    $('#invoiceNoBilled').html('<option selected="" disabled="" value="">Please select Invoice No</option>');
+    $('#invoiceNoBilled').trigger('change');
+});
+</script>
+<script>
+
+$('#billNewInvoice').click(function() {
+    $('#rowBilledItemDiv').css('pointer-events', 'all');
+    $('#rowBilledItemDiv').css('opacity', '1.0');
+    $('#London > .row').css('display', 'block');
+    $('#invoiceNoBill').val('New Invoice');
+    // $('#London').html('');
+    $('#London').css('display', 'block');
+    $('#Paris').css('display', 'none');
+    $('#button_general').addClass('active');
+    $('#button_tests_billed').removeClass('active');
+    $('#invoiceNoBilled').attr('disabled', 'disabled');
+    $('#invoiceNoBilled').html('<option selected="" disabled="" value="">Please select Invoice No</option>');
+    $('#invoiceNoBilled').trigger('change');
+});
+</script>
+<script>
+
+$('#billExistingInvoice').click(function() {
+    $('#rowBilledItemDiv').css('pointer-events', 'all');
+    $('#rowBilledItemDiv').css('opacity', '1.0');
+    $('#invoiceNoBill').val('');
+    // $('#London').html('');
+    $('#London > .row').css('display', 'block');
+    $('#London').css('display', 'block');
+    $('#Paris').css('display', 'none');
+    $('#button_general').addClass('active');
+    $('#button_tests_billed').removeClass('active');
+    let account = new URL(location.href).searchParams.get("account");
+    $.ajax({
+        type: "GET",
+        url: "getInvoicesForBilling.php?account=" + account,
+        success: function(resultData) {
+            // $('#invoiceNoBilled').html(resultData);
+            // $('#invoiceNoBilled').trigger('change');
+            var content = '';
+            let obj = JSON.parse(resultData);
+            console.log(obj);
+            for(i = 0; i < obj.length; i++) {
+                content += '<option value="'+obj[i].invoice_id+'">'+obj[i].invoice_id+'</option>';
+            }
+            $('#invoiceNoBilled').html(content);
+            $('#invoiceNoBilled').trigger('change');
+            invoices_data = obj;
+            getDataForInvoice(invoices_data)
+        }
+    });
+
+    $('#invoiceNoBilled').attr('disabled', false);
+});
+</script>
+<script>
+
+$('#btn_add_send').on('click', function() {
+    // console.log('clicked');
+    $('#division_id_send').val($("#location_select").val())
+})
+</script>
+<script>
+
 $('#status_pre_employment').prop('checked', true);
 if (sessionStorage.getItem('account_selected') != undefined && sessionStorage.getItem('account_selected') != null &&
     sessionStorage.getItem('account_selected') != '') {
@@ -1100,12 +1567,15 @@ if (sessionStorage.getItem('account_selected') != undefined && sessionStorage.ge
         data: 'account_id_location=' + sessionStorage.getItem('account_selected'),
         success: function(resultData) {
             $('#division_id').html(resultData);
+            $('#division_id_bill').html(resultData);
             // window.open("accounts.php", "_self");
         }
     });
 
 }
 // })
+</script>
+<script>
 
 function addEmployees() {
     // $('#myModal_Employee').modal('hide');
@@ -1191,6 +1661,29 @@ function addEmployees() {
         }
     });
 }
+</script>
+<script>
+
+$('#form_send_email').on('submit', function(e) {
+    let id = new URL(location.href).searchParams.get("id");
+    e.preventDefault();
+    
+    $.ajax({
+        type: "POST",
+        url: "viewMROReportSend.php?id=" + id,
+        data: $("#form_send_email").serialize(),
+        success: function(resultData) {
+            console.log($("#form_send_email").serialize())
+            console.log(resultData)
+            alert(resultData);
+            location.reload();
+            // window.open("landingscreen.php", "_self");
+        }
+    });
+
+})
+</script>
+<script>
 
 function addPreferences() {
     $('#myModal_Preferences').modal('hide');
@@ -1245,19 +1738,47 @@ function addPreferences() {
 <!-- <script src="dist/js/owl.carousel.min.js"></script> -->
 <script src="plugins/select2/js/select2.min.js"></script>
 <script>
-    console.log(sessionStorage.getItem('account_selected'))
+function openCity(evt, cityName) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
+<script>
+let account = new URL(location.href).searchParams.get("account");
+
 if (sessionStorage.getItem('account_selected') != undefined && sessionStorage.getItem('account_selected') != null && sessionStorage.getItem('account_selected') != 'null' &&
-    sessionStorage.getItem('account_selected') != '')
+    sessionStorage.getItem('account_selected') != '') {
     $('#accounts_select').val(sessionStorage.getItem('account_selected'));
-else {
+    $('#accounts_select').trigger('change');
+} else if ($('#accounts_select').val() != '' && $('#accounts_select').val() != null) {
+    sessionStorage.setItem('account_selected', $('#accounts_select').val());
+} else if (account != '' && account != 'null' && account != undefined && account != null) {
+    sessionStorage.setItem('account_selected', account);
+    $('#accounts_select').val(account);
+    $('#accounts_select').trigger('change');
+} else {
     $('.btn').css('pointer-events', 'none');
     $('.sidebar').css('pointer-events', 'none');
     $('.nav-link-disabler').css('pointer-events', 'none');
 }
 $('#accounts_select').on('change', function() {
     sessionStorage.setItem('account_selected', $(this).val());
-    console.log($(this).val())
-    console.log(location.pathname)
     window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' +
     sessionStorage.getItem('account_selected'), '_self');
 })
@@ -1270,12 +1791,15 @@ function openURL(url) {
     else
         window.open(url, '_self');
 }
+</script>
+<script>
 
-let account = new URL(location.href).searchParams.get("account");
 if((account == null || account == '') && $('#accounts_select').val() != '') {
     window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' + $('#accounts_select').val(), '_self');
 }
 
+</script>
+<script>
 
 $(window).resize(function () {
 

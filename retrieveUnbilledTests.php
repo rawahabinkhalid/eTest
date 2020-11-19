@@ -10,7 +10,7 @@ $result_test = $conn->query($sql_test);
 if($result_test->num_rows > 0) {
     $counter = 1;
     while($row_test = $result_test->fetch_assoc()) {
-        $url = "'getTestInfo.php?id=".$row_test['test_id']."'";
+        $url = "'getTestInfo.php?account=".$_GET['account_id']."&id=".$row_test['test_id']."'";
         $target = "'_self'";
         echo '<tr onclick="window.open('.$url.', '.$target.');">';
         echo '<td>'.$counter++.'</td>';
