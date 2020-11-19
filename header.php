@@ -1088,33 +1088,33 @@ if (!isset($_SESSION['userid'])) {
             <div class="modal-body" style="display: inline-block">
                 <div id="main_div">
                     <div class="row">
-                        <div class="col-md-2" style="display: inline-block">Specimen ID: </div>
+                        <div class="col-md-3" style="display: inline-block">Specimen ID: </div>
                         <div class="col-md-7" style="display: inline-block">
                             <input class="form-control" id="specimen_id" name="specimen_id">
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-2" style="display: inline-block">Employee ID (SSN): </div>
+                        <div class="col-md-3" style="display: inline-block">Employee ID (SSN): </div>
                         <div class="col-md-7" style="display: inline-block">
                             <input type="hidden" id="employeesindex" name="employeesindex" value="">
                             <input class="form-control" id="emp_id" name="emp_id">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-2" style="display: inline-block">First Name / Req No: </div>
+                        <div class="col-md-3" style="display: inline-block">First Name / Req No: </div>
                         <div class="col-md-7" style="display: inline-block">
                             <input class="form-control" id="first_nm" name="first_nm">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-2" style="display: inline-block">Last Name: </div>
+                        <div class="col-md-3" style="display: inline-block">Last Name: </div>
                         <div class="col-md-7" style="display: inline-block">
                             <input class="form-control" id="last_nm" name="last_nm">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-2" style="display: inline-block">Location: </div>
+                        <div class="col-md-3" style="display: inline-block">Location: </div>
                         <div class="col-md-7" style="display: inline-block">
                             <select class="form-control" id="division_id" name="division_id">
                                 <!-- <option value="">Select Location</option> -->
@@ -1122,7 +1122,7 @@ if (!isset($_SESSION['userid'])) {
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-2" style="display: inline-block"></div>
+                        <div class="col-md-3" style="display: inline-block"></div>
                         <div class="col-md-7" style="display: inline-block">
                             <fieldset style="border: 1px solid lightgray; padding: 10px">
                                 <legend>Status</legend>
@@ -1576,90 +1576,126 @@ if (sessionStorage.getItem('account_selected') != undefined && sessionStorage.ge
 // })
 </script>
 <script>
+    $('#specimen_id').on('change', function () {
+        $('#specimen_id').removeClass('validation-error')
+    });
+    $('#emp_id').on('change', function () {
+        $('#emp_id').removeClass('validation-error')
+    });
+    $('#first_nm').on('change', function () {
+        $('#first_nm').removeClass('validation-error')
+    });
+    $('#last_nm').on('change', function () {
+        $('#last_nm').removeClass('validation-error')
+    });
+    $('#division_id').on('change', function () {
+        $('#division_id').removeClass('validation-error')
+    });
+    $('#accounts_select').on('change', function () {
+        $('#accounts_select').removeClass('validation-error')
+    });
 
+</script>
+<script>
 function addEmployees() {
+    var error_validateForm = false;
     // $('#myModal_Employee').modal('hide');
     if($('#specimen_id').val() == '') {
-        $('#specimen_id').focus();
-        alert('Kindly enter Specimen Id.');
-        return;
+        // $('#specimen_id').focus();
+        // alert('Kindly enter Specimen Id.');
+        // return;
+        $('#specimen_id').addClass('validation-error')
+        error_validateForm = true;
     }
     if($('#emp_id').val() == '') {
-        $('#emp_id').focus();
-        alert('Kindly enter Employee Id.');
-        return;
+        $('#emp_id').addClass('validation-error')
+        // $('#emp_id').focus();
+        // alert('Kindly enter Employee Id.');
+        // return;
+        error_validateForm = true;
     }
     if($('#first_nm').val() == '') {
-        $('#first_nm').focus();
-        alert('Kindly enter First Name.');
-        return;
+        $('#first_nm').addClass('validation-error')
+        // $('#first_nm').focus();
+        // alert('Kindly enter First Name.');
+        // return;
+        error_validateForm = true;
     }
     if($('#last_nm').val() == '') {
-        $('#last_nm').focus();
-        alert('Kindly enter Last Name.');
-        return;
+        $('#last_nm').addClass('validation-error')
+        // $('#last_nm').focus();
+        // alert('Kindly enter Last Name.');
+        // return;
+        error_validateForm = true;
     }
     if($('#division_id').val() == '') {
-        $('#division_id').focus();
-        alert('Kindly select Location.');
-        return;
+        $('#division_id').addClass('validation-error')
+        // $('#division_id').focus();
+        // alert('Kindly select Location.');
+        // return;
+        error_validateForm = true;
     }
     if($('#accounts_select').val() == '') {
-        $('#accounts_select').focus();
-        alert('Kindly select Account.');
-        return;
+        $('#accounts_select').addClass('validation-error')
+        // $('#accounts_select').focus();
+        // alert('Kindly select Account.');
+        // return;
+        error_validateForm = true;
     }
     if(!$('#status_pre_employment').is(':checked') && !$('#status_active').is(':checked') && !$('#status_terminated').is(':checked')) {
         $('#status_pre_employment').focus();
         alert('Kindly select status of Employee.');
-        return;
+        // return;
+        error_validateForm = true;
     }
-    var temp = {};
-    temp['emp_id'] = $('#emp_id').val();
-    temp['specimen_id'] = $('#specimen_id').val();
-    temp['first_nm'] = $('#first_nm').val();
-    temp['last_nm'] = $('#last_nm').val();
-    temp['division_id'] = $('#division_id').val();
-    temp['account_id'] = $('#accounts_select').val();
-    temp['status'] = '';
-    if ($('#status_pre_employment').is(':checked'))
-        temp['status'] = 'P';
-    else if ($('#status_active').is(':checked'))
-        temp['status'] = 'A';
-    else if ($('#status_terminated').is(':checked'))
-        temp['status'] = 'T';
+    if(!error_validateForm) {
+        var temp = {};
+        temp['emp_id'] = $('#emp_id').val();
+        temp['specimen_id'] = $('#specimen_id').val();
+        temp['first_nm'] = $('#first_nm').val();
+        temp['last_nm'] = $('#last_nm').val();
+        temp['division_id'] = $('#division_id').val();
+        temp['account_id'] = $('#accounts_select').val();
+        temp['status'] = '';
+        if ($('#status_pre_employment').is(':checked'))
+            temp['status'] = 'P';
+        else if ($('#status_active').is(':checked'))
+            temp['status'] = 'A';
+        else if ($('#status_terminated').is(':checked'))
+            temp['status'] = 'T';
 
-    // $('#emp_id').val('');
-    // $('#specimen_id').val('');
-    // $('#first_nm').val('');
-    // $('#last_nm').val('');
-    // $('#division_id').val('');
-    // $('#status_pre_employment').prop('checked', false);
-    // $('#status_active').prop('checked', false);
-    // $('#status_terminated').prop('checked', false);
-    // $('#employeesindex').val('');
+        // $('#emp_id').val('');
+        // $('#specimen_id').val('');
+        // $('#first_nm').val('');
+        // $('#last_nm').val('');
+        // $('#division_id').val('');
+        // $('#status_pre_employment').prop('checked', false);
+        // $('#status_active').prop('checked', false);
+        // $('#status_terminated').prop('checked', false);
+        // $('#employeesindex').val('');
 
-    $.ajax({
-        type: "POST",
-        url: "insert_employee.php",
-        data: 'employeeData=' + JSON.stringify(temp),
-        success: function(resultData) {
-            resultData = JSON.parse(resultData);
-            console.log(resultData);
-            console.log("" + resultData.id);
-            alert(resultData.message);
-            if(resultData.id !== undefined)
-                window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' + sessionStorage.getItem('account_selected') + '&employee=' + resultData.id, '_self');
-            else {
-                // $('#closeButton').click();
-            //    $('#myModal_Employee').modal('toggle');
-            //     $('#myModal_Employee').css('display', 'block');
+        $.ajax({
+            type: "POST",
+            url: "insert_employee.php",
+            data: 'employeeData=' + JSON.stringify(temp),
+            success: function(resultData) {
+                resultData = JSON.parse(resultData);
+                console.log(resultData);
+                console.log("" + resultData.id);
+                alert(resultData.message);
+                if(resultData.id !== undefined)
+                    window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' + sessionStorage.getItem('account_selected') + '&employee=' + resultData.id, '_self');
+                else {
+                    // $('#closeButton').click();
+                //    $('#myModal_Employee').modal('toggle');
+                //     $('#myModal_Employee').css('display', 'block');
+                }
+                
+                // location.reload();
+                // window.open("accounts.php", "_self");
             }
-            
-            // location.reload();
-            // window.open("accounts.php", "_self");
-        }
-    });
+        });
+    }
 }
 </script>
 <script>

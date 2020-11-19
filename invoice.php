@@ -242,7 +242,7 @@ if ($result->num_rows > 0) {
                                         <tbody>
                                             <?php
 $count = 1;
-$sql = 'SELECT * FROM invoice';
+$sql = 'SELECT * FROM invoice WHERE account_id = ' . $_GET['account'];
 $result = mysqli_query($conn, $sql);
 while ($row = mysqli_fetch_assoc($result)) {
     $id = "'" . $row['invoice_id'] . "'";
