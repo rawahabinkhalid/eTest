@@ -241,12 +241,12 @@ if ($result->num_rows > 0) {
                                         </thead>
                                         <tbody>
                                             <?php
-$count = 1;
-$sql = 'SELECT * FROM invoice WHERE account_id = ' . $_GET['account'];
-$result = mysqli_query($conn, $sql);
-while ($row = mysqli_fetch_assoc($result)) {
-    $id = "'" . $row['invoice_id'] . "'";
-    echo '<tr id=' . implode('_', explode(' ', $id)) . ' onclick = "userSelected(' . $id . ', ' . implode('_', explode(' ', $id)) . ')">
+                                                    $count = 1;
+                                                    $sql = 'SELECT * FROM invoice WHERE account_id = ' . $_GET['account'];
+                                                    $result = mysqli_query($conn, $sql);
+                                                    while ($row = mysqli_fetch_assoc($result)) {
+                                                        $id = "'" . $row['invoice_id'] . "'";
+                                                        echo '<tr id=' . implode('_', explode(' ', $id)) . ' onclick = "userSelected(' . $id . ', ' . implode('_', explode(' ', $id)) . ')">
                                                         <th scope="row">' . $count++ . '</th>
                                                         <td>' . $row['invoice_id'] . '</td>
                                                         <td>' . $row['invoice_date'] . '</td>
@@ -267,7 +267,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                                                         <td>' . $row['update_user_id'] . '</td>
                                                         <td>' . $row['update_date'] . '</td>
                                                     </tr>';
-}
+                                                    }
 ?>
                                         </tbody>
                                     </table>
