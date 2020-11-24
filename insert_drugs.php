@@ -6,7 +6,7 @@ if(isset($_GET['delete_drug_id'])) {
     $drug_id =$_GET['delete_drug_id'];
 
     $sql = 'DELETE FROM drugs WHERE `drug_id` = ' . $drug_id;
-    echo $sql;
+    // echo $sql;
     if($conn->query($sql))
     {
         // echo "<script>alert('The data has been uploaded.');</script>";

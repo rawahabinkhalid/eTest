@@ -240,7 +240,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                     <form action="insert_drugs.php" method="post">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title">New User</h4>
+                                <h4 class="modal-title">New Drugs</h4>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                             <div class="modal-body" style="display: inline-block">
