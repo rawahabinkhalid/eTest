@@ -9,12 +9,14 @@ if(isset($_GET['delete_user_id'])) {
     echo $sql;
     if($conn->query($sql))
     {
-        echo "<script>alert('The data has been uploaded.');</script>";
+        echo "<script>alert('The data has been uploaded.');window.open('users.php', '_self');</script>";
+        // echo "<script>alert('The data has been uploaded.');</script>";
         header("location:users.php");
     }
     else
     {
-        echo 'Error! Try Again';
+        echo "<script>alert('Error occurred while saving data.');window.open('users.php', '_self');</script>";
+        // echo 'Error! Try Again';
         mysqli_close($conn);
     }
 } else {
@@ -26,7 +28,7 @@ if(isset($_GET['delete_user_id'])) {
 
     if(isset($_POST['user_id']) && $_POST['user_id'] == ''){
         $sql = 'INSERT INTO `users` (`user_id`,`first_nm`,`last_nm`,`password`,`admin`,`account_id`) VALUES ("'.$userid.'","'.$fname.'","'.$lname.'","'.$password.'","'.$admin.'",'.$_POST['accountSelect'].')';
-        echo $sql;
+        // echo $sql;
 
         if($conn->query($sql))
         {
@@ -34,12 +36,13 @@ if(isset($_GET['delete_user_id'])) {
                 $sqlLocation = 'INSERT INTO userlocation (user_id,location) VALUES ("'.$userid.'","'.$_POST['locationSelect'][$i].'");';
                 $conn->query($sqlLocation);
             }
-            echo "<script>alert('The data has been uploaded.');</script>";
-            header("location:users.php");
+            echo "<script>alert('The data has been uploaded.');window.open('users.php', '_self');</script>";
+            // header("location:users.php");
         }
         else
         {
-            echo 'Error! Try Again';
+            echo "<script>alert('Error occurred while saving data.');window.open('users.php', '_self');</script>";
+            // echo 'Error! Try Again';
             mysqli_close($conn);
         }
     } else if(isset($_POST['user_id']) && $_POST['user_id'] != ''){
@@ -47,12 +50,12 @@ if(isset($_GET['delete_user_id'])) {
         // echo $sql;
         if($conn->query($sql1))
         {
-            echo "<script>alert('The data has been uploaded.');</script>";
-            header("location:users.php");
+            echo "<script>alert('The data has been uploaded.');window.open('users.php', '_self');</script>";
+            // header("location:users.php");
         }
         else
         {
-            echo 'Error! Try Again';
+            echo "<script>alert('Error occurred while saving data.');window.open('users.php', '_self');</script>";
             mysqli_close($conn);
         }
     }

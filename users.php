@@ -291,26 +291,26 @@ to get the desired effect
                                 <div class="row">
                                     <input type="hidden" id="user_id" name="user_id">
                                     <div class="col-md-3" style="display: inline-block">User ID: </div>
-                                    <div class="col-md-7" style="display: inline-block"><input class="form-control"
+                                    <div class="col-md-7" style="display: inline-block"><input required class="form-control"
                                             id="userid" name="userid">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3" style="display: inline-block">First Name: </div>
-                                    <div class="col-md-7" style="display: inline-block"><input class="form-control"
+                                    <div class="col-md-7" style="display: inline-block"><input required class="form-control"
                                             id="fname" name="fname">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3" style="display: inline-block">Last Name: </div>
-                                    <div class="col-md-7" style="display: inline-block"><input class="form-control"
+                                    <div class="col-md-7" style="display: inline-block"><input required class="form-control"
                                             id="lname" name="lname">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3" style="display: inline-block">Password: </div>
                                     <div class="col-md-7" style="display: inline-block">
-                                        <input type="password" class="form-control" id="password" name="password"
+                                        <input type="password" class="form-control" required id="password" name="password"
                                             onchange="test_str()">
                                         <!-- <input type="text" id="t2" readonly/>  -->
                                         <span id="t2"></span>
@@ -324,8 +324,8 @@ to get the desired effect
                                 <div class="row">
                                     <div class="col-md-3">Account:</div>
                                     <div class="col-md-7">
-                                        <select class="form-control" id="accountSelect" name="accountSelect">
-                                            <option disabled selected>Select Account</option>
+                                        <select class="form-control" required id="accountSelect" name="accountSelect">
+                                            <option disabled selected value="">Select Account</option>
                                             <?php
                                             $sql = 'SELECT * FROM accounts';
                                             $result = $conn->query($sql);
@@ -340,7 +340,7 @@ to get the desired effect
                                 <div class="row">
                                     <div class="col-md-3">Location:</div>
                                     <div class="col-md-7">
-                                        <select class="form-control" id="locationSelect" name="locationSelect[]"
+                                        <select class="form-control" required id="locationSelect" name="locationSelect[]"
                                             multiple>
                                         </select>
 
