@@ -6,15 +6,17 @@ if(isset($_GET['delete_sample_id'])) {
     $sample_id =$_GET['delete_sample_id'];
 
     $sql = 'DELETE FROM sampletype WHERE `sample_id` = ' . $sample_id;
-    echo $sql;
+    // echo $sql;
     if($conn->query($sql))
     {
-        echo "<script>alert('The data has been uploaded.');</script>";
-        header("location:sampletype.php");
+        echo "<script>alert('The data has been uploaded.');window.open('sampletype.php', '_self');</script>";
+        // echo "<script>alert('The data has been uploaded.');</script>";
+        // header("location:sampletype.php");
     }
     else
     {
-        echo 'Error! Try Again';
+        echo "<script>alert('Error occurred while saving data.');window.open('sampletype.php', '_self');</script>";
+        // echo 'Error! Try Again';
         mysqli_close($conn);
     }
 } else {
@@ -25,12 +27,14 @@ if(isset($_GET['delete_sample_id'])) {
         // echo $sql;
         if($conn->query($sql))
         {
-            echo "<script>alert('The data has been uploaded.');</script>";
-            header("location:sampletype.php");
+            echo "<script>alert('The data has been uploaded.');window.open('sampletype.php', '_self');</script>";
+            // echo "<script>alert('The data has been uploaded.');</script>";
+            // header("location:sampletype.php");
         }
         else
         {
-            echo 'Error! Try Again';
+            echo "<script>alert('Error occurred while saving data.');window.open('sampletype.php', '_self');</script>";
+            // echo 'Error! Try Again';
             mysqli_close($conn);
         }
     } else if(isset($_POST['sampletype_id']) && $_POST['sampletype_id'] != ''){
@@ -38,12 +42,14 @@ if(isset($_GET['delete_sample_id'])) {
         // echo $sql;
         if($conn->query($sql1))
         {
-            echo "<script>alert('The data has been uploaded.');</script>";
-            header("location:sampletype.php");
+            echo "<script>alert('The data has been uploaded.');window.open('sampletype.php', '_self');</script>";
+            // echo "<script>alert('The data has been uploaded.');</script>";
+            // header("location:sampletype.php");
         }
         else
         {
-            echo 'Error! Try Again';
+            echo "<script>alert('Error occurred while saving data.');window.open('sampletype.php', '_self');</script>";
+            // echo 'Error! Try Again';
             mysqli_close($conn);
         }
     }

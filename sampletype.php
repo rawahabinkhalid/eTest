@@ -256,7 +256,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 <div class="row">
                                     <input type="hidden" id="sampletype_id" name="sampletype_id">
                                     <div class="col-md-2" style="display: inline-block">Sample Type: </div>
-                                    <div class="col-md-7" style="display: inline-block"><input class="form-control"
+                                    <div class="col-md-7" style="display: inline-block"><input required class="form-control"
                                             id="sampletype" name="sampletype">
                                     </div>
                                 </div>
