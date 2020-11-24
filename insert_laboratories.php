@@ -9,12 +9,14 @@ if(isset($_GET['delete_laboratories_id'])) {
     echo $sql;
     if($conn->query($sql))
     {
-        echo "<script>alert('The data has been uploaded.');</script>";
-        header("location:laboratories.php");
+        // echo "<script>alert('The data has been uploaded.');</script>";
+        // header("location:laboratories.php");
+        echo "<script>alert('The data has been uploaded.');window.open('laboratories.php', '_self');</script>";
     }
     else
     {
-        echo 'Error! Try Again';
+        echo "<script>alert('Error occurred while saving data.');window.open('laboratories.php', '_self');</script>";
+        // echo 'Error! Try Again';
         mysqli_close($conn);
     }
 } else {
@@ -32,13 +34,15 @@ if(isset($_GET['delete_laboratories_id'])) {
         echo $sql;
         if($conn->query($sql))
         {
-            echo "<script>alert('The data has been uploaded.');</script>";
-            header("location:laboratories.php");
+            // echo "<script>alert('The data has been uploaded.');</script>";
+            // header("location:laboratories.php");
+            echo "<script>alert('The data has been uploaded.');window.open('laboratories.php', '_self');</script>";
         }
         else
         {
-            echo 'Error! Try Again';
-            echo $conn->error;
+            echo "<script>alert('Error occurred while saving data.');window.open('laboratories.php', '_self');</script>";
+            // echo 'Error! Try Again';
+            // echo $conn->error;
             mysqli_close($conn);
         }
     } else if (isset($_POST['laboratories_id']) && $_POST['laboratories_id'] != '') {
@@ -47,12 +51,14 @@ if(isset($_GET['delete_laboratories_id'])) {
         // echo $sql1;
         if($conn->query($sql1))
         {
-            echo "<script>alert('The data has been uploaded.');</script>";
-            header("location:laboratories.php");
+            echo "<script>alert('The data has been uploaded.');window.open('laboratories.php', '_self');</script>";
+            // echo "<script>alert('The data has been uploaded.');</script>";
+            // header("location:laboratories.php");
         }
         else
         {
-            echo 'Error! Try Again';
+            // echo 'Error! Try Again';
+            echo "<script>alert('Error occurred while saving data.');window.open('laboratories.php', '_self');</script>";
             mysqli_close($conn);
         }
 

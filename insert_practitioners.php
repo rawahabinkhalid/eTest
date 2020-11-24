@@ -1,6 +1,7 @@
 <?php
 
 include_once('conn.php');
+$error_occurred = false;
 
 if(isset($_GET['delete_practitioner_id'])) {
     $practitioner_id =$_GET['delete_practitioner_id'];
@@ -9,13 +10,15 @@ if(isset($_GET['delete_practitioner_id'])) {
     // echo $sql;
     if($conn->query($sql))
     {
-        echo "<script>alert('The data has been uploaded.');</script>";
-        header("location:practitioners.php");
+        echo "<script>alert('The data has been uploaded.');window.open('practitioners.php', '_self');</script>";
+        // echo "<script>alert('The data has been uploaded.');</script>";
+        // header("location:practitioners.php");
     }
     else
     {
-        echo "<script>alert('Error! Try Again');</script>";
-        header("location:practitioners.php");
+        echo "<script>alert('Error occurred while saving data.');window.open('practitioners.php', '_self');</script>";
+        // echo "<script>alert('Error! Try Again');</script>";
+        // header("location:practitioners.php");
     }
 } else {
     $practname = $_POST['practname'];
@@ -44,12 +47,12 @@ if(isset($_GET['delete_practitioner_id'])) {
                 } else {
                     echo "<script>alert('Sorry, there was an error uploading your file.');</script>";
                 }
-                header("location:practitioners.php");
+                echo "<script>window.open('practitioners.php', '_self');</script>";
+                // header("location:practitioners.php");
             }
             else
             {
-                echo "<script>alert('Error! Try Again');</script>";
-                header("location:practitioners.php");
+                echo "<script>alert('Error occurred while saving data.');window.open('practitioners.php', '_self');</script>";
             }
             
         } else if (isset($_POST['practitioner_id']) && $_POST['practitioner_id'] != '') {
@@ -68,12 +71,11 @@ if(isset($_GET['delete_practitioner_id'])) {
                     }
 
                 }
-                header("location:practitioners.php");
+                echo "<script>window.open('practitioners.php', '_self');</script>";
             }
             else
             {
-                echo "<script>alert('Error! Try Again');</script>";
-                header("location:practitioners.php");
+                echo "<script>alert('Error occurred while saving data.');window.open('practitioners.php', '_self');</script>";
             }
 
         }

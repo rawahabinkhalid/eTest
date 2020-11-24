@@ -263,35 +263,35 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 <div class="row">
                                     <input type="hidden" id="laboratories_id" name="laboratories_id" value="">
                                     <div class="col-md-2" style="display: inline-block">Lab Name: </div>
-                                    <div class="col-md-7" style="display: inline-block"><input class="form-control"
+                                    <div class="col-md-7" style="display: inline-block"><input required class="form-control"
                                             id="labname" name="labname"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2" style="display: inline-block">Address: </div>
-                                    <div class="col-md-7" style="display: inline-block"><input class="form-control"
+                                    <div class="col-md-7" style="display: inline-block"><input required class="form-control"
                                             id="address" name="address"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2" style="display: inline-block">City: </div>
-                                    <div class="col-md-3" style="display: inline-block"><input class="form-control"
+                                    <div class="col-md-3" style="display: inline-block"><input required class="form-control"
                                             id="city" name="city"></div>
                                     <div class="col-md-1" style="display: inline-block">State: </div>
-                                    <div class="col-md-1" style="display: inline-block"><input class="form-control"
+                                    <div class="col-md-1" style="display: inline-block"><input required class="form-control"
                                             id="state" name="state" minlength="2" maxlength="2"></div>
                                     <div class="col-md-1" style="display: inline-block">Zip: </div>
-                                    <div class="col-md-1" style="display: inline-block"><input class="form-control"
+                                    <div class="col-md-1" style="display: inline-block"><input required class="form-control"
                                             id="zip" name="zip" minlength="10" maxlength="10"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2" style="display: inline-block">Phone: </div>
-                                    <div class="col-md-7" style="display: inline-block"><input class="form-control"
+                                    <div class="col-md-7" style="display: inline-block"><input required class="form-control"
                                             pattern="[7-9]{1}[0-9]{9}"
                                             title="Phone number with 7-9 and remaining 9 digit with 0-9" minlength="10"
                                             maxlength="10" id="phone" name="phone"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2" style="display: inline-block">Fax: </div>
-                                    <div class="col-md-7" style="display: inline-block"><input class="form-control"
+                                    <div class="col-md-7" style="display: inline-block"><input required class="form-control"
                                             pattern="[7-9]{1}[0-9]{9}"
                                             title="Phone number with 7-9 and remaining 9 digit with 0-9" minlength="10"
                                             maxlength="10" id="fax" name="fax"></div>

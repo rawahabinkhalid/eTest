@@ -458,7 +458,9 @@ include_once "conn.php";
             data: 'accountsData=' + JSON.stringify(accountsData),
             success: function(resultData) {
                 console.log(resultData);
-                // window.open("accounts.php", "_self");
+                alert(resultData);
+                // windo
+                window.open("accounts.php", "_self");
             }
         });
     }
