@@ -13,23 +13,26 @@ if(isset($_GET['delete_form_id'])) {
         echo $sql1;
         if($conn->query($sql1))
         {
-            echo "<script>alert('The data has been uploaded.');</script>";
-            header("location:testtype.php");
+            echo "<script>alert('The data has been uploaded.');window.open('form.php', '_self');</script>";
+            // echo "<script>alert('The data has been uploaded.');</script>";
+            // header("location:testtype.php");
         }
         else
         {
-            echo 'Error! Try Again';
+            echo "<script>alert('Error occurred while saving data.');window.open('form.php', '_self');</script>";
+            // echo 'Error! Try Again';
             mysqli_close($conn);
         }
     }
     else
     {
-        echo 'Error! Try Again';
+        echo "<script>alert('Error occurred while saving data.');window.open('form.php', '_self');</script>";
+        // echo 'Error! Try Again';
         mysqli_close($conn);
     }
 } else {
     if(isset($_POST['form_id']) && $_POST['form_id'] == ''){
-
+        $error = false;
         $formname = $_POST['formname'];
         $formtype =$_POST['formtype'];
         $drugs =$_POST['drugs'];
@@ -42,18 +45,25 @@ if(isset($_GET['delete_form_id'])) {
             for($i = 0; $i < count($drugs); $i++) {
                 $sql1 = 'INSERT INTO `formdrugs` VALUES ('.$id.', '.$drugs[$i].')';
                     if(!$conn->query($sql1)) {
-                        echo "<script>alert('Error occurred while saving drugs.');</script>";
+                        $error = true;
+                        // echo "<script>alert('Error occurred while saving drugs.');</script>";
                     }
                 }
-            echo "<script>alert('The data has been uploaded.');</script>";
-            header("location:form.php");
+            if(!$error)
+                echo "<script>alert('The data has been uploaded.');window.open('form.php', '_self');</script>";
+            else
+                echo "<script>alert('Error occurred while saving data.');window.open('form.php', '_self');</script>";
+            // echo "<script>alert('The data has been uploaded.');</script>";
+            // header("location:form.php");
         }
         else
         {
-            echo 'Error! Try Again';
+            echo "<script>alert('Error occurred while saving data.');window.open('form.php', '_self');</script>";
+            // echo 'Error! Try Again';
             mysqli_close($conn);
         }
     } else if(isset($_POST['form_id']) && $_POST['form_id'] != ''){
+        $error = false;
 
         $form_id = $_POST['form_id'];
         $formname = $_POST['formname'];
@@ -70,21 +80,28 @@ if(isset($_GET['delete_form_id'])) {
                 for($i = 0; $i < count($drugs); $i++) {
                     $sql1 = 'INSERT INTO `formdrugs` VALUES ('.$form_id.', '.$drugs[$i].')';
                         if(!$conn->query($sql1)) {
-                            echo "<script>alert('Error occurred while saving drugs.');</script>";
+                            $error = true;
+                            // echo "<script>alert('Error occurred while saving drugs.');</script>";
                         }
                     }
-                echo "<script>alert('The data has been uploaded.');</script>";
-                header("location:form.php");
-            }
+                    if(!$error)
+                        echo "<script>alert('The data has been uploaded.');window.open('form.php', '_self');</script>";
+                    else
+                        echo "<script>alert('Error occurred while saving data.');window.open('form.php', '_self');</script>";
+                    // echo "<script>alert('The data has been uploaded.');</script>";
+                    // header("location:form.php");
+                }
             else
             {
-                echo 'Error! Try Again';
+                echo "<script>alert('Error occurred while saving data.');window.open('form.php', '_self');</script>";
+                // echo 'Error! Try Again';
                 mysqli_close($conn);
             }
         }
         else
         {
-            echo 'Error! Try Again';
+            echo "<script>alert('Error occurred while saving data.');window.open('form.php', '_self');</script>";
+            // echo 'Error! Try Again';
             mysqli_close($conn);
         }
 

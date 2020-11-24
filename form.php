@@ -256,14 +256,14 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 <div class="row">
                                     <input type="hidden" id="form_id" name="form_id">
                                     <div class="col-md-2" style="display: inline-block">Form Name: </div>
-                                    <div class="col-md-7" style="display: inline-block"><input class="form-control"
+                                    <div class="col-md-7" style="display: inline-block"><input required class="form-control"
                                             name="formname" id="formname">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2" style="display: inline-block">Type: </div>
                                     <div class="col-md-3" style="display: inline-block">
-                                        <select class="form-control" name="formtype" id="formtype">
+                                        <select class="form-control" required name="formtype" id="formtype">
                                             <option value="">Please select type</option>
                                             <option value="F">Federal</option>
                                             <option value="S">State</option>
