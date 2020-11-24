@@ -11,7 +11,7 @@ if(isset($_GET['delete_user_id'])) {
     {
         echo "<script>alert('The data has been uploaded.');window.open('users.php', '_self');</script>";
         // echo "<script>alert('The data has been uploaded.');</script>";
-        header("location:users.php");
+        // header("location:users.php");
     }
     else
     {

@@ -2,6 +2,8 @@
 
 include_once('conn.php');
 
+$error_occurred = false;
+
 if(isset($_GET['delete_account_id'])) {
     $account_id =$_GET['delete_account_id'];
 
@@ -9,8 +11,9 @@ if(isset($_GET['delete_account_id'])) {
     echo $sql;
     if($conn->query($sql))
     {
-        echo "<script>alert('The data has been uploaded.');</script>";
-        header("location:accounts.php");
+        echo "<script>alert('The data has been uploaded.');window.open('users.php', '_self');</script>";
+        // echo "<script>alert('The data has been uploaded.');</script>";
+        // header("location:accounts.php");
     }
     else
     {
@@ -27,21 +30,23 @@ if(isset($_GET['delete_account_id'])) {
             $account_id = $conn->insert_id;
             for($i = 0; $i < count($accountsData->locations); $i++) {
                 $sql1 = 'INSERT INTO `divisions` (`account_id`, `division_nm`, `address`, `city`, `state`, `zip`, `phone`, `fax`, `contact`, `comments`, `email`) VALUES ('.$account_id.', "'.$accountsData->locations[$i]->division_nm.'", "'.$accountsData->locations[$i]->address.'", "'.$accountsData->locations[$i]->city.'", "'.$accountsData->locations[$i]->state.'", "'.$accountsData->locations[$i]->zip.'", "'.$accountsData->locations[$i]->phone.'", "'.$accountsData->locations[$i]->fax.'", "'.$accountsData->locations[$i]->contact.'", "'.$accountsData->locations[$i]->comments.'", "'.$accountsData->locations[$i]->email.'")';
-                echo $sql1;
+                // echo $sql1;
                 if($conn->query($sql1)) {
-                    echo "<script>alert('The data has been uploaded.');</script>";
+                    // echo "<script>alert('The data has been uploaded.');</script>";
                 } else {
-                    echo $conn->error;
+                    $error_occurred = true;
+                    // echo $conn->error;
                     mysqli_close($conn);
                 }
             }
             for($i = 0; $i < count($accountsData->fees); $i++) {
                 $sql2 = 'INSERT INTO `fees` (`account_id`, `type_id`, `amount`) VALUES ('.$account_id.', "'.$accountsData->fees[$i]->type_id.'", "'.$accountsData->fees[$i]->amount.'")';
-                echo $sql2;
+                // echo $sql2;
                 if($conn->query($sql2)) {
-                    echo "<script>alert('The data has been uploaded.');</script>";
+                    // echo "<script>alert('The data has been uploaded.');</script>";
                 } else {
-                    echo $conn->error;
+                    $error_occurred = true;
+                    // echo $conn->error;
                     mysqli_close($conn);
                 }
             }
@@ -53,15 +58,22 @@ if(isset($_GET['delete_account_id'])) {
                     $sql2 = 'INSERT INTO `employees` (`emp_id`, `account_id`, `division_id`, `first_nm`, `last_nm`, `status`, `specimen_id`, `insert_user_id`, `insert_date`) VALUES ("'.$accountsData->employees[$i]->emp_id.'", '.$account_id.', "'.$row3['division_id'].'", "'.$accountsData->employees[$i]->first_nm.'", "'.$accountsData->employees[$i]->last_nm.'", "'.$accountsData->employees[$i]->status.'", "'.$accountsData->employees[$i]->specimen_id.'", "'.$_SESSION['userid'].'", "'.date('Y-m-d H:i:s').'")';
                     echo $sql2;
                     if($conn->query($sql2)) {
-                        echo "<script>alert('The data has been uploaded.');</script>";
+                        // echo "<script>alert('The data has been uploaded.');</script>";
                     } else {
-                        echo $conn->error;
+                        $error_occurred = true;
+                        // echo $conn->error;
                         mysqli_close($conn);
                     }
                 }
             }
+            if(!$error_occurred) {
+                echo "<script>alert('The data has been uploaded.');window.open('users.php', '_self');</script>";
+            } else {
+                echo "<script>alert('Error occurred while saving data.');window.open('users.php', '_self');</script>";
+            }
         } else {
-            echo $conn->error;
+            echo "<script>alert('Error occurred while saving data.');window.open('users.php', '_self');</script>";
+            // echo $conn->error;
             mysqli_close($conn);
         }
     } else if(isset($accountsData->account_id) && $accountsData->account_id != ''){
@@ -81,11 +93,12 @@ if(isset($_GET['delete_account_id'])) {
                     {
                         for($i = 0; $i < count($accountsData->locations); $i++) {
                             $sql1 = 'INSERT INTO `divisions` (`account_id`, `division_nm`, `address`, `city`, `state`, `zip`, `phone`, `fax`, `contact`, `comments`, `email`) VALUES ('.$account_id.', "'.$accountsData->locations[$i]->division_nm.'", "'.$accountsData->locations[$i]->address.'", "'.$accountsData->locations[$i]->city.'", "'.$accountsData->locations[$i]->state.'", "'.$accountsData->locations[$i]->zip.'", "'.$accountsData->locations[$i]->phone.'", "'.$accountsData->locations[$i]->fax.'", "'.$accountsData->locations[$i]->contact.'", "'.$accountsData->locations[$i]->comments.'", "'.$accountsData->locations[$i]->email.'")';
-                            echo $sql1;
+                            // echo $sql1;
                             if($conn->query($sql1)) {
-                                echo "<script>alert('The data has been uploaded.');</script>";
+                                // echo "<script>alert('The data has been uploaded.');</script>";
                             } else {
-                                echo $conn->error;
+                                $error_occurred = true;
+                                // echo $conn->error;
                                 mysqli_close($conn);
                             }
                         }
@@ -93,9 +106,10 @@ if(isset($_GET['delete_account_id'])) {
                             $sql2 = 'INSERT INTO `fees` (`account_id`, `type_id`, `amount`) VALUES ('.$account_id.', "'.$accountsData->fees[$J]->type_id.'", "'.$accountsData->fees[$J]->amount.'")';
                             echo $sql2;
                             if($conn->query($sql2)) {
-                                echo "<script>alert('The data has been uploaded.');</script>";
+                                // echo "<script>alert('The data has been uploaded.');</script>";
                             } else {
-                                echo $conn->error;
+                                $error_occurred = true;
+                                // echo $conn->error;
                                 mysqli_close($conn);
                             }
                         }
@@ -105,30 +119,40 @@ if(isset($_GET['delete_account_id'])) {
                             if($result3->num_rows > 0) {
                                 $row3 = $result3->fetch_assoc();
                                 $sql2 = 'INSERT INTO `employees` (`emp_id`, `account_id`, `division_id`, `first_nm`, `last_nm`, `random_marker`, `status`, `specimen_id`, `insert_user_id`, `insert_date`) VALUES ("'.$accountsData->employees[$K]->emp_id.'", '.$account_id.', "'.$row3['division_id'].'", "'.$accountsData->employees[$K]->first_nm.'", "'.$accountsData->employees[$K]->last_nm.'", "", "'.$accountsData->employees[$K]->status.'", "'.$accountsData->employees[$K]->specimen_id.'", "'.$_SESSION['userid'].'", "'.date('Y-m-d H:i:s').'")';
-                                echo $sql2;
+                                // echo $sql2;
                                 if($conn->query($sql2)) {
-                                    echo "<script>alert('The data has been uploaded.');</script>";
+                                    // echo "<script>alert('The data has been uploaded.');</script>";
                                 } else {
-                                    echo $conn->error;
+                                    $error_occurred = true;
+                                    // echo $conn->error;
                                     mysqli_close($conn);
                                 }
                             }
                         }
                     } else {
-                        echo $conn->error;
+                        $error_occurred = true;
+                        // echo $conn->error;
                         mysqli_close($conn);
                     }
                 } else {
-                    echo $conn->error;
+                    $error_occurred = true;
+                    // echo $conn->error;
                     mysqli_close($conn);
                 }
             } else {
-                echo $conn->error;
+                $error_occurred = true;
+                // echo $conn->error;
                 mysqli_close($conn);
             }
         } else {
-            echo $conn->error;
+            $error_occurred = true;
+            // echo $conn->error;
             mysqli_close($conn);
+        }
+        if(!$error_occurred) {
+            echo "<script>alert('The data has been uploaded.');window.open('users.php', '_self');</script>";
+        } else {
+            echo "<script>alert('Error occurred while saving data.');window.open('users.php', '_self');</script>";
         }
     }
 }
