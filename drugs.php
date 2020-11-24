@@ -247,7 +247,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 <div class="row">
                                     <input type="hidden" id="drugs_id" name="drugs_id">
                                     <div class="col-md-2" style="display: inline-block">Drug Name: </div>
-                                    <div class="col-md-7" style="display: inline-block"><input class="form-control"
+                                    <div class="col-md-7" style="display: inline-block"><input required class="form-control"
                                             id="drugname" name="drugname">
                                     </div>
                                 </div>
