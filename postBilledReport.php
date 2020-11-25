@@ -231,9 +231,9 @@ to get the desired effect
                                 <div class="col-md-12" style="text-align: right">
                                     <button type="submit"  name="filterData" class="btn mt-2"
                                         style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Retrieve</button>
-                                    <button type="button" id="deleteButton" class="btn mt-2"
+                                    <!-- <button type="button" id="deleteButton" class="btn mt-2"
                                         style="background-color:#E7D7B7; border-radius:5px; width: 100px;"
-                                        onclick="$('.buttons-print').click();" disabled>Print</button>
+                                        onclick="$('.buttons-print').click();" disabled>Print</button> -->
                                 </div>
                                 <br>
                                 <br>
@@ -418,15 +418,46 @@ to get the desired effect
         }
     })
     </script>
-    <script>
-    $(document).ready(function() {
-        $('.table').DataTable({
+   
+   
+   <script>
+    $('.table').DataTable().destroy();
+    $('.table').DataTable({
             dom: 'Blfrtip',
+            "deferRender": true,
             buttons: [
                 'print'
             ]
         });
-        $('.buttons-print').css('display', 'none');
+        $('.buttons-print').addClass('btn mt-2');
+        $('.buttons-print').css('border-radius', '5px');
+        $('.buttons-print').css('width', '100px');
+        $('.buttons-print').css('background', 'none');
+        $('.buttons-print').css('background-color', '#E7D7B7');
+        $('.buttons-print').css('border', 'none');
+        $('.dt-buttons').addClass('float-right');
+        $('.dataTables_length').css('width', '50%')
+        $('.dataTables_length').css('display', 'inline-block')
+        $('#DataTables_Table_0_filter').css('width', '50%')
+        $('#DataTables_Table_0_filter').css('display', 'inline-block')
+        $('#DataTables_Table_0_filter').css('text-align', 'right')
+        $('#deleteButton').prop('disabled', false)
+        $(document).ready(function() {
+            $('.table').DataTable().destroy();
+            $('.table').DataTable({
+                dom: 'Blfrtip',
+                buttons: [
+                    'print'
+                ]
+        });
+        // $('.buttons-print').css('display', 'none');
+        $('.buttons-print').addClass('btn mt-2');
+        $('.buttons-print').css('background', 'none');
+        $('.buttons-print').css('background-color', '#E7D7B7');
+        $('.buttons-print').css('border', 'none');
+        $('.buttons-print').css('border-radius', '5px');
+        $('.buttons-print').css('width', '100px');
+        $('.dt-buttons').addClass('float-right');
         $('.dataTables_length').css('width', '50%')
         $('.dataTables_length').css('display', 'inline-block')
         $('#DataTables_Table_0_filter').css('width', '50%')
