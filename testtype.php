@@ -237,7 +237,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                     <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">New Type</h4>
+                            <h4 class="modal-title">New User</h4>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <form action="insert_testtype.php" method="post">
@@ -245,7 +245,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 <div class="row">
                                     <input type="hidden" id="testtype_id" name="testtype_id">
                                     <div class="col-md-2" style="display: inline-block; width:350px">Test Type: </div>
-                                    <div class="col-md-7" style="display: inline-block"><input required class="form-control"
+                                    <div class="col-md-7" style="display: inline-block"><input class="form-control"
                                             id="testtype" name="testtype">
                                     </div>
                                 </div>

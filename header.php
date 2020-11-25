@@ -3,8 +3,7 @@
 // echo $_SESSION['userid'];
 if (!isset($_SESSION['userid'])) {
     echo '<script>window.open("Login/", "_self");</script>';
-}
-?>
+} ?>
 
 <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
 <!-- overlayScrollbars -->
@@ -139,44 +138,46 @@ if (!isset($_SESSION['userid'])) {
     padding: 3px 10px !important;
 }
 </style>
-<ul class="navbar-nav">
+<ul class="navbar-nav col-md-8">
     <li class="nav-item">
         <a class="nav-link" id="nav-menu" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
     </li>
-    <li class="nav-item">        
+    <li class="nav-item col-md-12">        
         <?php if ($_SESSION['usertype'] == 'admin') { ?>
 
         <select class="form-control" id="accounts_select">
             <option selected disabled>Please select Account</option>
             <?php
-                        $sql = 'SELECT * FROM accounts ORDER BY account_nm';
-                        $result = $conn->query($sql);
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                echo '<option value="' .
-                                    $row['account_id'] .
-                                    '">' .
-                                    $row['account_nm'] .
-                                    '</option>';
-                            }
-                        }
-                        ?>
+            $sql = 'SELECT * FROM accounts ORDER BY account_nm';
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo '<option value="' .
+                        $row['account_id'] .
+                        '">' .
+                        $row['account_nm'] .
+                        '</option>';
+                }
+            }
+            ?>
         </select>
-        <?php } else if ($_SESSION['usertype'] == 'accounts') { ?>
+        <?php } elseif ($_SESSION['usertype'] == 'accounts') { ?>
         <select class="form-control" id="accounts_select">
             <?php
-                        $sql = 'SELECT * FROM accounts WHERE account_id=' . $_SESSION['accountid'];
-                        $result = $conn->query($sql);
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                echo '<option selected value="' .
-                                    $row['account_id'] .
-                                    '">' .
-                                    $row['account_nm'] .
-                                    '</option>';
-                            }
-                        }
-                        ?>
+            $sql =
+                'SELECT * FROM accounts WHERE account_id=' .
+                $_SESSION['accountid'];
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo '<option selected value="' .
+                        $row['account_id'] .
+                        '">' .
+                        $row['account_nm'] .
+                        '</option>';
+                }
+            }
+            ?>
         </select>
 
         <?php } ?>
@@ -186,7 +187,8 @@ if (!isset($_SESSION['userid'])) {
 
 <!-- Right navbar links -->
 <ul class="navbar-nav ml-auto">
-    
+<?php if ($_SESSION['usertype'] == 'admin') { ?>
+
     <li class="nav-item">
             <a href="" class="nav-link nav-link-disabler" data-toggle="modal" data-target="#myModal_Employee" id="btn_add_employees">
                 <p id="desktop_emp">Employee</p>
@@ -199,6 +201,7 @@ if (!isset($_SESSION['userid'])) {
                 <p id="mobile_pref">Pref</p>
             </a>
     </li>
+    <?php } ?>
 
     <!-- <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
@@ -302,8 +305,8 @@ if (!isset($_SESSION['userid'])) {
                 </div> -->
             <div class="info">
                 <a href="#" class="d-block" style="font-size: 1.1em;"><b><?php echo ucwords(
-                        $_SESSION['username']
-                    ); ?></b></a>
+                    $_SESSION['username']
+                ); ?></b></a>
             </div>
         </div>
 
@@ -336,7 +339,7 @@ if (!isset($_SESSION['userid'])) {
 </aside>
 
 
-<?php } else if ($_SESSION['usertype'] == 'accounts') { ?>
+<?php } elseif ($_SESSION['usertype'] == 'accounts') { ?>
 
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -355,8 +358,8 @@ if (!isset($_SESSION['userid'])) {
                 </div> -->
             <div class="info">
                 <a href="#" class="d-block" style="font-size: 1.1em;"><b><?php echo ucwords(
-                        $_SESSION['username']
-                    ); ?></b></a>
+                    $_SESSION['username']
+                ); ?></b></a>
             </div>
         </div>
 
@@ -389,7 +392,7 @@ if (!isset($_SESSION['userid'])) {
 </aside>
 
 
-<?php } else if ($_SESSION['usertype'] == 'admin') { ?>
+<?php } elseif ($_SESSION['usertype'] == 'admin') { ?>
 
 
 
@@ -412,8 +415,8 @@ if (!isset($_SESSION['userid'])) {
                 </div> -->
             <div class="info">
                 <a href="#" class="d-block" style="font-size: 1.1em;"><b><?php echo ucwords(
-                        $_SESSION['username']
-                    ); ?></b></a>
+                    $_SESSION['username']
+                ); ?></b></a>
             </div>
         </div>
 
@@ -934,8 +937,7 @@ if (!isset($_SESSION['userid'])) {
     </div>
     <!-- /.sidebar -->
 </aside>
-<?php
-}?>
+<?php } ?>
 
 <div id="myModal_Preferences" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
@@ -952,7 +954,7 @@ if (!isset($_SESSION['userid'])) {
                     <?php
                     $sqlPreferences = 'SELECT * FROM `preferences`';
                     $resultPreferences = $conn->query($sqlPreferences);
-                    if($resultPreferences->num_rows > 0) {
+                    if ($resultPreferences->num_rows > 0) {
                         $rowPreferences = $resultPreferences->fetch_assoc();
                         // print_r($rowPreferences);
                     }
@@ -964,17 +966,45 @@ if (!isset($_SESSION['userid'])) {
                                 <select class="form-control" id="practitioner_default" name="practitioner_default">
                                     <option selected disabled value="">Please select a Practitioner</option>
                                     <?php
-                                        $sqlPractitioner = 'SELECT * FROM `practitioner` ORDER BY `practitioner`.`practitioner_nm` ASC';
-                                        $resultPractitioner = $conn->query($sqlPractitioner);
-                                        if($resultPractitioner->num_rows > 0) {
-                                            while($rowPractitioner = $resultPractitioner->fetch_assoc()) {
-                                                echo '<option value="'.$rowPractitioner['practitioner_id'].'"';
-                                                if(isset($rowPreferences['practitioner_id']))
-                                                    if($rowPractitioner['practitioner_id'] == $rowPreferences['practitioner_id'])
-                                                        echo 'selected';
-                                                echo '>'.$rowPractitioner['practitioner_nm'].'</option>';
+                                    $sqlPractitioner =
+                                        'SELECT * FROM `practitioner` ORDER BY `practitioner`.`practitioner_nm` ASC';
+                                    $resultPractitioner = $conn->query(
+                                        $sqlPractitioner
+                                    );
+                                    if ($resultPractitioner->num_rows > 0) {
+                                        while (
+                                            $rowPractitioner = $resultPractitioner->fetch_assoc()
+                                        ) {
+                                            echo '<option value="' .
+                                                $rowPractitioner[
+                                                    'practitioner_id'
+                                                ] .
+                                                '"';
+                                            if (
+                                                isset(
+                                                    $rowPreferences[
+                                                        'practitioner_id'
+                                                    ]
+                                                )
+                                            ) {
+                                                if (
+                                                    $rowPractitioner[
+                                                        'practitioner_id'
+                                                    ] ==
+                                                    $rowPreferences[
+                                                        'practitioner_id'
+                                                    ]
+                                                ) {
+                                                    echo 'selected';
+                                                }
                                             }
+                                            echo '>' .
+                                                $rowPractitioner[
+                                                    'practitioner_nm'
+                                                ] .
+                                                '</option>';
                                         }
+                                    }
                                     ?>
                                 </select>
                             </div>
@@ -985,17 +1015,31 @@ if (!isset($_SESSION['userid'])) {
                                 <select class="form-control" id="lab_default" name="lab_default">
                                     <option selected disabled value="">Please select a Lab</option>
                                     <?php
-                                        $sqlLab = 'SELECT * FROM `lab` ORDER BY `lab`.`lab_nm` ASC';
-                                        $resultLab = $conn->query($sqlLab);
-                                        if($resultLab->num_rows > 0) {
-                                            while($rowLab = $resultLab->fetch_assoc()) {
-                                                echo '<option value="'.$rowLab['lab_id'].'"';
-                                                if(isset($rowPreferences['lab_id']))
-                                                    if($rowLab['lab_id'] == $rowPreferences['lab_id'])
-                                                        echo 'selected';
-                                                echo '>'.$rowLab['lab_nm'].'</option>';
+                                    $sqlLab =
+                                        'SELECT * FROM `lab` ORDER BY `lab`.`lab_nm` ASC';
+                                    $resultLab = $conn->query($sqlLab);
+                                    if ($resultLab->num_rows > 0) {
+                                        while (
+                                            $rowLab = $resultLab->fetch_assoc()
+                                        ) {
+                                            echo '<option value="' .
+                                                $rowLab['lab_id'] .
+                                                '"';
+                                            if (
+                                                isset($rowPreferences['lab_id'])
+                                            ) {
+                                                if (
+                                                    $rowLab['lab_id'] ==
+                                                    $rowPreferences['lab_id']
+                                                ) {
+                                                    echo 'selected';
+                                                }
                                             }
+                                            echo '>' .
+                                                $rowLab['lab_nm'] .
+                                                '</option>';
                                         }
+                                    }
                                     ?>
                                 </select>
                             </div>
@@ -1006,17 +1050,37 @@ if (!isset($_SESSION['userid'])) {
                                 <select class="form-control" id="sampleType_default" name="sampleType_default">
                                     <option selected disabled value="">Please select a Sample Type</option>
                                     <?php
-                                        $sqlSampleType = 'SELECT * FROM `sampletype` ORDER BY `sampletype`.`sample_nm` ASC';
-                                        $resultSampleType = $conn->query($sqlSampleType);
-                                        if($resultSampleType->num_rows > 0) {
-                                            while($rowSampleType = $resultSampleType->fetch_assoc()) {
-                                                echo '<option value="'.$rowSampleType['sample_id'].'"';
-                                                if(isset($rowPreferences['sample_id']))
-                                                    if($rowSampleType['sample_id'] == $rowPreferences['sample_id'])
-                                                        echo 'selected';
-                                                echo '>'.$rowSampleType['sample_nm'].'</option>';
+                                    $sqlSampleType =
+                                        'SELECT * FROM `sampletype` ORDER BY `sampletype`.`sample_nm` ASC';
+                                    $resultSampleType = $conn->query(
+                                        $sqlSampleType
+                                    );
+                                    if ($resultSampleType->num_rows > 0) {
+                                        while (
+                                            $rowSampleType = $resultSampleType->fetch_assoc()
+                                        ) {
+                                            echo '<option value="' .
+                                                $rowSampleType['sample_id'] .
+                                                '"';
+                                            if (
+                                                isset(
+                                                    $rowPreferences['sample_id']
+                                                )
+                                            ) {
+                                                if (
+                                                    $rowSampleType[
+                                                        'sample_id'
+                                                    ] ==
+                                                    $rowPreferences['sample_id']
+                                                ) {
+                                                    echo 'selected';
+                                                }
                                             }
+                                            echo '>' .
+                                                $rowSampleType['sample_nm'] .
+                                                '</option>';
                                         }
+                                    }
                                     ?>
                                 </select>
                             </div>
@@ -1027,17 +1091,35 @@ if (!isset($_SESSION['userid'])) {
                                 <select class="form-control" id="testType_default" name="testType_default">
                                     <option selected disabled value="">Please select a Test Type</option>
                                     <?php
-                                        $sqlTestType = 'SELECT * FROM `testtype` ORDER BY `testtype`.`type_nm` ASC';
-                                        $resultTestType = $conn->query($sqlTestType);
-                                        if($resultTestType->num_rows > 0) {
-                                            while($rowTestType = $resultTestType->fetch_assoc()) {
-                                                echo '<option value="'.$rowTestType['type_id'].'"';
-                                                if(isset($rowPreferences['type_id']))
-                                                    if($rowTestType['type_id'] == $rowPreferences['type_id'])
-                                                        echo 'selected';
-                                                echo '>'.$rowTestType['type_nm'].'</option>';
+                                    $sqlTestType =
+                                        'SELECT * FROM `testtype` ORDER BY `testtype`.`type_nm` ASC';
+                                    $resultTestType = $conn->query(
+                                        $sqlTestType
+                                    );
+                                    if ($resultTestType->num_rows > 0) {
+                                        while (
+                                            $rowTestType = $resultTestType->fetch_assoc()
+                                        ) {
+                                            echo '<option value="' .
+                                                $rowTestType['type_id'] .
+                                                '"';
+                                            if (
+                                                isset(
+                                                    $rowPreferences['type_id']
+                                                )
+                                            ) {
+                                                if (
+                                                    $rowTestType['type_id'] ==
+                                                    $rowPreferences['type_id']
+                                                ) {
+                                                    echo 'selected';
+                                                }
                                             }
+                                            echo '>' .
+                                                $rowTestType['type_nm'] .
+                                                '</option>';
                                         }
+                                    }
                                     ?>
                                 </select>
                             </div>
@@ -1048,17 +1130,37 @@ if (!isset($_SESSION['userid'])) {
                                 <select class="form-control" id="testReason_default" name="testReason_default">
                                     <option selected disabled value="">Please select a Test Reason</option>
                                     <?php
-                                        $sqlTestReason = 'SELECT * FROM `reasons` ORDER BY `reasons`.`reason_nm` ASC';
-                                        $resultTestReason = $conn->query($sqlTestReason);
-                                        if($resultTestReason->num_rows > 0) {
-                                            while($rowTestReason = $resultTestReason->fetch_assoc()) {
-                                                echo '<option value="'.$rowTestReason['reason_id'].'"';
-                                                if(isset($rowPreferences['reason_id']))
-                                                    if($rowTestReason['reason_id'] == $rowPreferences['reason_id'])
-                                                        echo 'selected';
-                                                echo '>'.$rowTestReason['reason_nm'].'</option>';
+                                    $sqlTestReason =
+                                        'SELECT * FROM `reasons` ORDER BY `reasons`.`reason_nm` ASC';
+                                    $resultTestReason = $conn->query(
+                                        $sqlTestReason
+                                    );
+                                    if ($resultTestReason->num_rows > 0) {
+                                        while (
+                                            $rowTestReason = $resultTestReason->fetch_assoc()
+                                        ) {
+                                            echo '<option value="' .
+                                                $rowTestReason['reason_id'] .
+                                                '"';
+                                            if (
+                                                isset(
+                                                    $rowPreferences['reason_id']
+                                                )
+                                            ) {
+                                                if (
+                                                    $rowTestReason[
+                                                        'reason_id'
+                                                    ] ==
+                                                    $rowPreferences['reason_id']
+                                                ) {
+                                                    echo 'selected';
+                                                }
                                             }
+                                            echo '>' .
+                                                $rowTestReason['reason_nm'] .
+                                                '</option>';
                                         }
+                                    }
                                     ?>
                                 </select>
                             </div>
@@ -1163,11 +1265,18 @@ if (!isset($_SESSION['userid'])) {
             <?php
             $contact_send = '';
             $email_send = '';
-            if(isset($_GET['account']) && $_GET['account'] != null && $_GET['account'] != 'null' && $_GET['account'] != '') {
-                $sqlSend = 'SELECT * FROM acctsforemail WHERE (contact IS NOT NULL OR email IS NOT NULL) AND account_id = ' . $_GET['account'];
+            if (
+                isset($_GET['account']) &&
+                $_GET['account'] != null &&
+                $_GET['account'] != 'null' &&
+                $_GET['account'] != ''
+            ) {
+                $sqlSend =
+                    'SELECT * FROM acctsforemail WHERE (contact IS NOT NULL OR email IS NOT NULL) AND account_id = ' .
+                    $_GET['account'];
                 // echo $sqlSend;
                 $resultSend = $conn->query($sqlSend);
-                if($resultSend->num_rows > 0) {
+                if ($resultSend->num_rows > 0) {
                     $rowSend = $resultSend->fetch_assoc();
                     $contact_send = $rowSend['contact'];
                     $email_send = $rowSend['email'];
@@ -1300,7 +1409,9 @@ if (!isset($_SESSION['userid'])) {
                                                                 <label>Invoice Date: </label>
                                                             </div>
                                                             <div class="col-md-8 my-row-8-input">
-                                                                <input type="date" id="invoiceDateBill" class="form-control" value="<?php echo date('Y-m-d'); ?>">
+                                                                <input type="date" id="invoiceDateBill" class="form-control" value="<?php echo date(
+                                                                    'Y-m-d'
+                                                                ); ?>">
                                                             </div>
                                                         </div>
                                                         <div class="row">

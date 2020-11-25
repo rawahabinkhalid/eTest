@@ -207,20 +207,12 @@ to get the desired effect
                                     <!-- Date Range&emsp; -->
                                     <!-- <select class="form-control" style="width: calc(100% - 100px); display: inline-block;"><option>Please select Date Range</option> -->
                                     <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" style="display: none">
                                             <div class="input-group-text">
-                                            <input type="checkbox" style="height: calc(1.25rem); width: calc(1.25rem);" <?php echo isset(
-                                                $_POST['daterangeCheck']
-                                            )
-                                                ? 'checked'
-                                                : ''; ?> name="daterangeCheck" id="daterangeCheck" aria-label="Checkbox for following text input">
+                                            <input type="checkbox" checked style="height: calc(1.25rem); width: calc(1.25rem);" name="daterangeCheck" id="daterangeCheck" aria-label="Checkbox for following text input">
                                             </div>
                                         </div>
-                                        <div id="reportrange" style="width: calc(100% - 100px) !important; display: inline-block; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%; <?php echo isset(
-                                            $_POST['daterangeCheck']
-                                        )
-                                            ? ''
-                                            : 'pointer-events: none; background-color: #e9ecef;'; ?>">
+                                        <div id="reportrange" style="width: calc(100% - 100px) !important; display: inline-block; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%;">
                                         <i class="fa fa-calendar"></i>&nbsp;
                                         <span></span> <i class="fa fa-caret-down"></i>
                                     </div>                                    </div>
@@ -261,7 +253,7 @@ to get the desired effect
                                 <br>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-12 table-responsvie">
                                     <?php
                                     $account_filter = $_GET['account'];
                                     $sqlDate = '';
@@ -290,6 +282,13 @@ to get the desired effect
                                             '" AND "' .
                                             $date_end_filter .
                                             '"))';
+                                    } else {
+                                        $sqlDate =
+                                            ' AND ((collection_date >= "' .
+                                            date('Y') .
+                                            '-01-01 00:00:00")  OR (invoice_date  >= "' .
+                                            date('Y') .
+                                            '-01-01 00:00:00"))';
                                     }
                                     ?>
                         <table class="table">
@@ -311,39 +310,16 @@ to get the desired effect
 
                                 <?php
                                 $i = 1;
-                                // $sql = 'SELECT * FROM accounts';
-                                // $result = $conn->query($sql);
-                                // while ($row = $result->fetch_assoc()) {
-                                //     $name = $row['account_nm'];
-                                //     echo'<tr>';
-                                //     $sql1 = 'SELECT * FROM test WHERE account_id = '.$row['account_id'].'  AND invoice_id IS NOT NULL';
-                                //     // echo $sql1;
-                                //     $result1 = $conn->query($sql1);
-                                //     while($row1 = $result1->fetch_assoc()){
-                                // $sql = 'SELECT * FROM accounts';
-                                // $result = $conn->query($sql);
-                                // while ($row = $result->fetch_assoc()) {
-                                //     $totalAmount = 0;
-                                //     $name = $row['account_nm'];
-                                $prevName = '';
                                 $sql1 =
                                     'SELECT * FROM test JOIN accounts ON accounts.account_id = test.account_id JOIN employees ON employees.emp_id = test.emp_id JOIN testtype ON testtype.type_id = test.type_id JOIN invoice ON invoice.invoice_id = test.invoice_id WHERE accounts.account_id = ' .
                                     $account_filter .
                                     ' AND test.invoice_id IS NOT NULL ' .
                                     $sqlDate .
                                     ' ORDER BY collection_date, test.account_id';
-                                // echo $sql1;
                                 $result1 = $conn->query($sql1);
                                 $result2 = $conn->query($sql1);
                                 while ($row1 = $result1->fetch_assoc()) {
                                     $name = $row1['account_nm'];
-                                    //  if($prevName != $name && $prevName != '') {
-                                    //     $prevName = $name;
-                                    //     echo'<tr><td style="display: none">'.$name.'_totalamount</td><td></td><td><b>Total Amount</b></td><td></td><td>'.$totalAmount.'</td><td></td></tr>';
-                                    //     $totalAmount = 0;
-                                    //   } else if ($prevName == '') {
-                                    //     $prevName = $name;
-                                    //   }
                                     echo '<tr>';
                                     $typeId = $row1['type_id'];
                                     $collection = $row1['collection_date'];
@@ -354,49 +330,36 @@ to get the desired effect
                                     $lname = $row1['last_nm'];
                                     $typenm = $row1['type_nm'];
                                     $date = $row1['invoice_date'];
-                                    // $sql2 = 'SELECT * FROM employees WHERE emp_id ="'.$emp.'"';
-                                    // $result2 = $conn->query($sql2);
-                                    // $row3 = $result2->fetch_assoc();
-                                    // $fname = $row3['first_nm'];
-                                    // $lname = $row3['last_nm'];
-                                    // $sql4 ='SELECT * FROM testtype WHERE type_id='.$typeId;
-                                    // $result4 = $conn->query($sql4);
-                                    // $row4 = $result4->fetch_assoc();
-                                    // $typenm = $row4['type_nm'];
-                                    // $sql5 = 'SELECT * FROM invoice WHERE invoice_id = '.$invId;
-                                    // $result5 = $conn->query($sql5);
-                                    // $row5 = $result5->fetch_assoc();
-                                    // $date = $row5['invoice_date'];
 
                                     echo '
-                                          <td>' .
+                                      <td>' .
                                         $i .
                                         '</td>
-                                          <td>' .
+                                      <td>' .
                                         $name .
                                         '</td>
-                                          <td>' .
+                                      <td>' .
                                         $collection .
                                         '</td>
-                                          <td>' .
+                                      <td>' .
                                         $emp .
                                         '</td>
-                                          <td>' .
+                                      <td>' .
                                         $fname .
                                         '</td>
-                                          <td>' .
+                                      <td>' .
                                         $lname .
                                         '</td>
-                                          <td>' .
+                                      <td>' .
                                         $typenm .
                                         '</td>
-                                          <td>' .
+                                      <td>' .
                                         $invId .
                                         '</td>
-                                          <td>' .
+                                      <td>' .
                                         $amount .
                                         '</td>
-                                          <td>' .
+                                      <td>' .
                                         $date .
                                         '</td>';
                                     echo '</tr>';
@@ -407,6 +370,9 @@ to get the desired effect
                         </table>
                     </div><!-- /.container-fluid -->
                 </div>
+                                <?php
+//}
+?>
                 <!-- /.content-header -->
                 <!-- Main content -->
                 <div class="content">
@@ -414,10 +380,10 @@ to get the desired effect
 
                         <br><br>
                     </div>
-                    </div>
-                    </div>
-                    </div>
                     <!-- /.container-fluid -->
+                </div>
+                </div>
+                </div>
                 </div>
                 <!-- /.content -->
             </div>
@@ -469,10 +435,12 @@ to get the desired effect
                         'Last 7 Days': [moment().subtract(6, 'days'), moment()],
                         'Last 30 Days': [moment().subtract(29, 'days'), moment()],
                         'This Month': [moment().startOf('month'), moment().endOf('month')],
-                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                        'This Year': [moment().startOf('year'), moment().endOf('year')],
+                        'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
                         };
-            var start = ($('#daterange').val() != '') ? moment($('#daterange').val().split(" - ")[0]) : moment();
-            var end = ($('#daterange').val() != '') ? moment($('#daterange').val().split(" - ")[1]) : moment();
+            var start = ($('#daterange').val() != '') ? moment($('#daterange').val().split(" - ")[0]) : moment().startOf('year');
+            var end = ($('#daterange').val() != '') ? moment($('#daterange').val().split(" - ")[1]) : moment().endOf('year');
 
             function cb(start, end) {
                 $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
@@ -488,6 +456,7 @@ to get the desired effect
 
             cb(start, end);
 
+            $("#reportrange").datepicker().datepicker("setDate", [moment().startOf('year'), moment().endOf('year')]);
         });
 
         $('.ranges ul li').on('click', function() {
@@ -506,7 +475,23 @@ to get the desired effect
     })
     </script>
     <script>
+    $('.table').DataTable().destroy();
+    $('.table').DataTable({
+            dom: 'Blfrtip',
+            "deferRender": true,
+            buttons: [
+                'print'
+            ]
+        });
+        $('.buttons-print').css('display', 'none');
+        $('.dataTables_length').css('width', '50%')
+        $('.dataTables_length').css('display', 'inline-block')
+        $('#DataTables_Table_0_filter').css('width', '50%')
+        $('#DataTables_Table_0_filter').css('display', 'inline-block')
+        $('#DataTables_Table_0_filter').css('text-align', 'right')
+        $('#deleteButton').prop('disabled', false)
     $(document).ready(function() {
+        $('.table').DataTable().destroy();
         $('.table').DataTable({
             dom: 'Blfrtip',
             buttons: [

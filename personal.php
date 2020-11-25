@@ -115,11 +115,11 @@ to get the desired effect
                             </div>
                             <div class="row">
                                 <div class="col-md-2">Password</div>
-                                <div class="col-md-2"><input class="form-control" id="password" required name="password"></div>
+                                <div class="col-md-2"><input class="form-control" id="password" name="password"></div>
                             </div>
                             <div class="row" style="display: none;" id="confirm_pass_div">
                                 <div class="col-md-2">Confirm</div>
-                                <div class="col-md-2"><input class="form-control" required id="confirm_password"></div>
+                                <div class="col-md-2"><input class="form-control" id="confirm_password"></div>
                             </div>
                             <br>
                             <div class="row">

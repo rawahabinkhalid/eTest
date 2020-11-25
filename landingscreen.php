@@ -1,8 +1,8 @@
 <?php
-include_once "conn.php";
+include_once 'conn.php';
 if ($_SESSION['usertype'] == 'guest') {
     header('location: personal.php');
-} 
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,7 +52,7 @@ to get the desired effect
             <!-- Left navbar links -->
             <ul class="navbar-nav">
             </ul>
-            <?php include "header.php";?>
+            <?php include 'header.php'; ?>
 
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
@@ -81,17 +81,25 @@ to get the desired effect
                             <div class="col-md-3">
                                 <button type="button" name="" class="btn ml-1"
                                     style="background-color:#E7D7B7; border-radius:5px; width: 100%;"
-                                    onclick="window.open('retrievetest.php?account=<?php echo isset($_GET['account'])?$_GET['account']:'';?>', '_self');">Retrieve
+                                    onclick="window.open('retrievetest.php?account=<?php echo isset(
+                                        $_GET['account']
+                                    )
+                                        ? $_GET['account']
+                                        : ''; ?>', '_self');">Retrieve
                                     Tests</button>
                             </div>
                         </div>
                         <br>
-                        <?php if($_SESSION['userid'] === 'admin') { ?>
+                        <?php if ($_SESSION['userid'] === 'admin') { ?>
                         <div class="row">
                             <div class="col-md-3">
                                 <button type="button" name="" class="btn ml-1"
                                     style="background-color:#E7D7B7; border-radius:5px; width: 100%;"
-                                    onclick="window.open('testinfo.php?account=<?php echo isset($_GET['account'])?$_GET['account']:'';?>', '_self');">Enter a new
+                                    onclick="window.open('testinfo.php?account=<?php echo isset(
+                                        $_GET['account']
+                                    )
+                                        ? $_GET['account']
+                                        : ''; ?>', '_self');">Enter a new
                                     test</button>
                                 <br><br>
                             </div>
@@ -149,7 +157,9 @@ else {
     </script>
     <script>
     
-    $('#accounts_select').select2().on("change", function(e) {
+    $('#accounts_select').select2({
+        width: '100%'
+    }).on("change", function(e) {
         sessionStorage.setItem('account_selected', $(this).val());
         console.log($(this).val())
         console.log(location.pathname)

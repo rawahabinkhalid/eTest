@@ -196,20 +196,13 @@ to get the desired effect
                                     <!-- Date Range&emsp; -->
                                     <!-- <select class="form-control" style="width: calc(100% - 100px); display: inline-block;"><option>Please select Date Range</option> -->
                                     <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" style="display: none">
                                             <div class="input-group-text">
-                                            <input type="checkbox" style="height: calc(1.25rem); width: calc(1.25rem);" <?php echo isset(
-                                                $_POST['daterangeCheck']
-                                            )
-                                                ? 'checked'
-                                                : ''; ?> name="daterangeCheck" id="daterangeCheck" aria-label="Checkbox for following text input">
+                                            <input type="checkbox" checked style="height: calc(1.25rem); width: calc(1.25rem);" name="daterangeCheck" id="daterangeCheck" aria-label="Checkbox for following text input">
                                             </div>
                                         </div>
-                                        <div id="reportrange" style="width: calc(100% - 100px) !important; display: inline-block; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%; <?php echo isset(
-                                            $_POST['daterangeCheck']
-                                        )
-                                            ? ''
-                                            : 'pointer-events: none; background-color: #e9ecef;'; ?>">
+                                        <div id="reportrange" style="width: calc(100% - 100px) !important; display: inline-block; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%;">
+
                                         <i class="fa fa-calendar"></i>&nbsp;
                                         <span></span> <i class="fa fa-caret-down"></i>
                                     </div>                                    </div>
@@ -232,9 +225,7 @@ to get the desired effect
                             
                         <!-- </form> -->
                         <!-- <br><br> -->
-                        <?php if (
-                            isset($_GET['account'])
-                        ) { ?>
+                        <?php if (isset($_GET['account'])) { ?>
                         <!-- <form action="" method="POST" class=""> -->
                             <div class="row no-print">
                                 <div class="col-md-12" style="text-align: right">
@@ -274,6 +265,11 @@ to get the desired effect
                                             '" AND "' .
                                             $date_end_filter .
                                             '"))';
+                                    } else {
+                                        $sqlDate =
+                                            ' AND ((invoice_date >= "' .
+                                            date('Y') .
+                                            '-01-01 00:00:00"))';
                                     }
                                     ?>
                                     </div></div>
@@ -383,10 +379,13 @@ to get the desired effect
                         'Last 7 Days': [moment().subtract(6, 'days'), moment()],
                         'Last 30 Days': [moment().subtract(29, 'days'), moment()],
                         'This Month': [moment().startOf('month'), moment().endOf('month')],
-                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                        'This Year': [moment().startOf('year'), moment().endOf('year')],
+                        'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
                         };
-            var start = ($('#daterange').val() != '') ? moment($('#daterange').val().split(" - ")[0]) : moment();
-            var end = ($('#daterange').val() != '') ? moment($('#daterange').val().split(" - ")[1]) : moment();
+            var start = ($('#daterange').val() != '') ? moment($('#daterange').val().split(" - ")[0]) : moment().startOf('year');
+            var end = ($('#daterange').val() != '') ? moment($('#daterange').val().split(" - ")[1]) : moment().endOf('year');
+
 
             function cb(start, end) {
                 $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));

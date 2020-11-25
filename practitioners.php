@@ -266,7 +266,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                     <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">New Practitioner</h4>
+                            <h4 class="modal-title">New User</h4>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <form action="insert_practitioners.php" method="post" enctype="multipart/form-data">
@@ -274,33 +274,33 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 <div class="row">
                                     <input type="hidden" id="practitioner_id" name="practitioner_id">
                                     <div class="col-md-2" style="display: inline-block">Practitioner Name: </div>
-                                    <div class="col-md-7" style="display: inline-block"><input required class="form-control"
+                                    <div class="col-md-7" style="display: inline-block"><input class="form-control"
                                             id="practname" name="practname"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2" style="display: inline-block">Address: </div>
-                                    <div class="col-md-7" style="display: inline-block"><input required class="form-control"
+                                    <div class="col-md-7" style="display: inline-block"><input class="form-control"
                                             id="address" name="address"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2" style="display: inline-block">City: </div>
-                                    <div class="col-md-3" style="display: inline-block"><input required class="form-control"
+                                    <div class="col-md-3" style="display: inline-block"><input class="form-control"
                                             id="city" name="city"></div>
                                     <div class="col-md-1" style="display: inline-block">State: </div>
-                                    <div class="col-md-1" style="display: inline-block"><input required class="form-control"
+                                    <div class="col-md-1" style="display: inline-block"><input class="form-control"
                                             id="state" name="state"></div>
                                     <div class="col-md-1" style="display: inline-block">Zip: </div>
-                                    <div class="col-md-1" style="display: inline-block"><input required class="form-control"
+                                    <div class="col-md-1" style="display: inline-block"><input class="form-control"
                                             id="zip" name="zip"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2" style="display: inline-block">Phone: </div>
-                                    <div class="col-md-7" style="display: inline-block"><input required class="form-control"
+                                    <div class="col-md-7" style="display: inline-block"><input class="form-control"
                                             id="phone" name="phone"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2" style="display: inline-block">Fax: </div>
-                                    <div class="col-md-7" style="display: inline-block"><input required class="form-control"
+                                    <div class="col-md-7" style="display: inline-block"><input class="form-control"
                                             id="fax" name="fax"></div>
                                 </div>
                                 <div class="row">
@@ -310,7 +310,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                                             <legend>Signature File</legend>
                                             <a href="" id="signature_anchor" target="_blank"><img src=""
                                                     id="signature_image" height=100></a><br>
-                                            File Path: <input required class="form-control" type="file" name="signaturefile"><br>
+                                            File Path: <input class="form-control" type="file" name="signaturefile"><br>
 
                                         </fieldset>
                                     </div>
