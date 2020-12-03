@@ -6,7 +6,7 @@ if(isset($_GET['delete_user_id'])) {
     $userid =$_GET['delete_user_id'];
 
     $sql = 'DELETE FROM users WHERE `user_id` = ' . $userid;
-    echo $sql;
+    // echo $sql;
     if($conn->query($sql))
     {
         echo "<script>alert('The data has been uploaded.');window.open('users.php', '_self');</script>";

@@ -77,11 +77,11 @@ include_once "conn.php";
     }
 
     function propertiesClicked() {
-        alert(selected_user);
+        // alert(selected_user);
         document.getElementsByClassName('modal-title')[0].innerHTML = 'Edit User';
         $.ajax({
             type: "GET",
-            url: "getAllData.php?user_id='" + selected_user + "'",
+            url: "getAllData.php?user_id=" + encodeURIComponent(selected_user),
             success: function(resultData) {
                 console.log(resultData);
                 var data = JSON.parse(resultData);
@@ -91,6 +91,22 @@ include_once "conn.php";
                 $('#lname').val(data.last_nm);
                 $('#password').val(data.password);
                 $('#accountSelect').val(data.account_id);
+
+                var accId = $('#accountSelect').val();
+                $.ajax({
+                    url: 'get_location_testinfo.php?account_id_location=' + accId,
+                    type: 'POST',
+
+                    success: function(data) {
+                        // alert(data);
+                        $('#locationSelect').html(data);
+                        $('#locationSelect').val(data.location)
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+
                 // $('#locationSelect').val(data.location);
                 if (data.admin === 'T') {
                     $('.checkbox').prop('checked', true)
@@ -217,7 +233,7 @@ to get the desired effect
                                         <tbody>
                                             <?php
                                             $count = 1;
-                                            $sql = 'SELECT * FROM users LEFT JOIN accounts ON users.account_id = accounts.account_id';
+                                            $sql = 'SELECT users.*, account_nm FROM users LEFT JOIN accounts ON users.account_id = accounts.account_id';
                                             $result = mysqli_query($conn, $sql);
                                             if(mysqli_num_rows($result) > 0) {
                                                 while ($row = mysqli_fetch_assoc($result)) {
@@ -394,6 +410,20 @@ to get the desired effect
 
     <script>
     $(document).ready(function() {
+        $('#accountSelect').val($('#accounts_select').val());
+        var accId = $('#accounts_select').val();
+        $.ajax({
+            url: 'get_location_testinfo.php?account_id_location=' + accId,
+            type: 'POST',
+
+            success: function(data) {
+                // alert(data);
+                $('#locationSelect').html(data);
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
         $('#table_users').DataTable();
     });
     $('#accountSelect').on('change', function() {

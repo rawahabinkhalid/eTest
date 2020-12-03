@@ -48,7 +48,7 @@ if(isset($_GET['practitioner_id'])) {
         echo json_encode($row);
     }
 } else if (isset($_GET['user_id'])) {
-    $sql = 'SELECT users.*, userlocation.location FROM users LEFT JOIN userlocation ON users.user_id = userlocation.user_id  WHERE users.user_id = '.$_GET['user_id'];
+    $sql = 'SELECT users.*, userlocation.location FROM users LEFT JOIN userlocation ON users.user_id = userlocation.user_id  WHERE users.user_id = "'.$_GET['user_id'] . '"';
     // echo $sql;
     $result = $conn->query($sql);
     if($result->num_rows > 0) {

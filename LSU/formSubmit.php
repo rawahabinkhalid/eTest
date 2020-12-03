@@ -81,7 +81,7 @@ $result = $conn->query($sql);
 if (!$result) {
     // echo "Success";
     // header('location: LSU_Table.php');
-    echo $sql;
+    // echo $sql;
     echo $conn->error;
 } else {
     date_default_timezone_set('Asia/Karachi');

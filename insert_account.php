@@ -8,7 +8,7 @@ if(isset($_GET['delete_account_id'])) {
     $account_id =$_GET['delete_account_id'];
 
     $sql = 'DELETE FROM accounts WHERE `account_id` = ' . $account_id;
-    echo $sql;
+    // echo $sql;
     if($conn->query($sql))
     {
         echo "The data has been uploaded.";
@@ -57,7 +57,7 @@ if(isset($_GET['delete_account_id'])) {
                 if($result3->num_rows > 0) {
                     $row3 = $result3->fetch_assoc();
                     $sql2 = 'INSERT INTO `employees` (`emp_id`, `account_id`, `division_id`, `first_nm`, `last_nm`, `status`, `specimen_id`, `insert_user_id`, `insert_date`) VALUES ("'.$accountsData->employees[$i]->emp_id.'", '.$account_id.', "'.$row3['division_id'].'", "'.$accountsData->employees[$i]->first_nm.'", "'.$accountsData->employees[$i]->last_nm.'", "'.$accountsData->employees[$i]->status.'", "'.$accountsData->employees[$i]->specimen_id.'", "'.$_SESSION['userid'].'", "'.date('Y-m-d H:i:s').'")';
-                    echo $sql2;
+                    // echo $sql2;
                     if($conn->query($sql2)) {
                         // echo "The data has been uploaded.";
                     } else {
@@ -105,7 +105,7 @@ if(isset($_GET['delete_account_id'])) {
                         }
                         for($J = 0; $J < count($accountsData->fees); $J++) {
                             $sql2 = 'INSERT INTO `fees` (`account_id`, `type_id`, `amount`) VALUES ('.$account_id.', "'.$accountsData->fees[$J]->type_id.'", "'.$accountsData->fees[$J]->amount.'")';
-                            echo $sql2;
+                            // echo $sql2;
                             if($conn->query($sql2)) {
                                 // echo "The data has been uploaded.";
                             } else {

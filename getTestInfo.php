@@ -283,7 +283,7 @@ to get the desired effect
                                             <div class="form-group">
                                                 <input type="radio" id="negative_pos"
                                                     <?php if(isset($row['result']) && $row['result']=="N") echo "checked"; ?>
-                                                    name="negative_positive">
+                                                    name="negative_positive" disabled>
                                                 Negative
                                             </div>
                                         </label>
@@ -304,7 +304,7 @@ to get the desired effect
                                     <div class="col-md-3" style="display: inline-block">
                                         <label for="negative_positive" style="display: inline-block; text-align: left;">
                                             <input type="radio" id="negative_positive" name="negative_positive"
-                                                <?php if(isset($row['result']) && $row['result']=="P") echo "checked"; ?>>
+                                                <?php if(isset($row['result']) && $row['result']=="P") echo "checked"; ?>  disabled>
                                             Positive for the Following:
                                         </label>
                                     </div>
@@ -343,7 +343,7 @@ to get the desired effect
                                         <div class="form-group">
                                             <label for="other_substances" style="display: inline-block">
                                                 <input type="checkbox" name="" id="other_substances" value=""
-                                                    <?php if(isset($row['other']) ) echo "checked"; ?>>
+                                                    <?php if(isset($row['other']) ) echo "checked"; ?>  disabled>
                                                 Other Substances:
                                             </label>
                                         </div>
@@ -361,9 +361,13 @@ to get the desired effect
                             </div>
                         </div>
                         <br>
+
+                        <?php if ($_SESSION['usertype'] != 'accounts') { ?>
+
                         <button type="button" name="submitPurchase" class="btn ml-1"
                             style="background-color:#E7D7B7; border-radius:12px; width: 100px;"
                             onclick="window.open('testinfo.php', '_self');">New</button>
+                        <?php } ?>
                         <button type="button" name="" id="" class="btn ml-1"
                             style="background-color:#E7D7B7; border-radius:12px; width: 100px;" onclick="window.open('viewMROReport.php?id=<?php echo $_GET['id']; ?>', '_blank'
                             );">Print</button>

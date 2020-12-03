@@ -175,21 +175,6 @@ to get the desired effect
                     </div>
                 </div>
             </form> -->
-            <div class="col-md-6 col-sm-6">
-                <div class="input-group input-group-sm">
-                    <select class="form-control" id="accounts_select">
-                        <?php
-$sql = 'SELECT * FROM accounts';
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        echo '<option value="' . $row['account_id'] . '">' . $row['account_nm'] . '</option>';
-    }
-}
-?>
-                    </select>
-                </div>
-            </div>
             <?php include "header.php";?>
 
             <!-- Content Wrapper. Contains page content -->
@@ -276,9 +261,9 @@ while ($row = mysqli_fetch_assoc($result)) {
                                     <button type="button" name="" class="btn mt-2" data-toggle="modal"
                                         data-target="#myModal" onclick="addClicked();"
                                         style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Add</button>
-                                    <button type="button" id="deleteButton" class="btn mt-2"
+                                    <!-- <button type="button" id="deleteButton" class="btn mt-2"
                                         style="background-color:#E7D7B7; border-radius:5px; width: 100px;"
-                                        onclick="deleteClicked();" disabled>Remove</button>
+                                        onclick="deleteClicked();" disabled>Remove</button> -->
                                     <button type="button" name="" class="btn mt-2"
                                         style="background-color:#E7D7B7; border-radius:5px; width: 100px;"
                                         data-toggle="modal" id="propertiesButton" data-target="#myModal"
@@ -298,7 +283,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                 <div class="modal-dialog modal-lg" style="max-width:65%">
 
                     <!-- Modal content-->
-                    <form action="insert_users.php" method="post">
+                    <form action="insert_invoice.php" method="post">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title">New Invoice</h4>

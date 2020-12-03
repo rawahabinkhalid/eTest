@@ -198,20 +198,12 @@ to get the desired effect
                                     <!-- Date Range&emsp; -->
                                     <!-- <select class="form-control" style="width: calc(100% - 100px); display: inline-block;"><option>Please select Date Range</option> -->
                                     <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend" style="display: none">
                                             <div class="input-group-text">
-                                            <input type="checkbox" style="height: calc(1.25rem); width: calc(1.25rem);" <?php echo isset(
-                                                $_POST['daterangeCheck']
-                                            )
-                                                ? 'checked'
-                                                : ''; ?> name="daterangeCheck" id="daterangeCheck" aria-label="Checkbox for following text input">
+                                            <input type="checkbox" checked style="height: calc(1.25rem); width: calc(1.25rem);" name="daterangeCheck" id="daterangeCheck" aria-label="Checkbox for following text input">
                                             </div>
                                         </div>
-                                        <div id="reportrange" style="width: calc(100% - 100px) !important; display: inline-block; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%; <?php echo isset(
-                                            $_POST['daterangeCheck']
-                                        )
-                                            ? ''
-                                            : 'pointer-events: none; background-color: #e9ecef;'; ?>">
+                                        <div id="reportrange" style="width: calc(100% - 100px) !important; display: inline-block; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%;">
                                         <i class="fa fa-calendar"></i>&nbsp;
                                         <span></span> <i class="fa fa-caret-down"></i>
                                     </div>                                    </div>
@@ -228,9 +220,11 @@ to get the desired effect
                                     <button type="submit" name="filterData" class="btn mt-2"
                                         style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Filter</button>
                                     <button type="button" class="btn mt-2"
-                                    onclick="window.open('viewInvoice.php', '_self');" style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Reset</button>
+                                        onclick="window.open('viewInvoice.php', '_self');"
+                                        style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Reset</button>
                                 </div>
                             </div>
+
                             
                         <!-- </form> -->
                         <!-- <br><br> -->
@@ -242,9 +236,9 @@ to get the desired effect
                                 <div class="col-md-12" style="text-align: right">
                                     <button type="submit"  name="filterData" class="btn mt-2"
                                         style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Retrieve</button>
-                                    <button type="button" id="deleteButton" class="btn mt-2"
+                                    <!-- <button type="button" id="deleteButton" class="btn mt-2"
                                         style="background-color:#E7D7B7; border-radius:5px; width: 100px;"
-                                        onclick="$('.buttons-print').click();" disabled>Print</button>
+                                        onclick="$('.buttons-print').click();" disabled>Print</button> -->
                                 </div>
                                 <br>
                                 <br>
@@ -276,6 +270,11 @@ to get the desired effect
                                             '" AND "' .
                                             $date_end_filter .
                                             '"))';
+                                    } else {
+                                        $sqlDate =
+                                            ' AND ((invoice_date  >= "' .
+                                            date('Y') .
+                                            '-01-01 00:00:00"))';
                                     }
                                     ?>
                                     </div></div>
@@ -312,6 +311,7 @@ to get the desired effect
                                         $row1['account_id'] .
                                         ' WHERE accounts.account_id = ' .
                                         $row1['account_id'] .
+                                        $sqlDate .
                                         ' ORDER BY invoice_id, accounts.account_id';
                                     // echo $sql;
                                     $result = $conn->query($sql);
@@ -463,15 +463,45 @@ to get the desired effect
         }
     })
     </script>
-    <script>
-    $(document).ready(function() {
-        $('.table').DataTable({
+   
+  <script>
+    $('.table').DataTable().destroy();
+    $('.table').DataTable({
             dom: 'Blfrtip',
+            "deferRender": true,
             buttons: [
                 'print'
             ]
         });
-        $('.buttons-print').css('display', 'none');
+        $('.buttons-print').addClass('btn mt-2');
+        $('.buttons-print').css('border-radius', '5px');
+        $('.buttons-print').css('width', '100px');
+        $('.buttons-print').css('background', 'none');
+        $('.buttons-print').css('background-color', '#E7D7B7');
+        $('.buttons-print').css('border', 'none');
+        $('.dt-buttons').addClass('float-right');
+        $('.dataTables_length').css('width', '50%')
+        $('.dataTables_length').css('display', 'inline-block')
+        $('#DataTables_Table_0_filter').css('width', '50%')
+        $('#DataTables_Table_0_filter').css('display', 'inline-block')
+        $('#DataTables_Table_0_filter').css('text-align', 'right')
+        $('#deleteButton').prop('disabled', false)
+        $(document).ready(function() {
+            $('.table').DataTable().destroy();
+            $('.table').DataTable({
+                dom: 'Blfrtip',
+                buttons: [
+                    'print'
+                ]
+        });
+        // $('.buttons-print').css('display', 'none');
+        $('.buttons-print').addClass('btn mt-2');
+        $('.buttons-print').css('background', 'none');
+        $('.buttons-print').css('background-color', '#E7D7B7');
+        $('.buttons-print').css('border', 'none');
+        $('.buttons-print').css('border-radius', '5px');
+        $('.buttons-print').css('width', '100px');
+        $('.dt-buttons').addClass('float-right');
         $('.dataTables_length').css('width', '50%')
         $('.dataTables_length').css('display', 'inline-block')
         $('#DataTables_Table_0_filter').css('width', '50%')
@@ -480,6 +510,8 @@ to get the desired effect
         $('#deleteButton').prop('disabled', false)
     });
     </script>
+
+   
     <script>
         $('#accountSelect').on('change',function(){
             var accId = $(this).val();

@@ -6,7 +6,7 @@ if(isset($_GET['delete_laboratories_id'])) {
     $laboratories_id =$_GET['delete_laboratories_id'];
 
     $sql = 'DELETE FROM lab WHERE `lab_id` = ' . $laboratories_id;
-    echo $sql;
+    // echo $sql;
     if($conn->query($sql))
     {
         // echo "<script>alert('The data has been uploaded.');</script>";
@@ -31,7 +31,7 @@ if(isset($_GET['delete_laboratories_id'])) {
     if(isset($_POST['laboratories_id']) && $_POST['laboratories_id'] == '') {
         
         $sql = 'INSERT INTO `lab` (`lab_nm`,`address`,`city`,`state`,`zip`,`phone`,`fax`) VALUES ("'.$labname.'","'.$address.'","'.$city.'","'.$state.'","'.$zip.'","'.$phone.'","'.$fax.'")';
-        echo $sql;
+        // echo $sql;
         if($conn->query($sql))
         {
             // echo "<script>alert('The data has been uploaded.');</script>";

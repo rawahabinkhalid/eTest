@@ -155,7 +155,7 @@ if ($conn->query($sql)) {
     // }
     echo "id=" . $id;
 } else {
-    echo $sql;
+    // echo $sql;
 }
 
 ?>

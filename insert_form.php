@@ -6,11 +6,11 @@ if(isset($_GET['delete_form_id'])) {
     $form_id =$_GET['delete_form_id'];
 
     $sql = 'DELETE FROM drugform WHERE `form_id` = ' . $form_id;
-    echo $sql;
+    // echo $sql;
     if($conn->query($sql))
     {
         $sql1 = 'DELETE FROM formdrugs WHERE `form_id` = ' . $form_id;
-        echo $sql1;
+        // echo $sql1;
         if($conn->query($sql1))
         {
             echo "<script>alert('The data has been uploaded.');window.open('form.php', '_self');</script>";
@@ -38,7 +38,7 @@ if(isset($_GET['delete_form_id'])) {
         $drugs =$_POST['drugs'];
 
         $sql = 'INSERT INTO `drugform` (`form_nm`,`form_type`) VALUES ("'.$formname.'","'.$formtype.'")';
-        echo $sql;
+        // echo $sql;
         if($conn->query($sql))
         {
             $id = $conn->insert_id;
@@ -70,11 +70,11 @@ if(isset($_GET['delete_form_id'])) {
         $formtype =$_POST['formtype'];
         $drugs =$_POST['drugs'];
         $sql1 = 'DELETE FROM formdrugs WHERE `form_id` = ' . $form_id;
-        echo $sql1;
+        // echo $sql1;
         if($conn->query($sql1))
         {
             $sql = 'UPDATE `drugform` SET `form_nm` = "'.$formname.'", `form_type` = "'.$formtype.'" WHERE form_id = ' . $form_id;
-            echo $sql;
+            // echo $sql;
             if($conn->query($sql))
             {
                 for($i = 0; $i < count($drugs); $i++) {

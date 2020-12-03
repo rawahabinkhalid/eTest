@@ -19,7 +19,7 @@ if($_FILES['cmplogo']['name'] != '') {
 
 $sql = 'INSERT INTO company (`company_nm`, `address`, `city`, `state`, `zip`, `phone`, `fax`, `logo_file_nm`) VALUES ("'.$companyname.'", "'.$address.'", "'.$city.'", "'.$state.'", "'.$zip.'", "'.$phone.'", "'.$fax.'", "'.$imageSql.'")';
 // $sql = 'UPDATE company SET `company_nm` = "'.$companyname.'" , `address` = "'.$address.'" , `city` = "'.$city.'" , `state` = "'.$state.'" , `zip` = "'.$zip.'" , `phone` = "'.$phone.'" , `fax` = "'.$fax.'" '.$imageSql.' WHERE  `company_id` = 1 ';
-echo $sql;
+// echo $sql;
 if($conn->query($sql))
 {
     $target_dir = "uploads/";
