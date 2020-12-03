@@ -23,6 +23,7 @@ include_once "conn.php";
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <script src="plugins/jquery/jquery.min.js"></script>
+    <link href="plugins/select2/css/select2.min.css" rel="stylesheet">
 
     <style>
     label {
@@ -179,21 +180,21 @@ to get the desired effect
                 </form> -->
             <!-- <div class="col-md-1 col-sm-1">
                 </div> -->
-            <div class="col-md-6 col-sm-6">
+            <!-- <div class="col-md-6 col-sm-6">
                 <div class="input-group input-group-sm">
-                    <select class="form-control" id="accounts_select">
+                    <select class="form-control" id="accounts_select"> -->
                         <?php
-$sql = 'SELECT * FROM accounts';
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        echo '<option value="' . $row['account_id'] . '">' . $row['account_nm'] . '</option>';
-    }
-}
+// $sql = 'SELECT * FROM accounts';
+// $result = $conn->query($sql);
+// if ($result->num_rows > 0) {
+//     while ($row = $result->fetch_assoc()) {
+//         echo '<option value="' . $row['account_id'] . '">' . $row['account_nm'] . '</option>';
+//     }
+// }
 ?>
-                    </select>
+                    <!-- </select>
                 </div>
-            </div>
+            </div> -->
             <?php include "header.php";?>
             <!-- </div>
             </div> -->
@@ -412,6 +413,8 @@ while ($row = mysqli_fetch_assoc($result)) {
     <script src="plugins/chart.js/Chart.min.js"></script>
     <script src="dist/js/demo.js"></script>
     <script src="dist/js/pages/dashboard3.js"></script>
+    <script src="plugins/select2/js/select2.min.js"></script>
+
 </body>
 <script>
 $(document).ready(function() {
@@ -446,5 +449,16 @@ $('#location').on('change', function() {
     });
 });
 </script>
+    <script>
+    $('#testfromuse').select2({
+        width: '100%'
+    });
+    $('#location').select2({
+        width: '100%'
+    });
+    $('#testreason').select2({
+        width: '100%'
+    });
+    </script>
 
 </html>
