@@ -1833,7 +1833,7 @@ $('#form_send_email').on('submit', function(e) {
 <script>
 
 function addPreferences() {
-    $('#myModal_Preferences').modal('hide');
+    // $('#myModal_Preferences').modal('hide');
     var temp = {};
     temp['practitioner_default'] = $('#practitioner_default').val();
     temp['lab_default'] = $('#lab_default').val();
