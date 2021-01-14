@@ -14,10 +14,10 @@ include_once '../conn.php';
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
-    #form-control {
-        height: 10p !important;
+        #form-control {
+            height: 10p !important;
 
-    }
+        }
     </style>
 
 
@@ -35,36 +35,39 @@ include_once '../conn.php';
                 // $conn = mysqli_connect("localhost","root","","etest");
                 $sql = 'SELECT * FROM lsuform WHERE Id = ' . $_GET['id'];
                 $result = $conn->query($sql);
-                $row = $result->fetch_assoc();
+                if ($result->num_rows > 0)
+                    $row = $result->fetch_assoc();
 
                 $sql1 = 'SELECT * FROM testtype WHERE type_id = ' . $row['TestType'];
                 // echo $sql1;
                 $result1 = $conn->query($sql1);
-                $row1 = $result1->fetch_assoc();
+                if ($result1->num_rows > 0)
+                    $row1 = $result1->fetch_assoc();
 
                 $sql2 = 'SELECT * FROM testtype WHERE type_id = ' . $row['Type2'];
                 // echo $sql2;
                 $result2 = $conn->query($sql2);
-                $row2 = $result2->fetch_assoc();
+                if ($result2->num_rows > 0)
+                    $row2 = $result2->fetch_assoc();
 
                 $sql3 = 'SELECT * FROM testtype WHERE type_id = ' . $row['Type3'];
                 // echo $sql3;
                 $result3 = $conn->query($sql3);
-                $row3 = $result3->fetch_assoc();
+                if ($result3->num_rows > 0)
+                    $row3 = $result3->fetch_assoc();
 
                 $sql4 = 'SELECT * FROM reasons WHERE reason_code = "' . $row['Reason'] . '"';
                 // echo $sql4;
                 $result4 = $conn->query($sql4);
-                $row4 = $result4->fetch_assoc();
+                if ($result4->num_rows > 0)
+                    $row4 = $result4->fetch_assoc();
                 ?>
 
                 <label class="mt-2" style="font-size: 13px; margin-right: 188px;"><b>Client</b></label>
                 <div class="col-md-4">
                     <div class="form-group">
                         <select disabled type="text" name="client" id="client" class="form-control">
-                            <option selected><?php echo $row[
-                                'Client'
-                            ]; ?></option>
+                            <option selected><?php echo (isset($row['Client'])) ? $row['Client'] : ''; ?></option>
                         </select>
                     </div>
                 </div>
@@ -76,8 +79,7 @@ include_once '../conn.php';
                 <div class="col-md-4">
                     <div class="form-group">
 
-                        <input disabled type="text" name="dept" id="dept" class="form-control"
-                            value="<?php echo $row['Dept']; ?>">
+                        <input disabled type="text" name="dept" id="dept" class="form-control" value="<?php echo (isset($row['Client'])) ? $row['Dept'] : ''; ?>">
                     </div>
                 </div>
             </div>
@@ -88,8 +90,7 @@ include_once '../conn.php';
                 <div class="col-md-4">
                     <div class="form-group">
 
-                        <input disabled type="text" name="fname" id="fname" class="form-control"
-                            value="<?php echo $row['FirstName']; ?>">
+                        <input disabled type="text" name="fname" id="fname" class="form-control" value="<?php echo (isset($row['FirstName'])) ? $row['FirstName'] : ''; ?>">
                     </div>
                 </div>
             </div>
@@ -100,8 +101,7 @@ include_once '../conn.php';
                 <div class="col-md-4">
                     <div class="form-group">
 
-                        <input disabled type="text" name="lname" id="lname" class="form-control"
-                            value="<?php echo $row['LastName']; ?>">
+                        <input disabled type="text" name="lname" id="lname" class="form-control" value="<?php echo (isset($row['LastName'])) ? $row['LastName'] : ''; ?>">
                     </div>
                 </div>
             </div>
@@ -112,8 +112,7 @@ include_once '../conn.php';
                 <div class="col-md-4">
                     <div class="form-group">
 
-                        <input disabled type="text" name="ssn" id="ssn" class="form-control"
-                            value="<?php echo $row['SSN']; ?>">
+                        <input disabled type="text" name="ssn" id="ssn" class="form-control" value="<?php echo (isset($row['SSN'])) ? $row['SSN'] : ''; ?>">
                     </div>
                 </div>
             </div>
@@ -124,8 +123,7 @@ include_once '../conn.php';
                 <div class="col-md-4">
                     <div class="form-group">
 
-                        <input disabled type="text" name="specimen" id="specimen" class="form-control"
-                            value="<?php echo $row['Specimen']; ?>">
+                        <input disabled type="text" name="specimen" id="specimen" class="form-control" value="<?php echo (isset($row['Specimen'])) ? $row['Specimen'] : ''; ?>">
                     </div>
                 </div>
             </div>
@@ -137,9 +135,7 @@ include_once '../conn.php';
                 <div class="col-md-7">
                     <div class="form-group">
                         <select disabled type="text" name="collectionSite" id="collectionSite" class="form-control">
-                            <option selected><?php echo $row[
-                                'Collection'
-                            ]; ?></option>
+                            <option selected><?php echo (isset($row['Collection'])) ? $row['Collection'] : ''; ?></option>
                         </select>
                     </div>
                 </div>
@@ -151,24 +147,19 @@ include_once '../conn.php';
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>Account</label>
-                        <input disabled type="text" name="account" id="account" placeholder="533020"
-                            class="form-control" readonly value="<?php echo $row[
-                                'Account'
-                            ]; ?>">
+                        <input disabled type="text" name="account" id="account" placeholder="533020" class="form-control" readonly value="<?php echo (isset($row['Account'])) ? $row['Account'] : ''; ?>">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>Fund</label>
-                        <input disabled type="text" name="fund" id="fund" class="form-control"
-                            value="<?php echo $row['Fund']; ?>">
+                        <input disabled type="text" name="fund" id="fund" class="form-control" value="<?php echo (isset($row['Fund'])) ? $row['Fund'] : ''; ?>">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>Department</label>
-                        <input disabled type="text" name="department" id="department" class="form-control"
-                            value="<?php echo $row['Department']; ?>">
+                        <input disabled type="text" name="department" id="department" class="form-control" value="<?php echo (isset($row['Department'])) ? $row['Department'] : ''; ?>">
                     </div>
                 </div>
             </div>
@@ -178,22 +169,19 @@ include_once '../conn.php';
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>Program</label>
-                        <input disabled type="text" name="program" id="program" class="form-control"
-                            value="<?php echo $row['Program']; ?>">
+                        <input disabled type="text" name="program" id="program" class="form-control" value="<?php echo (isset($row['Program'])) ? $row['Program'] : ''; ?>">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>Class</label>
-                        <input disabled type="text" name="class" id="class" class="form-control"
-                            value="<?php echo $row['Class']; ?>">
+                        <input disabled type="text" name="class" id="class" class="form-control" value="<?php echo (isset($row['Class'])) ? $row['Class'] : ''; ?>">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>Project</label>
-                        <input disabled type="text" name="project" id="project" class="form-control"
-                            value="<?php echo $row['Project']; ?>">
+                        <input disabled type="text" name="project" id="project" class="form-control" value="<?php echo (isset($row['Project'])) ? $row['Project'] : ''; ?>">
                     </div>
                 </div>
             </div>
@@ -204,15 +192,13 @@ include_once '../conn.php';
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>Contact</label>
-                        <input disabled type="text" name="contact" id="contact" class="form-control"
-                            value="<?php echo $row['Contact']; ?>">
+                        <input disabled type="text" name="contact" id="contact" class="form-control" value="<?php echo (isset($row['Contact'])) ? $row['Contact'] : ''; ?>">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>Email</label>
-                        <input disabled type="text" name="email" id="email" class="form-control"
-                            value="<?php echo $row['Email']; ?>">
+                        <input disabled type="text" name="email" id="email" class="form-control" value="<?php echo (isset($row['Email'])) ? $row['Email'] : ''; ?>">
                     </div>
                 </div>
             </div>
@@ -222,8 +208,7 @@ include_once '../conn.php';
                 <label class="mt-2" style="font-size: 13px; margin-right: 146px;"><b>Requested By</b></label>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <input disabled type="text" name="requestedBy" id="requestedBy" class="form-control"
-                            value="<?php echo $row['RequestedBy']; ?>">
+                        <input disabled type="text" name="requestedBy" id="requestedBy" class="form-control" value="<?php echo (isset($row['RequestedBy'])) ? $row['RequestedBy'] : ''; ?>">
                     </div>
                 </div>
 
@@ -234,8 +219,7 @@ include_once '../conn.php';
                 <label class="mt-2" style="font-size: 13px; margin-right: 135px;"><b>Requested Date</b></label>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <input disabled type="date" name="requestedDate" id="requestedDate" class="form-control"
-                            value="<?php echo $row['RequestedDate']; ?>">
+                        <input disabled type="date" name="requestedDate" id="requestedDate" class="form-control" value="<?php echo (isset($row['RequestedDate'])) ? $row['RequestedDate'] : ''; ?>">
                     </div>
                 </div>
             </div>
@@ -245,8 +229,7 @@ include_once '../conn.php';
                 <label class="mt-2" style="font-size: 13px; margin-right: 115px;"><b>Collection Deadline</b></label>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <input disabled type="date" name="deadline" id="deadline" class="form-control"
-                            value="<?php echo $row['Deadline']; ?>">
+                        <input disabled type="date" name="deadline" id="deadline" class="form-control" value="<?php echo (isset($row['Deadline'])) ? $row['Deadline'] : ''; ?>">
                     </div>
                 </div>
             </div>
@@ -257,9 +240,7 @@ include_once '../conn.php';
                 <div class="col-md-4">
                     <div class="form-group">
                         <select disabled type="text" name="type" id="type" class="form-control">
-                            <option selected><?php echo $row1[
-                                'type_nm'
-                            ]; ?></option>
+                            <option selected><?php echo (isset($row1['type_nm'])) ? $row1['type_nm'] : ''; ?></option>
                         </select>
                     </div>
                 </div>
@@ -271,9 +252,7 @@ include_once '../conn.php';
                 <div class="col-md-4">
                     <div class="form-group">
                         <select disabled type="text" name="reason" id="reason" class="form-control">
-                            <option selected><?php echo $row4[
-                                'reason_code'
-                            ]; ?></option>
+                            <option selected><?php echo (isset($row4['reason_code'])) ? $row4['reason_code'] : ''; ?></option>
                         </select>
                     </div>
                 </div>
@@ -285,9 +264,7 @@ include_once '../conn.php';
                 <div class="col-md-4">
                     <div class="form-group">
                         <select disabled type="text" name="type2" id="type2" class="form-control">
-                            <option selected><?php echo $row2[
-                                'type_nm'
-                            ]; ?></option>
+                            <option selected><?php echo (isset($row2['type_nm'])) ? $row2['type_nm'] : ''; ?></option>
                         </select>
                     </div>
                 </div>
@@ -299,9 +276,7 @@ include_once '../conn.php';
                 <div class="col-md-4">
                     <div class="form-group">
                         <select disabled type="text" name="type3" id="type3" class="form-control">
-                            <option selected><?php echo $row3[
-                                'type_nm'
-                            ]; ?></option>
+                            <option selected><?php echo (isset($row3['type_nm'])) ? $row3['type_nm'] : ''; ?></option>
                         </select>
                     </div>
                 </div>
@@ -312,9 +287,9 @@ include_once '../conn.php';
                         Position</b></label>
                 <div class="col-md-6">
                     <div class="form-check">
-                        <input class="form-check-input" disabled type="checkbox" value="1" name="safety" id="safety" <?php if ($row['Safety'] == 1) {
-                                echo 'checked';
-                            } ?>>
+                        <input class="form-check-input" disabled type="checkbox" value="1" name="safety" id="safety" <?php if (isset($row['Safety']) && $row['Safety'] == 1) {
+                                                                                                                            echo 'checked';
+                                                                                                                        } ?>>
                         <label class="form-check-label" for="defaultCheck1"></br>
                             Any individual whose principle responsibility is to operate public vehicles, maintain public
                             vehicles, or supervise any public employee who drives or maintains public vehicles will be
@@ -330,9 +305,7 @@ include_once '../conn.php';
                 <label class="mt-2" style="font-size: 13px; margin-right: 172px;"><b>Comments</b></label>
                 <div class="col-md-5">
                     <div class="form-group">
-                        <textarea disabled type="text" name="comments" id="comments" class="form-control"
-                            style="height: 150px;"><?php echo $row[
-                                'Comments'    ]; ?></textarea>
+                        <textarea disabled type="text" name="comments" id="comments" class="form-control" style="height: 150px;"><?php echo (isset($row['Comments'])) ? $row['Comments'] : ''; ?></textarea>
                     </div>
                 </div>
             </div>
@@ -340,11 +313,9 @@ include_once '../conn.php';
                 <div class="col-md-4"></div>
                 <div class="col-md-4" style="margin-left: 50px;">
                     <!-- <button type="submit" class="btn btn-secondary">Submit</button> -->
-                    <button type="button" class="btn btn-secondary" onclick="downloadPDF(<?php echo $row['Id']; ?>);"><i
-                            class="fa fa-download"></i> Reprint
+                    <button type="button" class="btn btn-secondary" onclick="downloadPDF(<?php echo (isset($row['Id'])) ? $row['Id'] : ''; ?>);"><i class="fa fa-download"></i> Reprint
                         Form</button>
-                    <button type="button" onclick="window.open('LSU_Table.php', '_self');"
-                        class="btn btn-secondary">Cancel</button>
+                    <button type="button" onclick="window.open('LSU_Table.php', '_self');" class="btn btn-secondary">Cancel</button>
                 </div>
             </div>
         </form>
@@ -356,34 +327,34 @@ include_once '../conn.php';
     <!-- DOWNLOAD PDF WORK-->
     <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
     <script>
-    function downloadPDF(Id) {
-        window.open("printForm.php?id=" + Id, "_self");
+        function downloadPDF(Id) {
+            window.open("printForm.php?id=" + Id, "_blank");
 
-        // $('.btn').css('display', 'none')
+            // $('.btn').css('display', 'none')
 
-        // var opt = {
-        //     margin: 0.5,
-        //     filename: 'MyFile.pdf',
-        //     html2canvas: {
-        //         scale: 2
-        //     },
-        //     pagebreak: {
-        //         mode: 'avoid-all',
-        //         before: '#page2el'
-        //     },
-        //     jsPDF: {
-        //         unit: 'in',
-        //         format: 'letter',
-        //         orientation: 'landscape'
-        //     }
-        // };
-        // html2pdf().set(opt)
-        //     .from(document.getElementsByClassName('lsudetails')[0])
-        //     .save().then(() => {
-        //         $('.btn').css('display', '')
-        //     });
+            // var opt = {
+            //     margin: 0.5,
+            //     filename: 'MyFile.pdf',
+            //     html2canvas: {
+            //         scale: 2
+            //     },
+            //     pagebreak: {
+            //         mode: 'avoid-all',
+            //         before: '#page2el'
+            //     },
+            //     jsPDF: {
+            //         unit: 'in',
+            //         format: 'letter',
+            //         orientation: 'landscape'
+            //     }
+            // };
+            // html2pdf().set(opt)
+            //     .from(document.getElementsByClassName('lsudetails')[0])
+            //     .save().then(() => {
+            //         $('.btn').css('display', '')
+            //     });
 
-    }
+        }
     </script>
 
 </body>

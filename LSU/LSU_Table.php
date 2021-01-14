@@ -43,7 +43,7 @@ include_once '../conn.php'; ?>
             <tbody>
                 <?php
                 // $conn = mysqli_connect("localhost","root","","etest");
-                $sql = 'SELECT * FROM lsuform';
+                $sql = 'SELECT * FROM lsuform WHERE userid = "' . $_SESSION['userid'] . '"';
                 $result = $conn->query($sql);
                 while ($row = $result->fetch_assoc()) {
                     echo '<tr>
@@ -68,7 +68,7 @@ include_once '../conn.php'; ?>
                         </tr>';
                 }
                 ?>
-                
+
             </tbody>
         </table>
     </div>

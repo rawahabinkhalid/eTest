@@ -4,6 +4,7 @@ $servername = 'matzgroup17.ipagemysql.com';
 $username = 'etest_matz';
 $password = 'etest_matz';
 $dbname = 'etest_matz';
+date_default_timezone_set('America/Los_Angeles');
 
 $servername = 'localhost';
 $username = 'root';

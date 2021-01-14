@@ -9,11 +9,15 @@ if (isset($_POST['submit'])) {
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
+        if ($row['Privileges'] != 'System' && $row['Privileges'] != 'Both') {
+            echo '<script>alert("Insufficient Privileges. This user have LSU rights only...");window.open("index.php", "_self");</script>';
+        }
         $_SESSION['userid'] = $row['user_id'];
+        $_SESSION['accountid'] = $row['account_id'];
         $_SESSION['usertype'] = ($row['admin'] == 'T') ? 'admin' : 'guest';
         $_SESSION['username'] = $row['first_nm'] . ' ' . $row['last_nm'];
 
-            header("location: ../landingscreen.php");        
+        header("location: ../landingscreen.php");
     } else {
         // echo '<script>alert("Not found");</script>';
         // header("location: index.php");
@@ -27,14 +31,12 @@ if (isset($_POST['submit'])) {
             $_SESSION['usertype'] = 'accounts';
             $_SESSION['username'] = $row['account_nm'];
 
-                header("location: ../landingscreen.php");        
+            header("location: ../landingscreen.php");
         } else {
             echo '<script>alert("Username / Password is not correct");window.open("index.php", "_self");</script>';
             // header("location: index.php");
         }
-
     }
-
 }
 
 ?>
@@ -88,7 +90,9 @@ if (isset($_POST['submit'])) {
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Password is required">
-                        <input class="input100" type="password" name="pass" placeholder="Password" required>
+                        <input class="input100" type="password" id="typepass" name="pass" placeholder="Password" required>
+                        <label class="unselectable"><input type="checkbox" onclick="Toggle()">
+                            <b>Show Password</b> </label>
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-lock" aria-hidden="true"></i>
@@ -99,8 +103,7 @@ if (isset($_POST['submit'])) {
                         <button name='submit' id="submit" type="submit" class="login100-form-btn">Login</button>
                     </div>
                     <br>
-                    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="loginLSU.php"
-                        style="color: blue; text-decoration: underline; text-align: center;"><b>Login with LSU</b></a>
+                    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="loginLSU.php" style="color: blue; text-decoration: underline; text-align: center;"><b>Login with LSU</b></a>
 
                     <!-- <div class="text-center p-t-12">
 						<span class="txt1">
@@ -135,9 +138,20 @@ if (isset($_POST['submit'])) {
     <!--===============================================================================================-->
     <script src="vendor/tilt/tilt.jquery.min.js"></script>
     <script>
-    $('.js-tilt').tilt({
-        scale: 1.1
-    })
+        $('.js-tilt').tilt({
+            scale: 1.1
+        })
+    </script>
+    <script>
+        // Change the type of input to password or text 
+        function Toggle() {
+            var temp = document.getElementById("typepass");
+            if (temp.type === "password") {
+                temp.type = "text";
+            } else {
+                temp.type = "password";
+            }
+        }
     </script>
     <!--===============================================================================================-->
     <script src="js/main.js"></script>

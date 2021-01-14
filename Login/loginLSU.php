@@ -9,19 +9,18 @@ if (isset($_POST['submit'])) {
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
+        if ($row['Privileges'] == 'System') {
+            echo '<script>alert("Insufficient Privileges. This user have System rights only...");window.open("index.php", "_self");</script>';
+        }
         $_SESSION['userid'] = $row['user_id'];
         $_SESSION['username'] = $row['first_nm'] . ' ' . $row['last_nm'];
 
         // echo 'found';
-            header("location: ../LSU/LSU_Table.php");
-
-
-        
+        header("location: ../LSU/LSU_Table.php");
     } else {
         // echo '<script>alert("Not found");</script>';
         header("location: index.php");
     }
-
 }
 
 ?>
@@ -52,6 +51,7 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <!--===============================================================================================-->
+
 </head>
 
 <body>
@@ -75,8 +75,13 @@ if (isset($_POST['submit'])) {
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Password is required">
-                        <input class="input100" type="password" name="pass" placeholder="Password" required>
+                        <input class="input100" type="password" id="typepass" name="pass" placeholder="Password" required>
+                        <label class="unselectable"><input type="checkbox" onclick="Toggle()">
+                            <b>Show Password</b> </label>
                         <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span> <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-lock" aria-hidden="true"></i>
                         </span>
@@ -121,9 +126,20 @@ if (isset($_POST['submit'])) {
     <!--===============================================================================================-->
     <script src="vendor/tilt/tilt.jquery.min.js"></script>
     <script>
-    $('.js-tilt').tilt({
-        scale: 1.1
-    })
+        $('.js-tilt').tilt({
+            scale: 1.1
+        })
+    </script>
+    <script>
+        // Change the type of input to password or text 
+        function Toggle() {
+            var temp = document.getElementById("typepass");
+            if (temp.type === "password") {
+                temp.type = "text";
+            } else {
+                temp.type = "password";
+            }
+        }
     </script>
     <!--===============================================================================================-->
     <script src="js/main.js"></script>

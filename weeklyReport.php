@@ -26,106 +26,106 @@ include_once 'conn.php'; ?>
 
 
     <style>
-    label {
-        /* Other styling... */
-        text-align: right;
-        clear: both;
-        float: left;
-        margin-right: 15px;
-    }
+        label {
+            /* Other styling... */
+            text-align: right;
+            clear: both;
+            float: left;
+            margin-right: 15px;
+        }
     </style>
     <script>
-    counter = 1;
-    var selected_user = -1;
+        counter = 1;
+        var selected_user = -1;
 
-    function addRow() {
-        var content =
-            '<tr><td><input type="text" class="form-control" id="clientId_' + counter +
-            '" name="client[]"></td><td><input type="text" class="form-control" id="itemid_' +
-            counter +
-            '" name="item[]" onchange="getRate(this);"></td><td><input type="text" class="form-control" id="description_' +
-            counter + '" name="description[]"></td><td><input type="text" class="form-control" id="kg_' + counter +
-            '" name="kg[]" onchange="calcTotal(this);"></td><td><input type="text" class="form-control" id="rate_' +
-            counter +
-            '" name="rate[]" onchange="calcTotal(this);"></td><td><input type="text" class="form-control" id="total_' +
-            counter + '" name="total[]" readonly></td></tr>';
-        $('#tbody').append(content);
+        function addRow() {
+            var content =
+                '<tr><td><input type="text" class="form-control" id="clientId_' + counter +
+                '" name="client[]"></td><td><input type="text" class="form-control" id="itemid_' +
+                counter +
+                '" name="item[]" onchange="getRate(this);"></td><td><input type="text" class="form-control" id="description_' +
+                counter + '" name="description[]"></td><td><input type="text" class="form-control" id="kg_' + counter +
+                '" name="kg[]" onchange="calcTotal(this);"></td><td><input type="text" class="form-control" id="rate_' +
+                counter +
+                '" name="rate[]" onchange="calcTotal(this);"></td><td><input type="text" class="form-control" id="total_' +
+                counter + '" name="total[]" readonly></td></tr>';
+            $('#tbody').append(content);
 
-        counter++;
-    }
-
-    function deleteRow() {
-        var tableName = "item";
-        var tbl = document.getElementById(tableName);
-        var lastRow = tbl.rows.length;
-        lastRow--;
-        // alert(lastRow);
-        if (lastRow > 1) {
-            tbl.deleteRow(lastRow);
-            // tbl.deleteRow(lastRow - 2);
+            counter++;
         }
 
-    }
+        function deleteRow() {
+            var tableName = "item";
+            var tbl = document.getElementById(tableName);
+            var lastRow = tbl.rows.length;
+            lastRow--;
+            // alert(lastRow);
+            if (lastRow > 1) {
+                tbl.deleteRow(lastRow);
+                // tbl.deleteRow(lastRow - 2);
+            }
 
-
-    function calcTotal(reference) {
-        index = reference.id.split('_')[1];
-        rate = document.getElementById('rate_' + index).value;
-        kg = document.getElementById('kg_' + index).value;
-        if (rate != '' && kg != '') {
-            document.getElementById('total_' + index).value = parseFloat(parseFloat(rate) * parseFloat(kg)).toFixed(2);
         }
-    }
 
-    function propertiesClicked() {
-        document.getElementsByClassName('modal-title')[0].innerHTML = 'Edit User';
-        $.ajax({
-            type: "GET",
-            url: "getAllData.php?user_id='" + selected_user + "'",
-            success: function(resultData) {
-                console.log(resultData);
-                var data = JSON.parse(resultData);
-                $('#user_id').val(selected_user);
-                $('#userid').val(data.user_id);
-                $('#fname').val(data.first_nm);
-                $('#lname').val(data.last_nm);
-                $('#password').val(data.password);
-                if (data.admin == 'T')
-                    $('#admin').prop("checked", true);
-                else
-                    $('#admin').prop("checked", false);
+
+        function calcTotal(reference) {
+            index = reference.id.split('_')[1];
+            rate = document.getElementById('rate_' + index).value;
+            kg = document.getElementById('kg_' + index).value;
+            if (rate != '' && kg != '') {
+                document.getElementById('total_' + index).value = parseFloat(parseFloat(rate) * parseFloat(kg)).toFixed(2);
             }
-        });
-    }
+        }
 
-    function deleteClicked() {
-        console.log("insert_users.php?delete_user_id='" + selected_user + "'");
-        $.ajax({
-            type: "GET",
-            url: "insert_users.php?delete_user_id='" + selected_user + "'",
-            success: function(resultData) {
-                // console.log(resultData);
-                window.open("users.php", "_self");
+        function propertiesClicked() {
+            document.getElementsByClassName('modal-title')[0].innerHTML = 'Edit User';
+            $.ajax({
+                type: "GET",
+                url: "getAllData.php?user_id='" + selected_user + "'",
+                success: function(resultData) {
+                    console.log(resultData);
+                    var data = JSON.parse(resultData);
+                    $('#user_id').val(selected_user);
+                    $('#userid').val(data.user_id);
+                    $('#fname').val(data.first_nm);
+                    $('#lname').val(data.last_nm);
+                    $('#password').val(data.password);
+                    if (data.admin == 'T')
+                        $('#admin').prop("checked", true);
+                    else
+                        $('#admin').prop("checked", false);
+                }
+            });
+        }
 
-            }
-        });
-    }
+        function deleteClicked() {
+            console.log("insert_users.php?delete_user_id='" + selected_user + "'");
+            $.ajax({
+                type: "GET",
+                url: "insert_users.php?delete_user_id='" + selected_user + "'",
+                success: function(resultData) {
+                    // console.log(resultData);
+                    window.open("users.php", "_self");
 
-    function addClicked() {
-        document.getElementsByClassName('modal-title')[0].innerHTML = 'New User';
-    }
+                }
+            });
+        }
 
-    function userSelected(user, id) {
-        $('#table_users > tbody  > tr').each(function(index, tr) {
-            tr.style.background = 'rgba(0,0,0,.05)';
-        });
+        function addClicked() {
+            document.getElementsByClassName('modal-title')[0].innerHTML = 'New User';
+        }
 
-        selected_user = user;
-        // alert("#" + id);
-        $('#deleteButton').prop('disabled', false);
-        $('#propertiesButton').prop('disabled', false);
-        $("#" + id).css('background', 'rgba(0,0,0,.35)');
-    }
+        function userSelected(user, id) {
+            $('#table_users > tbody  > tr').each(function(index, tr) {
+                tr.style.background = 'rgba(0,0,0,.05)';
+            });
+
+            selected_user = user;
+            // alert("#" + id);
+            $('#deleteButton').prop('disabled', false);
+            $('#propertiesButton').prop('disabled', false);
+            $("#" + id).css('background', 'rgba(0,0,0,.35)');
+        }
     </script>
 
 </head>
@@ -185,205 +185,205 @@ to get the desired effect
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="landingscreen.php">Home</a></li>
-                                    
+
                                     <li class="breadcrumb-item active">Users</li>
                                 </ol>
                             </div><!-- /.col -->
                         </div><!-- /.row -->
                         <form action="" method="POST" class="">
                             <div class="row no-print">
-                                
+
                                 <div class="col-md-5">
                                     <!-- Date Range&emsp; -->
                                     <!-- <select class="form-control" style="width: calc(100% - 100px); display: inline-block;"><option>Please select Date Range</option> -->
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend" style="display: none">
                                             <div class="input-group-text">
-                                            <input type="checkbox" checked style="height: calc(1.25rem); width: calc(1.25rem);" name="daterangeCheck" id="daterangeCheck" aria-label="Checkbox for following text input">
+                                                <input type="checkbox" checked style="height: calc(1.25rem); width: calc(1.25rem);" name="daterangeCheck" id="daterangeCheck" aria-label="Checkbox for following text input">
                                             </div>
                                         </div>
                                         <div id="reportrange" style="width: calc(100% - 100px) !important; display: inline-block; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%;">
-                                        <i class="fa fa-calendar"></i>&nbsp;
-                                        <span></span> <i class="fa fa-caret-down"></i>
-                                    </div>                                    </div>
-                                    <input type="hidden" class="form-control" value="<?php echo isset(
-                                        $_POST['daterange']
-                                    )
-                                        ? $_POST['daterange']
-                                        : ''; ?>" name="daterange" id="daterange" style="width: calc(100% - 100px); display: inline-block;" />
-                                    
+                                            <i class="fa fa-calendar"></i>&nbsp;
+                                            <span></span> <i class="fa fa-caret-down"></i>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" class="form-control" value="<?php echo isset($_POST['daterange'])
+                                                                                            ? $_POST['daterange']
+                                                                                            : ''; ?>" name="daterange" id="daterange" style="width: calc(100% - 100px); display: inline-block;" />
+
                                 </div>
                                 <div class="col-md-4">
-                                </div>                                
+                                </div>
                                 <div class="col-md-3" style="text-align: right">
-                                    <button type="submit" name="filterData" class="btn mt-2"
-                                        style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Filter</button>
-                                    <button type="button" class="btn mt-2"
-                                    onclick="window.open('weeklyReport.php', '_self');" style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Reset</button>
+                                    <button type="submit" name="filterData" class="btn mt-2" style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Filter</button>
+                                    <button type="button" class="btn mt-2" onclick="window.open('weeklyReport.php', '_self');" style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Reset</button>
                                 </div>
                             </div>
-                            
-                        <!-- </form> -->
-                        <!-- <br><br> -->
-                        <?php if (isset($_GET['account'])) { ?>
-                        <!-- <form action="" method="POST" class=""> -->
-                            <div class="row no-print">
-                                <div class="col-md-12" style="text-align: right">
-                                    <button type="submit"  name="filterData" class="btn mt-2"
-                                        style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Retrieve</button>
-                                    <!-- <button type="button" id="deleteButton" class="btn mt-2"
+
+                            <!-- </form> -->
+                            <!-- <br><br> -->
+                            <?php if (isset($_GET['account'])) { ?>
+                                <!-- <form action="" method="POST" class=""> -->
+                                <div class="row no-print">
+                                    <div class="col-md-12" style="text-align: right">
+                                        <button type="submit" name="filterData" class="btn mt-2" style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Retrieve</button>
+                                        <!-- <button type="button" id="deleteButton" class="btn mt-2"
                                         style="background-color:#E7D7B7; border-radius:5px; width: 100px;"
                                         onclick="$('.buttons-print').click();" disabled>Print</button> -->
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <br>
                                 </div>
-                                <br>
-                                <br>
-                                <br>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <?php
+                                        $account_filter = $_GET['account'];
+                                        $sqlDate = '';
+                                        if (
+                                            isset($_POST['daterangeCheck']) &&
+                                            isset($_POST['daterange']) &&
+                                            count(
+                                                explode(' - ', $_POST['daterange'])
+                                            ) > 1
+                                        ) {
+                                            $date_start_filter = explode(
+                                                ' - ',
+                                                $_POST['daterange']
+                                            )[0];
+                                            $date_end_filter = explode(
+                                                ' - ',
+                                                $_POST['daterange']
+                                            )[1];
+                                            $sqlDate =
+                                                ' AND ((invoice_date BETWEEN "' .
+                                                $date_start_filter .
+                                                '" AND "' .
+                                                $date_end_filter .
+                                                '"))';
+                                        } else {
+                                            $sqlDate =
+                                                ' AND ((invoice_date >= "' .
+                                                date('Y') .
+                                                '-01-01 00:00:00"))';
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+                                <table class="table">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">invoice_id</th>
+                                            <th scope="col">invoice_date</th>
+                                            <th scope="col">amount</th>
+                                            <th scope="col">emp_id</th>
+                                            <th scope="col">first_nm</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
                                     <?php
-                                    $account_filter = $_GET['account'];
-                                    $sqlDate = '';
-                                    if (
-                                        isset($_POST['daterangeCheck']) &&
-                                        isset($_POST['daterange']) &&
-                                        count(
-                                            explode(' - ', $_POST['daterange'])
-                                        ) > 1
-                                    ) {
-                                        $date_start_filter = explode(
-                                            ' - ',
-                                            $_POST['daterange']
-                                        )[0];
-                                        $date_end_filter = explode(
-                                            ' - ',
-                                            $_POST['daterange']
-                                        )[1];
-                                        $sqlDate =
-                                            ' AND ((invoice_date BETWEEN "' .
-                                            $date_start_filter .
-                                            '" AND "' .
-                                            $date_end_filter .
-                                            '"))';
-                                    } else {
-                                        $sqlDate =
-                                            ' AND ((invoice_date >= "' .
-                                            date('Y') .
-                                            '-01-01 00:00:00"))';
-                                    }
-                                    ?>
-                                    </div>
-                                    </div>
-                        <table class="table">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col">invoice_id</th>
-                                    <th scope="col">invoice_date</th>
-                                    <th scope="col">amount</th>
-                                    <th scope="col">emp_id</th>
-                                    <th scope="col">first_nm</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                <?php
-                                // if (isset($_GET['page_no']) && $_GET['page_no']!="") {
-                                //     $page_no = $_GET['page_no'];
-                                // } else {
-                                //     $page_no = 1;
-                                // }
-                                // $total_records_per_page = 10;
-                                // $offset = ($page_no-1) * $total_records_per_page;
-                                // $previous_page = $page_no - 1;
-                                // $next_page = $page_no + 1;
-                                // $adjacents = "2";
-
-                                // $result_count = mysqli_query(
-                                //     $conn,
-                                //     "SELECT COUNT(*) As total_records FROM  test JOIN accounts ON accounts.account_id = test.account_id JOIN employees ON employees.emp_id = test.emp_id JOIN testtype ON testtype.type_id = test.type_id JOIN invoice ON invoice.invoice_id = test.invoice_id WHERE test.invoice_id IS NOT NULL ORDER BY test.account_id"
-                                //     );
-                                // $total_records = mysqli_fetch_array($result_count);
-                                // $total_records = $total_records['total_records'];
-                                // $total_no_of_pages = ceil($total_records / $total_records_per_page);
-                                // $second_last = $total_no_of_pages - 1; // total pages minus 1
-
-                                $i = 1;
-                                // $sql = 'SELECT * FROM accounts';
-                                // $result = $conn->query($sql);
-                                // while ($row = $result->fetch_assoc()) {
-                                //     $name = $row['account_nm'];
-                                $totalAmount = 0;
-                                $prevName = '';
-                                // $sql1 = 'SELECT * FROM test JOIN accounts ON accounts.account_id = test.account_id JOIN employees ON employees.emp_id = test.emp_id JOIN testtype ON testtype.type_id = test.type_id JOIN invoice ON invoice.invoice_id = test.invoice_id WHERE test.invoice_id IS NOT NULL ORDER BY test.account_id LIMIT '.$offset.', '.$total_records_per_page.'';
-                                $sql1 =
-                                    'SELECT * FROM test JOIN accounts ON accounts.account_id = test.account_id JOIN employees ON employees.emp_id = test.emp_id JOIN testtype ON testtype.type_id = test.type_id JOIN invoice ON invoice.invoice_id = test.invoice_id WHERE test.invoice_id IS NOT NULL AND accounts.account_id = ' .
-                                    $account_filter .
-                                    $sqlDate .
-                                    ' ORDER BY collection_date, test.account_id';
-                                // echo $sql1;
-                                $result1 = $conn->query($sql1);
-                                while ($row1 = $result1->fetch_assoc()) {
-                                    $name = $row1['account_nm'];
-                                    if ($prevName != $name && $prevName != '') {
-                                        $prevName = $name;
-                                        echo '<tr><td style="display: none">' .
-                                            $name .
-                                            '_totalamount</td><td></td><td><b>Total Amount</b></td><td></td><td>' .
-                                            $totalAmount .
-                                            '</td><td></td></tr>';
-                                        $totalAmount = 0;
-                                    } elseif ($prevName == '') {
-                                        $prevName = $name;
-                                    }
-                                    echo '<tr>';
-                                    $typeId = $row1['type_id'];
-                                    $collection = $row1['collection_date'];
-                                    $emp = $row1['emp_id'];
-                                    $invId = $row1['invoice_id'];
-                                    $amount = $row1['amount'];
-                                    $fname = $row1['first_nm'];
-                                    $lname = $row1['last_nm'];
-                                    $typenm = $row1['type_nm'];
-                                    // $sql5 = 'SELECT * FROM invoice WHERE invoice_id = '.$invId;
-                                    // $result5 = $conn->query($sql5);
-                                    // if ($result5->num_rows > 0) {
-                                    //     $row5 = $result5->fetch_assoc();
-                                    //     $date = $row5['invoice_date'];
+                                    // if (isset($_GET['page_no']) && $_GET['page_no']!="") {
+                                    //     $page_no = $_GET['page_no'];
+                                    // } else {
+                                    //     $page_no = 1;
                                     // }
-                                    // else {
-                                    $date = $row1['invoice_date'];
-                                    // }
-                                    echo '
-                                          <td>' .
-                                        $invId .
-                                        '</td>
-                                          <td>' .
-                                        $date .
-                                        '</td>
-                                          <td>' .
-                                        $amount .
-                                        '</td>
-                                          <td>' .
-                                        $emp .
-                                        '</td>
-                                          <td>' .
-                                        $fname .
-                                        '</td>';
-                                    // echo '
-                                    //       <td></td>
-                                    //       <td></td>
-                                    //       <td></td>
-                                    //       <td></td>
-                                    //       <td></td>';
-                                    echo '</tr>';
-                                    $i++;
-                                }
+                                    // $total_records_per_page = 10;
+                                    // $offset = ($page_no-1) * $total_records_per_page;
+                                    // $previous_page = $page_no - 1;
+                                    // $next_page = $page_no + 1;
+                                    // $adjacents = "2";
 
-                                // }
+                                    // $result_count = mysqli_query(
+                                    //     $conn,
+                                    //     "SELECT COUNT(*) As total_records FROM  test JOIN accounts ON accounts.account_id = test.account_id JOIN employees ON employees.emp_id = test.emp_id JOIN testtype ON testtype.type_id = test.type_id JOIN invoice ON invoice.invoice_id = test.invoice_id WHERE test.invoice_id IS NOT NULL ORDER BY test.account_id"
+                                    //     );
+                                    // $total_records = mysqli_fetch_array($result_count);
+                                    // $total_records = $total_records['total_records'];
+                                    // $total_no_of_pages = ceil($total_records / $total_records_per_page);
+                                    // $second_last = $total_no_of_pages - 1; // total pages minus 1
+
+                                    $i = 1;
+                                    // $sql = 'SELECT * FROM accounts';
+                                    // $result = $conn->query($sql);
+                                    // while ($row = $result->fetch_assoc()) {
+                                    //     $name = $row['account_nm'];
+                                    $totalAmount = 0;
+                                    $prevName = '';
+                                    // $sql1 = 'SELECT * FROM test JOIN accounts ON accounts.account_id = test.account_id JOIN employees ON employees.emp_id = test.emp_id JOIN testtype ON testtype.type_id = test.type_id JOIN invoice ON invoice.invoice_id = test.invoice_id WHERE test.invoice_id IS NOT NULL ORDER BY test.account_id LIMIT '.$offset.', '.$total_records_per_page.'';
+                                    // $sql1 =
+                                    //     'SELECT * FROM test JOIN accounts ON accounts.account_id = test.account_id JOIN employees ON employees.emp_id = test.emp_id JOIN testtype ON testtype.type_id = test.type_id JOIN invoice ON invoice.invoice_id = test.invoice_id WHERE test.invoice_id IS NOT NULL AND accounts.account_id = ' .
+                                    //     $account_filter .
+                                    //     $sqlDate .
+                                    //     ' ORDER BY collection_date, test.account_id';
+                                    $sql1 =
+                                        'SELECT * FROM test JOIN accounts ON accounts.account_id = test.account_id JOIN employees ON employees.emp_id = test.emp_id JOIN testtype ON testtype.type_id = test.type_id JOIN invoice ON invoice.invoice_id = test.invoice_id WHERE test.invoice_id IS NOT NULL ' .
+                                        $sqlDate .
+                                        ' ORDER BY collection_date, test.account_id';
+                                    // echo $sql1;
+                                    $result1 = $conn->query($sql1);
+                                    while ($row1 = $result1->fetch_assoc()) {
+                                        $name = $row1['account_nm'];
+                                        if ($prevName != $name && $prevName != '') {
+                                            $prevName = $name;
+                                            echo '<tr><td style="display: none">' .
+                                                $name .
+                                                '_totalamount</td><td></td><td><b>Total Amount</b></td><td></td><td>' .
+                                                $totalAmount .
+                                                '</td><td></td></tr>';
+                                            $totalAmount = 0;
+                                        } elseif ($prevName == '') {
+                                            $prevName = $name;
+                                        }
+                                        echo '<tr>';
+                                        $typeId = $row1['type_id'];
+                                        $collection = $row1['collection_date'];
+                                        $emp = $row1['emp_id'];
+                                        $invId = $row1['invoice_id'];
+                                        $amount = $row1['amount'];
+                                        $fname = $row1['first_nm'];
+                                        $lname = $row1['last_nm'];
+                                        $typenm = $row1['type_nm'];
+                                        // $sql5 = 'SELECT * FROM invoice WHERE invoice_id = '.$invId;
+                                        // $result5 = $conn->query($sql5);
+                                        // if ($result5->num_rows > 0) {
+                                        //     $row5 = $result5->fetch_assoc();
+                                        //     $date = $row5['invoice_date'];
+                                        // }
+                                        // else {
+                                        $date = $row1['invoice_date'];
+                                        // }
+                                        echo '
+                                          <td>' .
+                                            $invId .
+                                            '</td>
+                                          <td>' .
+                                            $date .
+                                            '</td>
+                                          <td>' .
+                                            $amount .
+                                            '</td>
+                                          <td>' .
+                                            $emp .
+                                            '</td>
+                                          <td>' .
+                                            $fname .
+                                            '</td>';
+                                        // echo '
+                                        //       <td></td>
+                                        //       <td></td>
+                                        //       <td></td>
+                                        //       <td></td>
+                                        //       <td></td>';
+                                        echo '</tr>';
+                                        $i++;
+                                    }
+
+                                    // }
                                 } ?>
-                            </tbody>
-                        </table>
-                        <!--  -->
+                                    </tbody>
+                                </table>
+                                <!--  -->
                     </div><!-- /.container-fluid -->
                 </div>
                 <!-- /.content-header -->
@@ -439,16 +439,16 @@ to get the desired effect
     <script type="text/javascript">
         $(function() {
             var temp_range = {
-                            // 'Please select Date Range': [],
-                        'Today': [moment(), moment()],
-                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                        'This Month': [moment().startOf('month'), moment().endOf('month')],
-                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-                        'This Year': [moment().startOf('year'), moment().endOf('year')],
-                        'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
-                        };
+                // 'Please select Date Range': [],
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                'This Year': [moment().startOf('year'), moment().endOf('year')],
+                'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
+            };
             var start = ($('#daterange').val() != '') ? moment($('#daterange').val().split(" - ")[0]) : moment().startOf('year');
             var end = ($('#daterange').val() != '') ? moment($('#daterange').val().split(" - ")[1]) : moment().endOf('year');
 
@@ -473,20 +473,20 @@ to get the desired effect
         })
     </script>
     <script>
-    $('#daterangeCheck').on('click', function() {
-        if($(this).is(':checked')) {
-            $('#reportrange').css('pointer-events', '');
-            $('#reportrange').css('background-color', '#fff');
-        } else {
-            $('#reportrange').css('pointer-events', 'none');
-            $('#reportrange').css('background-color', '#e9ecef');
-        }
-    })
+        $('#daterangeCheck').on('click', function() {
+            if ($(this).is(':checked')) {
+                $('#reportrange').css('pointer-events', '');
+                $('#reportrange').css('background-color', '#fff');
+            } else {
+                $('#reportrange').css('pointer-events', 'none');
+                $('#reportrange').css('background-color', '#e9ecef');
+            }
+        })
     </script>
-    
+
     <script>
-    $('.table').DataTable().destroy();
-    $('.table').DataTable({
+        $('.table').DataTable().destroy();
+        $('.table').DataTable({
             dom: 'Blfrtip',
             "deferRender": true,
             buttons: [
@@ -506,48 +506,48 @@ to get the desired effect
         $('#DataTables_Table_0_filter').css('display', 'inline-block')
         $('#DataTables_Table_0_filter').css('text-align', 'right')
         $('#deleteButton').prop('disabled', false)
-    $(document).ready(function() {
-        $('.table').DataTable().destroy();
-        $('.table').DataTable({
-            dom: 'Blfrtip',
-            buttons: [
-                'print'
-            ]
+        $(document).ready(function() {
+            $('.table').DataTable().destroy();
+            $('.table').DataTable({
+                dom: 'Blfrtip',
+                buttons: [
+                    'print'
+                ]
+            });
+            // $('.buttons-print').css('display', 'none');
+            $('.buttons-print').addClass('btn mt-2');
+            $('.buttons-print').css('background', 'none');
+            $('.buttons-print').css('background-color', '#E7D7B7');
+            $('.buttons-print').css('border', 'none');
+            $('.buttons-print').css('border-radius', '5px');
+            $('.buttons-print').css('width', '100px');
+            $('.dt-buttons').addClass('float-right');
+            $('.dataTables_length').css('width', '50%')
+            $('.dataTables_length').css('display', 'inline-block')
+            $('#DataTables_Table_0_filter').css('width', '50%')
+            $('#DataTables_Table_0_filter').css('display', 'inline-block')
+            $('#DataTables_Table_0_filter').css('text-align', 'right')
+            $('#deleteButton').prop('disabled', false)
         });
-        // $('.buttons-print').css('display', 'none');
-        $('.buttons-print').addClass('btn mt-2');
-        $('.buttons-print').css('background', 'none');
-        $('.buttons-print').css('background-color', '#E7D7B7');
-        $('.buttons-print').css('border', 'none');
-        $('.buttons-print').css('border-radius', '5px');
-        $('.buttons-print').css('width', '100px');
-        $('.dt-buttons').addClass('float-right');
-        $('.dataTables_length').css('width', '50%')
-        $('.dataTables_length').css('display', 'inline-block')
-        $('#DataTables_Table_0_filter').css('width', '50%')
-        $('#DataTables_Table_0_filter').css('display', 'inline-block')
-        $('#DataTables_Table_0_filter').css('text-align', 'right')
-        $('#deleteButton').prop('disabled', false)
-    });
     </script>
 
-    
-    <script>
-    $('#accountSelect').on('change', function() {
-        var accId = $(this).val();
-        $.ajax({
-            url: 'get_location_testinfo.php?account_id_location=' + accId,
-            type: 'POST',
 
-            success: function(data) {
-                // alert(data);
-                $('#locationSelect').html(data);
-            },
-            cache: false,
-            contentType: false,
-            processData: false
-        });
-    })
+    <script>
+        $('#accountSelect').on('change', function() {
+            var accId = $(this).val();
+            $.ajax({
+                url: 'get_location_testinfo.php?account_id_location=' + accId,
+                type: 'POST',
+
+                success: function(data) {
+                    // alert(data);
+                    $('#locationSelect').html(data);
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        })
     </script>
 </body>
 

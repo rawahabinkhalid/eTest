@@ -26,96 +26,98 @@ $type2 = $_POST['type2'];
 $type3 = $_POST['type3'];
 $safety = $_POST['safety'];
 $comments = $_POST['comments'];
-
+$userid = $_SESSION['userid'];
 $sql =
-    'INSERT INTO `lsuform`(`Client`, `Dept`, `FirstName`, `LastName`, `SSN`, `Specimen`, `Collection`, `Account`, `Fund`, `Department`, `Program`, `Class`, `Project`, `Contact`, `Email`, `RequestedBy`, `RequestedDate`, `Deadline`, `TestType`, `Reason`, `Type2`, `Type3`, `Safety`, `Comments`) VALUES ("' .
-    $client .
-    '","' .
-    $dept .
-    '","' .
-    $fname .
-    '","' .
-    $lname .
-    '","' .
-    $ssn .
-    '","' .
-    $specimen .
-    '","' .
-    $collectionSite .
-    '","' .
-    $account .
-    '","' .
-    $fund .
-    '","' .
-    $department .
-    '","' .
-    $program .
-    '","' .
-    $class .
-    '","' .
-    $project .
-    '","' .
-    $contact .
-    '","' .
-    $email .
-    '","' .
-    $requestedBy .
-    '","' .
-    $requestedDate .
-    '","' .
-    $deadline .
-    '","' .
-    $type .
-    '","' .
-    $reason .
-    '","' .
-    $type2 .
-    '","' .
-    $type3 .
-    '","' .
-    $safety .
-    '","' .
-    $comments .
-    '")';
+	'INSERT INTO `lsuform`(`Client`, `Dept`, `FirstName`, `LastName`, `SSN`, `Specimen`, `Collection`, `Account`, `Fund`, `Department`, `Program`, `Class`, `Project`, `Contact`, `Email`, `RequestedBy`, `RequestedDate`, `Deadline`, `TestType`, `Reason`, `Type2`, `Type3`, `Safety`, `Comments`,`userid`) VALUES ("' .
+	$client .
+	'","' .
+	$dept .
+	'","' .
+	$fname .
+	'","' .
+	$lname .
+	'","' .
+	$ssn .
+	'","' .
+	$specimen .
+	'","' .
+	$collectionSite .
+	'","' .
+	$account .
+	'","' .
+	$fund .
+	'","' .
+	$department .
+	'","' .
+	$program .
+	'","' .
+	$class .
+	'","' .
+	$project .
+	'","' .
+	$contact .
+	'","' .
+	$email .
+	'","' .
+	$requestedBy .
+	'","' .
+	$requestedDate .
+	'","' .
+	$deadline .
+	'","' .
+	$type .
+	'","' .
+	$reason .
+	'","' .
+	$type2 .
+	'","' .
+	$type3 .
+	'","' .
+	$safety .
+	'","' .
+	$comments .
+	'","' .
+	$userid .
+	'")';
 $result = $conn->query($sql);
 if (!$result) {
-    // echo "Success";
-    // header('location: LSU_Table.php');
-    // echo $sql;
-    echo $conn->error;
+	// echo "Success";
+	// header('location: LSU_Table.php');
+	echo $sql;
+	echo $conn->error;
 } else {
-    date_default_timezone_set('Asia/Karachi');
+	date_default_timezone_set('America/Los_Angeles');
 
-    // if (isset($_POST['clientNameFilter'])) {
-    include_once '../vendor/tecnickcom/tcpdf/tcpdf.php';
-    $pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-    $pdf->SetCreator(PDF_CREATOR);
-    $pdf->SetAuthor('eTest');
-    $pdf->SetTitle('Document1.pdf');
-    $pdf->SetSubject('Document');
-    $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+	// if (isset($_POST['clientNameFilter'])) {
+	include_once '../vendor/tecnickcom/tcpdf/tcpdf.php';
+	$pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+	$pdf->SetCreator(PDF_CREATOR);
+	$pdf->SetAuthor('eTest');
+	$pdf->SetTitle('Document1.pdf');
+	$pdf->SetSubject('Document');
+	$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
-    // set margins
-    $pdf->SetMargins(5, 5, 5);
-    $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-    $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+	// set margins
+	$pdf->SetMargins(5, 5, 5);
+	$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+	$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
-    // set auto page breaks
-    // $pdf->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM);
-    // set default font subsetting mode
-    $pdf->setFontSubsetting(true);
-    // $pdf->setPrintHeader(false);
-    $pdf->setPrintFooter(false);
-    // Set font
-    $pdf->SetFont('helvetica', '', 10, '', true);
-    $pdf->AddPage();
-    // $pdf->setCellPaddings(1, 1, 1, 1);
-    // $pdf->setCellMargins(0, 0, 0, 0);
+	// set auto page breaks
+	// $pdf->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM);
+	// set default font subsetting mode
+	$pdf->setFontSubsetting(true);
+	// $pdf->setPrintHeader(false);
+	$pdf->setPrintFooter(false);
+	// Set font
+	$pdf->SetFont('helvetica', '', 10, '', true);
+	$pdf->AddPage();
+	// $pdf->setCellPaddings(1, 1, 1, 1);
+	// $pdf->setCellMargins(0, 0, 0, 0);
 
-    $html = '';
-    $invoiceNo = 0;
-    $tbl = '';
-    $html = <<<EOD
+	$html = '';
+	$invoiceNo = 0;
+	$tbl = '';
+	$html = <<<EOD
                     <table cellspacing="0" cellpadding="3" border="0">
                         <tr>
                             <td>
@@ -235,11 +237,11 @@ if (!$result) {
 
 
 EOD;
-    $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+	$pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
 
-    $pdf->AddPage();
-    $pdf->SetMargins(5, 0, 5);
-    $html = <<<EOD
+	$pdf->AddPage();
+	$pdf->SetMargins(5, 0, 5);
+	$html = <<<EOD
 	<table cellspacing="0" cellpadding="3" border="0">
 		<tr>
 			<td>
@@ -351,11 +353,11 @@ EOD;
 
 
 EOD;
-    $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
-    $pdf->AddPage();
+	$pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+	$pdf->AddPage();
 
-    $pdf->SetMargins(5, 0, 5);
-    $html = <<<EOD
+	$pdf->SetMargins(5, 0, 5);
+	$html = <<<EOD
 	<table cellspacing="0" cellpadding="3" border="0">
 		<tr>
 			<td>
@@ -589,14 +591,12 @@ EOD;
 		
 
 EOD;
-    $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
-    $pdf->AddPage();
+	$pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+	$pdf->AddPage();
 
-    $pdf->deletePage(intval($pdf->getPage() . '/' . $pdf->getNumPages()));
-    // <td border="1" style="width: 44%; border-left: 0px solid white"><br><br>
-    // <td border="1" style="width: 18%; border-right: 0px solid white">
-
-    $pdf->Output('Invoice No - ' . '.pdf');
+	$pdf->deletePage(intval($pdf->getPage() . '/' . $pdf->getNumPages()));
+	// <td border="1" style="width: 44%; border-left: 0px solid white"><br><br>
+	// <td border="1" style="width: 18%; border-right: 0px solid white">
+	$timestamp = date('d_M_Y___h_i_sa');
+	$pdf->Output('LSU Form - ' . $timestamp . '.pdf');
 }
-
-?>

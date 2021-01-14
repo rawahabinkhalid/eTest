@@ -19,15 +19,18 @@ if ($result->num_rows > 0) {
             $last_nm = $rowEmployee['last_nm'];
         }
         echo '<tr>';
-        echo '<td>1</td>';
-        echo '<td>'.$row['test_id'].'</td>';
-        echo '<td>'.$emp_id.'</td>';
-        echo '<td>'.$first_nm.'</td>';
-        echo '<td>'.$last_nm.'</td>';
-        echo '<td>'.$row['type_nm'].'</td>';
-        echo '<td>'.date('d-M-Y', strtotime($row['test_date'])).'</td>';
-        echo '<td>'.number_format(floatval($row['amount']), 2).'</td>';
-        echo '<tr>';
+        if (!isset($_GET['counter'])) {
+            echo '<td>1</td>';
+        } else {
+            echo '<td>' . $_GET['counter'] . '</td>';
+        }
+        echo '<td>' . $row['test_id'] . '</td>';
+        echo '<td>' . $emp_id . '</td>';
+        echo '<td>' . $first_nm . '</td>';
+        echo '<td>' . $last_nm . '</td>';
+        echo '<td>' . $row['type_nm'] . '</td>';
+        echo '<td>' . date('d-M-Y', strtotime($row['test_date'])) . '</td>';
+        echo '<td>' . number_format(floatval($row['amount']), 2) . '</td>';
+        echo '</tr>';
     }
 }
-?>

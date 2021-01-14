@@ -23,13 +23,13 @@ include_once "conn.php";
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
     <style>
-    label {
-        /* Other styling... */
-        text-align: right;
-        clear: both;
-        float: left;
-        margin-right: 15px;
-    }
+        label {
+            /* Other styling... */
+            text-align: right;
+            clear: both;
+            float: left;
+            margin-right: 15px;
+        }
     </style>
 
 
@@ -48,233 +48,476 @@ to get the desired effect
 <body class="sidebar-mini layout-fixed sidebar-expand">
     <div class="wrapper" id='printMe'>
         <br>
-        <div class="row" >
+        <div class="row">
             <div class="col-md-1"></div>
-            <div class="col-md-5"><h2>Drug Testing Report</h2></div>
+            <div class="col-md-5">
+                <h2>Drug Testing Report</h2>
+            </div>
             <div class="col-md-3"></div>
-            <div class="col-md-3"><h2>RN Expertise, Inc.</h2></div>
+            <div class="col-md-3">
+                <h2>RN Expertise, Inc.</h2>
+            </div>
         </div>
         <br>
-        <div class="row" >
+        <div class="row">
             <div class="col-md-1"></div>
-            <div class="col-md-3"><h5>Company Wide Results</h5></div>
+            <div class="col-md-3">
+                <h5>Company Wide Results</h5>
+            </div>
         </div>
-        <div class="row" >
+        <div class="row">
             <div class="col-md-1"></div>
-            <div class="col-md-3"><h5><span style="font-size: 0.65em;">For samples collected from</span></h5></div>
+            <div class="col-md-3">
+                <h5><span style="font-size: 0.65em;">For samples collected from</span></h5>
+            </div>
         </div>
         <hr>
         <br>
+        <?php
+        $companyCityState = '';
+        $companyPhone = '';
+        $sqlCompany = 'SELECT * FROM company ORDER BY company_id DESC LIMIT 1';
+        $resultCompany = $conn->query($sqlCompany);
+        if ($resultCompany->num_rows > 0) {
+            $rowCompany = $resultCompany->fetch_assoc();
+            $companyCityState = $rowCompany['city'] . ', ';
+            $companyCityState .= $rowCompany['state'] . ' ';
+            $companyCityState .= $rowCompany['zip'];
+
+            $companyPhone = $rowCompany['phone'];
+            $companyPhone .= '&emsp;&emsp;Fax: ' . $rowCompany['fax'];
+        }
+        $accountCityState = '';
+        $accountPhone = '';
+        $sqlAccount = 'SELECT * FROM accounts JOIN divisions ON divisions.account_id = accounts.account_id WHERE accounts.account_id = ' . $_GET['account'] . '';
+        $resultAccount = $conn->query($sqlAccount);
+        if ($resultAccount->num_rows > 0) {
+            $rowAccount = $resultAccount->fetch_assoc();
+
+            $accountCityState = $rowAccount['city'] . ', ';
+            $accountCityState .= $rowAccount['state'] . ' ';
+            $accountCityState .= $rowAccount['zip'];
+
+            $accountPhone = $rowAccount['phone'];
+            $accountPhone .= '&emsp;&emsp;Fax: ' . $rowAccount['fax'];
+        }
+        // $sqlAccount = 'SELECT * FROM accounts WHERE account_id = ' . $_GET['account'] . '';
+        // $resultAccount = $conn->query($sqlAccount);
+        // if ($resultAccount->num_rows > 0) {
+        //     $rowAccount = $resultAccount->fetch_assoc();
+        // }
+
+        ?>
         <div class="row">
             <div class="col-md-1"></div>
-            <div class="col-md-4"><span><b>RN Expertise, Inc:</b>2141241</span></div>
+            <div class="col-md-4"><span><b><?php echo (isset($rowCompany['company_nm'])) ? $rowCompany['company_nm'] : ''; ?></b></span></div>
             <div class="col-md-4"></div>
-            <div class="col-md-3"><span><b>SunCoast Concrete</b></span></div>
+            <div class="col-md-3"><span><b><?php echo (isset($rowAccount['account_nm'])) ? $rowAccount['account_nm'] : ''; ?></b></span></div>
         </div>
         <div class="row">
             <div class="col-md-1"></div>
-            <div class="col-md-3"><span><b>691 Douglas Ave</b></span></div>
+            <div class="col-md-3"><span><?php echo (isset($rowCompany['address'])) ? $rowCompany['address'] : ''; ?></span></div>
             <div class="col-md-5"></div>
-            <div class="col-md-3"><span><b>691 Douglas Ave</b></span></div>
+            <div class="col-md-3"><span><?php echo (isset($rowAccount['contact'])) ? "ATTN: " . $rowAccount['contact'] : ''; ?></span></div>
         </div>
         <div class="row">
             <div class="col-md-1"></div>
-            <div class="col-md-4"><span>Tel: 12348645</span>&nbsp;&nbsp;<span>Fax: 12348645</span></div>
-            <div class="col-md-4"></div>
-            <div class="col-md-3"><span>Tel: 12348645</span>&nbsp;&nbsp;<span>Fax: 12348645</span></div>
+            <div class="col-md-3"><span><?php echo (isset($companyCityState)) ? $companyCityState : ''; ?></span></div>
+            <div class="col-md-5"></div>
+            <div class="col-md-3"><span><?php echo (isset($rowAccount['address'])) ? $rowAccount['address'] : ''; ?></span></div>
         </div>
         <div class="row">
             <div class="col-md-1"></div>
-            <div class="col-md-5"><span>Tel: 12348645</span>&nbsp;&nbsp;<span>Fax: 12348645</span></div>
+            <div class="col-md-3"><span><?php echo (isset($companyPhone)) ? $companyPhone : ''; ?></span></div>
+            <div class="col-md-5"></div>
+            <div class="col-md-3"><span><?php echo (isset($accountCityState)) ? $accountCityState : ''; ?></span></div>
+        </div>
+        <div class="row">
+            <div class="col-md-1"></div>
             <div class="col-md-3"></div>
-            <div class="col-md-3"><span>Tel: 12348645</span>&nbsp;&nbsp;<span>Fax: 12348645</span></div>
+            <div class="col-md-5"></div>
+            <div class="col-md-3"><span><?php echo (isset($accountPhone)) ? $accountPhone : ''; ?></span></div>
         </div>
         <br>
         <br>
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-1"></div>
-            <div class="col-md-2"><h4><b>Results</b></h4></div>
+            <div class="col-md-2">
+                <h4><b>Results</b></h4>
+            </div>
         </div>
-        <hr>
+        <hr> -->
 
         <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-1"><span style="font-size: 0.80em;"><b>Summary</b></span></div>
-            <div class="col-md-1"></div>
-            <div class="col-md-1"><b>PA</b></div>
-            <div class="col-md-1"><b>PRE</b></div>
-            <div class="col-md-1"><b>R/AC</b></div>
-            <div class="col-md-1"><b>RAN</b></div>
-            <div class="col-md-1"><b>Total</b></div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-1"><b>Negative</b></div>
-            <div class="col-md-1"></div>
-            <div class="col-md-1">4</div>
-            <div class="col-md-1">39</div>
-            <div class="col-md-1">2</div>
-            <div class="col-md-1">11</div>
-            <div class="col-md-1"><b>56</b></div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-1"><b>Positive</b></div>
-            <div class="col-md-1"></div>
-            <div class="col-md-1">4</div>
-            <div class="col-md-1">39</div>
-            <div class="col-md-1">2</div>
-            <div class="col-md-1">11</div>
-            <div class="col-md-1"><b>56</b></div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-1"><b>Grand Total</b></div>
-            <div class="col-md-1"><b>4</b></div>
-            <div class="col-md-1"><b>39</b></div>
-            <div class="col-md-1"><b>2</b></div>
-            <div class="col-md-1"><b>11</b></div>
-            <div class="col-md-1"><b>56</b></div>
-        </div>
-
-        <br><br>
+            <div class="container">
+                <table id="" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Summary</th>
+                            <?php
+                            $sqlReason = 'SELECT DISTINCT(reasons.reason_code) AS reason_code FROM `test` JOIN `reasons` ON reasons.reason_id = test.reason_id WHERE account_id = ' . $_GET['account'] . ' ORDER BY reason_code';
+                            $resultReason = $conn->query($sqlReason);
+                            if ($resultReason->num_rows > 0) {
+                                while ($rowReason = $resultReason->fetch_assoc()) {
+                                    echo '<th>' . $rowReason['reason_code'] . '</th>';
+                                }
+                            }
+                            ?>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>Negative</b></td>
+                            <?php
+                            $sqlReason = 'SELECT DISTINCT(reasons.reason_code), reasons.reason_id FROM `test` JOIN `reasons` ON reasons.reason_id = test.reason_id WHERE account_id = ' . $_GET['account'] . ' ORDER BY reason_code';
+                            $resultReason = $conn->query($sqlReason);
+                            if ($resultReason->num_rows > 0) {
+                                while ($rowReason = $resultReason->fetch_assoc()) {
+                                    $sqlReason1 = 'SELECT COUNT(test_id) FROM `test` WHERE account_id = ' . $_GET['account'] . ' AND reason_id = ' . $rowReason['reason_id'] . ' AND result = "N" GROUP BY account_id,reason_id';
+                                    // echo $sqlReason1;
+                                    $resultReason1 = $conn->query($sqlReason1);
+                                    if ($resultReason1->num_rows > 0) {
+                                        while ($rowReason1 = $resultReason1->fetch_assoc()) {
+                                            echo '<th>' . $rowReason1['COUNT(test_id)'] . '</th>';
+                                        }
+                                    } else {
+                                        echo '<th></th>';
+                                    }
+                                }
+                            }
 
 
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-1"><span style="font-size: 0.80em;"><b>Refusal Details</b></span></div>
-            <div class="col-md-1"></div>
-            <div class="col-md-1"><b>PA</b></div>
-            <div class="col-md-1"><b>PRE</b></div>
-            <div class="col-md-1"><b>R/AC</b></div>
-            <div class="col-md-1"><b>RAN</b></div>
-            <div class="col-md-1"><b>Total</b></div>
-        </div>
+                            $sqlReason1 = 'SELECT COUNT(test_id) FROM `test` WHERE account_id = ' . $_GET['account'] . ' AND result = "N" GROUP BY account_id';
+                            // echo $sqlReason1;
+                            $resultReason1 = $conn->query($sqlReason1);
+                            if ($resultReason1->num_rows > 0) {
+                                while ($rowReason1 = $resultReason1->fetch_assoc()) {
+                                    echo '<th style="background: rgba(0, 0, 0, .2);">' . $rowReason1['COUNT(test_id)'] . '</th>';
+                                }
+                            }
+                            ?>
 
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-1"><b>Adulterated</b></div>
-            <div class="col-md-1"></div>
-            <div class="col-md-1">4</div>
-            <div class="col-md-1">39</div>
-            <div class="col-md-1">2</div>
-            <div class="col-md-1">11</div>
-            <div class="col-md-1"><b>56</b></div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-1"><b>Substituted</b></div>
-            <div class="col-md-1"></div>
-            <div class="col-md-1">4</div>
-            <div class="col-md-1">39</div>
-            <div class="col-md-1">2</div>
-            <div class="col-md-1">11</div>
-            <div class="col-md-1"><b>56</b></div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-1"><b>Grand Total</b></div>
-            <div class="col-md-1"><b>4</b></div>
-            <div class="col-md-1"><b>39</b></div>
-            <div class="col-md-1"><b>2</b></div>
-            <div class="col-md-1"><b>11</b></div>
-            <div class="col-md-1"><b>56</b></div>
-        </div>
-        
-        <br><br>
+                        </tr>
+                        <tr>
+                            <td><b>Positive</b></td>
+                            <?php
+                            $sqlReason = 'SELECT DISTINCT(reasons.reason_code), reasons.reason_id FROM `test` JOIN `reasons` ON reasons.reason_id = test.reason_id WHERE account_id = ' . $_GET['account'] . ' ORDER BY reason_code';
+                            $resultReason = $conn->query($sqlReason);
+                            if ($resultReason->num_rows > 0) {
+                                while ($rowReason = $resultReason->fetch_assoc()) {
+                                    $sqlReason1 = 'SELECT COUNT(test_id) FROM `test` WHERE account_id = ' . $_GET['account'] . ' AND reason_id = ' . $rowReason['reason_id'] . ' AND result = "P" GROUP BY account_id,reason_id';
+                                    // echo $sqlReason1;
+                                    $resultReason1 = $conn->query($sqlReason1);
+                                    if ($resultReason1->num_rows > 0) {
+                                        while ($rowReason1 = $resultReason1->fetch_assoc()) {
+                                            echo '<th>' . $rowReason1['COUNT(test_id)'] . '</th>';
+                                        }
+                                    } else {
+                                        echo '<th></th>';
+                                    }
+                                }
+                            }
 
 
+                            $sqlReason1 = 'SELECT COUNT(test_id) FROM `test` WHERE account_id = ' . $_GET['account'] . ' AND result = "P" GROUP BY account_id';
+                            // echo $sqlReason1;
+                            $resultReason1 = $conn->query($sqlReason1);
+                            if ($resultReason1->num_rows > 0) {
+                                while ($rowReason1 = $resultReason1->fetch_assoc()) {
+                                    echo '<th style="background: rgba(0, 0, 0, .2);">' . $rowReason1['COUNT(test_id)'] . '</th>';
+                                }
+                            } else {
+                                echo '<th style="background: rgba(0, 0, 0, .2);">0</th>';
+                            }
+                            ?>
+                        </tr>
+                        <tr style="background: rgba(0, 0, 0, .2);">
+                            <td style="text-align: right"><b>Grand Total</b></td>
+                            <?php
+                            $sqlReason = 'SELECT DISTINCT(reasons.reason_code), reasons.reason_id FROM `test` JOIN `reasons` ON reasons.reason_id = test.reason_id WHERE account_id = ' . $_GET['account'] . ' ORDER BY reason_code';
+                            $resultReason = $conn->query($sqlReason);
+                            if ($resultReason->num_rows > 0) {
+                                while ($rowReason = $resultReason->fetch_assoc()) {
+                                    $sqlReason1 = 'SELECT COUNT(test_id) FROM `test` WHERE account_id = ' . $_GET['account'] . ' AND reason_id = ' . $rowReason['reason_id'] . ' GROUP BY account_id,reason_id';
+                                    // echo $sqlReason1;
+                                    $resultReason1 = $conn->query($sqlReason1);
+                                    if ($resultReason1->num_rows > 0) {
+                                        while ($rowReason1 = $resultReason1->fetch_assoc()) {
+                                            echo '<th>' . $rowReason1['COUNT(test_id)'] . '</th>';
+                                        }
+                                    } else {
+                                        echo '<th></th>';
+                                    }
+                                }
+                            }
 
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-1"><span style="font-size: 0.80em;"><b>Positive Details</b></span></div>
-            <div class="col-md-1"></div>
-            <div class="col-md-1"><b>PA</b></div>
-            <div class="col-md-1"><b>PRE</b></div>
-            <div class="col-md-1"><b>R/AC</b></div>
-            <div class="col-md-1"><b>RAN</b></div>
-            <div class="col-md-1"><b>Total</b></div>
-        </div>
+                            $sqlReason1 = 'SELECT COUNT(test_id) FROM `test` WHERE account_id = ' . $_GET['account'] . ' GROUP BY account_id';
+                            // echo $sqlReason1;
+                            $resultReason1 = $conn->query($sqlReason1);
+                            if ($resultReason1->num_rows > 0) {
+                                while ($rowReason1 = $resultReason1->fetch_assoc()) {
+                                    echo '<th style="background: rgba(0, 0, 0, .2);">' . $rowReason1['COUNT(test_id)'] . '</th>';
+                                }
+                            } else {
+                                echo '<th style="background: rgba(0, 0, 0, .2);">0</th>';
+                            }
+                            ?>
 
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-1"><b>Alcohol</b></div>
-            <div class="col-md-1"></div>
-            <div class="col-md-1">4</div>
-            <div class="col-md-1">39</div>
-            <div class="col-md-1">2</div>
-            <div class="col-md-1">11</div>
-            <div class="col-md-1"><b>56</b></div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-1"><b>Amphetamines</b></div>
-            <div class="col-md-1"></div>
-            <div class="col-md-1">4</div>
-            <div class="col-md-1">39</div>
-            <div class="col-md-1">2</div>
-            <div class="col-md-1">11</div>
-            <div class="col-md-1"><b>56</b></div>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-1"><b>Cocaine Metabolite</b></div>
-            <div class="col-md-1"></div>
-            <div class="col-md-1">4</div>
-            <div class="col-md-1">39</div>
-            <div class="col-md-1">2</div>
-            <div class="col-md-1">11</div>
-            <div class="col-md-1"><b>56</b></div>
-        </div>
+
+        <br>
+        <br>
 
         <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-1"><b>Marijuana</b></div>
-            <div class="col-md-1"></div>
-            <div class="col-md-1">4</div>
-            <div class="col-md-1">39</div>
-            <div class="col-md-1">2</div>
-            <div class="col-md-1">11</div>
-            <div class="col-md-1"><b>56</b></div>
+            <div class="container">
+                <table id="" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Refusal Details</th>
+                            <?php
+                            $sqlReason = 'SELECT DISTINCT(reasons.reason_code) AS reason_code FROM `test` JOIN `reasons` ON reasons.reason_id = test.reason_id WHERE account_id = ' . $_GET['account'] . ' ORDER BY reason_code';
+                            $resultReason = $conn->query($sqlReason);
+                            if ($resultReason->num_rows > 0) {
+                                while ($rowReason = $resultReason->fetch_assoc()) {
+                                    echo '<th>' . $rowReason['reason_code'] . '</th>';
+                                }
+                            }
+                            ?>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>Adulterated</b></td>
+                            <?php
+                            $sqlReason = 'SELECT DISTINCT(reasons.reason_code), reasons.reason_id FROM `test` JOIN `reasons` ON reasons.reason_id = test.reason_id WHERE account_id = ' . $_GET['account'] . ' ORDER BY reason_code';
+                            $resultReason = $conn->query($sqlReason);
+                            if ($resultReason->num_rows > 0) {
+                                while ($rowReason = $resultReason->fetch_assoc()) {
+                                    $sqlReason1 = 'SELECT COUNT(DISTINCT(test_id)) FROM `test` JOIN formdrugs ON formdrugs.form_id = test.form_id JOIN drugs ON drugs.drug_id = formdrugs.drug_id WHERE account_id = ' . $_GET['account'] . ' AND reason_id = ' . $rowReason['reason_id'] . ' AND drug_nm = "Adulterated" AND result = "P" GROUP BY account_id,reason_id,drug_nm';
+                                    // echo $sqlReason1;
+                                    $resultReason1 = $conn->query($sqlReason1);
+                                    if ($resultReason1->num_rows > 0) {
+                                        while ($rowReason1 = $resultReason1->fetch_assoc()) {
+                                            echo '<th>' . $rowReason1['COUNT(DISTINCT(test_id))'] . '</th>';
+                                        }
+                                    } else {
+                                        echo '<th>0</th>';
+                                    }
+                                }
+                            }
+
+                            $sqlReason1 = 'SELECT COUNT(DISTINCT(test_id)) FROM `test` JOIN formdrugs ON formdrugs.form_id = test.form_id JOIN drugs ON drugs.drug_id = formdrugs.drug_id WHERE account_id = ' . $_GET['account'] . ' AND drug_nm = "Adulterated" AND result = "P" GROUP BY account_id,drug_nm';
+                            // echo $sqlReason1;
+                            $resultReason1 = $conn->query($sqlReason1);
+                            if ($resultReason1->num_rows > 0) {
+                                while ($rowReason1 = $resultReason1->fetch_assoc()) {
+                                    echo '<th style="background: rgba(0, 0, 0, .2);">' . $rowReason1['COUNT(DISTINCT(test_id))'] . '</th>';
+                                }
+                            } else {
+                                echo '<th style="background: rgba(0, 0, 0, .2);">0</th>';
+                            }
+                            ?>
+
+                        </tr>
+                        <tr>
+                            <td><b>DidNotProvideSample</b></td>
+                            <?php
+                            $sqlReason = 'SELECT DISTINCT(reasons.reason_code), reasons.reason_id FROM `test` JOIN `reasons` ON reasons.reason_id = test.reason_id WHERE account_id = ' . $_GET['account'] . ' ORDER BY reason_code';
+                            $resultReason = $conn->query($sqlReason);
+                            if ($resultReason->num_rows > 0) {
+                                while ($rowReason = $resultReason->fetch_assoc()) {
+                                    $sqlReason1 = 'SELECT COUNT(DISTINCT(test_id)) FROM `test` JOIN formdrugs ON formdrugs.form_id = test.form_id JOIN drugs ON drugs.drug_id = formdrugs.drug_id WHERE account_id = ' . $_GET['account'] . ' AND reason_id = ' . $rowReason['reason_id'] . ' AND drug_nm = "DidNotProvideSample" AND result = "P" GROUP BY account_id,reason_id,drug_nm';
+                                    // echo $sqlReason1;
+                                    $resultReason1 = $conn->query($sqlReason1);
+                                    if ($resultReason1->num_rows > 0) {
+                                        while ($rowReason1 = $resultReason1->fetch_assoc()) {
+                                            echo '<th>' . $rowReason1['COUNT(DISTINCT(test_id))'] . '</th>';
+                                        }
+                                    } else {
+                                        echo '<th>0</th>';
+                                    }
+                                }
+                            }
+
+                            $sqlReason1 = 'SELECT COUNT(DISTINCT(test_id)) FROM `test` JOIN formdrugs ON formdrugs.form_id = test.form_id JOIN drugs ON drugs.drug_id = formdrugs.drug_id WHERE account_id = ' . $_GET['account'] . ' AND drug_nm = "DidNotProvideSample" AND result = "P" GROUP BY account_id,drug_nm';
+                            // echo $sqlReason1;
+                            $resultReason1 = $conn->query($sqlReason1);
+                            if ($resultReason1->num_rows > 0) {
+                                while ($rowReason1 = $resultReason1->fetch_assoc()) {
+                                    echo '<th style="background: rgba(0, 0, 0, .2);">' . $rowReason1['COUNT(DISTINCT(test_id))'] . '</th>';
+                                }
+                            } else {
+                                echo '<th style="background: rgba(0, 0, 0, .2);">0</th>';
+                            }
+                            ?>
+
+                        </tr>
+                        <tr>
+                            <td><b>Substituted</b></td>
+                            <?php
+                            $sqlReason = 'SELECT DISTINCT(reasons.reason_code), reasons.reason_id FROM `test` JOIN `reasons` ON reasons.reason_id = test.reason_id WHERE account_id = ' . $_GET['account'] . ' ORDER BY reason_code';
+                            $resultReason = $conn->query($sqlReason);
+                            if ($resultReason->num_rows > 0) {
+                                while ($rowReason = $resultReason->fetch_assoc()) {
+                                    $sqlReason1 = 'SELECT COUNT(DISTINCT(test_id)) FROM `test` JOIN formdrugs ON formdrugs.form_id = test.form_id JOIN drugs ON drugs.drug_id = formdrugs.drug_id WHERE account_id = ' . $_GET['account'] . ' AND reason_id = ' . $rowReason['reason_id'] . ' AND drug_nm = "Substituted" AND result = "P" GROUP BY account_id,reason_id,drug_nm';
+                                    // echo $sqlReason1;
+                                    $resultReason1 = $conn->query($sqlReason1);
+                                    if ($resultReason1->num_rows > 0) {
+                                        while ($rowReason1 = $resultReason1->fetch_assoc()) {
+                                            echo '<th>' . $rowReason1['COUNT(DISTINCT(test_id))'] . '</th>';
+                                        }
+                                    } else {
+                                        echo '<th>0</th>';
+                                    }
+                                }
+                            }
+
+                            $sqlReason1 = 'SELECT COUNT(DISTINCT(test_id)) FROM `test` JOIN formdrugs ON formdrugs.form_id = test.form_id JOIN drugs ON drugs.drug_id = formdrugs.drug_id WHERE account_id = ' . $_GET['account'] . ' AND drug_nm = "Substituted" AND result = "P" GROUP BY account_id,drug_nm';
+                            // echo $sqlReason1;
+                            $resultReason1 = $conn->query($sqlReason1);
+                            if ($resultReason1->num_rows > 0) {
+                                while ($rowReason1 = $resultReason1->fetch_assoc()) {
+                                    echo '<th style="background: rgba(0, 0, 0, .2);">' . $rowReason1['COUNT(DISTINCT(test_id))'] . '</th>';
+                                }
+                            } else {
+                                echo '<th style="background: rgba(0, 0, 0, .2);">0</th>';
+                            }
+                            ?>
+
+                        </tr>
+                        <tr style="background: rgba(0, 0, 0, .2);">
+                            <td style="text-align: right"><b>Grand Total</b></td>
+                            <?php
+                            $sqlReason = 'SELECT DISTINCT(reasons.reason_code), reasons.reason_id FROM `test` JOIN `reasons` ON reasons.reason_id = test.reason_id WHERE account_id = ' . $_GET['account'] . ' ORDER BY reason_code';
+                            $resultReason = $conn->query($sqlReason);
+                            if ($resultReason->num_rows > 0) {
+                                while ($rowReason = $resultReason->fetch_assoc()) {
+                                    $sqlReason1 = 'SELECT COUNT(DISTINCT(test_id)) FROM `test` JOIN formdrugs ON formdrugs.form_id = test.form_id JOIN drugs ON drugs.drug_id = formdrugs.drug_id WHERE account_id = ' . $_GET['account'] . ' AND reason_id = ' . $rowReason['reason_id'] . ' AND (drug_nm = "Adulterated" OR drug_nm = "DidNotProvideSample" OR drug_nm = "Substituted") AND result = "P" GROUP BY account_id,reason_id,drug_nm';
+                                    // echo $sqlReason1;
+                                    $resultReason1 = $conn->query($sqlReason1);
+                                    if ($resultReason1->num_rows > 0) {
+                                        while ($rowReason1 = $resultReason1->fetch_assoc()) {
+                                            echo '<th>' . $rowReason1['COUNT(test_id)'] . '</th>';
+                                        }
+                                    } else {
+                                        echo '<th>0</th>';
+                                    }
+                                }
+                            }
+
+                            $sqlReason1 = 'SELECT COUNT(DISTINCT(test_id)) FROM `test` JOIN formdrugs ON formdrugs.form_id = test.form_id JOIN drugs ON drugs.drug_id = formdrugs.drug_id WHERE account_id = ' . $_GET['account'] . ' AND (drug_nm = "Adulterated" OR drug_nm = "DidNotProvideSample" OR drug_nm = "Substituted") AND result = "P" GROUP BY account_id';
+                            // echo $sqlReason1;
+                            $resultReason1 = $conn->query($sqlReason1);
+                            if ($resultReason1->num_rows > 0) {
+                                while ($rowReason1 = $resultReason1->fetch_assoc()) {
+                                    echo '<th>' . $rowReason1['COUNT(DISTINCT(test_id))'] . '</th>';
+                                }
+                            } else {
+                                echo '<th>0</th>';
+                            }
+                            ?>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
+        <br>
+        <br>
         <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-1"><b>Opiates</b></div>
-            <div class="col-md-1"></div>
-            <div class="col-md-1">4</div>
-            <div class="col-md-1">39</div>
-            <div class="col-md-1">2</div>
-            <div class="col-md-1">11</div>
-            <div class="col-md-1"><b>56</b></div>
-        </div>
+            <div class="container">
+                <table id="" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Positive Details</th>
+                            <?php
+                            $sqlReason = 'SELECT DISTINCT(reasons.reason_code) AS reason_code FROM `test` JOIN `reasons` ON reasons.reason_id = test.reason_id WHERE account_id = ' . $_GET['account'] . ' ORDER BY reason_code';
+                            $resultReason = $conn->query($sqlReason);
+                            if ($resultReason->num_rows > 0) {
+                                while ($rowReason = $resultReason->fetch_assoc()) {
+                                    echo '<th>' . $rowReason['reason_code'] . '</th>';
+                                }
+                            }
+                            ?>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $sqlDrugs = 'SELECT DISTINCT(drugs.drug_nm) AS drug_nm FROM `test` JOIN formdrugs ON formdrugs.form_id = test.form_id JOIN drugs ON drugs.drug_id = formdrugs.drug_id JOIN `reasons` ON reasons.reason_id = test.reason_id WHERE account_id = ' . $_GET['account'] . ' ORDER BY drug_nm';
+                        $resultDrugs = $conn->query($sqlDrugs);
+                        if ($resultDrugs->num_rows > 0) {
+                            while ($rowDrugs = $resultDrugs->fetch_assoc()) {
 
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-1"><b>Phencyclidine</b></div>
-            <div class="col-md-1"></div>
-            <div class="col-md-1">4</div>
-            <div class="col-md-1">39</div>
-            <div class="col-md-1">2</div>
-            <div class="col-md-1">11</div>
-            <div class="col-md-1"><b>56</b></div>
+                        ?>
+                                <tr>
+                                    <td><b>
+                                            <? echo $rowDrugs['drug_nm']; ?>
+                                        </b></td>
+                                    <?php
+                                    $sqlReason = 'SELECT DISTINCT(reasons.reason_code), reasons.reason_id FROM `test` JOIN `reasons` ON reasons.reason_id = test.reason_id WHERE account_id = ' . $_GET['account'] . ' ORDER BY reason_code';
+                                    $resultReason = $conn->query($sqlReason);
+                                    if ($resultReason->num_rows > 0) {
+                                        while ($rowReason = $resultReason->fetch_assoc()) {
+                                            $sqlReason1 = 'SELECT COUNT(DISTINCT(test_id)) FROM `test` JOIN formdrugs ON formdrugs.form_id = test.form_id JOIN drugs ON drugs.drug_id = formdrugs.drug_id WHERE account_id = ' . $_GET['account'] . ' AND reason_id = ' . $rowReason['reason_id'] . ' AND drug_nm = "' . $rowDrugs['drug_nm'] . '" AND result = "P" GROUP BY account_id,reason_id,drug_nm';
+                                            // echo $sqlReason1;
+                                            $resultReason1 = $conn->query($sqlReason1);
+                                            if ($resultReason1->num_rows > 0) {
+                                                while ($rowReason1 = $resultReason1->fetch_assoc()) {
+                                                    echo '<th>' . $rowReason1['COUNT(DISTINCT(test_id))'] . '</th>';
+                                                }
+                                            } else {
+                                                echo '<th>0</th>';
+                                            }
+                                        }
+                                    }
+
+
+
+                                    $sqlReason1 = 'SELECT COUNT(DISTINCT(test_id)) FROM `test` JOIN formdrugs ON formdrugs.form_id = test.form_id JOIN drugs ON drugs.drug_id = formdrugs.drug_id WHERE account_id = ' . $_GET['account'] . ' AND drug_nm = "' . $rowDrugs['drug_nm'] . '" AND result = "P" GROUP BY account_id,drug_nm';
+                                    // echo $sqlReason1;
+                                    $resultReason1 = $conn->query($sqlReason1);
+                                    if ($resultReason1->num_rows > 0) {
+                                        while ($rowReason1 = $resultReason1->fetch_assoc()) {
+                                            echo '<th style="background: rgba(0, 0, 0, .2);">' . $rowReason1['COUNT(DISTINCT(test_id))'] . '</th>';
+                                        }
+                                    } else {
+                                        echo '<th style="background: rgba(0, 0, 0, .2);">0</th>';
+                                    }
+                                    ?>
+
+                                </tr>
+                        <?php }
+                        } ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        
+        <br>
         <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-1"><b>Grand Total</b></div>
-            <div class="col-md-1"><b>4</b></div>
-            <div class="col-md-1"><b>39</b></div>
-            <div class="col-md-1"><b>2</b></div>
-            <div class="col-md-1"><b>11</b></div>
-            <div class="col-md-1"><b>56</b></div>
+            <div class="container">
+                <h3>LEGEND</h3>
+                <hr>
+                <div class="row">
+                    <?php
+                    $sqlReason = 'SELECT DISTINCT(reasons.reason_code) AS reason_code, reasons.reason_nm FROM `test` JOIN `reasons` ON reasons.reason_id = test.reason_id WHERE account_id = ' . $_GET['account'] . ' ORDER BY reason_code';
+                    $resultReason = $conn->query($sqlReason);
+                    if ($resultReason->num_rows > 0) {
+                        while ($rowReason = $resultReason->fetch_assoc()) {
+                            echo '<div class="col-md-1"><b>' . $rowReason['reason_code'] . '</b></div><div class="col-md-3">' . $rowReason['reason_nm'] . '</div>';
+                        }
+                    }
+                    ?>
+                </div>
+            </div>
         </div>
     </div>
     <br><br>
@@ -283,7 +526,7 @@ to get the desired effect
         <div class="col-md-1"></div>
         <div class="col-md-2"><button class="btn btn-info" onclick="printDiv('printMe')">Print </button></div>
     </div>
-    
+
 
     <!-- REQUIRED SCRIPTS -->
 
@@ -299,7 +542,7 @@ to get the desired effect
     <script src="dist/js/demo.js"></script>
     <script src="dist/js/pages/dashboard3.js"></script>
     <script>
-        function printDiv(divName){
+        function printDiv(divName) {
             var printContents = document.getElementById(divName).innerHTML;
             var originalContents = document.body.innerHTML;
 

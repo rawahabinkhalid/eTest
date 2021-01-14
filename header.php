@@ -16,50 +16,52 @@ if (!isset($_SESSION['userid'])) {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="dist/js/adminlte_sidebar_responsive.js"></script>
 <style>
-@media only screen and (min-width: 800px) {
-    #nav-menu {
-         display: none;
-         
-    }
+    @media only screen and (min-width: 800px) {
+        #nav-menu {
+            display: none;
 
-    #desktop_emp {
-        display: block;
-    }
-
-    #desktop_pref {
-        display: block;
-    }
-
-    #mobile_emp {
-        display: none;
-    }
-
-    #mobile_pref {
-        display: none;
-    }
-}
-@media only screen and (max-width: 800px) {
-    #nav-menu {
-         /* display: none; */
-         
-    }
-
-    #desktop_emp {
-        display: none;
         }
 
-    #desktop_pref {
-        display: none;
+        #desktop_emp {
+            display: block;
+        }
+
+        #desktop_pref {
+            display: block;
+        }
+
+        #mobile_emp {
+            display: none;
+        }
+
+        #mobile_pref {
+            display: none;
+        }
     }
 
-    #mobile_emp {
-        display: block;
-    }
+    @media only screen and (max-width: 800px) {
+        #nav-menu {
+            /* display: none; */
 
-    #mobile_pref {
-        display: block;
-    }
-/* 
+        }
+
+        #desktop_emp {
+            display: none;
+        }
+
+        #desktop_pref {
+            display: none;
+        }
+
+        #mobile_emp {
+            display: block;
+        }
+
+        #mobile_pref {
+            display: block;
+        }
+
+        /* 
     #btn_add_employees {
         padding-left: 5px;
         padding-right: 5px;
@@ -70,115 +72,151 @@ if (!isset($_SESSION['userid'])) {
         padding-right: 5px;
     } */
 
-    .nav-item .nav-link {
-        padding-left: 5px !important;
-        padding-right: 5px !important;
+        .nav-item .nav-link {
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+        }
     }
-}
 
-/* Style the tab */
-.tab {
-  overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
-}
+    /* Style the tab */
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
 
-/* Style the buttons that are used to open the tab content */
-.tab button {
-  background-color: inherit;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
-}
+    /* Style the buttons that are used to open the tab content */
+    .tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+    }
 
-/* Change background color of buttons on hover */
-.tab button:hover {
-  background-color: #ddd;
-}
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+        background-color: #ddd;
+    }
 
-/* Create an active/current tablink class */
-.tab button.active {
-  background-color: #ccc;
-}
+    /* Create an active/current tablink class */
+    .tab button.active {
+        background-color: #ccc;
+    }
 
-/* Style the tab content */
-.tabcontent {
-  display: none;
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
-}
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-top: none;
+    }
 
-.tabcontent {
-  animation: fadeEffect 0.5s; /* Fading effect takes 1 second */
-}
+    .tabcontent {
+        animation: fadeEffect 0.5s;
+        /* Fading effect takes 1 second */
+    }
 
-/* Go from zero to full opacity */
-@keyframes fadeEffect {
-  from {opacity: 0;}
-  to {opacity: 1;}
-}
+    /* Go from zero to full opacity */
+    @keyframes fadeEffect {
+        from {
+            opacity: 0;
+        }
 
-.my-row-4-label label, .my-row-5-label label {
-    font-size: 12px;
-    padding: 3px 0px;
-}
+        to {
+            opacity: 1;
+        }
+    }
 
-.my-row-8-input input, .my-row-7-input input {
-    font-size: 12px !important;
-    height: calc(1.75rem + 0px) !important;
-    padding: 3px 10px !important;
-}
-.my-row-8-input select, .my-row-7-input select {
-    font-size: 12px !important;
-    height: calc(1.75rem + 0px) !important;
-    padding: 3px 10px !important;
-}
+    .my-row-4-label label,
+    .my-row-5-label label {
+        font-size: 12px;
+        padding: 3px 0px;
+    }
+
+    .my-row-8-input input,
+    .my-row-7-input input {
+        font-size: 12px !important;
+        height: calc(1.75rem + 0px) !important;
+        padding: 3px 10px !important;
+    }
+
+    .my-row-8-input select,
+    .my-row-7-input select {
+        font-size: 12px !important;
+        height: calc(1.75rem + 0px) !important;
+        padding: 3px 10px !important;
+    }
+
+    .validation-error {
+        border-color: red !important;
+    }
 </style>
 <ul class="navbar-nav col-md-8">
     <li class="nav-item">
         <a class="nav-link" id="nav-menu" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
     </li>
-    <li class="nav-item col-md-12">        
+    <li class="nav-item col-md-12">
         <?php if ($_SESSION['usertype'] == 'admin') { ?>
-
-        <select class="form-control" id="accounts_select">
-            <option selected disabled>Please select Account</option>
-            <?php
-            $sql = 'SELECT * FROM accounts ORDER BY account_nm';
-            $result = $conn->query($sql);
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo '<option value="' .
-                        $row['account_id'] .
-                        '">' .
-                        $row['account_nm'] .
-                        '</option>';
+            <div class="form-inline">
+                <div class="form-inline" id="selected_filter_div" style="display: none">
+                    <label><input type="radio" id="selected_filter_all" name="selected_filter" value="All">&nbsp;All</label>
+                    <label><input type="radio" id="selected_filter_selected" name="selected_filter" value="Selected" checked>&nbsp;Selected</label>
+                </div>
+                <select class="form-control" id="accounts_select">
+                    <option selected disabled>Please select Account</option>
+                    <?php
+                    $sql = 'SELECT * FROM accounts ORDER BY account_nm';
+                    $result = $conn->query($sql);
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo '<option value="' .
+                                $row['account_id'] .
+                                '">' .
+                                $row['account_nm'] .
+                                '</option>';
+                        }
+                    }
+                    ?>
+                </select>
+            </div>
+        <?php } elseif ($_SESSION['usertype'] == 'accounts' || $_SESSION['usertype'] == 'guest') { ?>
+            <!-- <select class="form-control" id="accounts_select">
+                <?php
+                // $sql =
+                //     'SELECT * FROM accounts WHERE account_id=' .
+                //     $_SESSION['accountid'];
+                // $result = $conn->query($sql);
+                // if ($result->num_rows > 0) {
+                //     while ($row = $result->fetch_assoc()) {
+                //         echo '<option selected value="' .
+                //             $row['account_id'] .
+                //             '">' .
+                //             $row['account_nm'] .
+                //             '</option>';
+                //     }
+                // }
+                ?>
+            </select> -->
+            <select class="form-control" id="accounts_select">
+                <?php
+                $sql = 'SELECT * FROM accounts WHERE account_id = ' .
+                    $_SESSION['accountid'] . ' ORDER BY account_nm';
+                echo $sql;
+                $result = $conn->query($sql);
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo '<option value="' .
+                            $row['account_id'] .
+                            '">' .
+                            $row['account_nm'] .
+                            '</option>';
+                    }
                 }
-            }
-            ?>
-        </select>
-        <?php } elseif ($_SESSION['usertype'] == 'accounts') { ?>
-        <select class="form-control" id="accounts_select">
-            <?php
-            $sql =
-                'SELECT * FROM accounts WHERE account_id=' .
-                $_SESSION['accountid'];
-            $result = $conn->query($sql);
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo '<option selected value="' .
-                        $row['account_id'] .
-                        '">' .
-                        $row['account_nm'] .
-                        '</option>';
-                }
-            }
-            ?>
-        </select>
+                ?>
+            </select>
 
         <?php } ?>
     </li>
@@ -187,20 +225,20 @@ if (!isset($_SESSION['userid'])) {
 
 <!-- Right navbar links -->
 <ul class="navbar-nav ml-auto">
-<?php if ($_SESSION['usertype'] == 'admin') { ?>
+    <?php if ($_SESSION['usertype'] == 'admin') { ?>
 
-    <li class="nav-item">
+        <li class="nav-item">
             <a href="" class="nav-link nav-link-disabler" data-toggle="modal" data-target="#myModal_Employee" id="btn_add_employees">
                 <p id="desktop_emp">Employee</p>
                 <p id="mobile_emp">Emp</p>
             </a>
-    </li>
-    <li class="nav-item">
+        </li>
+        <li class="nav-item">
             <a href="" class="nav-link nav-link-disabler" data-toggle="modal" data-target="#myModal_Preferences" id="btn_add_preferences">
                 <p id="desktop_pref">Preferences</p>
                 <p id="mobile_pref">Pref</p>
             </a>
-    </li>
+        </li>
     <?php } ?>
 
     <!-- <li class="nav-item dropdown">
@@ -286,87 +324,38 @@ if (!isset($_SESSION['userid'])) {
 </ul>
 </nav>
 <!-- /.navbar -->
-<?php if ($_SESSION['usertype'] == 'guest') { ?>
+<?php // if ($_SESSION['usertype'] == 'guest') { 
+?>
 
-<!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="#" class="brand-link">
-        <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">RN Expertise</span>
-    </a>
 
-    <!-- Sidebar -->
-    <div class="sidebar" style="height:90% !important;">
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <!--  <div class="image">
+<?php if ($_SESSION['usertype'] == 'accounts' || $_SESSION['usertype'] == 'guest') { ?>
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="#" class="brand-link">
+            <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">RN Expertise</span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar" style="height:90% !important;">
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <!--  <div class="image">
                     <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                 </div> -->
-            <div class="info">
-                <a href="#" class="d-block" style="font-size: 1.1em;"><b><?php echo ucwords(
-                    $_SESSION['username']
-                ); ?></b></a>
+                <div class="info">
+                    <a href="#" class="d-block" style="font-size: 1.1em;"><b><?php echo ucwords(
+                                                                                    $_SESSION['username']
+                                                                                ); ?></b></a>
+                </div>
             </div>
-        </div>
 
-        <!-- Sidebar Menu -->
-        <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <li class="nav-item">
-                    <a href="personal.php" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
-                        <p>
-                            Personal
-                        </p>
-                    </a>
-                </li>
-                <!-- <li class="nav-item has-treeview">
-                    <a href="landingscreen.php" class="nav-link">
-                        <i class="nav-icon fas fa-home"></i>
-                        <p>
-                            MRO review / New Test
-                        </p>
-                    </a>
-                </li> -->
-
-
-            </ul>
-        </nav>
-        <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-</aside>
-
-
-<?php } elseif ($_SESSION['usertype'] == 'accounts') { ?>
-
-<!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="#" class="brand-link">
-        <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">RN Expertise</span>
-    </a>
-
-    <!-- Sidebar -->
-    <div class="sidebar" style="height:90% !important;">
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <!--  <div class="image">
-                    <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-                </div> -->
-            <div class="info">
-                <a href="#" class="d-block" style="font-size: 1.1em;"><b><?php echo ucwords(
-                    $_SESSION['username']
-                ); ?></b></a>
-            </div>
-        </div>
-
-        <!-- Sidebar Menu -->
-        <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <!-- <li class="nav-item">
+            <!-- Sidebar Menu -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <!-- <li class="nav-item">
                     <a href="personal.php" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
@@ -374,22 +363,30 @@ if (!isset($_SESSION['userid'])) {
                         </p>
                     </a>
                 </li> -->
-                <li class="nav-item has-treeview">
-                    <a href="landingscreen.php" class="nav-link">
-                        <i class="nav-icon fas fa-home"></i>
-                        <p>
-                            MRO review / New Test
-                        </p>
-                    </a>
-                </li>
+                    <li class="nav-item has-treeview">
+                        <a href="landingscreen.php" class="nav-link">
+                            <i class="nav-icon fas fa-home"></i>
+                            <p>
+                                MRO review / New Test
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="personal.php" class="nav-link">
+                            <i class="nav-icon fas fa-copy"></i>
+                            <p>
+                                Personal
+                            </p>
+                        </a>
+                    </li>
 
 
-            </ul>
-        </nav>
-        <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-</aside>
+                </ul>
+            </nav>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
 
 
 <?php } elseif ($_SESSION['usertype'] == 'admin') { ?>
@@ -398,36 +395,36 @@ if (!isset($_SESSION['userid'])) {
 
 
 
-<!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="#" class="brand-link">
-        <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">RN Expertise</span>
-    </a>
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="#" class="brand-link">
+            <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">RN Expertise</span>
+        </a>
 
-    <!-- Sidebar -->
-    <div class="sidebar" style="height:90% !important;">
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <!-- <div class="image">
+        <!-- Sidebar -->
+        <div class="sidebar" style="height:90% !important;">
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <!-- <div class="image">
                     <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                 </div> -->
-            <div class="info">
-                <a href="#" class="d-block" style="font-size: 1.1em;"><b><?php echo ucwords(
-                    $_SESSION['username']
-                ); ?></b></a>
+                <div class="info">
+                    <a href="#" class="d-block" style="font-size: 1.1em;"><b><?php echo ucwords(
+                                                                                    $_SESSION['username']
+                                                                                ); ?></b></a>
+                </div>
             </div>
-        </div>
 
-        <!-- Sidebar Menu -->
-        <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <!-- Add icons to the links using the .nav-icon class
+            <!-- Sidebar Menu -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                <!-- <li class="nav-item has-treeview menu-open">
+                    <!-- <li class="nav-item has-treeview menu-open">
                     <a href="dashboard.php" class="nav-link active"> -->
-                <!-- <li class="nav-item has-treeview">
+                    <!-- <li class="nav-item has-treeview">
                         <a href="dashboard.php" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
@@ -435,41 +432,41 @@ if (!isset($_SESSION['userid'])) {
                             </p>
                         </a>
                     </li> -->
-                <li class="nav-item has-treeview">
-                    <a onclick="openURL('landingscreen.php');" href="javascript:void();" class="nav-link">
-                        <!-- <a href="" class="nav-link"> -->
-                        <i class="nav-icon fas fa-home"></i>
-                        <p>
-                            MRO review / New Test
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item has-treeview">
-                    <a onclick="openURL('viewInvoice.php');" href="javascript:void();" class="nav-link">
-                        <!-- <a href="" class="nav-link"> -->
-                        <i class="nav-icon fas fa-copy "></i>
-                        <p>
-                            Invoice
-                        </p>
-                    </a>
-                </li>
+                    <li class="nav-item has-treeview">
+                        <a onclick="openURL('landingscreen.php');" href="javascript:void();" class="nav-link">
+                            <!-- <a href="" class="nav-link"> -->
+                            <i class="nav-icon fas fa-home"></i>
+                            <p>
+                                MRO review / New Test
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item has-treeview">
+                        <a onclick="openURL('viewInvoice.php');" href="javascript:void();" class="nav-link">
+                            <!-- <a href="" class="nav-link"> -->
+                            <i class="nav-icon fas fa-copy "></i>
+                            <p>
+                                Invoice
+                            </p>
+                        </a>
+                    </li>
 
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
-                        <p>
-                            File
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="" class="nav-link" id="new_form" style="pointer-events: none;">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>New</p>
-                            </a>
-                        </li>
-                        <!-- <li class="nav-item" style="pointer-events: none;">
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-copy"></i>
+                            <p>
+                                File
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="" class="nav-link" id="new_form" style="pointer-events: none;">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>New</p>
+                                </a>
+                            </li>
+                            <!-- <li class="nav-item" style="pointer-events: none;">
                             <a href="" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Delete</p>
@@ -481,61 +478,60 @@ if (!isset($_SESSION['userid'])) {
                                 <p>Save</p>
                             </a>
                         </li> -->
-                        <li class="nav-item">
-                            <a href="landingscreen.php" class="nav-link" id="cancel_form" style="pointer-events: none;">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Cancel</p>
-                            </a>
-                        </li>
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>
-                                    Account
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <!-- <li class="nav-item" style="pointer-events: none;">
+                            <li class="nav-item">
+                                <a href="landingscreen.php" class="nav-link" id="cancel_form" style="pointer-events: none;">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Cancel</p>
+                                </a>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="#" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>
+                                        Account
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <!-- <li class="nav-item" style="pointer-events: none;">
                                          <a href="" class="nav-link">
                                          &emsp;&emsp;<i class="far fa-circle nav-icon"></i>
                                               <p>&emsp;&emsp;Properties</p>
                                           </a>
                                      </li> -->
-                                <li class="nav-item">
-                                    <a href="" class="nav-link" data-toggle="modal" data-target="#myModal_Employee"
-                                        id="btn_add_employees">
-                                        &emsp;&emsp;<i class="far fa-circle nav-icon"></i>
-                                        <p>&emsp;&emsp;Add Employee</p>
-                                    </a>
-                                </li>
-                                <!-- <li class="nav-item" style="pointer-events: none;">
+                                    <li class="nav-item">
+                                        <a href="" class="nav-link" data-toggle="modal" data-target="#myModal_Employee" id="btn_add_employees">
+                                            &emsp;&emsp;<i class="far fa-circle nav-icon"></i>
+                                            <p>&emsp;&emsp;Add Employee</p>
+                                        </a>
+                                    </li>
+                                    <!-- <li class="nav-item" style="pointer-events: none;">
                                          <a href="" class="nav-link">
                                          &emsp;&emsp;<i class="far fa-circle nav-icon"></i>
                                               <p>&emsp;&emsp;Transfer Data</p>
                                           </a>
                                      </li> -->
-                                <li class="nav-item">
-                                    <a href="randomemployees.php" class="nav-link">
-                                        &emsp;&emsp;<i class="far fa-circle nav-icon"></i>
-                                        <p>&emsp;&emsp;Random Employee Listing</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a onclick="openURL('invoice.php');" href="javascript:void();" class="nav-link">
-                                        &emsp;&emsp;<i class="far fa-circle nav-icon"></i>
-                                        <p>&emsp;&emsp;Invoices</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a onclick="openURL('retrievetest.php');" href="javascript:void();" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Retrieve...</p>
-                            </a>
-                        </li>
-                        <!-- <li class="nav-item" style="pointer-events: none;">
+                                    <li class="nav-item">
+                                        <a href="randomemployees.php" class="nav-link">
+                                            &emsp;&emsp;<i class="far fa-circle nav-icon"></i>
+                                            <p>&emsp;&emsp;Random Employee Listing</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a onclick="openURL('invoice.php');" href="javascript:void();" class="nav-link">
+                                            &emsp;&emsp;<i class="far fa-circle nav-icon"></i>
+                                            <p>&emsp;&emsp;Invoices</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a onclick="openURL('retrievetest.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Retrieve...</p>
+                                </a>
+                            </li>
+                            <!-- <li class="nav-item" style="pointer-events: none;">
                             <a href="" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Clear Results</p>
@@ -547,29 +543,28 @@ if (!isset($_SESSION['userid'])) {
                                 <p>Print...</p>
                             </a>
                         </li> -->
-                        <!-- <li class="nav-item" style="pointer-events: none;">
+                            <!-- <li class="nav-item" style="pointer-events: none;">
                             <a href="" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Printer Setup...</p>
                             </a>
                         </li> -->
-                        <li class="nav-item">
-                            <a href="" class="nav-link" data-toggle="modal" data-target="#myModal_Preferences"
-                                id="btn_add_preferences">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Preferences</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="signout.php" class="nav-link nav-link-signout">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Exit</p>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link" data-toggle="modal" data-target="#myModal_Preferences" id="btn_add_preferences">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Preferences</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="signout.php" class="nav-link nav-link-signout">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Exit</p>
+                                </a>
+                            </li>
 
-                    </ul>
-                </li>
-                <!-- <li class="nav-item has-treeview">
+                        </ul>
+                    </li>
+                    <!-- <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
@@ -581,16 +576,16 @@ if (!isset($_SESSION['userid'])) {
 
                     </ul>
                 </li> -->
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
-                        <p>
-                            Results
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <!-- <li class="nav-item" style="pointer-events: none;">
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-copy"></i>
+                            <p>
+                                Results
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <!-- <li class="nav-item" style="pointer-events: none;">
                             <a href="" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Select All</p>
@@ -614,63 +609,61 @@ if (!isset($_SESSION['userid'])) {
                                 <p>Ungroup</p>
                             </a>
                         </li> -->
-                        <li class="nav-item">
-                            <a href="" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Refresh</p>
-                            </a>
-                        </li>
-                        <!-- <li class="nav-item" style="pointer-events: none;">
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Refresh</p>
+                                </a>
+                            </li>
+                            <!-- <li class="nav-item" style="pointer-events: none;">
                             <a href="" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Sort</p>
                             </a>
                         </li> -->
-                        <li class="nav-item" style="pointer-events: none;">
-                            <a href="" class="nav-link" data-toggle="modal" data-target="#myModal_Send"
-                                id="btn_add_send">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Send</p>
-                            </a>
-                        </li>
-                        <li class="nav-item" style="pointer-events: none;">
-                            <a href="" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Download</p>
-                            </a>
-                        </li>
-                        <li class="nav-item" style="pointer-events: none;">
-                            <a href="" class="nav-link" data-toggle="modal" data-target="#myModal_Billing"
-                                id="btn_add_billing">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Billing</p>
-                            </a>
-                        </li>
+                            <li class="nav-item" style="pointer-events: none;">
+                                <a href="" class="nav-link" data-toggle="modal" data-target="#myModal_Send" id="btn_add_send">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Send</p>
+                                </a>
+                            </li>
+                            <li class="nav-item" style="pointer-events: none;">
+                                <a href="" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Download</p>
+                                </a>
+                            </li>
+                            <li class="nav-item" style="pointer-events: none;">
+                                <a href="" class="nav-link" data-toggle="modal" data-target="#myModal_Billing" id="btn_add_billing">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Billing</p>
+                                </a>
+                            </li>
 
-                    </ul>
-                </li>
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
-                        <p>
-                            System
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="users.php" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Users</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="systemids.php" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>System IDs</p>
-                            </a>
-                        </li>
-                        <!-- <li class="nav-item has-treeview">
+                        </ul>
+                    </li>
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-copy"></i>
+                            <p>
+                                System
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="users.php" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Users</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="systemids.php" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>System IDs</p>
+                                </a>
+                            </li>
+                            <!-- <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>
@@ -700,243 +693,249 @@ if (!isset($_SESSION['userid'])) {
 
                             </ul>
                         </li> -->
-                        <li class="nav-item">
-                            <a href="accounts.php" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Accounts</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="practitioners.php" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Practitioners</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="laboratories.php" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Laboritories</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="testtype.php" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Test Types</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="sampletype.php" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Sample Types</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="testreason.php" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Test Reasons</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="drugs.php" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Drugs</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="form.php" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Forms</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="randomemployees.php" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Random Employees</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="randomemployeeslisting.php" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Random Employees Listing</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="companyInfo.php" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Company Information</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                            <li class="nav-item">
+                                <a href="accounts.php" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Accounts</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="employees.php" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Employees</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="practitioners.php" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Practitioners</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="laboratories.php" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Laboratories</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="testtype.php" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Test Types</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="sampletype.php" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Sample Types</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="testreason.php" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Test Reasons</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="drugs.php" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Drugs</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="form.php" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Forms</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="randomemployees.php" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Random Employees</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="randomemployeeslisting.php" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Random Employees Listing</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="companyInfo.php" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Company Information</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
-                        <p>
-                            Reports
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a onclick="openURL('accounts_fees.php');" href="javascript:void();" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Accounts Fees Report</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a onclick="openURL('bedsReport.php');" href="javascript:void();" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Monthly Beds Report</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a onclick="openURL('notBilledReport.php');" href="javascript:void();" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Items Not Billed</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a onclick="openURL('weeklyReport.php');" href="javascript:void();" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Weekly Funding Test</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a onclick="openURL('billingReport.php');" href="javascript:void();" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Billing Report</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a onclick="openURL('labelsBillingReport.php');" href="javascript:void();" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Labels For Billing Report</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a onclick="openURL('postBilledReport.php');" href="javascript:void();" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Post Billed Report</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a onclick="openURL('frandReport.php');" href="javascript:void();" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Frandomdotemplqry</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a onclick="openURL('unpaidInvoiceReport.php');" href="javascript:void();" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Unpaid Invoice Report</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a onclick="openURL('misReport.php');" href="javascript:void();" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>MIS Report</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a onclick="openURL('revenueReport.php');" href="javascript:void();" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Revenue Report</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a onclick="openURL('testResult.php');" href="javascript:void();" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Alere Report</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a onclick="openURL('peopleSoftInfo.php');" href="javascript:void();" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>WP Peoplesoft Info</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a onclick="openURL('mroReport.php');" href="javascript:void();" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>MRO Reports</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-copy"></i>
+                            <p>
+                                Reports
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('accounts_fees.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Accounts Fees Report</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('bedsReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Monthly Beds Report</p>
+                                </a>
+                            </li>
+                        </ul> -->
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('notBilledReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Items Not Billed</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('weeklyReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Weekly Funding Test</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('billingReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Billing Report</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('labelsBillingReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Labels For Billing Report</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('postBilledReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Post Billed Report</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('frandReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Frandomdotemplqry</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('unpaidInvoiceReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Unpaid Invoice Report</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('misReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>MIS Report</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('revenueReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Revenue Report</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('testResult.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Alere Report</p>
+                                </a>
+                            </li>
+                        </ul> -->
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('peopleSoftInfo.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>WP Peoplesoft Info</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('mroReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>MRO Reports</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
 
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
-                        <p>
-                            Help
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="aboutus.php" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>About Us</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="query.php" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Execute Query</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="personal.php" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
-                        <p>
-                            Personal
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="accountsManagement.php" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
-                        <p>
-                            Accounts Management
-                        </p>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-</aside>
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-copy"></i>
+                            <p>
+                                Help
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="aboutus.php" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>About Us</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="query.php" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Execute Query</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="personal.php" class="nav-link">
+                            <i class="nav-icon fas fa-copy"></i>
+                            <p>
+                                Personal
+                            </p>
+                        </a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a href="accountsManagement.php" class="nav-link">
+                            <i class="nav-icon fas fa-copy"></i>
+                            <p>
+                                Accounts Management
+                            </p>
+                        </a>
+                    </li> -->
+                </ul>
+            </nav>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
 <?php } ?>
 
 <div id="myModal_Preferences" class="modal fade" role="dialog">
@@ -976,32 +975,20 @@ if (!isset($_SESSION['userid'])) {
                                             $rowPractitioner = $resultPractitioner->fetch_assoc()
                                         ) {
                                             echo '<option value="' .
-                                                $rowPractitioner[
-                                                    'practitioner_id'
-                                                ] .
+                                                $rowPractitioner['practitioner_id'] .
                                                 '"';
                                             if (
-                                                isset(
-                                                    $rowPreferences[
-                                                        'practitioner_id'
-                                                    ]
-                                                )
+                                                isset($rowPreferences['practitioner_id'])
                                             ) {
                                                 if (
-                                                    $rowPractitioner[
-                                                        'practitioner_id'
-                                                    ] ==
-                                                    $rowPreferences[
-                                                        'practitioner_id'
-                                                    ]
+                                                    $rowPractitioner['practitioner_id'] ==
+                                                    $rowPreferences['practitioner_id']
                                                 ) {
                                                     echo 'selected';
                                                 }
                                             }
                                             echo '>' .
-                                                $rowPractitioner[
-                                                    'practitioner_nm'
-                                                ] .
+                                                $rowPractitioner['practitioner_nm'] .
                                                 '</option>';
                                         }
                                     }
@@ -1063,14 +1050,10 @@ if (!isset($_SESSION['userid'])) {
                                                 $rowSampleType['sample_id'] .
                                                 '"';
                                             if (
-                                                isset(
-                                                    $rowPreferences['sample_id']
-                                                )
+                                                isset($rowPreferences['sample_id'])
                                             ) {
                                                 if (
-                                                    $rowSampleType[
-                                                        'sample_id'
-                                                    ] ==
+                                                    $rowSampleType['sample_id'] ==
                                                     $rowPreferences['sample_id']
                                                 ) {
                                                     echo 'selected';
@@ -1104,9 +1087,7 @@ if (!isset($_SESSION['userid'])) {
                                                 $rowTestType['type_id'] .
                                                 '"';
                                             if (
-                                                isset(
-                                                    $rowPreferences['type_id']
-                                                )
+                                                isset($rowPreferences['type_id'])
                                             ) {
                                                 if (
                                                     $rowTestType['type_id'] ==
@@ -1143,14 +1124,10 @@ if (!isset($_SESSION['userid'])) {
                                                 $rowTestReason['reason_id'] .
                                                 '"';
                                             if (
-                                                isset(
-                                                    $rowPreferences['reason_id']
-                                                )
+                                                isset($rowPreferences['reason_id'])
                                             ) {
                                                 if (
-                                                    $rowTestReason[
-                                                        'reason_id'
-                                                    ] ==
+                                                    $rowTestReason['reason_id'] ==
                                                     $rowPreferences['reason_id']
                                                 ) {
                                                     echo 'selected';
@@ -1169,8 +1146,7 @@ if (!isset($_SESSION['userid'])) {
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" onclick="addPreferences();">OK</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal"
-                    onclick="selected_fees = -1;">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="selected_fees = -1;">Close</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Help</button>
             </div>
         </div>
@@ -1228,12 +1204,9 @@ if (!isset($_SESSION['userid'])) {
                         <div class="col-md-7" style="display: inline-block">
                             <fieldset style="border: 1px solid lightgray; padding: 10px">
                                 <legend>Status</legend>
-                                <label for="status_pre_employment"><input type="radio" id="status_pre_employment"
-                                        name="status">&emsp;Pre-Employment</label><br>
-                                <label for="status_active"><input type="radio" id="status_active"
-                                        name="status">&emsp;Active</label><br>
-                                <label for="status_terminated"><input type="radio" id="status_terminated"
-                                        name="status">&emsp;Terminated</label><br>
+                                <label for="status_pre_employment"><input type="radio" id="status_pre_employment" name="status">&emsp;Pre-Employment</label><br>
+                                <label for="status_active"><input type="radio" id="status_active" name="status">&emsp;Active</label><br>
+                                <label for="status_terminated"><input type="radio" id="status_terminated" name="status">&emsp;Terminated</label><br>
                             </fieldset>
                         </div>
                         <!-- <div class="col-md-2" style="display: inline-block">Location: </div><div class="col-md-7" style="display: inline-block"><select class="form-control"><option value="">Select Location</option></select></div> -->
@@ -1242,9 +1215,9 @@ if (!isset($_SESSION['userid'])) {
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" onclick="addEmployees();">OK</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal"
-                    onclick="selected_fees = -1;" id="closeButton">Close</button>
+                <button type="button" class="btn btn-default" id="addEmployee" onclick="addEmployees();">OK</button>
+                <button type="button" class="btn btn-default" id="editEmployee" onclick="editEmployees();" style="display: none;">OK</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="selected_fees = -1;" id="closeButton">Close</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Help</button>
             </div>
         </div>
@@ -1254,7 +1227,7 @@ if (!isset($_SESSION['userid'])) {
 
 
 <div id="myModal_Send" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
 
         <!-- Modal content-->
         <div class="modal-content">
@@ -1287,50 +1260,70 @@ if (!isset($_SESSION['userid'])) {
                 <div class="modal-body" style="display: inline-block; width: 100%">
                     <div id="main_div">
                         <div class="row">
-                            <div class="col-md-2" style="display: inline-block">Location: </div>
-                            <div class="col-md-7" style="display: inline-block">
-                                <select class="form-control" id="division_id_send" name="division_id_send" required></select>
-                            </div>
-                        </div>
+                            <div class="col-md-10" style="display: inline-block">
+                                <div class="row">
+                                    <div class="col-md-3" style="display: inline-block">Location: </div>
+                                    <div class="col-md-9" style="display: inline-block">
+                                        <select class="form-control" id="division_id_send" name="division_id_send" required></select>
+                                    </div>
+                                </div>
 
-                        <div class="row">
-                            <div class="col-md-2" style="display: inline-block">Contact: </div>
-                            <div class="col-md-7" style="display: inline-block">
-                                <input class="form-control" id="contact_send" name="contact_send" required value="<?php echo $contact_send; ?>">
+                                <div class="row">
+                                    <div class="col-md-3" style="display: inline-block">Contact: </div>
+                                    <div class="col-md-9" style="display: inline-block">
+                                        <input class="form-control" id="contact_send" name="contact_send" required value="<?php echo $contact_send; ?>">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3" style="display: inline-block">Email Address: </div>
+                                    <div class="col-md-9" style="display: inline-block">
+                                        <input class="form-control" id="email_send" name="email_send" required value="<?php echo $email_send; ?>">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3" style="display: inline-block">Message Subject: </div>
+                                    <div class="col-md-9" style="display: inline-block">
+                                        <input class="form-control" id="message_subject_send" required name="message_subject_send" value="Drug Test Results">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3" style="display: inline-block">Message Body: </div>
+                                    <div class="col-md-9" style="display: inline-block">
+                                        <textarea class="form-control" id="message_body_send" required name="message_body_send">(See Attached)</textarea>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3" style="display: inline-block">Format: </div>
+                                    <div class="col-md-9" style="display: inline-block">
+                                        <select class="form-control" id="format_send" required name="format_send">
+                                            <option value="Text">Text</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2" style="display: inline-block">Email Address: </div>
-                            <div class="col-md-7" style="display: inline-block">
-                                <input class="form-control" id="email_send" name="email_send" required value="<?php echo $email_send; ?>">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2" style="display: inline-block">Message Subject: </div>
-                            <div class="col-md-7" style="display: inline-block">
-                                <input class="form-control" id="message_subject_send" required name="message_subject_send" value="Drug Test Results">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2" style="display: inline-block">Message Body: </div>
-                            <div class="col-md-7" style="display: inline-block">
-                                <textarea class="form-control" id="message_body_send" required name="message_body_send">(See Attached)</textarea>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2" style="display: inline-block">Format: </div>
-                            <div class="col-md-7" style="display: inline-block">
-                                <select class="form-control" id="format_send" required name="format_send">
-                                    <option value="Text">Text</option>
-                                </select>
+                            <div class="col-md-2" style="display: inline-block">
+                                <div class="row" style="visibility: hidden">
+                                    <div class="col-md-3" style="display: inline-block">Location: </div>
+                                    <div class="col-md-9" style="display: inline-block">
+                                        <select class="form-control"></select>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="visibility: hidden">
+                                    <div class="col-md-3" style="display: inline-block">Contact: </div>
+                                    <div class="col-md-9" style="display: inline-block">
+                                        <input class="form-control">
+                                    </div>
+                                </div>
+                                <span style="font-size:11px;">For multiple email address, separate them with commas, for e.g. "xyz@abc.co,pqr@klm.com"</span>
+
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-default">OK</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal"
-                        onclick="selected_fees = -1;" id="closeButton">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="selected_fees = -1;" id="closeButton">Close</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Help</button>
                 </div>
             </form>
@@ -1380,7 +1373,7 @@ if (!isset($_SESSION['userid'])) {
                             </div>
                         </div>
                         <br>
-                         <div class="row" id="rowBilledItemDiv" style="pointer-events: none; opacity: 0.7;">
+                        <div class="row" id="rowBilledItemDiv" style="pointer-events: none; opacity: 0.7;">
                             <div class="col-md-12">
                                 <!-- Tab links -->
                                 <div class="tab">
@@ -1410,8 +1403,8 @@ if (!isset($_SESSION['userid'])) {
                                                             </div>
                                                             <div class="col-md-8 my-row-8-input">
                                                                 <input type="date" id="invoiceDateBill" class="form-control" value="<?php echo date(
-                                                                    'Y-m-d'
-                                                                ); ?>">
+                                                                                                                                        'Y-m-d'
+                                                                                                                                    ); ?>">
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -1499,7 +1492,7 @@ if (!isset($_SESSION['userid'])) {
                                                                 <label>Check No: </label>
                                                             </div>
                                                             <div class="col-md-7 my-row-7-input">
-                                                                <input type="number" id="invoiceCheckNoBill" class="form-control" >
+                                                                <input type="number" id="invoiceCheckNoBill" class="form-control">
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -1507,7 +1500,7 @@ if (!isset($_SESSION['userid'])) {
                                                                 <label>Check Date: </label>
                                                             </div>
                                                             <div class="col-md-7 my-row-7-input">
-                                                                <input type="date" id="invoiceCheckDateBill" class="form-control" >
+                                                                <input type="date" id="invoiceCheckDateBill" class="form-control">
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -1515,7 +1508,7 @@ if (!isset($_SESSION['userid'])) {
                                                                 <label>Pay Date: </label>
                                                             </div>
                                                             <div class="col-md-7 my-row-7-input">
-                                                                <input type="date" id="invoicePayDateBill" class="form-control" >
+                                                                <input type="date" id="invoicePayDateBill" class="form-control" value="<?php echo date('Y-m-d'); ?>">
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -1532,9 +1525,9 @@ if (!isset($_SESSION['userid'])) {
                                     </div>
                                 </div>
 
-                                <div id="Paris" class="tabcontent" style="height: 250px;">
+                                <div id="Paris" class="tabcontent" style="">
                                     <div class="table-responsive">
-                                        <table class="table table-hover">
+                                        <table id="tests_billed" class="table table-hover">
                                             <thead>
                                                 <th>S.No</th>
                                                 <th>Test No</th>
@@ -1555,8 +1548,7 @@ if (!isset($_SESSION['userid'])) {
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-default">OK</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal"
-                        onclick="selected_fees = -1;" id="closeButton">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="selected_fees = -1;" id="closeButton">Close</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Help</button>
                 </div>
             </form>
@@ -1567,12 +1559,28 @@ if (!isset($_SESSION['userid'])) {
 </div>
 <script src="dist/js/adminlte.js"></script>
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+    const my_url = new URL(location.href);
+    var my_url_location = my_url.pathname.split('/');
+    my_url_location = my_url_location[my_url_location.length - 1];
+    // console.log(my_url_location[my_url_location.length - 1])
+    if (my_url_location == 'notBilledReport.php' || my_url_location == 'weeklyReport.php' ||
+        my_url_location == 'billingReport.php' || my_url_location == 'labelsBillingReport.php' ||
+        my_url_location == 'postBilledReport.php' ||
+        my_url_location == 'unpaidInvoiceReport.php' || my_url_location == 'revenueReport.php' ||
+        my_url_location == 'peopleSoftInfo.php') {
+        $('#accounts_select').attr('disabled', true);
+        $('#accounts_select').hide();
+    }
+</script>
+
 <script>
     $('#btn_add_billing').click(function() {
+        $('#tbody_table_bill').html('');
         let id = new URL(location.href).searchParams.get("id");
         $.ajax({
             type: "GET",
-            url: "getTestData.php?test_id=" + id,
+            url: "getTestData.php?test_id=" + id + "&counter=1",
             success: function(resultData) {
                 $('#tbody_table_bill').html(resultData);
             }
@@ -1581,279 +1589,358 @@ if (!isset($_SESSION['userid'])) {
     })
 </script>
 <script>
-var invoices_data = [];
-$('#sentBill').on('click', function() {
-    if($(this).is(':checked')) {
-        $('#sentBillDate').attr('readonly', false);
-    } else {
-        $('#sentBillDate').attr('readonly', true);
-        $('#sentBillDate').val('');
-    }
-})
+    var invoices_data = [];
+    $('#sentBill').on('click', function() {
+        if ($(this).is(':checked')) {
+            $('#sentBillDate').attr('readonly', false);
+        } else {
+            $('#sentBillDate').attr('readonly', true);
+            $('#sentBillDate').val('');
+        }
+    })
 </script>
 <script>
+    $('#doNotBill').click(function() {
+        $('#invoiceNoBill').val("");
+        $('#invoiceDateBill').val("");
+        $('#division_id_bill').val("");
+        $('#invoiceReferenceBill').val("");
+        $('#invoiceTermsBill').val("");
+        $('#invoiceDueDateBill').val("");
+        $('#sentBillDate').val("");
+        $('#sentBill').attr("checked", false);
+        $('#invoiceAmountDueBill').val("");
+        $('#invoiceAmountPaidBill').val("0.00");
+        $('#invoiceCheckNoBill').val("");
+        $('#invoiceCheckDateBill').val("");
+        $('#invoicePayDateBill').val("");
+        $('#paidInFull').attr("checked", false);
 
-$('#doNotBill').click(function() {
-    $('#rowBilledItemDiv').css('pointer-events', 'none');
-    $('#rowBilledItemDiv').css('opacity', '0.7');
-    // $('#London').html('');
-    $('#London > .row').css('display', 'none');
-    $('#London').css('display', 'block');
-    $('#Paris').css('display', 'none');
-    $('#button_general').addClass('active');
-    $('#button_tests_billed').removeClass('active');
-    $('#invoiceNoBilled').attr('disabled', 'disabled');
-    $('#invoiceNoBilled').val('');
-    $('#invoiceNoBilled').html('<option selected="" disabled="" value="">Please select Invoice No</option>');
-    $('#invoiceNoBilled').trigger('change');
-});
+        $('#rowBilledItemDiv').css('pointer-events', 'none');
+        $('#rowBilledItemDiv').css('opacity', '0.7');
+        // $('#London').html('');
+        $('#London > .row').css('display', 'none');
+        $('#London').css('display', 'block');
+        $('#Paris').css('display', 'none');
+        $('#button_general').addClass('active');
+        $('#button_tests_billed').removeClass('active');
+        $('#invoiceNoBilled').attr('disabled', 'disabled');
+        $('#invoiceNoBilled').val('');
+        $('#invoiceNoBilled').html('<option selected="" disabled="" value="">Please select Invoice No</option>');
+        $('#invoiceNoBilled').trigger('change');
+    });
 </script>
 <script>
+    $('#billNewInvoice').click(function() {
+        $('#invoiceNoBill').val("");
+        $('#invoiceDateBill').val("");
+        $('#division_id_bill').val("");
+        $('#invoiceReferenceBill').val("");
+        $('#invoiceTermsBill').val("");
+        $('#invoiceDueDateBill').val("");
+        $('#sentBillDate').val("");
+        $('#sentBill').attr("checked", false);
+        $('#invoiceAmountDueBill').val("");
+        $('#invoiceAmountPaidBill').val("0.00");
+        $('#invoiceCheckNoBill').val("");
+        $('#invoiceCheckDateBill').val("");
+        $('#invoicePayDateBill').val("");
+        $('#paidInFull').attr("checked", false);
 
-$('#billNewInvoice').click(function() {
-    $('#rowBilledItemDiv').css('pointer-events', 'all');
-    $('#rowBilledItemDiv').css('opacity', '1.0');
-    $('#London > .row').css('display', 'block');
-    $('#invoiceNoBill').val('New Invoice');
-    // $('#London').html('');
-    $('#London').css('display', 'block');
-    $('#Paris').css('display', 'none');
-    $('#button_general').addClass('active');
-    $('#button_tests_billed').removeClass('active');
-    $('#invoiceNoBilled').attr('disabled', 'disabled');
-    $('#invoiceNoBilled').html('<option selected="" disabled="" value="">Please select Invoice No</option>');
-    $('#invoiceNoBilled').trigger('change');
-});
+        $('#rowBilledItemDiv').css('pointer-events', 'all');
+        $('#rowBilledItemDiv').css('opacity', '1.0');
+        $('#London > .row').css('display', 'block');
+        $('#invoiceNoBill').val('New Invoice');
+        // $('#London').html('');
+        $('#London').css('display', 'block');
+        $('#Paris').css('display', 'none');
+        $('#button_general').addClass('active');
+        $('#button_tests_billed').removeClass('active');
+        $('#invoiceNoBilled').attr('disabled', 'disabled');
+        $('#invoiceNoBilled').html('<option selected="" disabled="" value="">Please select Invoice No</option>');
+        $('#invoiceNoBilled').trigger('change');
+    });
 </script>
 <script>
-
-$('#billExistingInvoice').click(function() {
-    $('#rowBilledItemDiv').css('pointer-events', 'all');
-    $('#rowBilledItemDiv').css('opacity', '1.0');
-    $('#invoiceNoBill').val('');
-    // $('#London').html('');
-    $('#London > .row').css('display', 'block');
-    $('#London').css('display', 'block');
-    $('#Paris').css('display', 'none');
-    $('#button_general').addClass('active');
-    $('#button_tests_billed').removeClass('active');
-    let account = new URL(location.href).searchParams.get("account");
-    $.ajax({
-        type: "GET",
-        url: "getInvoicesForBilling.php?account=" + account,
-        success: function(resultData) {
-            // $('#invoiceNoBilled').html(resultData);
-            // $('#invoiceNoBilled').trigger('change');
-            var content = '';
-            let obj = JSON.parse(resultData);
-            console.log(obj);
-            for(i = 0; i < obj.length; i++) {
-                content += '<option value="'+obj[i].invoice_id+'">'+obj[i].invoice_id+'</option>';
+    $('#billExistingInvoice').click(function() {
+        $('#rowBilledItemDiv').css('pointer-events', 'all');
+        $('#rowBilledItemDiv').css('opacity', '1.0');
+        $('#invoiceNoBill').val('');
+        // $('#London').html('');
+        $('#London > .row').css('display', 'block');
+        $('#London').css('display', 'block');
+        $('#Paris').css('display', 'none');
+        $('#button_general').addClass('active');
+        $('#button_tests_billed').removeClass('active');
+        let account = new URL(location.href).searchParams.get("account");
+        $.ajax({
+            type: "GET",
+            url: "getInvoicesForBilling.php?account=" + account,
+            success: function(resultData) {
+                // $('#invoiceNoBilled').html(resultData);
+                // $('#invoiceNoBilled').trigger('change');
+                var content = '';
+                let obj = JSON.parse(resultData);
+                console.log(obj);
+                for (i = 0; i < obj.length; i++) {
+                    content += '<option value="' + obj[i].invoice_id + '">' + obj[i].invoice_id + '</option>';
+                }
+                $('#invoiceNoBilled').html(content);
+                $('#invoiceNoBilled').trigger('change');
+                invoices_data = obj;
+                getDataForInvoice(invoices_data)
             }
-            $('#invoiceNoBilled').html(content);
-            $('#invoiceNoBilled').trigger('change');
-            invoices_data = obj;
-            getDataForInvoice(invoices_data)
-        }
+        });
+
+        $('#invoiceNoBilled').attr('disabled', false);
     });
-
-    $('#invoiceNoBilled').attr('disabled', false);
-});
 </script>
 <script>
-
-$('#btn_add_send').on('click', function() {
-    // console.log('clicked');
-    $('#division_id_send').val($("#location_select").val())
-})
+    $('#btn_add_send').on('click', function() {
+        // console.log('clicked');
+        $('#division_id_send').val($("#location_select").val())
+    })
 </script>
 <script>
+    $('#status_pre_employment').prop('checked', true);
+    if (sessionStorage.getItem('account_selected') != undefined && sessionStorage.getItem('account_selected') != null &&
+        sessionStorage.getItem('account_selected') != '') {
+        $.ajax({
+            type: "GET",
+            url: "get_location_testinfo.php",
+            data: 'account_id_location=' + sessionStorage.getItem('account_selected'),
+            success: function(resultData) {
+                $('#division_id').html(resultData);
+                $('#division_id_bill').html(resultData);
+                // window.open("accounts.php", "_self");
+            }
+        });
 
-$('#status_pre_employment').prop('checked', true);
-if (sessionStorage.getItem('account_selected') != undefined && sessionStorage.getItem('account_selected') != null &&
-    sessionStorage.getItem('account_selected') != '') {
-    $.ajax({
-        type: "GET",
-        url: "get_location_testinfo.php",
-        data: 'account_id_location=' + sessionStorage.getItem('account_selected'),
-        success: function(resultData) {
-            $('#division_id').html(resultData);
-            $('#division_id_bill').html(resultData);
-            // window.open("accounts.php", "_self");
-        }
-    });
-
-}
-// })
+    }
+    // })
 </script>
 <script>
-    $('#specimen_id').on('change', function () {
+    $('#specimen_id').on('change', function() {
         $('#specimen_id').removeClass('validation-error')
     });
-    $('#emp_id').on('change', function () {
+    $('#emp_id').on('change', function() {
         $('#emp_id').removeClass('validation-error')
     });
-    $('#first_nm').on('change', function () {
+    $('#first_nm').on('change', function() {
         $('#first_nm').removeClass('validation-error')
     });
-    $('#last_nm').on('change', function () {
+    $('#last_nm').on('change', function() {
         $('#last_nm').removeClass('validation-error')
     });
-    $('#division_id').on('change', function () {
+    $('#division_id').on('change', function() {
         $('#division_id').removeClass('validation-error')
     });
-    $('#accounts_select').on('change', function () {
+    $('#accounts_select').on('change', function() {
         $('#accounts_select').removeClass('validation-error')
     });
-
 </script>
 <script>
-function addEmployees() {
-    var error_validateForm = false;
-    // $('#myModal_Employee').modal('hide');
-    if($('#specimen_id').val() == '') {
-        // $('#specimen_id').focus();
-        // alert('Kindly enter Specimen Id.');
-        // return;
-        $('#specimen_id').addClass('validation-error')
-        error_validateForm = true;
-    }
-    if($('#emp_id').val() == '') {
-        $('#emp_id').addClass('validation-error')
-        // $('#emp_id').focus();
-        // alert('Kindly enter Employee Id.');
-        // return;
-        error_validateForm = true;
-    }
-    if($('#first_nm').val() == '') {
-        $('#first_nm').addClass('validation-error')
-        // $('#first_nm').focus();
-        // alert('Kindly enter First Name.');
-        // return;
-        error_validateForm = true;
-    }
-    if($('#last_nm').val() == '') {
-        $('#last_nm').addClass('validation-error')
-        // $('#last_nm').focus();
-        // alert('Kindly enter Last Name.');
-        // return;
-        error_validateForm = true;
-    }
-    if($('#division_id').val() == '') {
-        $('#division_id').addClass('validation-error')
-        // $('#division_id').focus();
-        // alert('Kindly select Location.');
-        // return;
-        error_validateForm = true;
-    }
-    if($('#accounts_select').val() == '') {
-        $('#accounts_select').addClass('validation-error')
-        // $('#accounts_select').focus();
-        // alert('Kindly select Account.');
-        // return;
-        error_validateForm = true;
-    }
-    if(!$('#status_pre_employment').is(':checked') && !$('#status_active').is(':checked') && !$('#status_terminated').is(':checked')) {
-        $('#status_pre_employment').focus();
-        alert('Kindly select status of Employee.');
-        // return;
-        error_validateForm = true;
-    }
-    if(!error_validateForm) {
-        var temp = {};
-        temp['emp_id'] = $('#emp_id').val();
-        temp['specimen_id'] = $('#specimen_id').val();
-        temp['first_nm'] = $('#first_nm').val();
-        temp['last_nm'] = $('#last_nm').val();
-        temp['division_id'] = $('#division_id').val();
-        temp['account_id'] = $('#accounts_select').val();
-        temp['status'] = '';
-        if ($('#status_pre_employment').is(':checked'))
-            temp['status'] = 'P';
-        else if ($('#status_active').is(':checked'))
-            temp['status'] = 'A';
-        else if ($('#status_terminated').is(':checked'))
-            temp['status'] = 'T';
+    function addEmployees() {
+        error_validateForm = validateEmployee();
+        if (!error_validateForm) {
+            var temp = {};
+            temp['emp_id'] = $('#emp_id').val();
+            temp['specimen_id'] = $('#specimen_id').val();
+            temp['first_nm'] = $('#first_nm').val();
+            temp['last_nm'] = $('#last_nm').val();
+            temp['division_id'] = $('#division_id').val();
+            temp['account_id'] = $('#accounts_select').val();
+            temp['status'] = '';
+            if ($('#status_pre_employment').is(':checked'))
+                temp['status'] = 'P';
+            else if ($('#status_active').is(':checked'))
+                temp['status'] = 'A';
+            else if ($('#status_terminated').is(':checked'))
+                temp['status'] = 'T';
 
-        // $('#emp_id').val('');
-        // $('#specimen_id').val('');
-        // $('#first_nm').val('');
-        // $('#last_nm').val('');
-        // $('#division_id').val('');
-        // $('#status_pre_employment').prop('checked', false);
-        // $('#status_active').prop('checked', false);
-        // $('#status_terminated').prop('checked', false);
-        // $('#employeesindex').val('');
+            // $('#emp_id').val('');
+            // $('#specimen_id').val('');
+            // $('#first_nm').val('');
+            // $('#last_nm').val('');
+            // $('#division_id').val('');
+            // $('#status_pre_employment').prop('checked', false);
+            // $('#status_active').prop('checked', false);
+            // $('#status_terminated').prop('checked', false);
+            // $('#employeesindex').val('');
+
+            $.ajax({
+                type: "POST",
+                url: "insert_employee.php",
+                data: 'employeeData=' + JSON.stringify(temp),
+                success: function(resultData) {
+                    resultData = JSON.parse(resultData);
+                    console.log(resultData);
+                    console.log("" + resultData.id);
+                    alert(resultData.message);
+                    if (resultData.id !== undefined)
+                        window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' + sessionStorage.getItem('account_selected') + '&employee=' + resultData.id, '_self');
+                    else {
+                        // $('#closeButton').click();
+                        //    $('#myModal_Employee').modal('toggle');
+                        //     $('#myModal_Employee').css('display', 'block');
+                    }
+
+                    // location.reload();
+                    // window.open("accounts.php", "_self");
+                }
+            });
+        }
+    }
+
+    function editEmployees() {
+        error_validateForm = validateEmployee();
+        if (!error_validateForm) {
+            var temp = {};
+            temp['emp_id'] = $('#emp_id').val();
+            temp['specimen_id'] = $('#specimen_id').val();
+            temp['first_nm'] = $('#first_nm').val();
+            temp['last_nm'] = $('#last_nm').val();
+            temp['division_id'] = $('#division_id').val();
+            temp['account_id'] = $('#accounts_select').val();
+            temp['status'] = '';
+            if ($('#status_pre_employment').is(':checked'))
+                temp['status'] = 'P';
+            else if ($('#status_active').is(':checked'))
+                temp['status'] = 'A';
+            else if ($('#status_terminated').is(':checked'))
+                temp['status'] = 'T';
+
+            // $('#emp_id').val('');
+            // $('#specimen_id').val('');
+            // $('#first_nm').val('');
+            // $('#last_nm').val('');
+            // $('#division_id').val('');
+            // $('#status_pre_employment').prop('checked', false);
+            // $('#status_active').prop('checked', false);
+            // $('#status_terminated').prop('checked', false);
+            // $('#employeesindex').val('');
+
+            $.ajax({
+                type: "POST",
+                url: "insert_employee.php",
+                data: 'employeeData=' + JSON.stringify(temp),
+                success: function(resultData) {
+                    resultData = JSON.parse(resultData);
+                    console.log(resultData);
+                    console.log("" + resultData.id);
+                    alert(resultData.message);
+                    if (resultData.id !== undefined)
+                        window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' + sessionStorage.getItem('account_selected') + '&employee=' + resultData.id, '_self');
+                    else {
+                        // $('#closeButton').click();
+                        //    $('#myModal_Employee').modal('toggle');
+                        //     $('#myModal_Employee').css('display', 'block');
+                    }
+
+                    // location.reload();
+                    // window.open("accounts.php", "_self");
+                }
+            });
+        }
+    }
+
+    function validateEmployee() {
+        var error_validateForm = false;
+        // $('#myModal_Employee').modal('hide');
+        if ($('#specimen_id').val() == '') {
+            // $('#specimen_id').focus();
+            // alert('Kindly enter Specimen Id.');
+            // return;
+            $('#specimen_id').addClass('validation-error')
+            error_validateForm = true;
+        }
+        if ($('#emp_id').val() == '') {
+            $('#emp_id').addClass('validation-error')
+            // $('#emp_id').focus();
+            // alert('Kindly enter Employee Id.');
+            // return;
+            error_validateForm = true;
+        }
+        if ($('#first_nm').val() == '') {
+            $('#first_nm').addClass('validation-error')
+            // $('#first_nm').focus();
+            // alert('Kindly enter First Name.');
+            // return;
+            error_validateForm = true;
+        }
+        if ($('#last_nm').val() == '') {
+            $('#last_nm').addClass('validation-error')
+            // $('#last_nm').focus();
+            // alert('Kindly enter Last Name.');
+            // return;
+            error_validateForm = true;
+        }
+        if ($('#division_id').val() == '') {
+            $('#division_id').addClass('validation-error')
+            // $('#division_id').focus();
+            // alert('Kindly select Location.');
+            // return;
+            error_validateForm = true;
+        }
+        if ($('#accounts_select').val() == '') {
+            $('#accounts_select').addClass('validation-error')
+            // $('#accounts_select').focus();
+            // alert('Kindly select Account.');
+            // return;
+            error_validateForm = true;
+        }
+        if (!$('#status_pre_employment').is(':checked') && !$('#status_active').is(':checked') && !$('#status_terminated').is(':checked')) {
+            $('#status_pre_employment').focus();
+            alert('Kindly select status of Employee.');
+            // return;
+            error_validateForm = true;
+        }
+        return error_validateForm;
+    }
+</script>
+<script>
+    $('#form_send_email').on('submit', function(e) {
+        let id = new URL(location.href).searchParams.get("id");
+        e.preventDefault();
 
         $.ajax({
             type: "POST",
-            url: "insert_employee.php",
-            data: 'employeeData=' + JSON.stringify(temp),
+            url: "viewMROReportSend.php?id=" + id,
+            data: $("#form_send_email").serialize(),
             success: function(resultData) {
-                resultData = JSON.parse(resultData);
+                console.log($("#form_send_email").serialize())
+                console.log(resultData)
+                alert(resultData);
+                location.reload();
+                // window.open("landingscreen.php", "_self");
+            }
+        });
+
+    })
+</script>
+<script>
+    function addPreferences() {
+        // $('#myModal_Preferences').modal('hide');
+        var temp = {};
+        temp['practitioner_default'] = $('#practitioner_default').val();
+        temp['lab_default'] = $('#lab_default').val();
+        temp['sampleType_default'] = $('#sampleType_default').val();
+        temp['testType_default'] = $('#testType_default').val();
+        temp['testReason_default'] = $('#testReason_default').val();
+        console.log(temp);
+        $.ajax({
+            type: "POST",
+            url: "insert_preferences.php",
+            data: 'preferencesData=' + JSON.stringify(temp),
+            success: function(resultData) {
                 console.log(resultData);
-                console.log("" + resultData.id);
-                alert(resultData.message);
-                if(resultData.id !== undefined)
-                    window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' + sessionStorage.getItem('account_selected') + '&employee=' + resultData.id, '_self');
-                else {
-                    // $('#closeButton').click();
-                //    $('#myModal_Employee').modal('toggle');
-                //     $('#myModal_Employee').css('display', 'block');
-                }
-                
-                // location.reload();
+                alert(resultData);
+                location.reload();
+                // window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' + sessionStorage.getItem('account_selected'), '_self') + '&employee=' + resultData;
                 // window.open("accounts.php", "_self");
             }
         });
     }
-}
-</script>
-<script>
-
-$('#form_send_email').on('submit', function(e) {
-    let id = new URL(location.href).searchParams.get("id");
-    e.preventDefault();
-    
-    $.ajax({
-        type: "POST",
-        url: "viewMROReportSend.php?id=" + id,
-        data: $("#form_send_email").serialize(),
-        success: function(resultData) {
-            console.log($("#form_send_email").serialize())
-            console.log(resultData)
-            alert(resultData);
-            location.reload();
-            // window.open("landingscreen.php", "_self");
-        }
-    });
-
-})
-</script>
-<script>
-
-function addPreferences() {
-    // $('#myModal_Preferences').modal('hide');
-    var temp = {};
-    temp['practitioner_default'] = $('#practitioner_default').val();
-    temp['lab_default'] = $('#lab_default').val();
-    temp['sampleType_default'] = $('#sampleType_default').val();
-    temp['testType_default'] = $('#testType_default').val();
-    temp['testReason_default'] = $('#testReason_default').val();
-    console.log(temp);
-    $.ajax({
-        type: "POST",
-        url: "insert_preferences.php",
-        data: 'preferencesData=' + JSON.stringify(temp),
-        success: function(resultData) {
-            console.log(resultData);
-            alert(resultData);
-            location.reload();
-            // window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' + sessionStorage.getItem('account_selected'), '_self') + '&employee=' + resultData;
-            // window.open("accounts.php", "_self");
-        }
-    });
-}
 </script>
 
 
@@ -1885,77 +1972,74 @@ function addPreferences() {
 <!-- <script src="dist/js/owl.carousel.min.js"></script> -->
 <script src="plugins/select2/js/select2.min.js"></script>
 <script>
-function openCity(evt, cityName) {
-  // Declare all variables
-  var i, tabcontent, tablinks;
+    function openCity(evt, cityName) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
 
-  // Get all elements with class="tabcontent" and hide them
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
 
-  // Get all elements with class="tablinks" and remove the class "active"
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
 
-  // Show the current tab, and add an "active" class to the button that opened the tab
-  document.getElementById(cityName).style.display = "block";
-  evt.currentTarget.className += " active";
-}
-</script>
-<script>
-let account = new URL(location.href).searchParams.get("account");
-
-if (sessionStorage.getItem('account_selected') != undefined && sessionStorage.getItem('account_selected') != null && sessionStorage.getItem('account_selected') != 'null' &&
-    sessionStorage.getItem('account_selected') != '') {
-    $('#accounts_select').val(sessionStorage.getItem('account_selected'));
-    $('#accounts_select').trigger('change');
-} else if ($('#accounts_select').val() != '' && $('#accounts_select').val() != null) {
-    sessionStorage.setItem('account_selected', $('#accounts_select').val());
-} else if (account != '' && account != 'null' && account != undefined && account != null) {
-    sessionStorage.setItem('account_selected', account);
-    $('#accounts_select').val(account);
-    $('#accounts_select').trigger('change');
-} else {
-    $('.btn').css('pointer-events', 'none');
-    $('.sidebar').css('pointer-events', 'none');
-    $('.nav-link-disabler').css('pointer-events', 'none');
-}
-$('#accounts_select').on('change', function() {
-    sessionStorage.setItem('account_selected', $(this).val());
-    window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' +
-    sessionStorage.getItem('account_selected'), '_self');
-})
-</script>
-<script>
-function openURL(url) {
-    if (sessionStorage.getItem('account_selected') != undefined && sessionStorage.getItem('account_selected') != null &&
-        sessionStorage.getItem('account_selected') != '')
-        window.open(url + '?account=' + sessionStorage.getItem('account_selected'), '_self');
-    else
-        window.open(url, '_self');
-}
-</script>
-<script>
-
-if((account == null || account == '') && $('#accounts_select').val() != '') {
-    window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' + $('#accounts_select').val(), '_self');
-}
-
-</script>
-<script>
-
-$(window).resize(function () {
-
-    if ($(window).width() > 800) {
-        $("body").removeClass('sidebar-collapse');
-        $("body").addClass('sidebar-expand');
-    } else {
-        $("body").removeClass('sidebar-expand');
-        $("body").addClass('sidebar-collapse');
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
     }
-});
+</script>
+<script>
+    let account = new URL(location.href).searchParams.get("account");
+
+    if (sessionStorage.getItem('account_selected') != undefined && sessionStorage.getItem('account_selected') != null && sessionStorage.getItem('account_selected') != 'null' &&
+        sessionStorage.getItem('account_selected') != '') {
+        $('#accounts_select').val(sessionStorage.getItem('account_selected'));
+        $('#accounts_select').trigger('change');
+    } else if ($('#accounts_select').val() != '' && $('#accounts_select').val() != null) {
+        sessionStorage.setItem('account_selected', $('#accounts_select').val());
+    } else if (account != '' && account != 'null' && account != undefined && account != null) {
+        sessionStorage.setItem('account_selected', account);
+        $('#accounts_select').val(account);
+        $('#accounts_select').trigger('change');
+    } else {
+        $('.btn').css('pointer-events', 'none');
+        $('.sidebar').css('pointer-events', 'none');
+        $('.nav-link-disabler').css('pointer-events', 'none');
+    }
+    $('#accounts_select').on('change', function() {
+        sessionStorage.setItem('account_selected', $(this).val());
+        window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' +
+            sessionStorage.getItem('account_selected'), '_self');
+    })
+</script>
+<script>
+    function openURL(url) {
+        if (sessionStorage.getItem('account_selected') != undefined && sessionStorage.getItem('account_selected') != null &&
+            sessionStorage.getItem('account_selected') != '')
+            window.open(url + '?account=' + sessionStorage.getItem('account_selected'), '_self');
+        else
+            window.open(url, '_self');
+    }
+</script>
+<script>
+    if ((account == null || account == '') && $('#accounts_select').val() != '') {
+        window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' + $('#accounts_select').val(), '_self');
+    }
+</script>
+<script>
+    $(window).resize(function() {
+
+        if ($(window).width() > 800) {
+            $("body").removeClass('sidebar-collapse');
+            $("body").addClass('sidebar-expand');
+        } else {
+            $("body").removeClass('sidebar-expand');
+            $("body").addClass('sidebar-collapse');
+        }
+    });
 </script>

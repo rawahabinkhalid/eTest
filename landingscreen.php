@@ -1,8 +1,8 @@
 <?php
 include_once 'conn.php';
-if ($_SESSION['usertype'] == 'guest') {
-    header('location: personal.php');
-}
+// if ($_SESSION['usertype'] == 'guest') {
+//     header('location: personal.php');
+// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,13 +25,13 @@ if ($_SESSION['usertype'] == 'guest') {
     <link href="plugins/select2/css/select2.min.css" rel="stylesheet">
 
     <style>
-    label {
-        /* Other styling... */
-        text-align: right;
-        clear: both;
-        float: left;
-        margin-right: 15px;
-    }
+        label {
+            /* Other styling... */
+            text-align: right;
+            clear: both;
+            float: left;
+            margin-right: 15px;
+        }
     </style>
 </head>
 <!--
@@ -66,7 +66,7 @@ to get the desired effect
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="landingscreen.php">Home</a></li>
-                                    
+
                                     <li class="breadcrumb-item active">eTest</li>
                                 </ol>
                             </div><!-- /.col -->
@@ -79,31 +79,23 @@ to get the desired effect
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-3">
-                                <button type="button" name="" class="btn ml-1"
-                                    style="background-color:#E7D7B7; border-radius:5px; width: 100%;"
-                                    onclick="window.open('retrievetest.php?account=<?php echo isset(
-                                        $_GET['account']
-                                    )
-                                        ? $_GET['account']
-                                        : ''; ?>', '_self');">Retrieve
+                                <button type="button" name="" class="btn ml-1" style="background-color:#E7D7B7; border-radius:5px; width: 100%;" onclick="window.open('retrievetest.php?account=<?php echo isset($_GET['account'])
+                                                                                                                                                                                                    ? $_GET['account']
+                                                                                                                                                                                                    : ''; ?>', '_self');">Retrieve
                                     Tests</button>
                             </div>
                         </div>
                         <br>
                         <?php if ($_SESSION['userid'] === 'admin') { ?>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <button type="button" name="" class="btn ml-1"
-                                    style="background-color:#E7D7B7; border-radius:5px; width: 100%;"
-                                    onclick="window.open('testinfo.php?account=<?php echo isset(
-                                        $_GET['account']
-                                    )
-                                        ? $_GET['account']
-                                        : ''; ?>', '_self');">Enter a new
-                                    test</button>
-                                <br><br>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <button type="button" name="" class="btn ml-1" style="background-color:#E7D7B7; border-radius:5px; width: 100%;" onclick="window.open('testinfo.php?account=<?php echo isset($_GET['account'])
+                                                                                                                                                                                                    ? $_GET['account']
+                                                                                                                                                                                                    : ''; ?>', '_self');">Enter a new
+                                        test</button>
+                                    <br><br>
+                                </div>
                             </div>
-                        </div>
                         <?php } ?>
                     </div>
                     <!-- /.container-fluid -->
@@ -144,44 +136,42 @@ to get the desired effect
     <script src="dist/js/pages/dashboard3.js"></script>
     <script src="plugins/select2/js/select2.min.js"></script>
     <script>
-if (sessionStorage.getItem('account_selected') != undefined && sessionStorage.getItem('account_selected') != null && sessionStorage.getItem('account_selected') != 'null' &&
-    sessionStorage.getItem('account_selected') != '')
-    $('#accounts_select').val(sessionStorage.getItem('account_selected'));
-else {
-    $('.btn').css('pointer-events', 'none');
-    // $('.sidebar').css('pointer-events', 'none');
-    // $('.nav-link').css('pointer-events', 'none');
-    
-}
+        if (sessionStorage.getItem('account_selected') != undefined && sessionStorage.getItem('account_selected') != null && sessionStorage.getItem('account_selected') != 'null' &&
+            sessionStorage.getItem('account_selected') != '')
+            $('#accounts_select').val(sessionStorage.getItem('account_selected'));
+        else {
+            $('.btn').css('pointer-events', 'none');
+            // $('.sidebar').css('pointer-events', 'none');
+            // $('.nav-link').css('pointer-events', 'none');
 
+        }
     </script>
     <script>
-    
-    $('#accounts_select').select2({
-        width: '100%'
-    }).on("change", function(e) {
-        sessionStorage.setItem('account_selected', $(this).val());
-        console.log($(this).val())
-        console.log(location.pathname)
-        window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' +
-        sessionStorage.getItem('account_selected'), '_self');
-    });
+        $('#accounts_select').select2({
+            width: '100%'
+        }).on("change", function(e) {
+            sessionStorage.setItem('account_selected', $(this).val());
+            console.log($(this).val())
+            console.log(location.pathname)
+            window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' +
+                sessionStorage.getItem('account_selected'), '_self');
+        });
 
-    $('#practitioner_default').select2({
-        width: '100%'
-    });
-    $('#lab_default').select2({
-        width: '100%'
-    });
-    $('#sampleType_default').select2({
-        width: '100%'
-    });
-    $('#testType_default').select2({
-        width: '100%'
-    });
-    $('#testReason_default').select2({
-        width: '100%'
-    });
+        $('#practitioner_default').select2({
+            width: '100%'
+        });
+        $('#lab_default').select2({
+            width: '100%'
+        });
+        $('#sampleType_default').select2({
+            width: '100%'
+        });
+        $('#testType_default').select2({
+            width: '100%'
+        });
+        $('#testReason_default').select2({
+            width: '100%'
+        });
     </script>
 </body>
 

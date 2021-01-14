@@ -25,126 +25,132 @@ include_once "conn.php";
 
 
     <style>
-    label {
-        /* Other styling... */
-        text-align: right;
-        clear: both;
-        float: left;
-        margin-right: 15px;
-    }
+        label {
+            /* Other styling... */
+            text-align: right;
+            clear: both;
+            float: left;
+            margin-right: 15px;
+        }
     </style>
     <script>
-    counter = 1;
-    var selected_user = -1;
+        counter = 1;
+        var selected_user = -1;
 
-    function addRow() {
-        var content =
-            '<tr><td><input type="text" class="form-control" id="clientId_' + counter +
-            '" name="client[]"></td><td><input type="text" class="form-control" id="itemid_' +
-            counter +
-            '" name="item[]" onchange="getRate(this);"></td><td><input type="text" class="form-control" id="description_' +
-            counter + '" name="description[]"></td><td><input type="text" class="form-control" id="kg_' + counter +
-            '" name="kg[]" onchange="calcTotal(this);"></td><td><input type="text" class="form-control" id="rate_' +
-            counter +
-            '" name="rate[]" onchange="calcTotal(this);"></td><td><input type="text" class="form-control" id="total_' +
-            counter + '" name="total[]" readonly></td></tr>';
-        $('#tbody').append(content);
+        function addRow() {
+            var content =
+                '<tr><td><input type="text" class="form-control" id="clientId_' + counter +
+                '" name="client[]"></td><td><input type="text" class="form-control" id="itemid_' +
+                counter +
+                '" name="item[]" onchange="getRate(this);"></td><td><input type="text" class="form-control" id="description_' +
+                counter + '" name="description[]"></td><td><input type="text" class="form-control" id="kg_' + counter +
+                '" name="kg[]" onchange="calcTotal(this);"></td><td><input type="text" class="form-control" id="rate_' +
+                counter +
+                '" name="rate[]" onchange="calcTotal(this);"></td><td><input type="text" class="form-control" id="total_' +
+                counter + '" name="total[]" readonly></td></tr>';
+            $('#tbody').append(content);
 
-        counter++;
-    }
-
-    function deleteRow() {
-        var tableName = "item";
-        var tbl = document.getElementById(tableName);
-        var lastRow = tbl.rows.length;
-        lastRow--;
-        // alert(lastRow);
-        if (lastRow > 1) {
-            tbl.deleteRow(lastRow);
-            // tbl.deleteRow(lastRow - 2);
+            counter++;
         }
 
-    }
+        function deleteRow() {
+            var tableName = "item";
+            var tbl = document.getElementById(tableName);
+            var lastRow = tbl.rows.length;
+            lastRow--;
+            // alert(lastRow);
+            if (lastRow > 1) {
+                tbl.deleteRow(lastRow);
+                // tbl.deleteRow(lastRow - 2);
+            }
 
-
-    function calcTotal(reference) {
-        index = reference.id.split('_')[1];
-        rate = document.getElementById('rate_' + index).value;
-        kg = document.getElementById('kg_' + index).value;
-        if (rate != '' && kg != '') {
-            document.getElementById('total_' + index).value = parseFloat(parseFloat(rate) * parseFloat(kg)).toFixed(2);
         }
-    }
 
-    function propertiesClicked() {
-        // alert(selected_user);
-        document.getElementsByClassName('modal-title')[0].innerHTML = 'Edit User';
-        $.ajax({
-            type: "GET",
-            url: "getAllData.php?user_id=" + encodeURIComponent(selected_user),
-            success: function(resultData) {
-                console.log(resultData);
-                var data = JSON.parse(resultData);
-                $('#user_id').val(selected_user);
-                $('#userid').val(data.user_id);
-                $('#fname').val(data.first_nm);
-                $('#lname').val(data.last_nm);
-                $('#password').val(data.password);
-                $('#accountSelect').val(data.account_id);
 
-                var accId = $('#accountSelect').val();
-                $.ajax({
-                    url: 'get_location_testinfo.php?account_id_location=' + accId,
-                    type: 'POST',
+        function calcTotal(reference) {
+            index = reference.id.split('_')[1];
+            rate = document.getElementById('rate_' + index).value;
+            kg = document.getElementById('kg_' + index).value;
+            if (rate != '' && kg != '') {
+                document.getElementById('total_' + index).value = parseFloat(parseFloat(rate) * parseFloat(kg)).toFixed(2);
+            }
+        }
 
-                    success: function(data) {
-                        // alert(data);
-                        $('#locationSelect').html(data);
-                        $('#locationSelect').val(data.location)
-                    },
-                    cache: false,
-                    contentType: false,
-                    processData: false
-                });
+        function propertiesClicked() {
+            // alert(selected_user);
+            document.getElementsByClassName('modal-title')[0].innerHTML = 'Edit User';
+            $.ajax({
+                type: "GET",
+                url: "getAllData.php?user_id=" + encodeURIComponent(selected_user),
+                success: function(resultData) {
+                    console.log(resultData);
+                    var dataMain = JSON.parse(resultData);
+                    $('#user_id').val(selected_user);
+                    $('#userid').val(dataMain.user_id);
+                    $('#fname').val(dataMain.first_nm);
+                    $('#lname').val(dataMain.last_nm);
+                    $('#password').val(dataMain.password);
+                    $('#accountSelect').val(dataMain.account_id);
+                    if (dataMain.Privileges == 'System')
+                        $('#User_Privileges_System').prop('checked', true);
+                    else if (dataMain.Privileges == 'LSU')
+                        $('#User_Privileges_LSU').prop('checked', true);
+                    else if (dataMain.Privileges == 'Both')
+                        $('#User_Privileges_Both').prop('checked', true);
 
-                // $('#locationSelect').val(data.location);
-                if (data.admin === 'T') {
-                    $('.checkbox').prop('checked', true)
-                } else {
-                    $('.checkbox').prop('checked', false)
+                    var accId = $('#accountSelect').val();
+                    $.ajax({
+                        url: 'get_location_testinfo.php?account_id_location=' + accId,
+                        type: 'POST',
+
+                        success: function(data) {
+                            // alert(data);
+                            $('#locationSelect').html(data);
+                            $('#locationSelect').val(dataMain.location)
+                        },
+                        cache: false,
+                        contentType: false,
+                        processData: false
+                    });
+
+                    // $('#locationSelect').val(data.location);
+                    if (dataMain.admin === 'T') {
+                        $('.checkbox').prop('checked', true)
+                    } else {
+                        $('.checkbox').prop('checked', false)
+                    }
                 }
-            }
-        });
-    }
+            });
+        }
 
-    function deleteClicked() {
-        console.log("insert_users.php?delete_user_id='" + selected_user + "'");
-        $.ajax({
-            type: "GET",
-            url: "insert_users.php?delete_user_id='" + selected_user + "'",
-            success: function(resultData) {
-                // console.log(resultData);
-                window.open("users.php", "_self");
+        function deleteClicked() {
+            console.log("insert_users.php?delete_user_id='" + selected_user + "'");
+            $.ajax({
+                type: "GET",
+                url: "insert_users.php?delete_user_id='" + selected_user + "'",
+                success: function(resultData) {
+                    // console.log(resultData);
+                    window.open("users.php", "_self");
 
-            }
-        });
-    }
+                }
+            });
+        }
 
-    function addClicked() {
-        document.getElementsByClassName('modal-title')[0].innerHTML = 'New User';
-    }
+        function addClicked() {
+            document.getElementsByClassName('modal-title')[0].innerHTML = 'New User';
+        }
 
-    function userSelected(user, id) {
-        $('#table_users > tbody  > tr').each(function(index, tr) {
-            tr.style.background = 'rgba(0,0,0,.05)';
-        });
+        function userSelected(user, id) {
+            $('#table_users > tbody  > tr').each(function(index, tr) {
+                tr.style.background = 'rgba(0,0,0,.05)';
+            });
 
-        selected_user = user;
-        // alert("#" + id);
-        $('#deleteButton').prop('disabled', false);
-        $('#propertiesButton').prop('disabled', false);
-        $("#" + id).css('background', 'rgba(0,0,0,.35)');
-    }
+            selected_user = user;
+            // alert("#" + id);
+            $('#deleteButton').prop('disabled', false);
+            $('#propertiesButton').prop('disabled', false);
+            $("#" + id).css('background', 'rgba(0,0,0,.35)');
+        }
     </script>
 
 </head>
@@ -190,7 +196,7 @@ to get the desired effect
                 </div>
             </form> -->
 
-            <?php include "header.php";?>
+            <?php include "header.php"; ?>
 
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
@@ -204,7 +210,7 @@ to get the desired effect
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="landingscreen.php">Home</a></li>
-                                    
+
                                     <li class="breadcrumb-item active">Users</li>
                                 </ol>
                             </div><!-- /.col -->
@@ -228,6 +234,7 @@ to get the desired effect
                                                 <th scope="col">Admin</th>
                                                 <th scope="col">Account</th>
                                                 <th scope="col">Locations</th>
+                                                <th scope="col">Privileges</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -235,20 +242,20 @@ to get the desired effect
                                             $count = 1;
                                             $sql = 'SELECT users.*, account_nm FROM users LEFT JOIN accounts ON users.account_id = accounts.account_id';
                                             $result = mysqli_query($conn, $sql);
-                                            if(mysqli_num_rows($result) > 0) {
+                                            if (mysqli_num_rows($result) > 0) {
                                                 while ($row = mysqli_fetch_assoc($result)) {
 
-                                                    $sqlLocations = 'SELECT * FROM userlocation JOIN divisions ON userlocation.location = divisions.division_id WHERE userlocation.user_id = "'.$row['user_id'].'"';
+                                                    $sqlLocations = 'SELECT * FROM userlocation JOIN divisions ON userlocation.location = divisions.division_id WHERE userlocation.user_id = "' . $row['user_id'] . '"';
                                                     // echo $sqlLocations;
                                                     $resultLocation = $conn->query($sqlLocations);
                                                     $arr_locations = array();
-                                                    if (mysqli_num_rows($resultLocation)>0) {
+                                                    if (mysqli_num_rows($resultLocation) > 0) {
                                                         while ($rowLocation = $resultLocation->fetch_assoc()) {
-                                                            array_push($arr_locations,$rowLocation['division_nm']);
+                                                            array_push($arr_locations, $rowLocation['division_nm']);
                                                         }
                                                     }
 
-                                                    
+
 
                                                     $id = "'" . $row['user_id'] . "'";
                                                     echo '
@@ -259,29 +266,23 @@ to get the desired effect
                                                         <td>' . $row['last_nm'] . '</td>
                                                         <td>' . $row['admin'] . '</td>
                                                         <td>' . $row['account_nm'] . '</td>';
-                                                        echo '<td>';
-                                                            foreach($arr_locations as $locations) {
-                                                                echo $locations, '<br>';
-                                                            }
-                                                        echo '</td>';
+                                                    echo '<td>';
+                                                    foreach ($arr_locations as $locations) {
+                                                        echo $locations, '<br>';
+                                                    }
+                                                    echo '</td>
+                                                    <td>' . $row['Privileges'] . '</td>';
                                                     echo '</tr>';
                                                 }
                                             }
-                                        ?>
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
                                 <div class="col-md-1">
-                                    <button type="button" name="" class="btn mt-2" data-toggle="modal"
-                                        data-target="#myModal" onclick="addClicked();"
-                                        style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Add</button>
-                                    <button type="button" id="deleteButton" class="btn mt-2"
-                                        style="background-color:#E7D7B7; border-radius:5px; width: 100px;"
-                                        onclick="deleteClicked();" disabled>Remove</button>
-                                    <button type="button" name="" class="btn mt-2"
-                                        style="background-color:#E7D7B7; border-radius:5px; width: 100px;"
-                                        data-toggle="modal" id="propertiesButton" data-target="#myModal"
-                                        onclick="propertiesClicked();" disabled>Properties</button>
+                                    <button type="button" name="" class="btn mt-2" data-toggle="modal" data-target="#myModal" onclick="addClicked();" style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Add</button>
+                                    <button type="button" id="deleteButton" class="btn mt-2" style="background-color:#E7D7B7; border-radius:5px; width: 100px;" onclick="deleteClicked();" disabled>Remove</button>
+                                    <button type="button" name="" class="btn mt-2" style="background-color:#E7D7B7; border-radius:5px; width: 100px;" data-toggle="modal" id="propertiesButton" data-target="#myModal" onclick="propertiesClicked();" disabled>Properties</button>
                                 </div>
                             </div>
                         </form>
@@ -307,35 +308,30 @@ to get the desired effect
                                 <div class="row">
                                     <input type="hidden" id="user_id" name="user_id">
                                     <div class="col-md-3" style="display: inline-block">User ID: </div>
-                                    <div class="col-md-7" style="display: inline-block"><input class="form-control"
-                                            id="userid" name="userid">
+                                    <div class="col-md-7" style="display: inline-block"><input class="form-control" id="userid" name="userid">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3" style="display: inline-block">First Name: </div>
-                                    <div class="col-md-7" style="display: inline-block"><input class="form-control"
-                                            id="fname" name="fname">
+                                    <div class="col-md-7" style="display: inline-block"><input class="form-control" id="fname" name="fname">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3" style="display: inline-block">Last Name: </div>
-                                    <div class="col-md-7" style="display: inline-block"><input class="form-control"
-                                            id="lname" name="lname">
+                                    <div class="col-md-7" style="display: inline-block"><input class="form-control" id="lname" name="lname">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3" style="display: inline-block">Password: </div>
                                     <div class="col-md-7" style="display: inline-block">
-                                        <input type="password" class="form-control" id="password" name="password"
-                                            onchange="test_str()">
+                                        <input type="password" class="form-control" id="password" name="password" onchange="test_str()">
                                         <!-- <input type="text" id="t2" readonly/>  -->
                                         <span id="t2"></span>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3" style="display: inline-block"></div>
-                                    <div class="col-md-7" style="display: inline-block"><input class="checkbox"
-                                            type="checkbox" value="T" id="admin" name="admin"><label>Admin</label></div>
+                                    <div class="col-md-7" style="display: inline-block"><input class="checkbox" type="checkbox" value="T" id="admin" name="admin"><label>Admin</label></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3">Account:</div>
@@ -345,8 +341,8 @@ to get the desired effect
                                             <?php
                                             $sql = 'SELECT * FROM accounts';
                                             $result = $conn->query($sql);
-                                            while ($row = $result ->fetch_assoc()) {
-                                                echo '<option value='.$row['account_id'].'>'.$row['account_nm'].'</option>';
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo '<option value=' . $row['account_id'] . '>' . $row['account_nm'] . '</option>';
                                             }
                                             ?>
                                         </select>
@@ -356,12 +352,18 @@ to get the desired effect
                                 <div class="row">
                                     <div class="col-md-3">Location:</div>
                                     <div class="col-md-7">
-                                        <select class="form-control" id="locationSelect" name="locationSelect[]"
-                                            multiple>
+                                        <select class="form-control" id="locationSelect" name="locationSelect[]" multiple>
                                         </select>
 
 
                                     </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-3">User Privileges:</div>
+                                    <div class="col-md-3" style="display: inline-block"><input type="radio" value="System" id="User_Privileges_System" name="User_Privileges" checked required><label>System</label></div>
+                                    <div class="col-md-3" style="display: inline-block"><input type="radio" value="LSU" id="User_Privileges_LSU" name="User_Privileges" required><label>LSU</label></div>
+                                    <div class="col-md-3" style="display: inline-block"><input type="radio" value="Both" id="User_Privileges_Both" name="User_Privileges" required><label>Both</label></div>
                                 </div>
 
                             </div>
@@ -409,64 +411,64 @@ to get the desired effect
     <script src="dist/js/pages/dashboard3.js"></script>
 
     <script>
-    $(document).ready(function() {
-        $('#accountSelect').val($('#accounts_select').val());
-        var accId = $('#accounts_select').val();
-        $.ajax({
-            url: 'get_location_testinfo.php?account_id_location=' + accId,
-            type: 'POST',
+        $(document).ready(function() {
+            $('#accountSelect').val($('#accounts_select').val());
+            var accId = $('#accounts_select').val();
+            $.ajax({
+                url: 'get_location_testinfo.php?account_id_location=' + accId,
+                type: 'POST',
 
-            success: function(data) {
-                // alert(data);
-                $('#locationSelect').html(data);
-            },
-            cache: false,
-            contentType: false,
-            processData: false
+                success: function(data) {
+                    // alert(data);
+                    $('#locationSelect').html(data);
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+            $('#table_users').DataTable();
         });
-        $('#table_users').DataTable();
-    });
-    $('#accountSelect').on('change', function() {
-        var accId = $(this).val();
-        $.ajax({
-            url: 'get_location_testinfo.php?account_id_location=' + accId,
-            type: 'POST',
+        $('#accountSelect').on('change', function() {
+            var accId = $(this).val();
+            $.ajax({
+                url: 'get_location_testinfo.php?account_id_location=' + accId,
+                type: 'POST',
 
-            success: function(data) {
-                // alert(data);
-                $('#locationSelect').html(data);
-            },
-            cache: false,
-            contentType: false,
-            processData: false
-        });
-    })
+                success: function(data) {
+                    // alert(data);
+                    $('#locationSelect').html(data);
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        })
     </script>
 
     <script>
-    function test_str() {
-        var res;
-        var str =
-            document.getElementById("password").value;
-        if (str.match(/[a-z]/g) && str.match(
-                /[A-Z]/g) && str.match(
-                /[0-9]/g) && str.match(
-                /[^a-zA-Z\d]/g) && str.length >= 8) {
-            res = "Password is strong";
-            document.getElementById("t2").innerHTML = res;
-            document.getElementById("t2").style.color = "#08c922";
+        function test_str() {
+            var res;
+            var str =
+                document.getElementById("password").value;
+            if (str.match(/[a-z]/g) && str.match(
+                    /[A-Z]/g) && str.match(
+                    /[0-9]/g) && str.match(
+                    /[^a-zA-Z\d]/g) && str.length >= 8) {
+                res = "Password is strong";
+                document.getElementById("t2").innerHTML = res;
+                document.getElementById("t2").style.color = "#08c922";
+            }
+
+            // document.getElementById("t2").innerHTML = res; 
+            // document.getElementById("t2").style.color = "#08c922";
+            else {
+                res = "Password should contain atleast 1 special characters, 1 uppercase letter, 1 number.";
+                document.getElementById("t2").innerHTML = res;
+                document.getElementById("t2").style.color = "#f50008";
+            }
+
+
         }
-
-        // document.getElementById("t2").innerHTML = res; 
-        // document.getElementById("t2").style.color = "#08c922";
-        else {
-            res = "Password should contain atleast 1 special characters, 1 uppercase letter, 1 number.";
-            document.getElementById("t2").innerHTML = res;
-            document.getElementById("t2").style.color = "#f50008";
-        }
-
-
-    }
     </script>
 </body>
 

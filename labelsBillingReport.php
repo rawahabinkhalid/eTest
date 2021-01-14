@@ -23,24 +23,27 @@ include_once 'conn.php'; ?>
 
 
     <style>
-    label {
-        /* Other styling... */
-        text-align: right;
-        clear: both;
-        float: left;
-        margin-right: 15px;
-    }
-
-    @media print {    
-        .no-print, .no-print *
-        {
-            display: none !important;
+        label {
+            /* Other styling... */
+            text-align: right;
+            clear: both;
+            float: left;
+            margin-right: 15px;
         }
 
-        body, html, #wrapper {
-            height: 100%;
+        @media print {
+
+            .no-print,
+            .no-print * {
+                display: none !important;
+            }
+
+            body,
+            html,
+            #wrapper {
+                height: 100%;
+            }
         }
-    }
     </style>
 
 
@@ -57,7 +60,7 @@ to get the desired effect
 -->
 
 <body class="sidebar-mini layout-fixed sidebar-expand">
-<!-- <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed"> -->
+    <!-- <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed"> -->
     <div class="wrapper">
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -82,76 +85,75 @@ to get the desired effect
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="landingscreen.php">Home</a></li>
-                                    
+
                                     <li class="breadcrumb-item active">Users</li>
                                 </ol>
                             </div><!-- /.col -->
                         </div><!-- /.row -->
                         <br>
                         <form action="" method="POST" class="">
-                        <?php if (
-                            isset($_GET['account'])
-                        ) { ?>
-                        <!-- <form action="" method="POST" class=""> -->
-                            <div class="row">
-                                <div class="col-md-12" style="text-align: right">
-                                    <button type="submit"  name="filterData" class="btn mt-2"
-                                        style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Retrieve</button>
-                                    <button type="button" id="deleteButton" class="btn mt-2"
-                                        style="background-color:#E7D7B7; border-radius:5px; width: 100px;"
-                                        onclick="window.print();" disabled>Print</button>
+                            <?php if (
+                                isset($_GET['account'])
+                            ) { ?>
+                                <!-- <form action="" method="POST" class=""> -->
+                                <div class="row">
+                                    <div class="col-md-12" style="text-align: right">
+                                        <button type="submit" name="filterData" class="btn mt-2" style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Retrieve</button>
+                                        <button type="button" id="deleteButton" class="btn mt-2" style="background-color:#E7D7B7; border-radius:5px; width: 100px;" onclick="window.print();" disabled>Print</button>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <br>
                                 </div>
-                                <br>
-                                <br>
-                                <br>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <?php $account_filter =
-                                        $_GET['account']; ?>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <?php $account_filter =
+                                            $_GET['account']; ?>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row" id="DivIdToPrint">
-                            <!-- <div class="col-md-4">Trillium Driver Solution Houston<br>Ellen Alvia<br>1717 Turning Basin Site 447<br>Houston &emsp;&emsp;&emsp;TX 77029</div>
+                                <div class="row" id="DivIdToPrint">
+                                    <!-- <div class="col-md-4">Trillium Driver Solution Houston<br>Ellen Alvia<br>1717 Turning Basin Site 447<br>Houston &emsp;&emsp;&emsp;TX 77029</div>
                             <div class="col-md-4">Trillium Driver Solution Houston<br>Ellen Alvia<br>1717 Turning Basin Site 447<br>Houston &emsp;&emsp;&emsp;TX 77029</div>
                             <div class="col-md-4">Trillium Driver Solution Houston<br>Ellen Alvia<br>1717 Turning Basin Site 447<br>Houston &emsp;&emsp;&emsp;TX 77029</div> -->
-                            <?php
-                            $count = 0;
-                            $sql =
-                                'SELECT * FROM accounts JOIN divisions ON divisions.account_id = accounts.account_id WHERE accounts.account_id = ' .
-                                $account_filter;
-                            $result = $conn->query($sql);
-                            if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
-                                    echo '<div class="col-md-4 mt-4">' .
-                                        $row['account_nm'] .
-                                        ' - ' .
-                                        $row['division_nm'] .
-                                        '<br>' .
-                                        $row['contact'] .
-                                        '<br>' .
-                                        $row['address'] .
-                                        '<br>' .
-                                        $row['city'] .
-                                        ' &emsp;&emsp;&emsp;' .
-                                        $row['state'] .
-                                        ' ' .
-                                        $row['zip'] .
-                                        '</div>';
-                                    // if ($count % 3 == 0) {
-                                    //     echo '<div class="row">';
-                                    // }
-                                    $count++;
+                                <?php
+                                $count = 0;
+                                $sql =
+                                    'SELECT * FROM accounts JOIN divisions ON divisions.account_id = accounts.account_id';
+                                // $sql =
+                                //     'SELECT * FROM accounts JOIN divisions ON divisions.account_id = accounts.account_id WHERE accounts.account_id = ' .
+                                //     $account_filter;
+                                $result = $conn->query($sql);
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo '<div class="col-md-4 mt-4">' .
+                                            $row['account_nm'] .
+                                            ' - ' .
+                                            $row['division_nm'] .
+                                            '<br>' .
+                                            $row['contact'] .
+                                            '<br>' .
+                                            $row['address'] .
+                                            '<br>' .
+                                            $row['city'] .
+                                            ' &emsp;&emsp;&emsp;' .
+                                            $row['state'] .
+                                            ' ' .
+                                            $row['zip'] .
+                                            '</div>';
+                                        // if ($count % 3 == 0) {
+                                        //     echo '<div class="row">';
+                                        // }
+                                        $count++;
+                                    }
                                 }
-                            }
                             } ?>
-                            </div>
+                                </div>
 
                     </div><!-- /.container-fluid -->
                 </div>
                 <!-- /.content-header -->
                 <!-- Main content -->
-                
+
                 <!-- /.content -->
             </div>
             <!-- /.content-wrapper -->
@@ -188,7 +190,7 @@ to get the desired effect
     <script src="dist/js/pages/dashboard3.js"></script>
 
     <script>
-        $('#accountSelect').on('change',function(){
+        $('#accountSelect').on('change', function() {
             var accId = $(this).val();
             $.ajax({
                 url: 'get_location_testinfo.php?account_id_location=' + accId,

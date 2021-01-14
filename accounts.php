@@ -24,542 +24,622 @@ include_once "conn.php";
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
     <style>
-    label {
-        /* Other styling... */
-        text-align: right;
-        clear: both;
-        float: left;
-        margin-right: 15px;
-    }
+        label {
+            /* Other styling... */
+            text-align: right;
+            clear: both;
+            float: left;
+            margin-right: 15px;
+        }
     </style>
     <script>
-    counter = 1;
-    var locations = [];
-    var fees = [];
-    var employees = [];
-    var selected_location = -1;
-    var selected_fees = -1;
-    var selected_employees = -1;
-    var selected_accounts = -1;
+        counter = 1;
+        var locations = [];
+        var fees = [];
+        var employees = [];
+        var selected_location = -1;
+        var selected_fees = -1;
+        var selected_employees = -1;
+        var selected_accounts = -1;
 
-    function addRow() {
-        var content =
-            '<tr><td><input type="text" class="form-control" id="clientId_' + counter +
-            '" name="client[]"></td><td><input type="text" class="form-control" id="itemid_' +
-            counter +
-            '" name="item[]" onchange="getRate(this);"></td><td><input type="text" class="form-control" id="description_' +
-            counter + '" name="description[]"></td><td><input type="text" class="form-control" id="kg_' + counter +
-            '" name="kg[]" onchange="calcTotal(this);"></td><td><input type="text" class="form-control" id="rate_' +
-            counter +
-            '" name="rate[]" onchange="calcTotal(this);"></td><td><input type="text" class="form-control" id="total_' +
-            counter + '" name="total[]" readonly></td></tr>';
-        $('#tbody').append(content);
+        function addRow() {
+            var content =
+                '<tr><td><input type="text" class="form-control" id="clientId_' + counter +
+                '" name="client[]"></td><td><input type="text" class="form-control" id="itemid_' +
+                counter +
+                '" name="item[]" onchange="getRate(this);"></td><td><input type="text" class="form-control" id="description_' +
+                counter + '" name="description[]"></td><td><input type="text" class="form-control" id="kg_' + counter +
+                '" name="kg[]" onchange="calcTotal(this);"></td><td><input type="text" class="form-control" id="rate_' +
+                counter +
+                '" name="rate[]" onchange="calcTotal(this);"></td><td><input type="text" class="form-control" id="total_' +
+                counter + '" name="total[]" readonly></td></tr>';
+            $('#tbody').append(content);
 
-        counter++;
-    }
-
-    function deleteRow() {
-        var tableName = "item";
-        var tbl = document.getElementById(tableName);
-        var lastRow = tbl.rows.length;
-        lastRow--;
-        // alert(lastRow);
-        if (lastRow > 1) {
-            tbl.deleteRow(lastRow);
-            // tbl.deleteRow(lastRow - 2);
+            counter++;
         }
 
-    }
+        function deleteRow() {
+            var tableName = "item";
+            var tbl = document.getElementById(tableName);
+            var lastRow = tbl.rows.length;
+            lastRow--;
+            // alert(lastRow);
+            if (lastRow > 1) {
+                tbl.deleteRow(lastRow);
+                // tbl.deleteRow(lastRow - 2);
+            }
 
-
-    function calcTotal(reference) {
-        index = reference.id.split('_')[1];
-        rate = document.getElementById('rate_' + index).value;
-        kg = document.getElementById('kg_' + index).value;
-        if (rate != '' && kg != '') {
-            document.getElementById('total_' + index).value = parseFloat(parseFloat(rate) * parseFloat(kg)).toFixed(2);
         }
-    }
 
-    function propertiesClicked() {
-        // document.getElementsByClassName('modal-title')[0].innerHTML = 'Edit User';
-    }
 
-    function addClicked() {
-        // document.getElementsByClassName('modal-title')[0].innerHTML = 'New User';
-    }
+        function calcTotal(reference) {
+            index = reference.id.split('_')[1];
+            rate = document.getElementById('rate_' + index).value;
+            kg = document.getElementById('kg_' + index).value;
+            if (rate != '' && kg != '') {
+                document.getElementById('total_' + index).value = parseFloat(parseFloat(rate) * parseFloat(kg)).toFixed(2);
+            }
+        }
 
-    function addClicked_General() {
-        document.getElementsByClassName('modal-title')[1].innerHTML = 'New Location';
-        // $('#locationindex').val(locations.length);
-    }
+        function propertiesClicked() {
+            // document.getElementsByClassName('modal-title')[0].innerHTML = 'Edit User';
+        }
 
-    function propertiesClicked_General() {
-        document.getElementsByClassName('modal-title')[1].innerHTML = 'Edit Location';
-    }
+        function addClicked() {
+            // document.getElementsByClassName('modal-title')[0].innerHTML = 'New User';
+        }
 
-    function addClicked_Fees() {
-        document.getElementsByClassName('modal-title')[2].innerHTML = 'New Account Fee';
-    }
+        function addClicked_General() {
+            document.getElementsByClassName('modal-title')[1].innerHTML = 'New Location';
+            // $('#locationindex').val(locations.length);
+        }
 
-    function propertiesClicked_Fees() {
-        document.getElementsByClassName('modal-title')[2].innerHTML = 'Edit Account Fee';
-    }
+        function propertiesClicked_General() {
+            $('#division_nm').removeClass('validation-error')
+            $('#address').removeClass('validation-error')
+            $('#city').removeClass('validation-error')
+            $('#state').removeClass('validation-error')
+            $('#zip').removeClass('validation-error')
+            $('#email').removeClass('validation-error')
 
-    function addClicked_Employees() {
-        document.getElementsByClassName('modal-title')[3].innerHTML = 'New Employee';
-    }
+            document.getElementsByClassName('modal-title')[1].innerHTML = 'Edit Location';
+        }
 
-    function propertiesClicked_Employees() {
-        document.getElementsByClassName('modal-title')[3].innerHTML = 'Edit Employee';
-    }
+        function addClicked_Fees() {
+            document.getElementsByClassName('modal-title')[2].innerHTML = 'New Account Fee';
+        }
+
+        function propertiesClicked_Fees() {
+            document.getElementsByClassName('modal-title')[2].innerHTML = 'Edit Account Fee';
+        }
+
+        function addClicked_Employees() {
+            document.getElementsByClassName('modal-title')[3].innerHTML = 'New Employee';
+        }
+
+        function propertiesClicked_Employees() {
+            document.getElementsByClassName('modal-title')[3].innerHTML = 'Edit Employee';
+        }
     </script>
 
     <script>
-    function openTab(evt, cityName) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-        document.getElementById(cityName).style.display = "block";
-        evt.currentTarget.className += " active";
-        if (cityName == 'Employees') {
-            content = '';
-            content += '<option value="">Select Location</option>';
-            for (i = 0; i < locations.length; i++) {
-                content += '<option value="' + locations[i].division_nm + '">' + locations[i].division_nm + '</option>';
+        function openTab(evt, cityName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
             }
-            $('#division_id').html(content);
-            // alert("employees");
-            if (locations.length <= 0) {
-                $('#btn_add_employees').prop('disabled', true);
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+            if (cityName == 'Employees') {
+                content = '';
+                content += '<option value="">Select Location</option>';
+                for (i = 0; i < locations.length; i++) {
+                    content += '<option value="' + locations[i].division_nm + '">' + locations[i].division_nm + '</option>';
+                }
+                $('#division_id').html(content);
+                // alert("employees");
+                if (locations.length <= 0) {
+                    $('#btn_add_employees').prop('disabled', true);
+                } else {
+                    $('#btn_add_employees').prop('disabled', false);
+                }
+            }
+        }
+
+        function validateLocation() {
+            var error_validateForm = false;
+            // $('#myModal_Employee').modal('hide');
+            if ($('#division_nm').val() == '') {
+                // $('#specimen_id').focus();
+                // alert('Kindly enter Specimen Id.');
+                // return;
+                $('#division_nm').addClass('validation-error')
+                error_validateForm = true;
+            }
+            if ($('#address').val() == '') {
+                $('#address').addClass('validation-error')
+                // $('#emp_id').focus();
+                // alert('Kindly enter Employee Id.');
+                // return;
+                error_validateForm = true;
+            }
+            if ($('#city').val() == '') {
+                $('#city').addClass('validation-error')
+                // $('#first_nm').focus();
+                // alert('Kindly enter First Name.');
+                // return;
+                error_validateForm = true;
+            }
+            if ($('#state').val() == '') {
+                $('#state').addClass('validation-error')
+                // $('#last_nm').focus();
+                // alert('Kindly enter Last Name.');
+                // return;
+                error_validateForm = true;
+            }
+            console.log($('#zip').val().length)
+            if ($('#zip').val() == '') {
+                $('#zip').addClass('validation-error')
+                // $('#division_id').focus();
+                // alert('Kindly select Location.');
+                // return;
+                error_validateForm = true;
+            } else if ($('#zip').val().length == 5 || $('#zip').val().length == 10) {
+                $('#zip').removeClass('validation-error')
+                error_validateForm = false;
             } else {
-                $('#btn_add_employees').prop('disabled', false);
+                $('#zip').addClass('validation-error')
+                // $('#division_id').focus();
+                // alert('Kindly select Location.');
+                // return;
+                error_validateForm = true;
             }
-        }
-    }
-
-    function addLocation() {
-        var temp = {};
-        temp['division_nm'] = $('#division_nm').val();
-        temp['address'] = $('#address').val();
-        temp['city'] = $('#city').val();
-        temp['state'] = $('#state').val();
-        temp['zip'] = $('#zip').val();
-        temp['phone'] = $('#phone').val();
-        temp['fax'] = $('#fax').val();
-        temp['contact'] = $('#contact').val();
-        temp['email'] = $('#email').val();
-        temp['comments'] = $('#comments').html();
-
-        if ($('#locationindex').val() == '')
-            locations.push(temp);
-        else {
-            locations[selected_location] = temp;
-        }
-
-        $('#division_nm').val('');
-        $('#address').val('');
-        $('#city').val('');
-        $('#state').val('');
-        $('#zip').val('');
-        $('#phone').val('');
-        $('#fax').val('');
-        $('#contact').val('');
-        $('#email').val('');
-        $('#comments').html('');
-
-        refreshLocationTable();
-        console.log(locations);
-
-        selected_location = -1;
-    }
-
-    function refreshLocationTable() {
-        content = '';
-        for (i = 0; i < locations.length; i++) {
-            content += '<tr id="locations_' + i + '" onclick="selectedLocation(' + i + ');">';
-            content += '<td>';
-            content += (i + 1);
-            content += '</td>';
-            content += '<td>';
-            content += locations[i].division_nm;
-            content += '</td>';
-            content += '</tr>';
-        }
-
-        $('#table_locations').html(content);
-
-        $('#btn_delete_location').prop('disabled', true);
-        $('#btn_properties_location').prop('disabled', true);
-    }
-
-    function selectedLocation(i) {
-
-        $('#table_locations > tr').each(function(index, tr) {
-            tr.style.background = 'rgba(0,0,0,.05)';
-        });
-
-        selected_location = i;
-        $('#btn_delete_location').prop('disabled', false);
-        $('#btn_properties_location').prop('disabled', false);
-        $("#locations_" + i).css('background', 'rgba(0,0,0,.35)');
-    }
-
-    function removeClicked_General() {
-        var value = locations[selected_location].division_nm;
-
-        locations = locations.filter(function(item) {
-            console.log(item);
-            return item.division_nm !== value
-        })
-
-        $('#btn_delete_location').prop('disabled', true);
-        $('#btn_properties_location').prop('disabled', true);
-
-        refreshLocationTable();
-        selected_location = -1;
-    }
-
-    function propertiesClicked_General() {
-        $('#locationindex').val(selected_location);
-        $('#division_nm').val(locations[selected_location].division_nm);
-        $('#address').val(locations[selected_location].address);
-        $('#city').val(locations[selected_location].city);
-        $('#state').val(locations[selected_location].state);
-        $('#zip').val(locations[selected_location].zip);
-        $('#phone').val(locations[selected_location].phone);
-        $('#fax').val(locations[selected_location].fax);
-        $('#contact').val(locations[selected_location].contact);
-        $('#email').val(locations[selected_location].email);
-        $('#comments').val(locations[selected_location].comments);
-    }
-
-
-    function addFees() {
-        var temp = {};
-        temp['type_id'] = $('#type_id').val();
-        temp['amount'] = $('#amount').val();
-
-        if ($('#feesindex').val() == '')
-            fees.push(temp);
-        else {
-            fees[selected_fees] = temp;
-        }
-
-        $('#type_id').val('');
-        $('#amount').val('');
-        $('#feesindex').val('');
-
-        refreshFeesTable();
-
-        selected_fees = -1;
-    }
-
-    function refreshFeesTable() {
-        content = '';
-        for (i = 0; i < fees.length; i++) {
-            content += '<tr id="fees_' + i + '" onclick="selectedFees(' + i + ');">';
-            content += '<td>';
-            content += (i + 1);
-            content += '</td>';
-            content += '<td>';
-            content += document.querySelector('#type_id option[value="' + fees[i].type_id + '"]').innerHTML;
-            content += '</td>';
-            content += '<td>';
-            content += fees[i].amount;
-            content += '</td>';
-            content += '</tr>';
-        }
-
-        $('#feesindex').val('');
-
-        $('#table_fees').html(content);
-
-        $('#btn_delete_fee').prop('disabled', true);
-        $('#btn_properties_fee').prop('disabled', true);
-    }
-
-    function selectedFees(i) {
-
-        $('#table_fees > tr').each(function(index, tr) {
-            tr.style.background = 'rgba(0,0,0,.05)';
-        });
-
-        selected_fees = i;
-        $('#btn_delete_fee').prop('disabled', false);
-        $('#btn_properties_fee').prop('disabled', false);
-        $("#fees_" + i).css('background', 'rgba(0,0,0,.35)');
-    }
-
-    function removeClicked_Fees() {
-        var value = fees[selected_fees].type_id;
-        var amount = fees[selected_fees].amount;
-
-        fees = fees.filter(function(item) {
-            console.log(item);
-            console.log(item.type_id !== value);
-            console.log(item.amount !== amount);
-            console.log(item.type_id !== value || item.amount !== amount);
-            return item.type_id !== value || item.amount !== amount
-        })
-
-        $('#btn_delete_fee').prop('disabled', true);
-        $('#btn_properties_fee').prop('disabled', true);
-        console.log(fees);
-
-        refreshFeesTable();
-        selected_fees = -1;
-        $('#feesindex').val('');
-
-    }
-
-    function propertiesClicked_Fees() {
-        $('#feesindex').val(selected_fees);
-        $('#type_id').val(fees[selected_fees].type_id);
-        $('#amount').val(fees[selected_fees].amount);
-    }
-
-
-    function addEmployees() {
-        var temp = {};
-        temp['emp_id'] = $('#emp_id').val();
-        temp['first_nm'] = $('#first_nm').val();
-        temp['last_nm'] = $('#last_nm').val();
-        temp['division_id'] = $('#division_id').val();
-        temp['status'] = '';
-        if ($('#status_pre_employment').is(':checked'))
-            temp['status'] = 'P';
-        else if ($('#status_active').is(':checked'))
-            temp['status'] = 'A';
-        else if ($('#status_terminated').is(':checked'))
-            temp['status'] = 'T';
-
-        if ($('#employeesindex').val() == '')
-            employees.push(temp);
-        else {
-            employees[selected_employees] = temp;
-        }
-
-        $('#emp_id').val('');
-        $('#first_nm').val('');
-        $('#last_nm').val('');
-        $('#division_id').val('');
-        $('#status_pre_employment').prop('checked', false);
-        $('#status_active').prop('checked', false);
-        $('#status_terminated').prop('checked', false);
-        $('#employeesindex').val('');
-
-        refreshEmployeesTable();
-
-        selected_employees = -1;
-
-    }
-
-    function refreshEmployeesTable() {
-        content = '';
-        for (i = 0; i < employees.length; i++) {
-            content += '<tr id="employee_' + i + '" onclick="selectedEmployees(' + i + ');">';
-            content += '<td>';
-            content += (i + 1);
-            content += '</td>';
-            content += '<td>' + employees[i].emp_id + '</td>';
-            content += '<td>' + employees[i].division_id + '</td>';
-            // content += '<td>';
-            // locations.find(item => {
-            //     return item.restaurant.food == 'chicken'
-            // })
-            // content += '</td>';
-            content += '<td>' + employees[i].first_nm + '</td>';
-            content += '<td>' + employees[i].last_nm + '</td>';
-            content += '<td>';
-            if (employees[i].status == 'P')
-                content += 'Pre-Employment';
-            if (employees[i].status == 'A')
-                content += 'Active';
-            if (employees[i].status == 'T')
-                content += 'Terminated';
-            content += '</td>';
-            content += '</tr>';
-        }
-
-        $('#employeesindex').val('');
-
-        $('#table_employees').html(content);
-
-        $('#btn_delete_employees').prop('disabled', true);
-        $('#btn_properties_employees').prop('disabled', true);
-    }
-
-    function selectedEmployees(i) {
-        $('#table_employees > tr').each(function(index, tr) {
-            tr.style.background = 'rgba(0,0,0,.05)';
-        });
-
-        selected_employees = i;
-        $('#btn_delete_employees').prop('disabled', false);
-        $('#btn_properties_employees').prop('disabled', false);
-        $("#employee_" + i).css('background', 'rgba(0,0,0,.35)');
-    }
-
-    function removeClicked_Employees() {
-        var value = employees[selected_employees].emp_id;
-        var division_id = employees[selected_employees].division_id;
-
-        employees = employees.filter(function(item) {
-            return item.emp_id !== value || item.division_id !== division_id
-        })
-
-        $('#btn_delete_employees').prop('disabled', true);
-        $('#btn_properties_employees').prop('disabled', true);
-        console.log(fees);
-
-        refreshEmployeesTable();
-        selected_employees = -1;
-        $('#employeesindex').val('');
-
-    }
-
-    function propertiesClicked_Employees() {
-        $('#employeesindex').val(selected_employees);
-
-        $('#emp_id').val(employees[selected_employees].emp_id);
-        $('#first_nm').val(employees[selected_employees].first_nm);
-        $('#last_nm').val(employees[selected_employees].last_nm);
-        $('#division_id').val(employees[selected_employees].division_id);
-        if (employees[selected_employees].status == 'P')
-            $('#status_pre_employment').prop('checked', true);
-        if (employees[selected_employees].status == 'A')
-            $('#status_active').prop('checked', true);
-        if (employees[selected_employees].status == 'T')
-            $('#status_terminated').prop('checked', true);
-    }
-
-    function saveAccount() {
-        accountsData = {
-            'account_id': $('#account_id').val(),
-            'account_nm': $('#account_nm').val(),
-            'account_code': $('#account_code').val(),
-            'ar_funding_code': $('#ar_funding_code').val(),
-            'locations': locations,
-            'fees': fees,
-            'employees': employees
-        };
-        console.log('accountsData', accountsData);
-        console.log('accountsData=' + JSON.stringify(accountsData))
-        $.ajax({
-            type: "POST",
-            url: "insert_account.php",
-            data: 'accountsData=' + JSON.stringify(accountsData),
-            success: function(resultData) {
-                console.log(resultData);
-                alert(resultData);
-                // windo
-                window.open("accounts.php", "_self");
+            if ($('#email').val() == '' || !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test($('#email').val())) {
+                $('#email').addClass('validation-error')
+                // $('#accounts_select').focus();
+                // alert('Kindly select Account.');
+                // return;
+                error_validateForm = true;
             }
-        });
-    }
+            return error_validateForm;
+        }
 
-
-    function deleteClicked() {
-        $.ajax({
-            type: "GET",
-            url: "insert_account.php?delete_account_id=" + selected_accounts,
-            success: function(resultData) {
-                // console.log(resultData);
-                window.open("accounts.php", "_self");
-
+        function addLocation() {
+            var temp = {};
+            if (validateLocation()) {
+                $('#addLocation').attr('data-dismiss', '');
+                return;
+            } else {
+                $('#addLocation').attr('data-dismiss', 'modal');
             }
-        });
-    }
+            temp['division_nm'] = $('#division_nm').val();
+            temp['address'] = $('#address').val();
+            temp['city'] = $('#city').val();
+            temp['state'] = $('#state').val();
+            temp['zip'] = $('#zip').val();
+            temp['phone'] = $('#phone').val();
+            temp['fax'] = $('#fax').val();
+            temp['contact'] = $('#contact').val();
+            temp['email'] = $('#email').val();
+            temp['comments'] = $('#comments').html();
 
-    function propertiesClicked() {
-        document.getElementsByClassName('modal-title')[0].innerHTML = 'Edit Practitioner';
-        $.ajax({
-            type: "GET",
-            url: "getAllData.php?account_id=" + selected_accounts,
-            success: function(resultData) {
-                console.log(resultData);
-                var data = JSON.parse(resultData);
-                console.log(data);
+            if ($('#locationindex').val() == '')
+                locations.push(temp);
+            else {
+                locations[selected_location] = temp;
+            }
 
-                $('#locationindex').val('');
-                $('#feesindex').val('');
-                $('#employeesindex').val('');
-                $('#account_id').val(data.accounts_data.account_id);
-                $('#account_nm').val(data.accounts_data.account_nm);
-                $('#account_code').val(data.accounts_data.account_code);
-                $('#ar_funding_code').val(data.accounts_data.ar_funding_code);
+            $('#division_nm').val('');
+            $('#address').val('');
+            $('#city').val('');
+            $('#state').val('');
+            $('#zip').val('');
+            $('#phone').val('');
+            $('#fax').val('');
+            $('#contact').val('');
+            $('#email').val('');
+            $('#comments').html('');
 
-                locations = [];
-                fees = [];
-                employees = [];
-                selected_location = -1;
-                selected_fees = -1;
-                selected_employees = -1;
-                selected_accounts = -1;
+            refreshLocationTable();
+            console.log(locations);
 
-                for (i = 0; i < data.accounts_divisions.length; i++) {
-                    var temp = {};
-                    temp['division_nm'] = data.accounts_divisions[i].division_nm;
-                    temp['address'] = data.accounts_divisions[i].address;
-                    temp['city'] = data.accounts_divisions[i].city;
-                    temp['state'] = data.accounts_divisions[i].state;
-                    temp['zip'] = data.accounts_divisions[i].zip;
-                    temp['phone'] = data.accounts_divisions[i].phone;
-                    temp['fax'] = data.accounts_divisions[i].fax;
-                    temp['contact'] = data.accounts_divisions[i].contact;
-                    temp['email'] = data.accounts_divisions[i].email;
-                    temp['comments'] = data.accounts_divisions[i].comments;
+            selected_location = -1;
+        }
 
-                    locations.push(temp);
-                    console.log(locations);
+        function refreshLocationTable() {
+            content = '';
+            for (i = 0; i < locations.length; i++) {
+                content += '<tr id="locations_' + i + '" onclick="selectedLocation(' + i + ');">';
+                content += '<td>';
+                content += (i + 1);
+                content += '</td>';
+                content += '<td>';
+                content += locations[i].division_nm;
+                content += '</td>';
+                content += '</tr>';
+            }
+
+            $('#table_locations').html(content);
+
+
+            $('#btn_delete_location').prop('disabled', true);
+            $('#btn_properties_location').prop('disabled', true);
+        }
+
+        function selectedLocation(i) {
+
+            $('#table_locations > tr').each(function(index, tr) {
+                tr.style.background = 'rgba(0,0,0,.05)';
+            });
+
+            selected_location = i;
+            $('#btn_delete_location').prop('disabled', false);
+            $('#btn_properties_location').prop('disabled', false);
+            $("#locations_" + i).css('background', 'rgba(0,0,0,.35)');
+        }
+
+        function removeClicked_General() {
+            var value = locations[selected_location].division_nm;
+
+            locations = locations.filter(function(item) {
+                console.log(item);
+                return item.division_nm !== value
+            })
+
+            $('#btn_delete_location').prop('disabled', true);
+            $('#btn_properties_location').prop('disabled', true);
+
+            refreshLocationTable();
+            selected_location = -1;
+        }
+
+        function propertiesClicked_General() {
+            $('#division_nm').removeClass('validation-error')
+            $('#address').removeClass('validation-error')
+            $('#city').removeClass('validation-error')
+            $('#state').removeClass('validation-error')
+            $('#zip').removeClass('validation-error')
+            $('#email').removeClass('validation-error')
+
+
+            $('#locationindex').val(selected_location);
+            $('#division_nm').val(locations[selected_location].division_nm);
+            $('#address').val(locations[selected_location].address);
+            $('#city').val(locations[selected_location].city);
+            $('#state').val(locations[selected_location].state);
+            $('#zip').val(locations[selected_location].zip);
+            $('#phone').val(locations[selected_location].phone);
+            $('#fax').val(locations[selected_location].fax);
+            $('#contact').val(locations[selected_location].contact);
+            $('#email').val(locations[selected_location].email);
+            $('#comments').val(locations[selected_location].comments);
+        }
+
+
+        function addFees() {
+            var temp = {};
+            temp['type_id'] = $('#type_id').val();
+            temp['amount'] = $('#amount').val();
+
+            if ($('#feesindex').val() == '')
+                fees.push(temp);
+            else {
+                fees[selected_fees] = temp;
+            }
+
+            $('#type_id').val('');
+            $('#amount').val('');
+            $('#feesindex').val('');
+
+            refreshFeesTable();
+
+            selected_fees = -1;
+        }
+
+        function refreshFeesTable() {
+            content = '';
+            for (i = 0; i < fees.length; i++) {
+                content += '<tr id="fees_' + i + '" onclick="selectedFees(' + i + ');">';
+                content += '<td>';
+                content += (i + 1);
+                content += '</td>';
+                content += '<td>';
+                content += document.querySelector('#type_id option[value="' + fees[i].type_id + '"]').innerHTML;
+                content += '</td>';
+                content += '<td>';
+                content += fees[i].amount;
+                content += '</td>';
+                content += '</tr>';
+            }
+
+            $('#feesindex').val('');
+
+            $('#table_fees').html(content);
+
+            $('#btn_delete_fee').prop('disabled', true);
+            $('#btn_properties_fee').prop('disabled', true);
+        }
+
+        function selectedFees(i) {
+
+            $('#table_fees > tr').each(function(index, tr) {
+                tr.style.background = 'rgba(0,0,0,.05)';
+            });
+
+            selected_fees = i;
+            $('#btn_delete_fee').prop('disabled', false);
+            $('#btn_properties_fee').prop('disabled', false);
+            $("#fees_" + i).css('background', 'rgba(0,0,0,.35)');
+        }
+
+        function removeClicked_Fees() {
+            var value = fees[selected_fees].type_id;
+            var amount = fees[selected_fees].amount;
+
+            fees = fees.filter(function(item) {
+                console.log(item);
+                console.log(item.type_id !== value);
+                console.log(item.amount !== amount);
+                console.log(item.type_id !== value || item.amount !== amount);
+                return item.type_id !== value || item.amount !== amount
+            })
+
+            $('#btn_delete_fee').prop('disabled', true);
+            $('#btn_properties_fee').prop('disabled', true);
+            console.log(fees);
+
+            refreshFeesTable();
+            selected_fees = -1;
+            $('#feesindex').val('');
+
+        }
+
+        function propertiesClicked_Fees() {
+            $('#feesindex').val(selected_fees);
+            $('#type_id').val(fees[selected_fees].type_id);
+            $('#amount').val(fees[selected_fees].amount);
+        }
+
+
+        function addEmployees() {
+            var temp = {};
+            temp['emp_id'] = $('#emp_id').val();
+            temp['first_nm'] = $('#first_nm').val();
+            temp['last_nm'] = $('#last_nm').val();
+            temp['division_id'] = $('#division_id').val();
+            temp['status'] = '';
+            if ($('#status_pre_employment').is(':checked'))
+                temp['status'] = 'P';
+            else if ($('#status_active').is(':checked'))
+                temp['status'] = 'A';
+            else if ($('#status_terminated').is(':checked'))
+                temp['status'] = 'T';
+
+            if ($('#employeesindex').val() == '')
+                employees.push(temp);
+            else {
+                employees[selected_employees] = temp;
+            }
+
+            $('#emp_id').val('');
+            $('#first_nm').val('');
+            $('#last_nm').val('');
+            $('#division_id').val('');
+            $('#status_pre_employment').prop('checked', false);
+            $('#status_active').prop('checked', false);
+            $('#status_terminated').prop('checked', false);
+            $('#employeesindex').val('');
+
+            refreshEmployeesTable();
+
+            selected_employees = -1;
+
+        }
+
+        function refreshEmployeesTable() {
+            content = '';
+            for (i = 0; i < employees.length; i++) {
+                content += '<tr id="employee_' + i + '" onclick="selectedEmployees(' + i + ');">';
+                content += '<td>';
+                content += (i + 1);
+                content += '</td>';
+                content += '<td>' + employees[i].emp_id + '</td>';
+                content += '<td>' + employees[i].division_id + '</td>';
+                // content += '<td>';
+                // locations.find(item => {
+                //     return item.restaurant.food == 'chicken'
+                // })
+                // content += '</td>';
+                content += '<td>' + employees[i].first_nm + '</td>';
+                content += '<td>' + employees[i].last_nm + '</td>';
+                content += '<td>';
+                if (employees[i].status == 'P')
+                    content += 'Pre-Employment';
+                if (employees[i].status == 'A')
+                    content += 'Active';
+                if (employees[i].status == 'T')
+                    content += 'Terminated';
+                content += '</td>';
+                content += '</tr>';
+            }
+
+            $('#employeesindex').val('');
+
+            $('#table_employees').html(content);
+
+            $('#btn_delete_employees').prop('disabled', true);
+            $('#btn_properties_employees').prop('disabled', true);
+        }
+
+        function selectedEmployees(i) {
+            $('#table_employees > tr').each(function(index, tr) {
+                tr.style.background = 'rgba(0,0,0,.05)';
+            });
+
+            selected_employees = i;
+            $('#btn_delete_employees').prop('disabled', false);
+            $('#btn_properties_employees').prop('disabled', false);
+            $("#employee_" + i).css('background', 'rgba(0,0,0,.35)');
+        }
+
+        function removeClicked_Employees() {
+            var value = employees[selected_employees].emp_id;
+            var division_id = employees[selected_employees].division_id;
+
+            employees = employees.filter(function(item) {
+                return item.emp_id !== value || item.division_id !== division_id
+            })
+
+            $('#btn_delete_employees').prop('disabled', true);
+            $('#btn_properties_employees').prop('disabled', true);
+            console.log(fees);
+
+            refreshEmployeesTable();
+            selected_employees = -1;
+            $('#employeesindex').val('');
+
+        }
+
+        function propertiesClicked_Employees() {
+            $('#employeesindex').val(selected_employees);
+
+            $('#emp_id').val(employees[selected_employees].emp_id);
+            $('#first_nm').val(employees[selected_employees].first_nm);
+            $('#last_nm').val(employees[selected_employees].last_nm);
+            $('#division_id').val(employees[selected_employees].division_id);
+            if (employees[selected_employees].status == 'P')
+                $('#status_pre_employment').prop('checked', true);
+            if (employees[selected_employees].status == 'A')
+                $('#status_active').prop('checked', true);
+            if (employees[selected_employees].status == 'T')
+                $('#status_terminated').prop('checked', true);
+        }
+
+        function saveAccount() {
+            accountsData = {
+                'account_id': $('#account_id').val(),
+                'account_nm': $('#account_nm').val(),
+                'account_code': $('#account_code').val(),
+                'ar_funding_code': $('#ar_funding_code').val(),
+                'locations': locations,
+                'fees': fees,
+                'employees': employees
+            };
+            console.log('accountsData', accountsData);
+            console.log('accountsData=' + JSON.stringify(accountsData))
+            $.ajax({
+                type: "POST",
+                url: "insert_account.php",
+                data: 'accountsData=' + JSON.stringify(accountsData),
+                success: function(resultData) {
+                    console.log(resultData);
+                    alert(resultData);
+                    // windo
+                    window.open("accounts.php", "_self");
                 }
-                refreshLocationTable();
+            });
+        }
 
-                for (i = 0; i < data.accounts_fees.length; i++) {
-                    var temp = {};
-                    temp['type_id'] = data.accounts_fees[i].type_id;
-                    temp['amount'] = data.accounts_fees[i].amount;
 
-                    fees.push(temp);
-                    console.log(fees);
+        function deleteClicked() {
+            $.ajax({
+                type: "GET",
+                url: "insert_account.php?delete_account_id=" + selected_accounts,
+                success: function(resultData) {
+                    // console.log(resultData);
+                    window.open("accounts.php", "_self");
+
                 }
-                refreshFeesTable();
+            });
+        }
 
-                for (i = 0; i < data.accounts_employees.length; i++) {
-                    var temp = {};
-                    temp['emp_id'] = data.accounts_employees[i].emp_id;
-                    temp['first_nm'] = data.accounts_employees[i].first_nm;
-                    temp['last_nm'] = data.accounts_employees[i].last_nm;
-                    temp['division_id'] = data.accounts_employees[i].division_id;
-                    temp['status'] = data.accounts_employees[i].status;
+        function propertiesClicked() {
+            document.getElementsByClassName('modal-title')[0].innerHTML = 'Edit Practitioner';
+            $.ajax({
+                type: "GET",
+                url: "getAllData.php?account_id=" + selected_accounts,
+                success: function(resultData) {
+                    console.log(resultData);
+                    var data = JSON.parse(resultData);
+                    console.log(data);
 
-                    employees.push(temp);
-                    console.log(employees);
+                    $('#locationindex').val('');
+                    $('#feesindex').val('');
+                    $('#employeesindex').val('');
+                    $('#account_id').val(data.accounts_data.account_id);
+                    $('#account_nm').val(data.accounts_data.account_nm);
+                    $('#account_code').val(data.accounts_data.account_code);
+                    $('#ar_funding_code').val(data.accounts_data.ar_funding_code);
+
+                    locations = [];
+                    fees = [];
+                    employees = [];
+                    selected_location = -1;
+                    selected_fees = -1;
+                    selected_employees = -1;
+                    selected_accounts = -1;
+
+                    for (i = 0; i < data.accounts_divisions.length; i++) {
+                        var temp = {};
+                        temp['division_nm'] = data.accounts_divisions[i].division_nm;
+                        temp['address'] = data.accounts_divisions[i].address;
+                        temp['city'] = data.accounts_divisions[i].city;
+                        temp['state'] = data.accounts_divisions[i].state;
+                        temp['zip'] = data.accounts_divisions[i].zip;
+                        temp['phone'] = data.accounts_divisions[i].phone;
+                        temp['fax'] = data.accounts_divisions[i].fax;
+                        temp['contact'] = data.accounts_divisions[i].contact;
+                        temp['email'] = data.accounts_divisions[i].email;
+                        temp['comments'] = data.accounts_divisions[i].comments;
+
+                        locations.push(temp);
+                        console.log(locations);
+                    }
+                    refreshLocationTable();
+
+                    for (i = 0; i < data.accounts_fees.length; i++) {
+                        var temp = {};
+                        temp['type_id'] = data.accounts_fees[i].type_id;
+                        temp['amount'] = data.accounts_fees[i].amount;
+
+                        fees.push(temp);
+                        console.log(fees);
+                    }
+                    refreshFeesTable();
+
+                    for (i = 0; i < data.accounts_employees.length; i++) {
+                        var temp = {};
+                        temp['emp_id'] = data.accounts_employees[i].emp_id;
+                        temp['first_nm'] = data.accounts_employees[i].first_nm;
+                        temp['last_nm'] = data.accounts_employees[i].last_nm;
+                        temp['division_id'] = data.accounts_employees[i].division_id;
+                        temp['status'] = data.accounts_employees[i].status;
+
+                        employees.push(temp);
+                        console.log(employees);
+                    }
+                    refreshEmployeesTable();
                 }
-                refreshEmployeesTable();
-            }
-        });
-    }
+            });
+        }
 
-    function accountSelected(id) {
-        $('#table_accounts > tbody  > tr').each(function(index, tr) {
-            tr.style.background = 'rgba(0,0,0,.05)';
-        });
+        function accountSelected(id) {
+            $('#table_accounts > tbody  > tr').each(function(index, tr) {
+                tr.style.background = 'rgba(0,0,0,.05)';
+            });
 
-        selected_accounts = id;
+            selected_accounts = id;
 
-        // alert("#" + id);
-        $('#deleteButton').prop('disabled', false);
-        $('#propertiesButton').prop('disabled', false);
-        $("#" + id).css('background', 'rgba(0,0,0,.35)');
-    }
+            // alert("#" + id);
+            $('#deleteButton').prop('disabled', false);
+            $('#propertiesButton').prop('disabled', false);
+            $("#" + id).css('background', 'rgba(0,0,0,.35)');
+        }
     </script>
 
 </head>
@@ -606,7 +686,7 @@ to get the desired effect
                 </div>
             </form> -->
 
-            <?php include "header.php";?>
+            <?php include "header.php"; ?>
 
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
@@ -643,32 +723,25 @@ to get the desired effect
                                         </thead>
                                         <tbody>
                                             <?php
-$count = 1;
-$sql = 'SELECT * FROM accounts';
-$result = mysqli_query($conn, $sql);
-while ($row = mysqli_fetch_assoc($result)) {
-    $id = $row['account_id'];
-    echo '
+                                            $count = 1;
+                                            $sql = 'SELECT * FROM accounts';
+                                            $result = mysqli_query($conn, $sql);
+                                            while ($row = mysqli_fetch_assoc($result)) {
+                                                $id = $row['account_id'];
+                                                echo '
                                                     <tr id="' . $id . '" onclick = "accountSelected(' . $id . ');">
                                                         <th scope="row">' . $count++ . '</th>
                                                         <td>' . $row['account_nm'] . '</td>
                                                     </tr>';
-}
-?>
+                                            }
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
                                 <div class="col-md-1">
-                                    <button type="button" name="" class="btn mt-2" data-toggle="modal"
-                                        data-target="#myModal" onclick="addClicked();"
-                                        style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Add</button>
-                                    <button type="button" name="" class="btn mt-2" id="deleteButton"
-                                        style="background-color:#E7D7B7; border-radius:5px; width: 100px;"
-                                        onclick="deleteClicked();" disabled>Remove</button>
-                                    <button type="button" name="" id="propertiesButton" class="btn mt-2"
-                                        style="background-color:#E7D7B7; border-radius:5px; width: 100px;"
-                                        data-toggle="modal" data-target="#myModal" onclick="propertiesClicked();"
-                                        disabled>Properties</button>
+                                    <button type="button" name="" class="btn mt-2" data-toggle="modal" data-target="#myModal" onclick="addClicked();" style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Add</button>
+                                    <button type="button" name="" class="btn mt-2" id="deleteButton" style="background-color:#E7D7B7; border-radius:5px; width: 100px;" onclick="deleteClicked();" disabled>Remove</button>
+                                    <button type="button" name="" id="propertiesButton" class="btn mt-2" style="background-color:#E7D7B7; border-radius:5px; width: 100px;" data-toggle="modal" data-target="#myModal" onclick="propertiesClicked();" disabled>Properties</button>
                                 </div>
                             </div>
                         </form>
@@ -709,12 +782,10 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 </div>
                                 <div class="row mt-1">
                                     <div class="col-3">AR Funding Code: </div>
-                                    <div class="col-4"><input class="form-control" id="ar_funding_code"
-                                            name="account_code">
+                                    <div class="col-4"><input class="form-control" id="ar_funding_code" name="account_code">
                                     </div>
                                     <div class="col-1">Code: </div>
-                                    <div class="col-4"><input class="form-control" id="account_code"
-                                            name="account_code">
+                                    <div class="col-4"><input class="form-control" id="account_code" name="account_code">
                                     </div>
                                 </div>
                                 <br>
@@ -739,13 +810,9 @@ while ($row = mysqli_fetch_assoc($result)) {
                                     </table>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-toggle="modal"
-                                        data-target="#myModal_General" onclick="addClicked_General();">Add</button>
-                                    <button type="button" class="btn btn-default" id="btn_delete_location"
-                                        onclick="removeClicked_General();" disabled>Remove</button>
-                                    <button type="button" class="btn btn-default" data-toggle="modal"
-                                        data-target="#myModal_General" onclick="propertiesClicked_General();"
-                                        id="btn_properties_location" data-dismiss="modal" disabled>Properties</button>
+                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal_General" onclick="addClicked_General();">Add</button>
+                                    <button type="button" class="btn btn-default" id="btn_delete_location" onclick="removeClicked_General();" disabled>Remove</button>
+                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal_General" onclick="propertiesClicked_General();" id="btn_properties_location" disabled>Properties</button>
                                 </div>
 
 
@@ -777,13 +844,9 @@ while ($row = mysqli_fetch_assoc($result)) {
                                     </table>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-toggle="modal"
-                                        data-target="#myModal_Fees" onclick="addClicked_Fees();">Add</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal"
-                                        id="btn_delete_fee" onclick="removeClicked_Fees();" disabled>Remove</button>
-                                    <button type="button" class="btn btn-default" data-toggle="modal"
-                                        data-target="#myModal_Fees" id="btn_properties_fee"
-                                        onclick="propertiesClicked_Fees();" disabled>Properties</button>
+                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal_Fees" onclick="addClicked_Fees();">Add</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_delete_fee" onclick="removeClicked_Fees();" disabled>Remove</button>
+                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal_Fees" id="btn_properties_fee" onclick="propertiesClicked_Fees();" disabled>Properties</button>
                                 </div>
 
                             </div>
@@ -823,22 +886,15 @@ while ($row = mysqli_fetch_assoc($result)) {
                                     </table>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-toggle="modal"
-                                        data-target="#myModal_Employee1" onclick="addClicked_Employees();"
-                                        id="btn_add_employees">Add</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal"
-                                        id="btn_delete_employees" onclick="removeClicked_Employees();"
-                                        disabled>Remove</button>
-                                    <button type="button" class="btn btn-default" data-toggle="modal"
-                                        data-target="#myModal_Employee1" id="btn_properties_employees"
-                                        onclick="propertiesClicked_Employees();" disabled>Properties</button>
+                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal_Employee1" onclick="addClicked_Employees();" id="btn_add_employees">Add</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_delete_employees" onclick="removeClicked_Employees();" disabled>Remove</button>
+                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal_Employee1" id="btn_properties_employees" onclick="propertiesClicked_Employees();" disabled>Properties</button>
                                 </div>
                             </div>
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal"
-                                onclick="saveAccount();">OK</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="saveAccount();">OK</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Help</button>
                         </div>
@@ -867,51 +923,40 @@ while ($row = mysqli_fetch_assoc($result)) {
                             </div>
                             <div class="row">
                                 <div class="col-md-2" style="display: inline-block">Address: </div>
-                                <div class="col-md-8" style="display: inline-block"><input class="form-control"
-                                        id="address" name="address"></div>
+                                <div class="col-md-8" style="display: inline-block"><input class="form-control" id="address" name="address"></div>
                             </div>
                             <div class="row">
                                 <div class="col-md-2" style="display: inline-block">City: </div>
-                                <div class="col-md-3" style="display: inline-block"><input class="form-control"
-                                        id="city" name="city"></div>
+                                <div class="col-md-3" style="display: inline-block"><input class="form-control" id="city" name="city"></div>
                                 <div class="col-md-1" style="display: inline-block">State: </div>
-                                <div class="col-md-1" style="display: inline-block"><input class="form-control"
-                                        id="state" name="state"></div>
+                                <div class="col-md-1" style="display: inline-block"><input class="form-control" id="state" name="state"></div>
                                 <div class="col-md-1" style="display: inline-block">Zip: </div>
-                                <div class="col-md-2" style="display: inline-block"><input class="form-control" id="zip"
-                                        name="zip"></div>
+                                <div class="col-md-2" style="display: inline-block"><input class="form-control" id="zip" name="zip" minlength="5"></div>
                             </div>
                             <div class="row">
                                 <div class="col-md-2" style="display: inline-block">Phone: </div>
-                                <div class="col-md-3" style="display: inline-block"><input class="form-control"
-                                        id="phone" name="phone"></div>
+                                <div class="col-md-3" style="display: inline-block"><input class="form-control" id="phone" name="phone"></div>
                             </div>
                             <div class="row">
                                 <div class="col-md-2" style="display: inline-block">Fax: </div>
-                                <div class="col-md-3" style="display: inline-block"><input class="form-control" id="fax"
-                                        name="fax"></div>
+                                <div class="col-md-3" style="display: inline-block"><input class="form-control" id="fax" name="fax"></div>
                             </div>
                             <div class="row">
                                 <div class="col-md-2" style="display: inline-block">Contact: </div>
-                                <div class="col-md-8" style="display: inline-block"><input class="form-control"
-                                        id="contact" name="contact"></div>
+                                <div class="col-md-8" style="display: inline-block"><input class="form-control" id="contact" name="contact"></div>
                             </div>
                             <div class="row">
                                 <div class="col-md-2" style="display: inline-block">Email Address: </div>
-                                <div class="col-md-8" style="display: inline-block"><input class="form-control"
-                                        id="email" name="email"></div>
+                                <div class="col-md-8" style="display: inline-block"><input class="form-control" id="email" name="email"></div>
                             </div>
                             <div class="row">
                                 <div class="col-md-2" style="display: inline-block">Comments: </div>
-                                <div class="col-md-8" style="display: inline-block"><textarea class="form-control"
-                                        id="comments" name="comments"></textarea></div>
+                                <div class="col-md-8" style="display: inline-block"><textarea class="form-control" id="comments" name="comments"></textarea></div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal"
-                                onclick="addLocation();">OK</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"
-                                onclick="selected_location = -1;">Close</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id="addLocation" onclick="addLocation();">OK</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="selected_location = -1;refreshLocationTable()">Close</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Help</button>
                         </div>
                     </div>
@@ -949,15 +994,12 @@ while ($row = mysqli_fetch_assoc($result)) {
                             </div>
                             <div class="row">
                                 <div class="col-md-2" style="display: inline-block">Amount: </div>
-                                <div class="col-md-7" style="display: inline-block"><input id="amount" name="amount"
-                                        type="number" min="0" step="0.01" class="form-control"></div>
+                                <div class="col-md-7" style="display: inline-block"><input id="amount" name="amount" type="number" min="0" step="0.01" class="form-control"></div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal"
-                                onclick="addFees();">OK</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"
-                                onclick="selected_fees = -1;">Close</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="addFees();">OK</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="selected_fees = -1;">Close</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Help</button>
                         </div>
                         <!-- <div class="modal-footer">
@@ -1015,12 +1057,9 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 <div class="col-md-7" style="display: inline-block">
                                     <fieldset style="border: 1px solid lightgray; padding: 10px">
                                         <legend>Status</legend>
-                                        <label for="preEmployment"><input type="radio" id="status_pre_employment"
-                                                name="status">&emsp;Pre-Employment</label><br>
-                                        <label for="active"><input type="radio" id="status_active"
-                                                name="status">&emsp;Active</label><br>
-                                        <label for="terminated"><input type="radio" id="status_terminated"
-                                                name="status">&emsp;Terminated</label><br>
+                                        <label for="preEmployment"><input type="radio" id="status_pre_employment" name="status">&emsp;Pre-Employment</label><br>
+                                        <label for="active"><input type="radio" id="status_active" name="status">&emsp;Active</label><br>
+                                        <label for="terminated"><input type="radio" id="status_terminated" name="status">&emsp;Terminated</label><br>
                                     </fieldset>
                                 </div>
                                 <!-- <div class="col-md-2" style="display: inline-block">Location: </div><div class="col-md-7" style="display: inline-block"><select class="form-control"><option value="">Select Location</option></select></div> -->
@@ -1028,10 +1067,8 @@ while ($row = mysqli_fetch_assoc($result)) {
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal"
-                                onclick="addEmployees();">OK</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"
-                                onclick="selected_fees = -1;">Close</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="addEmployees();">OK</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="selected_fees = -1;">Close</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Help</button>
                         </div>
                     </div>
@@ -1061,6 +1098,8 @@ while ($row = mysqli_fetch_assoc($result)) {
     <script src="plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap -->
     <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <!-- AdminLTE -->
     <!-- <script src="dist/js/jquery-3.5.1.js"></script> -->
     <!-- <script src="dist/js/jquery.dataTables.min.js"></script> -->
@@ -1072,22 +1111,61 @@ while ($row = mysqli_fetch_assoc($result)) {
     <script src="dist/js/demo.js"></script>
     <script src="dist/js/pages/dashboard3.js"></script>
     <script>
-    $(document).ready(function() {
-        $('#table_accounts').DataTable();
-    });
-    $('#emp_id').on('change', function() {
-        var str = $(this).val();
-        regexp = /^(?!000|666)[0-8][0-9]{2}-(?!00)[0-9]{2}-(?!  0000)[0-9]{4}$/;
+        $(document).ready(function() {
+            $('#table_accounts').DataTable();
+        });
+        $('#emp_id').on('change', function() {
+            var str = $(this).val();
+            regexp = /^(?!000|666)[0-8][0-9]{2}-(?!00)[0-9]{2}-(?!  0000)[0-9]{4}$/;
 
-        // var strFilter = /^[0-3][0-9]{7}$/;
+            // var strFilter = /^[0-3][0-9]{7}$/;
 
-        if (regexp.test(str)) {
-            console.log('right');
-        } else {
-            alert('Please enter correct SSN Number');
-            $('#emp_id').val('');
-        }
-    })
+            if (regexp.test(str)) {
+                console.log('right');
+            } else {
+                alert('Please enter correct SSN Number');
+                $('#emp_id').val('');
+            }
+        })
+    </script>
+    <script>
+        $('#division_nm').on('change', function() {
+            $('#division_nm').removeClass('validation-error')
+        });
+        $('#address').on('change', function() {
+            $('#address').removeClass('validation-error')
+        });
+        $('#city').on('change', function() {
+            $('#city').removeClass('validation-error')
+        });
+        $('#state').on('change', function() {
+            $('#state').removeClass('validation-error')
+        });
+        $('#zip').on('change', function() {
+            $('#zip').removeClass('validation-error')
+        });
+        $('#email').on('change', function() {
+            $('#email').removeClass('validation-error')
+        });
+    </script>
+    <script>
+        $().ready(() => {
+            var maskOptions = {
+                placeholder: "_____-____",
+                onKeyPress: function(cep, e, field, options) {
+                    // Use an optional digit (9) at the end to trigger the change
+                    var masks = ["00000-0009", "00009"],
+                        digits = cep.replace(/[^0-9]/g, "").length,
+                        // When you receive a value for the optional parameter, then you need to swap
+                        // to the new format
+                        mask = digits >= 5 ? masks[0] : masks[1];
+                    console.log('triggered')
+                    $("#zip").mask(mask, options);
+                }
+            };
+
+            $("#zip").mask("00009", maskOptions);
+        });
     </script>
 </body>
 
