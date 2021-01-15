@@ -263,9 +263,11 @@ to get the desired effect
                                                 '"))';
                                         } else {
                                             $sqlDate =
-                                                ' AND ((invoice_date >= "' .
+                                                ' AND ((invoice_date BETWEEN "' .
                                                 date('Y') .
-                                                '-01-01 00:00:00"))';
+                                                '-01-01 00:00:00" AND "' .
+                                                date('Y') .
+                                                '-12-31 00:00:00"))';
                                         }
                                         ?>
                                     </div>
@@ -273,6 +275,7 @@ to get the desired effect
                                 <table class="table">
                                     <thead class="thead-dark">
                                         <tr>
+                                            <th scope="col">Account</th>
                                             <th scope="col">Invoice #</th>
                                             <th scope="col">Invoice Date</th>
                                             <th scope="col">Invoice total</th>
@@ -292,9 +295,9 @@ to get the desired effect
                                     $prevName = '';
                                     // $sql1 = 'SELECT * FROM test JOIN accounts ON accounts.account_id = test.account_id JOIN employees ON employees.emp_id = test.emp_id JOIN testtype ON testtype.type_id = test.type_id JOIN invoice ON invoice.invoice_id = test.invoice_id WHERE test.invoice_id IS NOT NULL ORDER BY test.account_id LIMIT '.$offset.', '.$total_records_per_page.'';
                                     $sql1 =
-                                        'SELECT * FROM test JOIN accounts ON accounts.account_id = test.account_id JOIN employees ON employees.emp_id = test.emp_id JOIN testtype ON testtype.type_id = test.type_id JOIN invoice ON invoice.invoice_id = test.invoice_id WHERE test.invoice_id IS NOT NULL ' .
+                                        'SELECT * FROM invoice JOIN accounts ON accounts.account_id = invoice.account_id WHERE paid = "T" ' .
                                         $sqlDate .
-                                        ' ORDER BY collection_date, test.account_id';
+                                        ' ORDER BY account_nm, invoice_date';
                                     // $sql1 =
                                     //     'SELECT * FROM test JOIN accounts ON accounts.account_id = test.account_id JOIN employees ON employees.emp_id = test.emp_id JOIN testtype ON testtype.type_id = test.type_id JOIN invoice ON invoice.invoice_id = test.invoice_id WHERE test.invoice_id IS NOT NULL AND accounts.account_id = ' .
                                     //     $account_filter .
@@ -305,12 +308,14 @@ to get the desired effect
                                     while ($row1 = $result1->fetch_assoc()) {
                                         $name = $row1['account_nm'];
                                         if ($prevName != $name && $prevName != '') {
-                                            $prevName = $name;
-                                            echo '<tr><td style="display: none">' .
-                                                $name .
+                                            echo '<tr><td><span style="display: none">' .
+                                                $prevName .
+                                                '</span></td><td style="display: none">' .
+                                                $prevName .
                                                 '_totalamount</td><td></td><td><b>Total Amount</b></td><td></td><td>' .
                                                 $totalAmount .
                                                 '</td><td></td></tr>';
+                                            $prevName = $name;
                                             $totalAmount = 0;
                                         } elseif ($prevName == '') {
                                             $prevName = $name;
@@ -333,6 +338,10 @@ to get the desired effect
                                         $totalAmount += $amount;
                                         $paid = $row1['paid'];
                                         echo '
+                                          <td>';
+
+                                        echo $prevName;
+                                        echo '</td>
                                           <td>' .
                                             $invId .
                                             '</td>

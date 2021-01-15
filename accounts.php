@@ -23,6 +23,8 @@ include_once "conn.php";
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
+    <link rel="stylesheet" href="dist/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="dist/css/buttons.dataTables.min.css" />
     <style>
         label {
             /* Other styling... */
@@ -86,7 +88,27 @@ include_once "conn.php";
         }
 
         function addClicked() {
-            // document.getElementsByClassName('modal-title')[0].innerHTML = 'New User';
+            $('#table_accounts > tbody  > tr').each(function(index, tr) {
+                tr.style.background = 'rgba(0,0,0,.05)';
+            });
+
+            $('#account_id').val('');
+            $('#account_nm').val('');
+            $('#ar_funding_code').val('');
+            $('#account_code').val('');
+
+            $('#table_locations').html('');
+            $('#table_fees').html('');
+            $('#table_employees').html('');
+
+            locations = [];
+            selected_location = -1;
+
+            fees = [];
+            selected_fees = -1;
+
+            employees = [];
+            selected_employees = -1;
         }
 
         function addClicked_General() {
@@ -406,38 +428,42 @@ include_once "conn.php";
         }
 
 
-        function addEmployees() {
-            var temp = {};
-            temp['emp_id'] = $('#emp_id').val();
-            temp['first_nm'] = $('#first_nm').val();
-            temp['last_nm'] = $('#last_nm').val();
-            temp['division_id'] = $('#division_id').val();
-            temp['status'] = '';
-            if ($('#status_pre_employment').is(':checked'))
-                temp['status'] = 'P';
-            else if ($('#status_active').is(':checked'))
-                temp['status'] = 'A';
-            else if ($('#status_terminated').is(':checked'))
-                temp['status'] = 'T';
+        function addEmployees_Account() {
+            error_validateForm = validateEmployee();
+            if (!error_validateForm) {
+                var temp = {};
+                temp['specimen_id'] = $('#specimen_id').val();
+                temp['emp_id'] = $('#emp_id').val();
+                temp['first_nm'] = $('#first_nm').val();
+                temp['last_nm'] = $('#last_nm').val();
+                temp['division_id'] = $('#division_id').val();
+                temp['status'] = '';
+                if ($('#status_pre_employment').is(':checked'))
+                    temp['status'] = 'P';
+                else if ($('#status_active').is(':checked'))
+                    temp['status'] = 'A';
+                else if ($('#status_terminated').is(':checked'))
+                    temp['status'] = 'T';
 
-            if ($('#employeesindex').val() == '')
-                employees.push(temp);
-            else {
-                employees[selected_employees] = temp;
+                if ($('#employeesindex').val() == '')
+                    employees.push(temp);
+                else {
+                    employees[selected_employees] = temp;
+                }
+
+                $('#emp_id').val('');
+                $('#first_nm').val('');
+                $('#last_nm').val('');
+                $('#division_id').val('');
+                $('#status_pre_employment').prop('checked', false);
+                $('#status_active').prop('checked', false);
+                $('#status_terminated').prop('checked', false);
+                $('#employeesindex').val('');
+
+                refreshEmployeesTable();
+
+                selected_employees = -1;
             }
-
-            $('#emp_id').val('');
-            $('#first_nm').val('');
-            $('#last_nm').val('');
-            $('#division_id').val('');
-            $('#status_pre_employment').prop('checked', false);
-            $('#status_active').prop('checked', false);
-            $('#status_terminated').prop('checked', false);
-            $('#employeesindex').val('');
-
-            refreshEmployeesTable();
-
-            selected_employees = -1;
 
         }
 
@@ -789,7 +815,7 @@ to get the desired effect
                                     </div>
                                 </div>
                                 <br>
-                                <div class="row">
+                                <div class="row" style=" height: 200px; overflow: auto;">
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
@@ -820,7 +846,7 @@ to get the desired effect
 
                             <div id="Fees" class="tabcontent">
                                 <br>
-                                <div class="row">
+                                <div class="row" style=" height: 300px; overflow: auto;">
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
@@ -853,7 +879,7 @@ to get the desired effect
 
                             <div id="Employees" class="tabcontent">
                                 <br>
-                                <div class="row">
+                                <div class="row" style=" height: 300px; overflow: auto;">
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
@@ -1026,6 +1052,12 @@ to get the desired effect
                         </div>
                         <div class="modal-body" style="display: inline-block">
                             <div class="row">
+                                <div class="col-md-2" style="display: inline-block">Specimen ID: </div>
+                                <div class="col-md-7" style="display: inline-block">
+                                    <input class="form-control" id="specimen_id" name="specimen_id">
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-2" style="display: inline-block">Employee ID (SSN): </div>
                                 <div class="col-md-7" style="display: inline-block">
                                     <input type="hidden" id="employeesindex" name="employeesindex" value="">
@@ -1057,9 +1089,9 @@ to get the desired effect
                                 <div class="col-md-7" style="display: inline-block">
                                     <fieldset style="border: 1px solid lightgray; padding: 10px">
                                         <legend>Status</legend>
-                                        <label for="preEmployment"><input type="radio" id="status_pre_employment" name="status">&emsp;Pre-Employment</label><br>
-                                        <label for="active"><input type="radio" id="status_active" name="status">&emsp;Active</label><br>
-                                        <label for="terminated"><input type="radio" id="status_terminated" name="status">&emsp;Terminated</label><br>
+                                        <label for="status_pre_employment"><input type="radio" id="status_pre_employment" name="status">&emsp;Pre-Employment</label><br>
+                                        <label for="status_active"><input type="radio" id="status_active" name="status">&emsp;Active</label><br>
+                                        <label for="status_terminated"><input type="radio" id="status_terminated" name="status">&emsp;Terminated</label><br>
                                     </fieldset>
                                 </div>
                                 <!-- <div class="col-md-2" style="display: inline-block">Location: </div><div class="col-md-7" style="display: inline-block"><select class="form-control"><option value="">Select Location</option></select></div> -->
@@ -1067,7 +1099,7 @@ to get the desired effect
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="addEmployees();">OK</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="addEmployees_Account();">OK</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal" onclick="selected_fees = -1;">Close</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Help</button>
                         </div>
@@ -1110,6 +1142,11 @@ to get the desired effect
     <script src="plugins/chart.js/Chart.min.js"></script>
     <script src="dist/js/demo.js"></script>
     <script src="dist/js/pages/dashboard3.js"></script>
+    <script src="dist/js/jquery.dataTables.min.js"></script>
+    <script src="dist/js/dataTables.bootstrap4.min.js"></script>
+    <script src="dist/js/dataTables.buttons.min.js"></script>
+    <script src="dist/js/buttons.print.min.js"></script>
+
     <script>
         $(document).ready(function() {
             $('#table_accounts').DataTable();
