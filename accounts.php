@@ -109,6 +109,8 @@ include_once "conn.php";
 
             employees = [];
             selected_employees = -1;
+            $('#import_employee_btn').prop('hidden', true);
+
         }
 
         function addClicked_General() {
@@ -586,6 +588,8 @@ include_once "conn.php";
 
         function propertiesClicked() {
             document.getElementsByClassName('modal-title')[0].innerHTML = 'Edit Practitioner';
+            $('#import_employee_btn').prop('hidden', false);
+
             $.ajax({
                 type: "GET",
                 url: "getAllData.php?account_id=" + selected_accounts,
@@ -608,7 +612,7 @@ include_once "conn.php";
                     selected_location = -1;
                     selected_fees = -1;
                     selected_employees = -1;
-                    selected_accounts = -1;
+                    // selected_accounts = -1;
 
                     for (i = 0; i < data.accounts_divisions.length; i++) {
                         var temp = {};
@@ -637,6 +641,8 @@ include_once "conn.php";
                         console.log(fees);
                     }
                     refreshFeesTable();
+                    if (data.accounts_employees.length > 0)
+                        $('#export_employee_btn').prop('hidden', false);
 
                     for (i = 0; i < data.accounts_employees.length; i++) {
                         var temp = {};
@@ -911,11 +917,18 @@ to get the desired effect
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal_Employee_Import">Import</button>
-                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal_Employee1" onclick="addClicked_Employees();" id="btn_add_employees">Add</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_delete_employees" onclick="removeClicked_Employees();" disabled>Remove</button>
-                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal_Employee1" id="btn_properties_employees" onclick="propertiesClicked_Employees();" disabled>Properties</button>
+                                <div class="modal-footer" style="justify-content: flex-start;">
+                                    <div class="row" style="width: 100%">
+                                        <div class="col-md-6">
+                                            <button type="button" class="btn btn-default" id="import_employee_btn" data-toggle="modal" data-target="#myModal_Employee_Import" hidden>Import</button>
+                                            <button type="button" class="btn btn-default" id="export_employee_btn" onclick="exportEmployees();" hidden>Export</button>
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal_Employee1" onclick="addClicked_Employees();" id="btn_add_employees">Add</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_delete_employees" onclick="removeClicked_Employees();" disabled>Remove</button>
+                                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal_Employee1" id="btn_properties_employees" onclick="propertiesClicked_Employees();" disabled>Properties</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 

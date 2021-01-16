@@ -443,7 +443,7 @@ if (!isset($_SESSION['userid'])) {
                         </a>
                     </li>
                     <li class="nav-item has-treeview">
-                        <a onclick="openURL('viewInvoice.php');" href="javascript:void();" class="nav-link">
+                        <a onclick="openURL('invoice.php');" href="javascript:void();" class="nav-link">
                             <!-- <a href="" class="nav-link"> -->
                             <i class="nav-icon fas fa-copy "></i>
                             <p>
@@ -1226,7 +1226,7 @@ if (!isset($_SESSION['userid'])) {
     </div>
 </div>
 
-<div id="myModal_Employee_Import" class="modal fade" role="dialog">
+<div id="myModal_Employee_Import" class="modal fade" role="dialog" style="z-index: 99999999;">
     <div class="modal-dialog modal-lg">
 
         <!-- Modal content-->
@@ -2262,7 +2262,7 @@ if (!isset($_SESSION['userid'])) {
                     body_content += tabs[tab];
 
                     console.log(tabs[tab]);
-                    employee_row.push(tabs[tab]);
+                    employee_row.push(tabs[tab].replace('\r', ''));
                     body_content += '</td>';
 
                 }
@@ -2303,7 +2303,7 @@ if (!isset($_SESSION['userid'])) {
 <script>
     function exportEmployees() {
         var content = '';
-        $('#import_employee_body').find('tr').each(function() {
+        $('#table_employees').find('tr').each(function() {
             // console.log($(this)[0].childElementCount)
             var maxRowChild = $(this)[0].childElementCount;
             console.log("$(this)[0].childElementCount: " + $(this)[0].childElementCount)
@@ -2316,10 +2316,11 @@ if (!isset($_SESSION['userid'])) {
                     if (maxRowChild - 1 != $(this)[0].cellIndex)
                         content += '\t';
                 });
+                content += '\n';
             }
         });
 
-        let filename = "readme.txt";
+        let filename = "employee_export.txt";
         let text = content;
         let blob = new Blob([text], {
             type: 'text/plain'
@@ -2342,6 +2343,7 @@ if (!isset($_SESSION['userid'])) {
             'employee_id': $('#field_map_employee_id').val(),
             'employee_first_nm': $('#field_map_employee_first_name').val(),
             'employee_last_nm': $('#field_map_employee_last_name').val(),
+            'account': $('#account_id').val(),
             'location': $('#division_id_import').val(),
             'start_at_row': $('#start_import_at_row').val(),
             'employees_data': import_employees_data
@@ -2354,6 +2356,7 @@ if (!isset($_SESSION['userid'])) {
             data: 'importData=' + JSON.stringify(importData),
             success: function(resultData) {
                 console.log(resultData);
+                propertiesClicked();
                 // alert(resultData);
                 // // windo
                 // window.open("accounts.php", "_self");
