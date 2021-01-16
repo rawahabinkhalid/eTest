@@ -229,6 +229,7 @@ if (!isset($_SESSION['userid'])) {
 
         <li class="nav-item">
             <a href="" class="nav-link nav-link-disabler" data-toggle="modal" data-target="#myModal_Employee" id="btn_add_employees">
+                <!-- <a href="" class="nav-link nav-link-disabler" data-toggle="modal" data-target="#myModal_Employee_Import" id="btn_add_employees"> -->
                 <p id="desktop_emp">Employee</p>
                 <p id="mobile_emp">Emp</p>
             </a>
@@ -1225,6 +1226,124 @@ if (!isset($_SESSION['userid'])) {
     </div>
 </div>
 
+<div id="myModal_Employee_Import" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Import Employees</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" style="display: inline-block">
+                <div class="row">
+                    <div class="col-md-8">
+                        <fieldset style="border: 1px solid silver; padding: 10px;">
+                            <legend style="padding-left: 10px; padding-right: 10px; width: auto; font-size: 12px; margin-bottom: 0rem;">Source File</legend>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <input type="file" accept=".txt" id="input_file_to_import_employees" class="form-control">
+                                </div>
+                                <div class="col-md-3">
+
+                                    <button class="btn btn-info" id="preview_now" disabled>Preview now</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset style="border: 1px solid silver; padding: 10px;">
+                            <legend style="padding-left: 10px; padding-right: 10px; width: auto; font-size: 12px; margin-bottom: 0rem;">Field Delimiter</legend>
+                            <div class="form-group mb-0">
+                                <div class="row">
+                                    <div class="col-md-6 pr-0"><label class="mb-0" for="field_delimiter_tab"><input type="radio" checked name="field_delimiter" id="field_delimiter_tab">&emsp;TAB</label></div>
+                                    <div class="col-md-6 pr-0"><input style="height: calc(2.00rem + 0px); width:100px; visibility: hidden" class="form-control"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 pr-0"><label for="field_delimiter_comma"><input type="radio" name="field_delimiter" id="field_delimiter_comma">&emsp;Comma</label>
+                                    </div>
+                                    <div class="col-md-6 pr-0"><input style="height: calc(2.00rem + 0px); width: 100px; visibility: hidden" class="form-control"></div>
+                                </div>
+                                <!-- <div class="row">
+                                    <div class="col-md-6 pr-0"><label for="field_delimiter_f_width"><input type="radio" name="field_delimiter" id="field_delimiter_f_width">&emsp;Fixed Width :</label>
+                                    </div>
+                                    <div class="col-md-6 pr-0"><input style="height: calc(2.00rem + 0px)" class="form-control" id="field_delimiter_f_width_text" disabled type="number"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 pr-0"><label for="field_delimiter_other"><input type="radio" name="field_delimiter" id="field_delimiter_other">&emsp;Other:</label>
+                                    </div>
+                                    <div class="col-md-6 pr-0"><input style="height: calc(2.00rem + 0px)" class="form-control" id="field_delimiter_other_text" disabled type="text"></div>
+                                </div> -->
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <fieldset style="border: 1px solid silver; padding: 10px;">
+                            <legend style="padding-left: 10px; padding-right: 10px; width: auto; font-size: 12px; margin-bottom: 0rem;">Data Mapping</legend>
+                            <div class="row">
+                                <div class="col-md-6"><label for="field_delimiter_tab">Field to be used for Employee ID / SSN</label></div>
+                                <div class="col-md-6"><select class="form-control" id="field_map_employee_id" style="height: calc(2.00rem + 0px)">
+                                        <option value=""></option>
+                                    </select></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6"><label for="field_delimiter_tab">Field to be used for Employee First Name</label></div>
+                                <div class="col-md-6"><select class="form-control" id="field_map_employee_first_name" style="height: calc(2.00rem + 0px)">
+                                        <option value=""></option>
+                                    </select></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6"><label for="field_delimiter_tab">Field to be used for Employee Last Name</label></div>
+                                <div class="col-md-6"><select class="form-control" id="field_map_employee_last_name" style="height: calc(2.00rem + 0px)">
+                                        <option value=""></option>
+                                    </select></div>
+                            </div>
+
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <fieldset style="border: 1px solid silver; padding: 10px;">
+                            <legend style="padding-left: 10px; padding-right: 10px; width: auto; font-size: 12px; margin-bottom: 0rem;">Options</legend>
+                            <div class="row">
+                                <div class="col-md-6"><label for="field_delimiter_tab">Import to location</label></div>
+                                <div class="col-md-6"><select class="form-control" style="height: calc(2.00rem + 0px)" id="division_id_import"></select></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6"><label for="field_delimiter_tab">Start import at row</label></div>
+                                <div class="col-md-6"><input class="form-control" id="start_import_at_row" style="height: calc(2.00rem + 0px)" type="number" value="1" min="1" max="1"></div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-12">
+                        <fieldset style="border: 1px solid silver; padding: 10px;">
+                            <div class="row">
+                                <div class="col-md-12 table-responsive" style="height: 150px; overflow: auto;">
+                                    <table class="table table-striped" id="employee_imported_table">
+                                        <thead id="import_employee_header"></thead>
+                                        <tbody id="import_employee_body"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="importEmployee" onclick="importEmployees();" disabled>Import</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="closeButton">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Help</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 
 <div id="myModal_Send" class="modal fade" role="dialog">
     <div class="modal-dialog modal-xl">
@@ -1712,6 +1831,7 @@ if (!isset($_SESSION['userid'])) {
             success: function(resultData) {
                 $('#division_id').html(resultData);
                 $('#division_id_bill').html(resultData);
+                $('#division_id_import').html(resultData);
                 // window.open("accounts.php", "_self");
             }
         });
@@ -2042,4 +2162,202 @@ if (!isset($_SESSION['userid'])) {
             $("body").addClass('sidebar-collapse');
         }
     });
+
+    $('#field_delimiter_tab').on('click', function() {
+        $('#field_delimiter_other_text').val();
+        $('#field_delimiter_other_text').prop('disabled', true);
+        $('#field_delimiter_f_width_text').val();
+        $('#field_delimiter_f_width_text').prop('disabled', true);
+        validateImportEmployee();
+    })
+
+    $('#field_delimiter_comma').on('click', function() {
+        $('#field_delimiter_other_text').val();
+        $('#field_delimiter_other_text').prop('disabled', true);
+        $('#field_delimiter_f_width_text').val();
+        $('#field_delimiter_f_width_text').prop('disabled', true);
+        validateImportEmployee();
+    })
+
+    $('#field_delimiter_f_width').on('click', function() {
+        $('#field_delimiter_other_text').val();
+        $('#field_delimiter_other_text').prop('disabled', true);
+        $('#field_delimiter_f_width_text').val();
+        $('#field_delimiter_f_width_text').prop('disabled', false);
+        validateImportEmployee();
+    })
+
+    $('#field_delimiter_other').on('click', function() {
+        $('#field_delimiter_other_text').val();
+        $('#field_delimiter_other_text').prop('disabled', false);
+        $('#field_delimiter_f_width_text').val();
+        $('#field_delimiter_f_width_text').prop('disabled', true);
+        validateImportEmployee();
+    })
+
+    var text;
+    $('#input_file_to_import_employees').on('change', function(event) {
+        console.log($('#preview_now').prop('disabled'))
+        var input = event.target;
+        if ($(this).prop('files')[0].type == 'text/plain')
+            $('#preview_now').prop('disabled', false);
+        else
+            $('#preview_now').prop('disabled', true);
+        console.log($(this).prop('files')[0]);
+        var reader = new FileReader();
+        reader.onload = function() {
+            text = reader.result;
+        };
+        reader.readAsText(input.files[0]);
+        validateImportEmployee();
+    })
+
+    $('#field_map_employee_id').on('change', function() {
+        validateImportEmployee();
+    });
+    $('#field_map_employee_first_name').on('change', function() {
+        validateImportEmployee();
+    });
+    $('#field_map_employee_last_name').on('change', function() {
+        validateImportEmployee();
+    });
+
+    var import_employees_data = [];
+
+    $('#preview_now').on('click', function() {
+        var max_columns = 0;
+        var delimiter = ($('#field_delimiter_tab').is(':checked')) ? '\t' : ',';
+        var lines = text.split('\n');
+        for (var line = 0; line < lines.length; line++) {
+            var tabs = lines[line].split(delimiter);
+            if (tabs.length > max_columns)
+                max_columns = tabs.length;
+        }
+
+        var header_content = '';
+        var body_content = '';
+        var data_mapping_content = '<option value=""></option>';
+        for (i = 1; i <= max_columns; i++) {
+            header_content += '<th>Field ' + i + '</th>';
+            data_mapping_content += '<option value="Field ' + i + '">Field ' + i + '</option>';
+        }
+
+        $('#import_employee_header').html(header_content)
+        $('#field_map_employee_id').html(data_mapping_content)
+        $('#field_map_employee_first_name').html(data_mapping_content)
+        $('#field_map_employee_last_name').html(data_mapping_content)
+
+        console.log("length: " + max_columns)
+
+        var lines = text.split('\n');
+        for (var line = 0; line < lines.length; line++) {
+            var tabs = lines[line].split(delimiter);
+            if (tabs.length > 0) {
+                $('#start_import_at_row').prop('max', line);
+
+                body_content += '<tr>';
+                var employee_row = [];
+                for (var tab = 0; tab < tabs.length; tab++) {
+                    body_content += '<td>';
+                    body_content += tabs[tab];
+
+                    console.log(tabs[tab]);
+                    employee_row.push(tabs[tab]);
+                    body_content += '</td>';
+
+                }
+                import_employees_data[line] = employee_row;
+            }
+            body_content += '</tr>';
+        }
+        $('#import_employee_body').html(body_content)
+        console.log(import_employees_data);
+        validateImportEmployee();
+    })
+
+    $('#start_import_at_row').on('change', function() {
+        if (parseInt($(this).val()) < parseInt($(this).prop('min')))
+            $(this).val($(this).prop('min'))
+        if (parseInt($(this).val()) > parseInt($(this).prop('max')))
+            $(this).val($(this).prop('max'))
+        validateImportEmployee();
+    })
+
+    function validateImportEmployee() {
+        $('#importEmployee').prop('disabled', true);
+        if ($('#preview_now').prop('disabled') == true)
+            return false;
+        if ($('#field_map_employee_id').val() == '')
+            return false;
+        if ($('#field_map_employee_first_name').val() == '')
+            return false;
+        if ($('#field_map_employee_last_name').val() == '')
+            return false;
+        if ($('#start_import_at_row').val() == '')
+            return false;
+
+        $('#importEmployee').prop('disabled', false);
+    }
+</script>
+
+<script>
+    function exportEmployees() {
+        var content = '';
+        $('#import_employee_body').find('tr').each(function() {
+            // console.log($(this)[0].childElementCount)
+            var maxRowChild = $(this)[0].childElementCount;
+            console.log("$(this)[0].childElementCount: " + $(this)[0].childElementCount)
+            if ($(this)[0].childElementCount > 1) {
+                $(this).find('td').each(function() {
+                    console.log("$(this)[0].cellIndex: " + $(this)[0].cellIndex)
+                    var textval = $(this).text(); // this will be the text of each <td>
+                    // console.log("textval: " + textval);
+                    content += textval;
+                    if (maxRowChild - 1 != $(this)[0].cellIndex)
+                        content += '\t';
+                });
+            }
+        });
+
+        let filename = "readme.txt";
+        let text = content;
+        let blob = new Blob([text], {
+            type: 'text/plain'
+        });
+        let link = document.createElement("a");
+        link.download = filename;
+        //link.innerHTML = "Download File";
+        link.href = window.URL.createObjectURL(blob);
+        document.body.appendChild(link);
+        link.click();
+        setTimeout(() => {
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(link.href);
+        }, 100);
+    }
+</script>
+<script>
+    function importEmployees() {
+        importData = {
+            'employee_id': $('#field_map_employee_id').val(),
+            'employee_first_nm': $('#field_map_employee_first_name').val(),
+            'employee_last_nm': $('#field_map_employee_last_name').val(),
+            'location': $('#division_id_import').val(),
+            'start_at_row': $('#start_import_at_row').val(),
+            'employees_data': import_employees_data
+        };
+        console.log('importData', importData);
+        console.log('importData=' + JSON.stringify(importData))
+        $.ajax({
+            type: "POST",
+            url: "import_employees.php",
+            data: 'importData=' + JSON.stringify(importData),
+            success: function(resultData) {
+                console.log(resultData);
+                // alert(resultData);
+                // // windo
+                // window.open("accounts.php", "_self");
+            }
+        });
+    }
 </script>

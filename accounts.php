@@ -912,6 +912,7 @@ to get the desired effect
                                     </table>
                                 </div>
                                 <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal_Employee_Import">Import</button>
                                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal_Employee1" onclick="addClicked_Employees();" id="btn_add_employees">Add</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_delete_employees" onclick="removeClicked_Employees();" disabled>Remove</button>
                                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal_Employee1" id="btn_properties_employees" onclick="propertiesClicked_Employees();" disabled>Properties</button>
