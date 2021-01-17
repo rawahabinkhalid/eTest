@@ -1464,7 +1464,7 @@ if (!isset($_SESSION['userid'])) {
             <form id="form_send_billing">
                 <div class="modal-body" style="display: inline-block; width: 100%">
                     <div id="main_div">
-                        <div class="row">
+                        <div class="row" id="billing_info_background">
                             <div class="col-md-6">
                                 <fieldset style="border: 1px solid silver;padding: 0px 15px;">
                                     <legend style="font-size: 1rem;width:auto;padding:0px 10px;">Options</legend>
@@ -2363,4 +2363,9 @@ if (!isset($_SESSION['userid'])) {
             }
         });
     }
+</script>
+<script>
+    $('#form_send_billing').on('submit', function() {
+
+    })
 </script>
