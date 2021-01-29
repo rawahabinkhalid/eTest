@@ -641,8 +641,10 @@ include_once "conn.php";
                         console.log(fees);
                     }
                     refreshFeesTable();
-                    if (data.accounts_employees.length > 0)
+                    if (data.accounts_employees.length > 0) {
                         $('#export_employee_btn').prop('hidden', false);
+                        $('#clear_employee_btn').prop('hidden', false);
+                    }
 
                     for (i = 0; i < data.accounts_employees.length; i++) {
                         var temp = {};
@@ -785,7 +787,7 @@ to get the desired effect
             </div>
             <!-- /.content-wrapper -->
             <!-- Modal -->
-            <div id="myModal" class="modal fade" role="dialog" style="z-index:1400;">
+            <div id="myModal" class="modal fade" data-backdrop="static" role="dialog" style="z-index:1400;">
                 <div class="modal-dialog modal-lg">
 
                     <!-- Modal content-->
@@ -920,6 +922,7 @@ to get the desired effect
                                 <div class="modal-footer" style="justify-content: flex-start;">
                                     <div class="row" style="width: 100%">
                                         <div class="col-md-6">
+                                            <button type="button" class="btn btn-default" id="clear_employee_btn" data-toggle="modal" data-target="#myModal_Employee_Clear" hidden>Clear All</button>
                                             <button type="button" class="btn btn-default" id="import_employee_btn" data-toggle="modal" data-target="#myModal_Employee_Import" hidden>Import</button>
                                             <button type="button" class="btn btn-default" id="export_employee_btn" onclick="exportEmployees();" hidden>Export</button>
                                         </div>
@@ -1129,7 +1132,7 @@ to get the desired effect
 
             <!-- Main Footer -->
             <!-- <footer class="main-footer">
-                <strong>Copyright &copy; 2020 <a href="https://matz.group/">MATZ Solutions Pvt Ltd</a>.</strong>
+                <strong>Copyright &copy; 2020-21 <a href="https://matz.group/">MATZ Solutions Pvt Ltd</a>.</strong>
                 All rights reserved.
                 <div class="float-right d-none d-sm-inline-block">
                     <b>Version</b> 3.0.0-rc.1

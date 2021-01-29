@@ -14,9 +14,10 @@ if ($resultInvoice->num_rows > 0) {
             }
         }
         $rowInvoice['test'] = $dataTest;
-        // $rowInvoice['sql'] = $sqlTest;
+        $rowInvoice['sql'] = $sqlInvoice;
         $data[] = $rowInvoice;
         // echo '<option value="'.$rowInvoice['invoice_id'].'">'.$rowInvoice['invoice_id'].'</option>';
     }
 }
+// $data->sql = $sqlInvoice;
 echo json_encode($data);

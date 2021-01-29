@@ -26,11 +26,19 @@ if (!isset($_SESSION['userid'])) {
             display: block;
         }
 
+        #desktop_random {
+            display: block;
+        }
+
         #desktop_pref {
             display: block;
         }
 
         #mobile_emp {
+            display: none;
+        }
+
+        #mobile_random {
             display: none;
         }
 
@@ -45,12 +53,20 @@ if (!isset($_SESSION['userid'])) {
 
         }
 
+        #desktop_random {
+            display: none;
+        }
+
         #desktop_emp {
             display: none;
         }
 
         #desktop_pref {
             display: none;
+        }
+
+        #mobile_random {
+            display: block;
         }
 
         #mobile_emp {
@@ -226,7 +242,13 @@ if (!isset($_SESSION['userid'])) {
 <!-- Right navbar links -->
 <ul class="navbar-nav ml-auto">
     <?php if ($_SESSION['usertype'] == 'admin') { ?>
-
+        <li class="nav-item">
+            <a href="randomemployees.php" class="nav-link nav-link-disabler">
+                <!-- <a href="" class="nav-link nav-link-disabler" data-toggle="modal" data-target="#myModal_Employee_Import" id="btn_add_employees"> -->
+                <p id="desktop_random">Random</p>
+                <p id="mobile_random">Rand</p>
+            </a>
+        </li>
         <li class="nav-item">
             <a href="" class="nav-link nav-link-disabler" data-toggle="modal" data-target="#myModal_Employee" id="btn_add_employees">
                 <!-- <a href="" class="nav-link nav-link-disabler" data-toggle="modal" data-target="#myModal_Employee_Import" id="btn_add_employees"> -->
@@ -451,7 +473,15 @@ if (!isset($_SESSION['userid'])) {
                             </p>
                         </a>
                     </li>
-
+                    <li class="nav-item has-treeview">
+                        <a onclick="openURL('randomemployees.php');" href="javascript:void();" class="nav-link">
+                            <!-- <a href="" class="nav-link"> -->
+                            <i class="nav-icon fas fa-copy "></i>
+                            <p>
+                                Random
+                            </p>
+                        </a>
+                    </li>
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-copy"></i>
@@ -777,14 +807,14 @@ if (!isset($_SESSION['userid'])) {
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
-                        <ul class="nav nav-treeview">
+                        <!-- <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a onclick="openURL('accounts_fees.php');" href="javascript:void();" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Accounts Fees Report</p>
                                 </a>
                             </li>
-                        </ul>
+                        </ul> -->
                         <!-- <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a onclick="openURL('bedsReport.php');" href="javascript:void();" class="nav-link">
@@ -793,70 +823,75 @@ if (!isset($_SESSION['userid'])) {
                                 </a>
                             </li>
                         </ul> -->
-                        <ul class="nav nav-treeview">
+                        <!-- <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a onclick="openURL('notBilledReport.php');" href="javascript:void();" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Items Not Billed</p>
                                 </a>
                             </li>
-                        </ul>
-                        <ul class="nav nav-treeview">
+                        </ul> -->
+                        <!-- <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a onclick="openURL('weeklyReport.php');" href="javascript:void();" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Weekly Funding Test</p>
                                 </a>
                             </li>
-                        </ul>
-                        <ul class="nav nav-treeview">
+                        </ul> -->
+                        <!-- <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a onclick="openURL('billingReport.php');" href="javascript:void();" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Billing Report</p>
                                 </a>
                             </li>
-                        </ul>
-                        <ul class="nav nav-treeview">
+                        </ul> -->
+                        <!-- <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a onclick="openURL('labelsBillingReport.php');" href="javascript:void();" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Labels For Billing Report</p>
                                 </a>
                             </li>
-                        </ul>
-                        <ul class="nav nav-treeview">
+                        </ul> -->
+                        <!-- <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a onclick="openURL('postBilledReport.php');" href="javascript:void();" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Post Billed Report</p>
                                 </a>
                             </li>
-                        </ul>
-                        <ul class="nav nav-treeview">
+                        </ul> -->
+
+                        <!-- <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a onclick="openURL('frandReport.php');" href="javascript:void();" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Frandomdotemplqry</p>
+                                    <i class="far fa-circle nav-icon" style="margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);"></i>
+                                    <p style="margin-left: 35px;">Active Employees for a<br>Random Account</p>
                                 </a>
                             </li>
-                        </ul>
-                        <ul class="nav nav-treeview">
+                        </ul>                         -->
+                        <!-- <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a onclick="openURL('unpaidInvoiceReport.php');" href="javascript:void();" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Unpaid Invoice Report</p>
                                 </a>
                             </li>
-                        </ul>
-                        <ul class="nav nav-treeview">
+                        </ul> -->
+                        <!-- <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a onclick="openURL('misReport.php');" href="javascript:void();" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>MIS Report</p>
                                 </a>
                             </li>
-                        </ul>
+                        </ul> -->
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a onclick="openURL('revenueReport.php');" href="javascript:void();" class="nav-link">
@@ -890,8 +925,138 @@ if (!isset($_SESSION['userid'])) {
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-copy"></i>
+                            <p>
+                                Account Reports
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('frandReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon" style="margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);"></i>
+                                    <p style="margin-left: 35px;">Active Employees for a<br>Random Account</p>
+                                </a>
+                            </li>
+                        </ul>                        
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('accounts_fees.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Fees Report</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-copy"></i>
+                            <p>
+                                Billing Reports
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('weeklyReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>AR Funding Report</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('billingReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Billing Report</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('notBilledReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Items Not Billed</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('labelsBillingReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Labels For Billing Report</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-copy"></i>
+                            <p>
+                                Company Reports
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('annualSalesReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Annual Sales Report</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('misReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>MIS Report</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-copy" style="margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);"></i>
+                            <p style="margin-left: 35px">
+                                Past Due Invoice<br>Reports
+                                <i class="fas fa-angle-left right" style="margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    right: 15px;"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('postBilledReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Post Billed Report</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('unpaidInvoiceReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Unpaid Invoice Report</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-copy"></i>
@@ -1344,6 +1509,33 @@ if (!isset($_SESSION['userid'])) {
     </div>
 </div>
 
+<div id="myModal_Employee_Clear" class="modal fade" role="dialog" style="z-index: 99999999;">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Clear All Employees</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" style="display: inline-block">
+                <div class="row">
+                    <div class="col-md-12">
+                        WARNING!!! Deleting employees will also delete all TESTS and INVOICE line items and everything else associated with the employees.
+                        ARE YOU ABSOLUTELY SURE YOU WANT TO DELETE THE EMPLOYEES??
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="clearEmployees" onclick="clearEmployees();">Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="closeButtonClearEmployee">No</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Help</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 
 <div id="myModal_Send" class="modal fade" role="dialog">
     <div class="modal-dialog modal-xl">
@@ -1470,9 +1662,9 @@ if (!isset($_SESSION['userid'])) {
                                     <legend style="font-size: 1rem;width:auto;padding:0px 10px;">Options</legend>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <label for="doNotBill"><input type="radio" checked id="doNotBill" name="billedType">&emsp;Do not bill selected tests</label>
-                                            <label for="billNewInvoice"><input type="radio" id="billNewInvoice" name="billedType">&emsp;Bill on a new invoice</label>
-                                            <label for="billExistingInvoice"><input type="radio" id="billExistingInvoice" name="billedType">&emsp;Bill on an existing invoice</label>
+                                            <label for="doNotBill"><input type="radio" checked id="doNotBill" name="billedType" value="do_not_bill">&emsp;Do not bill selected tests</label>
+                                            <label for="billNewInvoice"><input type="radio" id="billNewInvoice" name="billedType" value="new_invoice">&emsp;Bill on a new invoice</label>
+                                            <label for="billExistingInvoice"><input type="radio" id="billExistingInvoice" name="billedType" value="existing_invoice">&emsp;Bill on an existing invoice</label>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -1483,7 +1675,7 @@ if (!isset($_SESSION['userid'])) {
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
                                             <label for="invoiceNoBill">Invoice No:</label>
-                                            <select class="form-control" id="invoiceNoBilled" disabled>
+                                            <select class="form-control" id="invoiceNoBilled" name="invoiceNoBilled" disabled>
                                                 <option selected disabled value="">Please select Invoice No</option>
                                             </select>
                                         </div>
@@ -1513,7 +1705,7 @@ if (!isset($_SESSION['userid'])) {
                                                                 <label>Invoice No: </label>
                                                             </div>
                                                             <div class="col-md-8 my-row-8-input">
-                                                                <input class="form-control" id="invoiceNoBill" value="New Invoice" readonly>
+                                                                <input class="form-control" id="invoiceNoBill" name="invoiceNoBill" value="New Invoice" readonly>
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -1521,9 +1713,9 @@ if (!isset($_SESSION['userid'])) {
                                                                 <label>Invoice Date: </label>
                                                             </div>
                                                             <div class="col-md-8 my-row-8-input">
-                                                                <input type="date" id="invoiceDateBill" class="form-control" value="<?php echo date(
-                                                                                                                                        'Y-m-d'
-                                                                                                                                    ); ?>">
+                                                                <input type="date" id="invoiceDateBill" name="invoiceDateBill" class="form-control" value="<?php echo date(
+                                                                                                                                                                'Y-m-d'
+                                                                                                                                                            ); ?>">
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -1541,7 +1733,7 @@ if (!isset($_SESSION['userid'])) {
                                                                 <label>Reference: </label>
                                                             </div>
                                                             <div class="col-md-8 my-row-8-input">
-                                                                <input id="invoiceReferenceBill" class="form-control">
+                                                                <input id="invoiceReferenceBill" name="invoiceReferenceBill" class="form-control">
                                                             </div>
                                                         </div>
                                                     </fieldset>
@@ -1556,7 +1748,7 @@ if (!isset($_SESSION['userid'])) {
                                                                 <label>Terms: </label>
                                                             </div>
                                                             <div class="col-md-8 my-row-8-input">
-                                                                <select id="invoiceTermsBill" class="form-control">
+                                                                <select id="invoiceTermsBill" name="invoiceTermsBill" class="form-control">
                                                                     <option selected disabled value="">Please select Terms</option>
                                                                     <option value="30">30 Days</option>
                                                                     <option value="60">60 Days</option>
@@ -1569,15 +1761,15 @@ if (!isset($_SESSION['userid'])) {
                                                                 <label>Due Date: </label>
                                                             </div>
                                                             <div class="col-md-8 my-row-8-input">
-                                                                <input id="invoiceDueDateBill" type="date" class="form-control">
+                                                                <input id="invoiceDueDateBill" name="invoiceDueDateBill" type="date" class="form-control">
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-4 my-row-4-label">
-                                                                <label for="sentBill"><input type="checkbox" id="sentBill">&emsp;Sent</label>
+                                                                <label for="sentBill"><input type="checkbox" id="sentBill" name="sentBill" value="T">&emsp;Sent</label>
                                                             </div>
                                                             <div class="col-md-8 my-row-8-input">
-                                                                <input type="date" class="form-control" id="sentBillDate" readonly>
+                                                                <input type="date" class="form-control" id="sentBillDate" name="sentBillDate" readonly>
                                                             </div>
                                                         </div>
                                                     </fieldset>
@@ -1594,7 +1786,7 @@ if (!isset($_SESSION['userid'])) {
                                                                 <label>Amount Due: </label>
                                                             </div>
                                                             <div class="col-md-7 my-row-7-input">
-                                                                <input type="number" id="invoiceAmountDueBill" class="form-control" readonly>
+                                                                <input type="number" id="invoiceAmountDueBill" name="invoiceAmountDueBill" class="form-control" readonly>
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -1602,7 +1794,7 @@ if (!isset($_SESSION['userid'])) {
                                                                 <label>Amount Paid: </label>
                                                             </div>
                                                             <div class="col-md-7 my-row-7-input">
-                                                                <input type="number" id="invoiceAmountPaidBill" class="form-control" value="0.00">
+                                                                <input type="number" id="invoiceAmountPaidBill" name="invoiceAmountPaidBill" class="form-control" value="0.00">
                                                             </div>
                                                         </div>
                                                         <br><br>
@@ -1611,7 +1803,7 @@ if (!isset($_SESSION['userid'])) {
                                                                 <label>Check No: </label>
                                                             </div>
                                                             <div class="col-md-7 my-row-7-input">
-                                                                <input type="number" id="invoiceCheckNoBill" class="form-control">
+                                                                <input type="number" id="invoiceCheckNoBill" name="invoiceCheckNoBill" class="form-control">
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -1619,7 +1811,7 @@ if (!isset($_SESSION['userid'])) {
                                                                 <label>Check Date: </label>
                                                             </div>
                                                             <div class="col-md-7 my-row-7-input">
-                                                                <input type="date" id="invoiceCheckDateBill" class="form-control">
+                                                                <input type="date" id="invoiceCheckDateBill" name="invoiceCheckDateBill" class="form-control">
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -1627,14 +1819,15 @@ if (!isset($_SESSION['userid'])) {
                                                                 <label>Pay Date: </label>
                                                             </div>
                                                             <div class="col-md-7 my-row-7-input">
-                                                                <input type="date" id="invoicePayDateBill" class="form-control" value="<?php echo date('Y-m-d'); ?>">
+                                                                <input type="date" id="invoicePayDateBill" name="invoicePayDateBill" class="form-control" value="<?php echo date('Y-m-d'); ?>">
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-5 my-row-5-label">
                                                             </div>
                                                             <div class="col-md-7 my-row-7-input">
-                                                                <label for="paidInFull"><input type="checkbox" id="paidInFull">&emsp;Paid in Full</label>
+                                                                <label for="paidInFull"><input type="checkbox" id="paidInFull" name="paidInFull" value="T">&emsp;Paid in Full</label>
+                                                                <input type="hidden" id="test_id_added" name="test_id_added" value="">
                                                             </div>
                                                         </div>
                                                     </fieldset>
@@ -1695,6 +1888,8 @@ if (!isset($_SESSION['userid'])) {
 
 <script>
     $('#btn_add_billing').click(function() {
+        $('#test_id_added').val(new URL(location.href).searchParams.get("id"))
+
         $('#tbody_table_bill').html('');
         let id = new URL(location.href).searchParams.get("id");
         $.ajax({
@@ -1747,19 +1942,24 @@ if (!isset($_SESSION['userid'])) {
         $('#invoiceNoBilled').val('');
         $('#invoiceNoBilled').html('<option selected="" disabled="" value="">Please select Invoice No</option>');
         $('#invoiceNoBilled').trigger('change');
+
+        let id = new URL(location.href).searchParams.get("id");
+        console.log("id")
+        console.log(id)
+        $('#test_id_added').val(new URL(location.href).searchParams.get("id"))
     });
 </script>
 <script>
     $('#billNewInvoice').click(function() {
         $('#invoiceNoBill').val("");
         $('#invoiceDateBill').val("");
-        $('#division_id_bill').val("");
+        // $('#division_id_bill').val("");
         $('#invoiceReferenceBill').val("");
         $('#invoiceTermsBill').val("");
         $('#invoiceDueDateBill').val("");
         $('#sentBillDate').val("");
         $('#sentBill').attr("checked", false);
-        $('#invoiceAmountDueBill').val("");
+        $('#invoiceAmountDueBill').val($('#getFeeAmount').val());
         $('#invoiceAmountPaidBill').val("0.00");
         $('#invoiceCheckNoBill').val("");
         $('#invoiceCheckDateBill').val("");
@@ -1778,6 +1978,10 @@ if (!isset($_SESSION['userid'])) {
         $('#invoiceNoBilled').attr('disabled', 'disabled');
         $('#invoiceNoBilled').html('<option selected="" disabled="" value="">Please select Invoice No</option>');
         $('#invoiceNoBilled').trigger('change');
+        let id = new URL(location.href).searchParams.get("id");
+        console.log("id")
+        console.log(id)
+        $('#test_id_added').val(new URL(location.href).searchParams.get("id"))
     });
 </script>
 <script>
@@ -1791,6 +1995,10 @@ if (!isset($_SESSION['userid'])) {
         $('#Paris').css('display', 'none');
         $('#button_general').addClass('active');
         $('#button_tests_billed').removeClass('active');
+        let id = new URL(location.href).searchParams.get("id");
+        console.log("id")
+        console.log(id)
+        $('#test_id_added').val(new URL(location.href).searchParams.get("id"))
         let account = new URL(location.href).searchParams.get("account");
         $.ajax({
             type: "GET",
@@ -2330,7 +2538,7 @@ if (!isset($_SESSION['userid'])) {
         //link.innerHTML = "Download File";
         link.href = window.URL.createObjectURL(blob);
         document.body.appendChild(link);
-        link.click();
+        link.click(); 
         setTimeout(() => {
             document.body.removeChild(link);
             window.URL.revokeObjectURL(link.href);
@@ -2363,9 +2571,82 @@ if (!isset($_SESSION['userid'])) {
             }
         });
     }
+
+    function clearEmployees() {
+        $.ajax({
+            type: "POST",
+            url: "clear_employees.php",
+            data: 'data=' + selected_accounts,
+            success: function(resultData) {
+                console.log(resultData);
+                $('#closeButtonClearEmployee').click();
+                // $('#myModal_Employee_Clear').modal('toggle');
+                // $('body').removeClass('modal-open');
+                propertiesClicked();
+                // alert(resultData);
+                // // windo
+                // window.open("accounts.php", "_self");
+            }
+        });
+    }
 </script>
 <script>
-    $('#form_send_billing').on('submit', function() {
-
+    $('#form_send_billing').on('submit', function(event) {
+        event.preventDefault();
+        let formData = $(this).serialize();
+        formData += '&account_id_bill=' + $('#accounts_select').val() + '&invoiceNoBilled=' + $('#invoiceNoBilled').val()
+        console.log(formData);
+        $.ajax({
+            type: "POST",
+            url: "insert_invoice.php",
+            data: formData,
+            success: function(resultData) {
+                console.log(resultData);
+                alert(resultData);
+                window.open('invoice.php', '_self');
+                // console.log(location.pathname.split('/')[location.pathname.split('/').length - 1])
+                // if(location.pathname.split('/')[location.pathname.split('/').length - 1] == 'invoice.php') {
+                //     location.reload();
+                // }
+                // $('#myModal_Billing').modal('hide');
+                // $('body').removeClass('modal-open');
+                // $('.modal-backdrop').remove();
+                // refreshBillingModal();
+                // // windo
+                // window.open("accounts.php", "_self");
+            }
+        });
     })
+
+    function refreshBillingModal() {
+        $('#invoiceNoBill').val("");
+        $('#invoiceDateBill').val("");
+        // $('#division_id_bill').val("");
+        $('#invoiceReferenceBill').val("");
+        $('#invoiceTermsBill').val("");
+        $('#invoiceDueDateBill').val("");
+        $('#sentBillDate').val("");
+        $('#sentBill').attr("checked", false);
+        $('#invoiceAmountDueBill').val('');
+        $('#invoiceAmountPaidBill').val("0.00");
+        $('#invoiceCheckNoBill').val("");
+        $('#invoiceCheckDateBill').val("");
+        $('#invoicePayDateBill').val("");
+        $('#paidInFull').attr("checked", false);
+
+        $('#rowBilledItemDiv').css('pointer-events', 'all');
+        $('#rowBilledItemDiv').css('opacity', '1.0');
+        $('#London > .row').css('display', 'block');
+        $('#invoiceNoBill').val('New Invoice');
+        // $('#London').html('');
+        $('#London').css('display', 'block');
+        $('#Paris').css('display', 'none');
+        $('#button_general').addClass('active');
+        $('#button_tests_billed').removeClass('active');
+        $('#invoiceNoBilled').attr('disabled', 'disabled');
+        $('#invoiceNoBilled').html('<option selected="" disabled="" value="">Please select Invoice No</option>');
+        $('#invoiceNoBilled').trigger('change');
+        $('#test_id_added').val('')
+        $('#tbody_table_bill').html('');
+    }
 </script>

@@ -270,9 +270,10 @@ to get the desired effect
                                         ?>
                                     </div>
                                 </div>
-                                <table class="table">
+                                <table id="table_users" class="table">
                                     <thead class="thead-dark">
                                         <tr>
+                                            <th scope="col">account_nm</th>
                                             <th scope="col">invoice_id</th>
                                             <th scope="col">invoice_date</th>
                                             <th scope="col">amount</th>
@@ -319,21 +320,23 @@ to get the desired effect
                                     $sql1 =
                                         'SELECT * FROM test JOIN accounts ON accounts.account_id = test.account_id JOIN employees ON employees.emp_id = test.emp_id JOIN testtype ON testtype.type_id = test.type_id JOIN invoice ON invoice.invoice_id = test.invoice_id WHERE test.invoice_id IS NOT NULL ' .
                                         $sqlDate .
-                                        ' ORDER BY collection_date, test.account_id';
+                                        ' ORDER BY test.account_id, collection_date';
                                     // echo $sql1;
                                     $result1 = $conn->query($sql1);
                                     while ($row1 = $result1->fetch_assoc()) {
+                                        $print = false;
+                                        $account_id = $row1['account_id'];
                                         $name = $row1['account_nm'];
                                         if ($prevName != $name && $prevName != '') {
+                                            echo '<tr style=""><td style="display: none"></td><th><b>Total Amount</b></th><td>' .
+                                                number_format(floatval($totalAmount), 2) .
+                                                '</td><td></td><td></td><td></td><td></td></tr>';
                                             $prevName = $name;
-                                            echo '<tr><td style="display: none">' .
-                                                $name .
-                                                '_totalamount</td><td></td><td><b>Total Amount</b></td><td></td><td>' .
-                                                $totalAmount .
-                                                '</td><td></td></tr>';
                                             $totalAmount = 0;
+                                            $print = true;
                                         } elseif ($prevName == '') {
                                             $prevName = $name;
+                                            $print = true;
                                         }
                                         echo '<tr>';
                                         $typeId = $row1['type_id'];
@@ -354,7 +357,19 @@ to get the desired effect
                                         $date = $row1['invoice_date'];
                                         // }
                                         echo '
-                                          <td>' .
+                                        <td>';
+                                        // echo '<span style="display: none">' .
+                                        // $account_id . '_' . $prevName .
+                                        // '</span>';                                            
+                                        if($print)
+                                            echo $prevName;
+                                        else {
+                                           echo '<span style="display: none">' .
+                                            $prevName .
+                                            '</span>';                                            
+                                        }
+                                        echo '</td>
+                                        <td>' .
                                             $invId .
                                             '</td>
                                           <td>' .
@@ -377,11 +392,21 @@ to get the desired effect
                                         //       <td></td>';
                                         echo '</tr>';
                                         $i++;
+                                        $totalAmount = floatval($totalAmount) + floatval($amount);
                                     }
 
                                     // }
                                 } ?>
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th style="text-align:right">Total:</th>
+                                            <th></th>
+                                            <th colspan="2"></th>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                                 <!--  -->
                     </div><!-- /.container-fluid -->
@@ -407,7 +432,7 @@ to get the desired effect
 
             <!-- Main Footer -->
             <footer class="main-footer">
-                <strong>Copyright &copy; 2020 <a href="https://matz.group/">MATZ Solutions Pvt Ltd</a>.</strong>
+                <strong>Copyright &copy; 2020-21 <a href="https://matz.group/">MATZ Solutions Pvt Ltd</a>.</strong>
                 All rights reserved.
                 <div class="float-right d-none d-sm-inline-block">
                     <b>Version</b> 3.0.0-rc.1
@@ -434,6 +459,10 @@ to get the desired effect
     <script src="dist/js/pages/dashboard3.js"></script>
     <script src="dist/js/dataTables.buttons.min.js"></script>
     <script src="dist/js/buttons.print.min.js"></script>
+    <script src="dist/js/jszip.min.js"></script>
+    <script src="dist/js/pdfmake.min.js"></script>
+    <script src="dist/js/vfs_fonts.js"></script>
+    <script src="dist/js/buttons.html5.min.js"></script>
     <script type="text/javascript" src="dist/js/moment.min.js"></script>
     <script type="text/javascript" src="dist/js/daterangepicker.min.js"></script>
     <script type="text/javascript">
@@ -485,69 +514,77 @@ to get the desired effect
     </script>
 
     <script>
-        $('.table').DataTable().destroy();
-        $('.table').DataTable({
+        function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+    $(document).ready(function() {
+        $('#table_users').DataTable({
             dom: 'Blfrtip',
+            "bSort" : false,
+            "ordering": false,
             "deferRender": true,
             buttons: [
-                'print'
-            ]
+                { extend: 'print', footer: true },
+                { extend: 'excelHtml5', footer: true },
+                { extend: 'csvHtml5', footer: true },
+                { extend: 'pdfHtml5', footer: true }
+            ],
+            "footerCallback": function ( row, data, start, end, display ) {
+                var api = this.api(), data;
+    
+                // Remove the formatting to get integer data for summation
+                var intVal = function ( i ) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '')*1 :
+                        typeof i === 'number' ?
+                            i : 0;
+                };
+    
+                // Total over all pages
+                total = api
+                    .column( 3 )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
+    
+                // Total over this page
+                pageTotal = api
+                    .column( 3, { page: 'all', filter:'applied'} )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
+    
+                // Update footer
+                $( api.column( 3 ).footer() ).html(
+                    '$ '+numberWithCommas(pageTotal)
+                );
+            }
         });
-        $('.buttons-print').addClass('btn mt-2');
-        $('.buttons-print').css('border-radius', '5px');
-        $('.buttons-print').css('width', '100px');
-        $('.buttons-print').css('background', 'none');
-        $('.buttons-print').css('background-color', '#E7D7B7');
-        $('.buttons-print').css('border', 'none');
-        $('.dt-buttons').addClass('float-right');
-        $('.dataTables_length').css('width', '50%')
         $('.dataTables_length').css('display', 'inline-block')
-        $('#DataTables_Table_0_filter').css('width', '50%')
-        $('#DataTables_Table_0_filter').css('display', 'inline-block')
-        $('#DataTables_Table_0_filter').css('text-align', 'right')
-        $('#deleteButton').prop('disabled', false)
-        $(document).ready(function() {
-            $('.table').DataTable().destroy();
-            $('.table').DataTable({
-                dom: 'Blfrtip',
-                buttons: [
-                    'print'
-                ]
-            });
-            // $('.buttons-print').css('display', 'none');
-            $('.buttons-print').addClass('btn mt-2');
-            $('.buttons-print').css('background', 'none');
-            $('.buttons-print').css('background-color', '#E7D7B7');
-            $('.buttons-print').css('border', 'none');
-            $('.buttons-print').css('border-radius', '5px');
-            $('.buttons-print').css('width', '100px');
-            $('.dt-buttons').addClass('float-right');
-            $('.dataTables_length').css('width', '50%')
-            $('.dataTables_length').css('display', 'inline-block')
-            $('#DataTables_Table_0_filter').css('width', '50%')
-            $('#DataTables_Table_0_filter').css('display', 'inline-block')
-            $('#DataTables_Table_0_filter').css('text-align', 'right')
-            $('#deleteButton').prop('disabled', false)
-        });
-    </script>
+        $('.dataTables_filter').css('display', 'inline-block')
+        $('.dataTables_filter').css('text-align', 'right')
+        $('.dt-buttons').addClass('float-right');
+        $('.buttons-print').css('border-radius', '5px');
 
+        formatDataTableButtons('.buttons-print')
+        formatDataTableButtons('.buttons-excel')
+        formatDataTableButtons('.buttons-csv')
+        formatDataTableButtons('.buttons-pdf')
 
-    <script>
-        $('#accountSelect').on('change', function() {
-            var accId = $(this).val();
-            $.ajax({
-                url: 'get_location_testinfo.php?account_id_location=' + accId,
-                type: 'POST',
+        // $('.dataTables_length').css('width', '50%')
+        // $('#DataTables_Table_0_filter').css('width', '50%')
+    });
 
-                success: function(data) {
-                    // alert(data);
-                    $('#locationSelect').html(data);
-                },
-                cache: false,
-                contentType: false,
-                processData: false
-            });
-        })
+    function formatDataTableButtons(className) {
+        $(className).addClass('btn mt-2');
+        $(className).css('border-radius', '5px');
+        $(className).css('width', '100px');
+        $(className).css('background', 'none');
+        $(className).css('background-color', '#E7D7B7');
+        $(className).css('border', 'none');
+    }
     </script>
 </body>
 

@@ -151,7 +151,8 @@ to get the desired effect
                         <!-- <form action="" method="POST" class=""> -->
 
                         <?php
-                        $sql = 'SELECT * FROM test LEFT JOIN reasons ON test.reason_id = reasons.reason_id LEFT JOIN sampletype ON test.sample_id = sampletype.sample_id LEFT JOIN testtype ON test.type_id = testtype.type_id LEFT JOIN divisions ON test.division_id = divisions.division_id LEFT JOIN drugform ON test.form_id = drugform.form_id JOIN employees ON employees.emp_id = test.emp_id LEFT JOIN invoice ON test.invoice_id = invoice.invoice_id WHERE account_id = ' . $_GET['account'] . ' AND test_id=' . $_GET['id'];
+                        $sql = 'SELECT * FROM test LEFT JOIN reasons ON test.reason_id = reasons.reason_id LEFT JOIN sampletype ON test.sample_id = sampletype.sample_id LEFT JOIN testtype ON test.type_id = testtype.type_id LEFT JOIN divisions ON test.division_id = divisions.division_id LEFT JOIN drugform ON test.form_id = drugform.form_id JOIN employees ON employees.emp_id = test.emp_id LEFT JOIN invoice ON test.invoice_id = invoice.invoice_id WHERE test.account_id = ' . $_GET['account'] . ' AND test_id=' . $_GET['id'];
+                        // echo $sql;
                         $result = $conn->query($sql);
                         $row = $result->fetch_assoc();
                         ?>
@@ -371,7 +372,7 @@ to get the desired effect
 
             <!-- Main Footer -->
             <footer class="main-footer">
-                <strong>Copyright &copy; 2020 <a href="https://matz.group/">MATZ Solutions Pvt Ltd</a>.</strong>
+                <strong>Copyright &copy; 2020-21 <a href="https://matz.group/">MATZ Solutions Pvt Ltd</a>.</strong>
                 All rights reserved.
                 <div class="float-right d-none d-sm-inline-block">
                     <b>Version</b> 3.0.0-rc.1
@@ -431,6 +432,10 @@ to get the desired effect
             $('#invoiceCheckDateBill').val("");
             $('#invoicePayDateBill').val("");
             $('#paidInFull').attr("checked", false);
+            let id = new URL(location.href).searchParams.get("id");
+            console.log("id")
+            console.log(id)
+            $('#test_id_added').val(new URL(location.href).searchParams.get("id"))
         }
 
         function getDataForInvoice(invoices_data_temp, value) {
@@ -438,12 +443,15 @@ to get the desired effect
             const invoice = invoices_data.find(invoice => invoice.invoice_id === $('#invoiceNoBilled').val())
             console.log(invoice)
             $('#invoiceNoBill').val(invoice.invoice_id);
-            $('#invoiceDateBill').val(invoice.invoice_date.split(' ')[0]);
+            if (invoice.invoice_date != null)
+                $('#invoiceDateBill').val(invoice.invoice_date.split(' ')[0]);
             $('#division_id_bill').val(invoice.division_id);
             $('#invoiceReferenceBill').val(invoice.reference_nm);
             $('#invoiceTermsBill').val(invoice.terms);
-            $('#invoiceDueDateBill').val(invoice.due_date.split(' ')[0]);
-            $('#sentBillDate').val(invoice.send_date.split(' ')[0]);
+            if (invoice.due_date != null)
+                $('#invoiceDueDateBill').val(invoice.due_date.split(' ')[0]);
+            if (invoice.send_date != null)
+                $('#sentBillDate').val(invoice.send_date.split(' ')[0]);
             $('#sentBillDate').attr('readonly', true);
             $('#sentBill').attr("checked", false);
             if (invoice.sent == 'T') {
@@ -453,8 +461,10 @@ to get the desired effect
             $('#invoiceAmountDueBill').val(parseFloat($('#getFeeAmount').val()) + parseFloat(invoice.amount));
             $('#invoiceAmountPaidBill').val(parseFloat(invoice.amount_paid));
             $('#invoiceCheckNoBill').val(invoice.check_no);
-            $('#invoiceCheckDateBill').val(invoice.check_date.split(' ')[0]);
-            $('#invoicePayDateBill').val(invoice.pay_date.split(' ')[0]);
+            if (invoice.check_date != null)
+                $('#invoiceCheckDateBill').val(invoice.check_date.split(' ')[0]);
+            if (invoice.pay_date != null)
+                $('#invoicePayDateBill').val(invoice.pay_date.split(' ')[0]);
             $('#paidInFull').attr("checked", true);
 
             table_data = "";
@@ -481,6 +491,9 @@ to get the desired effect
             })
 
             let id = new URL(location.href).searchParams.get("id");
+            console.log("id")
+            console.log(id)
+            $('#test_id_added').val(new URL(location.href).searchParams.get("id"))
             $.ajax({
                 type: "GET",
                 url: "getTestData.php?test_id=" + id + "&counter=" + counter,

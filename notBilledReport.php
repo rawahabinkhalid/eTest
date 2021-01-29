@@ -265,7 +265,7 @@ to get the desired effect
 
                                 // echo $sqlDate;
                                 ?>
-                                <table class="table">
+                                <table id="table_users" class="table">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th scope="col">Account_nm</th>
@@ -304,9 +304,9 @@ to get the desired effect
                                             $prevName = $name;
                                             echo '<tr><td style="display: none">' .
                                                 $name .
-                                                '_totalamount</td><td></td><td><b>Total Amount</b></td><td></td><td>' .
+                                                '_totalamount</td><td></td><td><b>Total Amount</b></td><td></td><td></td><td>' .
                                                 $totalAmount .
-                                                '</td><td></td></tr>';
+                                                '</td></tr>';
                                             $totalAmount = 0;
                                         } elseif ($prevName == '') {
                                             $prevName = $name;
@@ -355,6 +355,15 @@ to get the desired effect
                                 //}
                                     ?>
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th style="text-align:right">Total:</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                     </div><!-- /.container-fluid -->
                 </div>
@@ -379,7 +388,7 @@ to get the desired effect
 
             <!-- Main Footer -->
             <footer class="main-footer">
-                <strong>Copyright &copy; 2020 <a href="https://matz.group/">MATZ Solutions Pvt Ltd</a>.</strong>
+                <strong>Copyright &copy; 2020-21 <a href="https://matz.group/">MATZ Solutions Pvt Ltd</a>.</strong>
                 All rights reserved.
                 <div class="float-right d-none d-sm-inline-block">
                     <b>Version</b> 3.0.0-rc.1
@@ -406,6 +415,10 @@ to get the desired effect
     <script src="dist/js/dataTables.bootstrap4.min.js"></script>
     <script src="dist/js/dataTables.buttons.min.js"></script>
     <script src="dist/js/buttons.print.min.js"></script>
+    <script src="dist/js/jszip.min.js"></script>
+    <script src="dist/js/pdfmake.min.js"></script>
+    <script src="dist/js/vfs_fonts.js"></script>
+    <script src="dist/js/buttons.html5.min.js"></script>
     <script type="text/javascript" src="dist/js/moment.min.js"></script>
     <script type="text/javascript" src="dist/js/daterangepicker.min.js"></script>
     <script type="text/javascript">
@@ -456,69 +469,71 @@ to get the desired effect
         })
     </script>
 
-    <script>
-        $('.table').DataTable().destroy();
-        $('.table').DataTable({
+<script>
+        function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+        $(document).ready(function() {
+        $('#table_users').DataTable({
             dom: 'Blfrtip',
+            "bSort" : false,
+            "ordering": false,
             "deferRender": true,
             buttons: [
-                'print'
-            ]
+                { extend: 'print', footer: true },
+                { extend: 'excelHtml5', footer: true },
+                { extend: 'csvHtml5', footer: true },
+                { extend: 'pdfHtml5', footer: true }
+            ],
+            "footerCallback": function ( row, data, start, end, display ) {
+                var api = this.api(), data;
+    
+                // Remove the formatting to get integer data for summation
+                var intVal = function ( i ) {
+                    console.log(i)
+                    // if()
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '')*1 :
+                        typeof i === 'number' ?
+                            i : 0;
+                };
+    
+                // Total over this page
+                pageTotal = api
+                    .column( 3, { page: 'all', filter:'applied'} )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
+    
+                // Update footer
+                $( api.column( 3 ).footer() ).html(
+                    '$ '+numberWithCommas(pageTotal)
+                );
+            }
         });
-        $('.buttons-print').addClass('btn mt-2');
-        $('.buttons-print').css('border-radius', '5px');
-        $('.buttons-print').css('width', '100px');
-        $('.buttons-print').css('background', 'none');
-        $('.buttons-print').css('background-color', '#E7D7B7');
-        $('.buttons-print').css('border', 'none');
-        $('.dt-buttons').addClass('float-right');
-        $('.dataTables_length').css('width', '50%')
         $('.dataTables_length').css('display', 'inline-block')
-        $('#DataTables_Table_0_filter').css('width', '50%')
-        $('#DataTables_Table_0_filter').css('display', 'inline-block')
-        $('#DataTables_Table_0_filter').css('text-align', 'right')
-        $('#deleteButton').prop('disabled', false)
-        $(document).ready(function() {
-            $('.table').DataTable().destroy();
-            $('.table').DataTable({
-                dom: 'Blfrtip',
-                buttons: [
-                    'print'
-                ]
-            });
-            // $('.buttons-print').css('display', 'none');
-            $('.buttons-print').addClass('btn mt-2');
-            $('.buttons-print').css('background', 'none');
-            $('.buttons-print').css('background-color', '#E7D7B7');
-            $('.buttons-print').css('border', 'none');
-            $('.buttons-print').css('border-radius', '5px');
-            $('.buttons-print').css('width', '100px');
-            $('.dt-buttons').addClass('float-right');
-            $('.dataTables_length').css('width', '50%')
-            $('.dataTables_length').css('display', 'inline-block')
-            $('#DataTables_Table_0_filter').css('width', '50%')
-            $('#DataTables_Table_0_filter').css('display', 'inline-block')
-            $('#DataTables_Table_0_filter').css('text-align', 'right')
-            $('#deleteButton').prop('disabled', false)
-        });
-    </script>
+        $('.dataTables_filter').css('display', 'inline-block')
+        $('.dataTables_filter').css('text-align', 'right')
+        $('.dt-buttons').addClass('float-right');
+        $('.buttons-print').css('border-radius', '5px');
 
-    <script>
-        $('#accountSelect').on('change', function() {
-            var accId = $(this).val();
-            $.ajax({
-                url: 'get_location_testinfo.php?account_id_location=' + accId,
-                type: 'POST',
+        formatDataTableButtons('.buttons-print')
+        formatDataTableButtons('.buttons-excel')
+        formatDataTableButtons('.buttons-csv')
+        formatDataTableButtons('.buttons-pdf')
 
-                success: function(data) {
-                    // alert(data);
-                    $('#locationSelect').html(data);
-                },
-                cache: false,
-                contentType: false,
-                processData: false
-            });
-        })
+        // $('.dataTables_length').css('width', '50%')
+        // $('#DataTables_Table_0_filter').css('width', '50%')
+    });
+    function formatDataTableButtons(className) {
+        $(className).addClass('btn mt-2');
+        $(className).css('border-radius', '5px');
+        $(className).css('width', '100px');
+        $(className).css('background', 'none');
+        $(className).css('background-color', '#E7D7B7');
+        $(className).css('border', 'none');
+    }
     </script>
 </body>
 

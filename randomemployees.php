@@ -78,24 +78,26 @@ include_once "conn.php";
         }
 
         function propertiesClicked() {
-            document.getElementsByClassName('modal-title')[0].innerHTML = 'Edit User';
-            $.ajax({
-                type: "GET",
-                url: "getAllData.php?random_id='" + selected_user + "'",
-                success: function(resultData) {
-                    console.log(resultData);
-                    var data = JSON.parse(resultData);
-                    $('#user_id').val(selected_user);
-                    $('#userid').val(data.user_id);
-                    $('#fname').val(data.first_nm);
-                    $('#lname').val(data.last_nm);
-                    $('#password').val(data.password);
-                    if (data.admin == 'T')
-                        $('#admin').prop("checked", true);
-                    else
-                        $('#admin').prop("checked", false);
-                }
-            });
+            let accounts = $('#accounts_select').val();
+            window.open('randomemployeeslisting.php?account=' + accounts + '&id=' + selected_user, '_self')
+            // document.getElementsByClassName('modal-title')[0].innerHTML = 'Edit User';
+            // $.ajax({
+            //     type: "GET",
+            //     url: "getAllData.php?random_id='" + selected_user + "'",
+            //     success: function(resultData) {
+            //         console.log(resultData);
+            //         var data = JSON.parse(resultData);
+            //         $('#user_id').val(selected_user);
+            //         $('#userid').val(data.user_id);
+            //         $('#fname').val(data.first_nm);
+            //         $('#lname').val(data.last_nm);
+            //         $('#password').val(data.password);
+            //         if (data.admin == 'T')
+            //             $('#admin').prop("checked", true);
+            //         else
+            //             $('#admin').prop("checked", false);
+            //     }
+            // });
         }
 
         function deleteClicked() {
@@ -122,7 +124,7 @@ include_once "conn.php";
             selected_user = user;
             // alert("#" + id);
             $('#deleteButton').prop('disabled', false);
-            // $('#propertiesButton').prop('disabled', false);
+            $('#propertiesButton').prop('disabled', false);
             $("#" + id).css('background', 'rgba(0,0,0,.35)');
         }
 
@@ -255,7 +257,7 @@ to get the desired effect
                                 <div class="col-md-1">
                                     <button type="button" name="" class="btn mt-2" data-toggle="modal" data-target="#myModal" onclick="addClicked();" style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Add</button>
                                     <button type="button" id="deleteButton" class="btn mt-2" style="background-color:#E7D7B7; border-radius:5px; width: 100px;" onclick="deleteClicked();" disabled>Remove</button>
-                                    <button type="button" name="" class="btn mt-2" style="background-color:#E7D7B7; border-radius:5px; width: 100px;" data-toggle="modal" id="propertiesButton" data-target="#myModal" onclick="propertiesClicked();" disabled>Properties</button>
+                                    <button type="button" id="propertiesButton" name="" class="btn mt-2" style="background-color:#E7D7B7; border-radius:5px; width: 100px;" onclick="propertiesClicked();" disabled>Properties</button>
                                 </div>
                             </div>
                         </form>
@@ -391,7 +393,7 @@ to get the desired effect
 
             <!-- Main Footer -->
             <footer class="main-footer">
-                <strong>Copyright &copy; 2020 <a href="https://matz.group/">MATZ Solutions Pvt Ltd</a>.</strong>
+                <strong>Copyright &copy; 2020-21 <a href="https://matz.group/">MATZ Solutions Pvt Ltd</a>.</strong>
                 All rights reserved.
                 <div class="float-right d-none d-sm-inline-block">
                     <b>Version</b> 3.0.0-rc.1

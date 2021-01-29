@@ -146,8 +146,13 @@ to get the desired effect
                                             <?php
                                             $count = 1;
                                             $i = 0;
+                                            $sqlRandom = '';
+
+                                            if(isset($_GET['id']) && $_GET['id'] != '' && $_GET['id'] != null) {
+                                                $sqlRandom = ' AND randomitems.random_id = ' . $_GET['id'];
+                                            }
                                             if (isset($_GET['account']) && $_GET['account'] != '' && $_GET['account'] != null) {
-                                                $sql = 'SELECT * FROM randomitems JOIN employees ON randomitems.emp_id = employees.emp_id AND randomitems.account_id = employees.account_id WHERE randomitems.account_id = ' . $_GET['account'] . '';
+                                                $sql = 'SELECT * FROM randomitems JOIN employees ON randomitems.emp_id = employees.emp_id AND randomitems.account_id = employees.account_id WHERE randomitems.account_id = ' . $_GET['account'] . ' ' . $sqlRandom;
                                                 $result = mysqli_query($conn, $sql);
                                                 while ($row = mysqli_fetch_assoc($result)) {
                                                     $test_id = (is_null($row['test_id'])) ? 0 : $row['test_id'];
@@ -197,7 +202,7 @@ to get the desired effect
 
             <!-- Main Footer -->
             <footer class="main-footer">
-                <strong>Copyright &copy; 2020 <a href="https://matz.group/">MATZ Solutions Pvt Ltd</a>.</strong>
+                <strong>Copyright &copy; 2020-21 <a href="https://matz.group/">MATZ Solutions Pvt Ltd</a>.</strong>
                 All rights reserved.
                 <div class="float-right d-none d-sm-inline-block">
                     <b>Version</b> 3.0.0-rc.1

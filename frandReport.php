@@ -9,7 +9,7 @@ include_once 'conn.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>FRANDOMDOTEMPLqry</title>
+    <title>Active Employees for a Random Account</title>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
@@ -35,99 +35,6 @@ include_once 'conn.php'; ?>
             margin-right: 15px;
         }
     </style>
-    <script>
-        counter = 1;
-        var selected_user = -1;
-
-        function addRow() {
-            var content =
-                '<tr><td><input type="text" class="form-control" id="clientId_' + counter +
-                '" name="client[]"></td><td><input type="text" class="form-control" id="itemid_' +
-                counter +
-                '" name="item[]" onchange="getRate(this);"></td><td><input type="text" class="form-control" id="description_' +
-                counter + '" name="description[]"></td><td><input type="text" class="form-control" id="kg_' + counter +
-                '" name="kg[]" onchange="calcTotal(this);"></td><td><input type="text" class="form-control" id="rate_' +
-                counter +
-                '" name="rate[]" onchange="calcTotal(this);"></td><td><input type="text" class="form-control" id="total_' +
-                counter + '" name="total[]" readonly></td></tr>';
-            $('#tbody').append(content);
-
-            counter++;
-        }
-
-        function deleteRow() {
-            var tableName = "item";
-            var tbl = document.getElementById(tableName);
-            var lastRow = tbl.rows.length;
-            lastRow--;
-            // alert(lastRow);
-            if (lastRow > 1) {
-                tbl.deleteRow(lastRow);
-                // tbl.deleteRow(lastRow - 2);
-            }
-
-        }
-
-
-        function calcTotal(reference) {
-            index = reference.id.split('_')[1];
-            rate = document.getElementById('rate_' + index).value;
-            kg = document.getElementById('kg_' + index).value;
-            if (rate != '' && kg != '') {
-                document.getElementById('total_' + index).value = parseFloat(parseFloat(rate) * parseFloat(kg)).toFixed(2);
-            }
-        }
-
-        function propertiesClicked() {
-            document.getElementsByClassName('modal-title')[0].innerHTML = 'Edit User';
-            $.ajax({
-                type: "GET",
-                url: "getAllData.php?user_id='" + selected_user + "'",
-                success: function(resultData) {
-                    console.log(resultData);
-                    var data = JSON.parse(resultData);
-                    $('#user_id').val(selected_user);
-                    $('#userid').val(data.user_id);
-                    $('#fname').val(data.first_nm);
-                    $('#lname').val(data.last_nm);
-                    $('#password').val(data.password);
-                    if (data.admin == 'T')
-                        $('#admin').prop("checked", true);
-                    else
-                        $('#admin').prop("checked", false);
-                }
-            });
-        }
-
-        function deleteClicked() {
-            console.log("insert_users.php?delete_user_id='" + selected_user + "'");
-            $.ajax({
-                type: "GET",
-                url: "insert_users.php?delete_user_id='" + selected_user + "'",
-                success: function(resultData) {
-                    // console.log(resultData);
-                    window.open("users.php", "_self");
-
-                }
-            });
-        }
-
-        function addClicked() {
-            document.getElementsByClassName('modal-title')[0].innerHTML = 'New User';
-        }
-
-        function userSelected(user, id) {
-            $('#table_users > tbody  > tr').each(function(index, tr) {
-                tr.style.background = 'rgba(0,0,0,.05)';
-            });
-
-            selected_user = user;
-            // alert("#" + id);
-            $('#deleteButton').prop('disabled', false);
-            $('#propertiesButton').prop('disabled', false);
-            $("#" + id).css('background', 'rgba(0,0,0,.35)');
-        }
-    </script>
 
 </head>
 <!--
@@ -180,10 +87,10 @@ to get the desired effect
                 <div class="content-header">
                     <div class="container-fluid">
                         <div class="row mb-2">
-                            <div class="col-sm-6">
-                                <h1 class="m-0 text-dark"><b><u>FRANDOMDOTEMPLqry Report</u></b></h1>
+                            <div class="col-sm-8">
+                                <h1 class="m-0 text-dark"><b><u>Active Employees for a Random Account Report</u></b></h1>
                             </div><!-- /.col -->
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="landingscreen.php">Home</a></li>
 
@@ -191,40 +98,43 @@ to get the desired effect
                                 </ol>
                             </div><!-- /.col -->
                         </div><!-- /.row -->
-                        <form action="" method="POST" class="">
-
-
-                            <!-- </form> -->
-                            <!-- <br><br> -->
-                            <?php if (
+                        <?php if (
                                 isset($_GET['account'])
                             ) { ?>
-                                <!-- <form action="" method="POST" class=""> -->
-                                <div class="row no-print">
-                                    <div class="col-md-12" style="text-align: right">
-                                        <button type="submit" name="filterData" class="btn mt-2" style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Retrieve</button>
-                                        <!-- <button type="button" id="deleteButton" class="btn mt-2"
-                                        style="background-color:#E7D7B7; border-radius:5px; width: 100px;"
-                                        onclick="$('.buttons-print').click();" disabled>Print</button> -->
+                            <form action="" method="POST" class="">
+
+
+                                <!-- </form> -->
+                                <!-- <br><br> -->
+                                
+                                    <!-- <form action="" method="POST" class=""> -->
+                                    <div class="row no-print">
+                                        <div class="col-md-12" style="text-align: right">
+                                            <button type="submit" name="filterData" class="btn mt-2" style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Retrieve</button>
+                                            <!-- <button type="button" id="deleteButton" class="btn mt-2"
+                                            style="background-color:#E7D7B7; border-radius:5px; width: 100px;"
+                                            onclick="$('.buttons-print').click();" disabled>Print</button> -->
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <br>
                                     </div>
-                                    <br>
-                                    <br>
-                                    <br>
-                                </div>
+                                </form>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <?php $account_filter =
                                             $_GET['account']; ?>
                                     </div>
                                 </div>
-                                <table class="table">
+                                <table id="table_users" class="table">
                                     <thead class="thead-dark">
                                         <tr>
-                                            <th scope="col">first_nm</th>
-                                            <th scope="col">last_nm</th>
-                                            <th scope="col">emp_id</th>
-                                            <th scope="col">status</th>
-                                            <th scope="col">account_id</th>
+                                            <th>#</th>
+                                            <th>emp_id</th>
+                                            <th>first_nm</th>
+                                            <th>last_nm</th>
+                                            <th>account_nm</th>
+                                            <th>status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -232,7 +142,7 @@ to get the desired effect
                                     <?php
                                     $i = 1;
                                     $sql =
-                                        'SELECT * FROM employees WHERE status = "a" AND account_id = ' .
+                                        'SELECT * FROM employees JOIN accounts ON accounts.account_id = employees.account_id WHERE employees.status = "a" AND employees.account_id = ' .
                                         $account_filter .
                                         '';
                                     // $sql =
@@ -242,29 +152,32 @@ to get the desired effect
                                     // // echo $sql;
                                     $result = $conn->query($sql);
                                     while ($row = $result->fetch_assoc()) {
-                                        echo '
-                                    <tr>
-                                      <td>' .
-                                            $row['first_nm'] .
-                                            '</td>
-                                      <td>' .
-                                            $row['last_nm'] .
-                                            '</td>
-                                      <td>' .
-                                            $row['emp_id'] .
-                                            '</td>
-                                      <td>' .
-                                            $row['status'] .
-                                            '</td>
-                                      <td>' .
-                                            $row['account_id'] .
-                                            '</td>';
+                                        echo '<tr>
+                                                <td>' .
+                                                    $i .
+                                                '</td>
+                                                <td>' .
+                                                    $row['emp_id'] .
+                                                '</td>
+                                                <td>' .
+                                                    $row['first_nm'] .
+                                                '</td>
+                                                <td>' .
+                                                    $row['last_nm'] .
+                                                '</td>
+                                                <td>' .
+                                                    $row['account_nm'] .
+                                                '</td>
+                                                <td>' .
+                                                    $row['status'] .
+                                                '</td>';
                                         echo '</tr>';
                                         $i++;
                                     }
-                                } ?>
+                                ?>
                                     </tbody>
                                 </table>
+                            <?php } ?>
                     </div><!-- /.container-fluid -->
                 </div>
                 <!-- /.content-header -->
@@ -288,7 +201,7 @@ to get the desired effect
 
             <!-- Main Footer -->
             <footer class="main-footer">
-                <strong>Copyright &copy; 2020 <a href="https://matz.group/">MATZ Solutions Pvt Ltd</a>.</strong>
+                <strong>Copyright &copy; 2020-21 <a href="https://matz.group/">MATZ Solutions Pvt Ltd</a>.</strong>
                 All rights reserved.
                 <div class="float-right d-none d-sm-inline-block">
                     <b>Version</b> 3.0.0-rc.1
@@ -316,118 +229,80 @@ to get the desired effect
     <script src="dist/js/dataTables.bootstrap4.min.js"></script>
     <script src="dist/js/dataTables.buttons.min.js"></script>
     <script src="dist/js/buttons.print.min.js"></script>
-    <script type="text/javascript" src="dist/js/moment.min.js"></script>
-    <script type="text/javascript" src="dist/js/daterangepicker.min.js"></script>
+    <script src="dist/js/jszip.min.js"></script>
+    <script src="dist/js/pdfmake.min.js"></script>
+    <script src="dist/js/vfs_fonts.js"></script>
+    <script src="dist/js/buttons.html5.min.js"></script>
     <script type="text/javascript">
-        $(function() {
-            var temp_range = {
-                // 'Please select Date Range': [],
-                'Today': [moment(), moment()],
-                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                'This Month': [moment().startOf('month'), moment().endOf('month')],
-                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-            };
-            var start = ($('#daterange').val() != '') ? moment($('#daterange').val().split(" - ")[0]) : moment();
-            var end = ($('#daterange').val() != '') ? moment($('#daterange').val().split(" - ")[1]) : moment();
-
-            function cb(start, end) {
-                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-                $('#daterange').val(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'))
-            }
-
-
-            $('#reportrange').daterangepicker({
-                startDate: start,
-                endDate: end,
-                ranges: temp_range
-            }, cb);
-
-            cb(start, end);
-
-        });
-
-        $('.ranges ul li').on('click', function() {
-            console.log($(this).attr('data-range-key'));
-        })
-    </script>
-    <script>
-        $('#daterangeCheck').on('click', function() {
-            if ($(this).is(':checked')) {
-                $('#reportrange').css('pointer-events', '');
-                $('#reportrange').css('background-color', '#fff');
-            } else {
-                $('#reportrange').css('pointer-events', 'none');
-                $('#reportrange').css('background-color', '#e9ecef');
-            }
-        })
-    </script>
-
-
-    <script>
-        $('.table').DataTable().destroy();
-        $('.table').DataTable({
+       function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+    $(document).ready(function() {
+        $('#table_users').DataTable({
             dom: 'Blfrtip',
             "deferRender": true,
             buttons: [
-                'print'
-            ]
+                {   extend: 'print', footer: true   },
+                { extend: 'excelHtml5', footer: true },
+                { extend: 'csvHtml5', footer: true },
+                { extend: 'pdfHtml5', footer: true }
+            ],
+            "footerCallback": function ( row, data, start, end, display ) {
+                var api = this.api(), data;
+    
+                // Remove the formatting to get integer data for summation
+                var intVal = function ( i ) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '')*1 :
+                        typeof i === 'number' ?
+                            i : 0;
+                };
+    
+                // Total over all pages
+                total = api
+                    .column( 1 )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
+    
+                // Total over this page
+                pageTotal = api
+                    .column( 1, { page: 'all', filter:'applied'} )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
+    
+                // Update footer
+                $( api.column( 1 ).footer() ).html(
+                    '$ '+numberWithCommas(pageTotal)
+                );
+            }
         });
-        $('.buttons-print').addClass('btn mt-2');
-        $('.buttons-print').css('border-radius', '5px');
-        $('.buttons-print').css('width', '100px');
-        $('.buttons-print').css('background', 'none');
-        $('.buttons-print').css('background-color', '#E7D7B7');
-        $('.buttons-print').css('border', 'none');
-        $('.dt-buttons').addClass('float-right');
-        $('.dataTables_length').css('width', '50%')
         $('.dataTables_length').css('display', 'inline-block')
-        $('#DataTables_Table_0_filter').css('width', '50%')
-        $('#DataTables_Table_0_filter').css('display', 'inline-block')
-        $('#DataTables_Table_0_filter').css('text-align', 'right')
-        $('#deleteButton').prop('disabled', false)
-        $(document).ready(function() {
-            $('.table').DataTable().destroy();
-            $('.table').DataTable({
-                dom: 'Blfrtip',
-                buttons: [
-                    'print'
-                ]
-            });
-            // $('.buttons-print').css('display', 'none');
-            $('.buttons-print').addClass('btn mt-2');
-            $('.buttons-print').css('background', 'none');
-            $('.buttons-print').css('background-color', '#E7D7B7');
-            $('.buttons-print').css('border', 'none');
-            $('.buttons-print').css('border-radius', '5px');
-            $('.buttons-print').css('width', '100px');
-            $('.dt-buttons').addClass('float-right');
-            $('.dataTables_length').css('width', '50%')
-            $('.dataTables_length').css('display', 'inline-block')
-            $('#DataTables_Table_0_filter').css('width', '50%')
-            $('#DataTables_Table_0_filter').css('display', 'inline-block')
-            $('#DataTables_Table_0_filter').css('text-align', 'right')
-            $('#deleteButton').prop('disabled', false)
-        });
-    </script>
+        $('.dataTables_filter').css('display', 'inline-block')
+        $('.dataTables_filter').css('text-align', 'right')
+        $('.dt-buttons').addClass('float-right');
+        $('.buttons-print').css('border-radius', '5px');
 
-    <script>
-        $('#accountSelect').on('change', function() {
-            var accId = $(this).val();
-            $.ajax({
-                url: 'get_location_testinfo.php?account_id_location=' + accId,
-                type: 'POST',
+        formatDataTableButtons('.buttons-print')
+        formatDataTableButtons('.buttons-excel')
+        formatDataTableButtons('.buttons-csv')
+        formatDataTableButtons('.buttons-pdf')
 
-                success: function(data) {
-                    // alert(data);
-                    $('#locationSelect').html(data);
-                },
-                cache: false,
-                contentType: false,
-                processData: false
-            });
-        })
+        // $('.dataTables_length').css('width', '50%')
+        // $('#DataTables_Table_0_filter').css('width', '50%')
+    });
+
+    function formatDataTableButtons(className) {
+        $(className).addClass('btn mt-2');
+        $(className).css('border-radius', '5px');
+        $(className).css('width', '100px');
+        $(className).css('background', 'none');
+        $(className).css('background-color', '#E7D7B7');
+        $(className).css('border', 'none');
+    }
     </script>
 </body>
 

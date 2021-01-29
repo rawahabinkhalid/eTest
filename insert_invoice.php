@@ -1,63 +1,135 @@
 <?php
-
+/*
+billedType=existing_invoice
+invoiceNoBilled=35796
+invoiceNoBill=35796
+invoiceDateBill=2008-08-01
+division_id_bill=1855
+invoiceReferenceBill=Drug%20Screens%20%2F%20See%20Excel%20Spreadsheet
+invoiceTermsBill=30
+invoiceDueDateBill=2008-08-31
+sentBillDate=2008-07-31
+invoiceAmountDueBill=175
+invoiceAmountPaidBill=144
+invoiceCheckNoBill=398612
+invoiceCheckDateBill=2008-08-25
+invoicePayDateBill=2008-08-25
+test_id_added=653519
+*/
 include_once('conn.php');
 
-// if(isset($_GET['delete_user_id'])) {
-//     $userid =$_GET['delete_user_id'];
+$sqlcheck = 'SELECT * FROM invoice WHERE invoice_id = '. $_POST['invoiceNoBilled'];
+$resultcheck = mysqli_query($conn,$sqlcheck);
 
-//     $sql = 'DELETE FROM users WHERE `user_id` = ' . $userid;
-//     echo $sql;
-//     if($conn->query($sql))
-//     {
-//         echo "<script>alert('The data has been uploaded.');window.open('users.php', '_self');</script>";
-//         // echo "<script>alert('The data has been uploaded.');</script>";
-//         // header("location:users.php");
-//     }
-//     else
-//     {
-//         echo "<script>alert('Error occurred while saving data.');window.open('users.php', '_self');</script>";
-//         // echo 'Error! Try Again';
-//         mysqli_close($conn);
-//     }
-// } else {
-//     $userid =$_POST['userid'];
-//     $fname = $_POST['fname'];
-//     $lname = $_POST['lname'];
-//     $password = $_POST['password'];
-//     $admin = (isset($_POST['admin'])) ? $_POST['admin'] : 'F';
+$insertdate = date('Y-m-d H:i:s');
+$updatedate = date('Y-m-d H:i:s');
 
-//     if(isset($_POST['user_id']) && $_POST['user_id'] == ''){
-//         $sql = 'INSERT INTO `users` (`user_id`,`first_nm`,`last_nm`,`password`,`admin`,`account_id`) VALUES ("'.$userid.'","'.$fname.'","'.$lname.'","'.$password.'","'.$admin.'",'.$_POST['accountSelect'].')';
-//         // echo $sql;
+$paidInFull = (isset($_POST['paidInFull'])) ? $_POST['paidInFull'] : 'F';
+$sentBill = (isset($_POST['sentBill'])) ? $_POST['sentBill'] : 'F';
 
-//         if($conn->query($sql))
-//         {
-//             for($i=0; $i<count($_POST['locationSelect']); $i++){
-//                 $sqlLocation = 'INSERT INTO userlocation (user_id,location) VALUES ("'.$userid.'","'.$_POST['locationSelect'][$i].'");';
-//                 $conn->query($sqlLocation);
-//             }
-//             echo "<script>alert('The data has been uploaded.');window.open('users.php', '_self');</script>";
-//             // header("location:users.php");
-//         }
-//         else
-//         {
-//             echo "<script>alert('Error occurred while saving data.');window.open('users.php', '_self');</script>";
-//             // echo 'Error! Try Again';
-//             mysqli_close($conn);
-//         }
-//     } else if(isset($_POST['user_id']) && $_POST['user_id'] != ''){
-//         $sql1 = 'UPDATE users SET `user_id` = "'.$userid.'", `first_nm` = "'.$fname.'", `last_nm` = "'.$lname.'", `password` = "'.$password.'", `admin` = "'.$admin.'", `account_id` = '.$_POST['accountSelect'].' WHERE user_id ="'. $_POST['user_id'].'"';
-//         // echo $sql;
-//         if($conn->query($sql1))
-//         {
-            echo "<script>alert('The data has been uploaded.');window.open('invoice.php', '_self');</script>";
-//             // header("location:users.php");
-//         }
-//         else
-//         {
-//             echo "<script>alert('Error occurred while saving data.');window.open('users.php', '_self');</script>";
-//             mysqli_close($conn);
-//         }
-//     }
-// }
+if(mysqli_num_rows($resultcheck) > 0){
+
+    $sqlDelete = 'DELETE FROM invoice WHERE invoice_id = '. $_POST['invoiceNoBilled'];
+    $resultDelete = mysqli_query($conn,$sqlDelete);
+
+    if($resultDelete){
+
+        $sql = 'INSERT INTO invoice(
+            `invoice_id`,
+            `company_id`,
+            `account_id`,
+            `division_id`,
+            `terms`,
+            `reference_nm`,
+            `invoice_date`,
+            `check_no`,
+            `check_date`,
+            `amount_paid`,
+            `pay_date`,
+            `due_date`,
+            `paid`,
+            `comments`,
+            `insert_user_id`,
+            `insert_date`,
+            `update_user_id`,
+            `update_date`,
+            `sent`,
+            `send_type`,
+            `send_date`
+        )
+        VALUES( "'.$_POST['invoiceNoBilled'].'", 1 , "'.$_POST['account_id_bill'].'", "'.$_POST['division_id_bill'].'", 
+                "'.$_POST['invoiceTermsBill'].'", "'.$_POST['invoiceReferenceBill'].'", "'.$_POST['invoiceDateBill'].'", 
+                "'.$_POST['invoiceCheckNoBill'].'", "'.$_POST['invoiceCheckDateBill'].'", "'.$_POST['invoiceAmountPaidBill'].'", 
+                "'.$_POST['invoicePayDateBill'].'", "'.$_POST['invoiceDueDateBill'].'", "'.$paidInFull.'", "", "'.$_SESSION['userid'].'", 
+                "'.$insertdate.'", "'.$_SESSION['userid'].'", "'.$updatedate.'", "'.$sentBill.'", " ", "'.$_POST['sentBillDate'].'") ';
+        $result = mysqli_query($conn,$sql);
+
+        if($result){
+    
+            echo "The data has been uploaded.";
+
+        } else {
+            echo $sql;
+        }
+        
+    } else {
+
+        echo $sqlDelete;
+    }
+
+} else {
+
+    $sql = 'INSERT INTO invoice(
+        `company_id`,
+        `account_id`,
+        `division_id`,
+        `terms`,
+        `reference_nm`,
+        `invoice_date`,
+        `check_no`,
+        `check_date`,
+        `amount_paid`,
+        `pay_date`,
+        `due_date`,
+        `paid`,
+        `comments`,
+        `insert_user_id`,
+        `insert_date`,
+        `update_user_id`,
+        `update_date`,
+        `sent`,
+        `send_type`,
+        `send_date`
+    )
+    VALUES( 1 , "'.$_POST['account_id_bill'].'", "'.$_POST['division_id_bill'].'", 
+                "'.$_POST['invoiceTermsBill'].'", "'.$_POST['invoiceReferenceBill'].'", "'.$_POST['invoiceDateBill'].'", 
+                "'.$_POST['invoiceCheckNoBill'].'", "'.$_POST['invoiceCheckDateBill'].'", "'.$_POST['invoiceAmountPaidBill'].'", 
+                "'.$_POST['invoicePayDateBill'].'", "'.$_POST['invoiceDueDateBill'].'", "'.$paidInFull.'", "", "'.$_SESSION['userid'].'", 
+                "'.$insertdate.'", "'.$_SESSION['userid'].'", "'.$updatedate.'", "'.$sentBill.'", " ", "'.$_POST['sentBillDate'].'") ';
+
+    $result = mysqli_query($conn,$sql);
+    $id = $conn->insert_id;
+    $sql = 'INSERT INTO invoiceitems(
+        `invoice_id`,
+        `account_id`,
+        `test_id`,
+        `insert_user_id`,
+        `insert_date`
+    )
+    VALUES( "'.$id.'" , "'.$_POST['account_id_bill'].'", '.$_POST['test_id_added'].', 
+                "'.$_SESSION['userid'].'", "'.$insertdate.'") ';
+    $result = mysqli_query($conn,$sql);
+    $sqlUpdateTest = 'UPDATE test SET invoice_id = ' . $id . ' WHERE test_id = ' . $_POST['test_id_added'];
+    $result = mysqli_query($conn,$sqlUpdateTest);
+
+    if($result){
+
+        echo "The data has been uploaded.";
+
+    } else {
+        echo $sql;
+    }
+}
+
+
 ?>
