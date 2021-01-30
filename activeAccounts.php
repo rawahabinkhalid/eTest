@@ -9,7 +9,7 @@ include_once 'conn.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>Monthly Billing Report for LSU</title>
+    <title>Active Accounts</title>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
@@ -180,28 +180,29 @@ to get the desired effect
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1 class="m-0 text-dark"><b><u>Monthly Billing Report for LSU</u></b></h1>
+                                <h1 class="m-0 text-dark"><b><u>Active Accounts</u></b></h1>
                             </div><!-- /.col -->
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="landingscreen.php">Home</a></li>
 
-                                    <li class="breadcrumb-item active">Monthly Billing Report for LSU</li>
+                                    <li class="breadcrumb-item active">Active Accounts</li>
                                 </ol>
                             </div><!-- /.col -->
                         </div><!-- /.row -->
                         <form action="" method="POST" class="">
                             <div class="row no-print">
 
-                                <div class="col-md-6">
-                                    <!-- Account Name&emsp;
-                                    <input class="form-control" name="account_nm" value="<?php // echo (isset($_POST['account_nm'])) ? $_POST['account_nm'] : ''; ?>" style="width: calc(100% - 150px); display: inline-block;"> -->
+                                <div class="col-md-5">
+                                    <!-- Date Range&emsp; -->
+                                    <!-- <select class="form-control" style="width: calc(100% - 100px); display: inline-block;"><option>Please select Date Range</option> -->
+                                    
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                 </div>
                                 <div class="col-md-3" style="text-align: right">
                                     <!-- <button type="submit" name="filterData" class="btn mt-2" style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Filter</button>
-                                    <button type="button" class="btn mt-2" onclick="window.open('peopleSoftInfo.php.php', '_self');" style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Reset</button> -->
+                                    <button type="button" class="btn mt-2" onclick="window.open('weeklyReport.php', '_self');" style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Reset</button> -->
                                 </div>
                             </div>
 
@@ -255,91 +256,81 @@ to get the desired effect
                                         ?>
                                     </div>
                                 </div>
-                                <table id="table_users" class="table table-responsive">
+                                <table id="table_users" class="table">
                                     <thead class="thead-dark">
                                         <tr>
-                                            <th scope="col">account_nm</th>
-                                            <th scope="col">collection_date</th>
-                                            <th scope="col">amount</th>
+                                            <th scope="col">first_nm</th>
+                                            <th scope="col">last_nm</th>
                                             <th scope="col">emp_id</th>
-                                            <th scope="col">FirstName</th>
-                                            <th scope="col">LastName</th>
-                                            <th scope="col">PeopleSoftAcct</th>
-                                            <th scope="col">PeopleSoftFund</th>
-                                            <th scope="col">PeopleSoftDept</th>
-                                            <th scope="col">PeopleSoftProgram</th>
-                                            <th scope="col">PeopleSoftClass</th>
-                                            <th scope="col">PeopleSoftProject</th>
-                                            <th scope="col">req_no</th>
-                                            <th scope="col">type_nm</th>
-                                            <th scope="col">invoice_id</th>
+                                            <th scope="col">status</th>
+                                            <th scope="col">account_id</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
                                     <?php
+                                    // if (isset($_GET['page_no']) && $_GET['page_no']!="") {
+                                    //     $page_no = $_GET['page_no'];
+                                    // } else {
+                                    //     $page_no = 1;
+                                    // }
+                                    // $total_records_per_page = 10;
+                                    // $offset = ($page_no-1) * $total_records_per_page;
+                                    // $previous_page = $page_no - 1;
+                                    // $next_page = $page_no + 1;
+                                    // $adjacents = "2";
+
+                                    // $result_count = mysqli_query(
+                                    //     $conn,
+                                    //     "SELECT COUNT(*) As total_records FROM  test JOIN accounts ON accounts.account_id = test.account_id JOIN employees ON employees.emp_id = test.emp_id JOIN testtype ON testtype.type_id = test.type_id JOIN invoice ON invoice.invoice_id = test.invoice_id WHERE test.invoice_id IS NOT NULL ORDER BY test.account_id"
+                                    //     );
+                                    // $total_records = mysqli_fetch_array($result_count);
+                                    // $total_records = $total_records['total_records'];
+                                    // $total_no_of_pages = ceil($total_records / $total_records_per_page);
+                                    // $second_last = $total_no_of_pages - 1; // total pages minus 1
+
+                                    $i = 1;
+                                    // $sql = 'SELECT * FROM accounts';
+                                    // $result = $conn->query($sql);
+                                    // while ($row = $result->fetch_assoc()) {
+                                    //     $name = $row['account_nm'];
+                                    $totalAmount = 0;
+                                    $prevName = '';
+                                    // $sql1 = 'SELECT * FROM test JOIN accounts ON accounts.account_id = test.account_id JOIN employees ON employees.emp_id = test.emp_id JOIN testtype ON testtype.type_id = test.type_id JOIN invoice ON invoice.invoice_id = test.invoice_id WHERE test.invoice_id IS NOT NULL ORDER BY test.account_id LIMIT '.$offset.', '.$total_records_per_page.'';
                                     // $sql1 =
-                                    //     'SELECT * FROM divisions JOIN accounts ON divisions.account_id = accounts.account_id JOIN test ON test.account_id = accounts.account_id AND test.division_id = divisions.division_id JOIN  ORDER BY accounts.account_nm';
-                                    $sql1 = 'SELECT accounts.account_nm, test.collection_date, test.amount, test.emp_id, lsuform.FirstName, lsuform.LastName, lsuform.Account, lsuform.Fund, lsuform.Department, lsuform.Program, lsuform.Class, lsuform.Project, test.req_no, testtype.type_nm, test.invoice_id
-                                    FROM (lsuform INNER JOIN (test INNER JOIN accounts ON test.account_id = accounts.account_id) ON lsuform.SSN = test.emp_id) INNER JOIN testtype ON test.type_id = testtype.type_id
-                                    ORDER BY lsuform.LastName;
-                                    ;                                    
-                                    ';
+                                    //     'SELECT * FROM test JOIN accounts ON accounts.account_id = test.account_id JOIN employees ON employees.emp_id = test.emp_id JOIN testtype ON testtype.type_id = test.type_id JOIN invoice ON invoice.invoice_id = test.invoice_id WHERE test.invoice_id IS NOT NULL AND accounts.account_id = ' .
+                                    //     $account_filter .
+                                    //     $sqlDate .
+                                    //     ' ORDER BY collection_date, test.account_id';
+                                    $sql1 =
+                                        'SELECT * FROM employees JOIN accounts ON accounts.account_id = employees.account_id WHERE employees.status = "A"  AND accounts.account_id = ' .
+                                        $account_filter;
                                     // echo $sql1;
                                     $result1 = $conn->query($sql1);
                                     while ($row1 = $result1->fetch_assoc()) {
-
+                                        $account_id = $row1['account_id'];
+                                        $name = $row1['account_nm'];
+                                        
                                         echo '<tr>';
                                         echo '
                                         <td>';
                                         // echo '<span style="display: none">' .
                                         // $account_id . '_' . $prevName .
                                         // '</span>';                                            
-                                        echo $row1['account_nm'];
+                                        echo $row1['first_nm'];
                                         echo '</td>
                                         <td>' .
-                                            // $row1['collection_date'] .
-                                            date('d-M-Y', strtotime($row1['collection_date'])) .
+                                            $row1['last_nm'] .
                                             '</td>
-                                        <td>$ ' .
-                                        number_format(floatval($row1['amount']), 2) .
+                                          <td>' .
+                                            $row1['emp_id'] .
                                             '</td>
-                                        <td>' .
-                                        $row1['emp_id'] .
-                                        '</td>
-                                        <td>' .
-                                        $row1['FirstName'] .
-                                        '</td>
-                                        <td>' .
-                                        $row1['LastName'] .
-                                        '</td>
-                                        <td>' .
-                                        $row1['Account'] .
-                                        '</td>
-                                        <td>$ ' .
-                                        $row1['Fund'] .
-                                        '</td>
-                                        <td>' .
-                                        $row1['Department'] .
-                                        '</td>
-                                        <td>' .
-                                        $row1['Program'] .
-                                        '</td>
-                                        <td>' .
-                                        $row1['Class'] .
-                                        '</td>
-                                        <td>' .
-                                        $row1['Project'] .
-                                        '</td>
-                                        <td>' .
-                                        $row1['req_no'] .
-                                        '</td>
-                                        <td>' .
-                                        $row1['type_nm'] .
-                                        '</td>
-                                        <td>' .
-                                        $row1['invoice_id'] .
-                                        '</td>';
+                                          <td>' .
+                                            $row1['status'] .
+                                            '</td>
+                                          <td>' .
+                                            $row1['account_id'] .
+                                            '</td>';
                                         // echo '
                                         //       <td></td>
                                         //       <td></td>
@@ -467,12 +458,13 @@ to get the desired effect
     $(document).ready(function() {
         $('#table_users').DataTable({
             dom: 'Blfrtip',
+            "order": [[ 1, "asc" ]],
             "deferRender": true,
             buttons: [
-                { extend: 'print', footer: true },
+                { extend: 'print', footer: true, exportOptions: { columns: [ 0, 1, 2, 3 ] } },
                 { extend: 'excelHtml5', footer: true },
                 { extend: 'csvHtml5', footer: true },
-                { extend: 'pdfHtml5', footer: true }
+                { extend: 'pdfHtml5', footer: true, exportOptions: { columns: [ 0, 1, 2, 3 ] } }
             ]
         });
         $('.dataTables_length').css('display', 'inline-block')
@@ -501,4 +493,4 @@ to get the desired effect
     </script>
 </body>
 
-</html>peopleSoftInfo.php
+</html>

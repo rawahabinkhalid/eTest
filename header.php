@@ -799,14 +799,14 @@ if (!isset($_SESSION['userid'])) {
                         </ul>
                     </li>
 
-                    <li class="nav-item has-treeview">
+                    <!-- <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-copy"></i>
                             <p>
                                 Reports
                                 <i class="fas fa-angle-left right"></i>
                             </p>
-                        </a>
+                        </a> -->
                         <!-- <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a onclick="openURL('accounts_fees.php');" href="javascript:void();" class="nav-link">
@@ -892,14 +892,14 @@ if (!isset($_SESSION['userid'])) {
                                 </a>
                             </li>
                         </ul> -->
-                        <ul class="nav nav-treeview">
+                        <!-- <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a onclick="openURL('revenueReport.php');" href="javascript:void();" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Revenue Report</p>
                                 </a>
                             </li>
-                        </ul>
+                        </ul> -->
                         <!-- <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a onclick="openURL('testResult.php');" href="javascript:void();" class="nav-link">
@@ -908,23 +908,8 @@ if (!isset($_SESSION['userid'])) {
                                 </a>
                             </li>
                         </ul> -->
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a onclick="openURL('peopleSoftInfo.php');" href="javascript:void();" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>WP Peoplesoft Info</p>
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a onclick="openURL('mroReport.php');" href="javascript:void();" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>MRO Reports</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                        
+                    <!-- </li> -->
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-copy"></i>
@@ -933,6 +918,15 @@ if (!isset($_SESSION['userid'])) {
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <!-- <a onclick="#" href="javascript:void();" class="nav-link text-danger"> -->
+                                <a onclick="openURL('activeAccounts.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Active Accounts</p>
+                                </a>
+                            </li>
+                        </ul>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a onclick="openURL('frandReport.php');" href="javascript:void();" class="nav-link">
@@ -944,12 +938,88 @@ if (!isset($_SESSION['userid'])) {
                                     <p style="margin-left: 35px;">Active Employees for a<br>Random Account</p>
                                 </a>
                             </li>
-                        </ul>                        
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="#" href="javascript:void();" class="nav-link text-danger">
+                                <!-- <a onclick="openURL('accountUsageReport.php');" href="javascript:void();" class="nav-link"> -->
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Account Usage Report</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <!-- <a onclick="#" href="javascript:void();" class="nav-link text-danger"> -->
+                                <a onclick="openURL('companyDetailReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Company Detail Report</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="#" href="javascript:void();" class="nav-link text-danger">
+                                <!-- <a onclick="openURL('companyDrugReport.php');" href="javascript:void();" class="nav-link"> -->
+                                    <i class="far fa-circle nav-icon" style="margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);"></i>
+                                    <p style="margin-left: 35px;">Company Tested for<br>a Certain Drug</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="#" href="javascript:void();" class="nav-link text-danger">
+                                <!-- <a onclick="openURL('emailReport.php');" href="javascript:void();" class="nav-link"> -->
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Email Report</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <!-- <a onclick="#" href="javascript:void();" class="nav-link text-danger"> -->
+                                <a onclick="openURL('employeeLookupReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Employee Lookup Report</p>
+                                </a>
+                            </li>
+                        </ul>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a onclick="openURL('accounts_fees.php');" href="javascript:void();" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Fees Report</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <!-- <a onclick="#" href="javascript:void();" class="nav-link text-danger"> -->
+                                <a onclick="openURL('invoiceLookupReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Invoice Lookup Report</p>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="openURL('mroReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>MRO Reports</p>
+                                </a>
+                            </li>
+                        </ul>                        
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <!-- <a onclick="#" href="javascript:void();" class="nav-link text-danger"> -->
+                                <a onclick="openURL('randomResultsReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Random Results Report</p>
                                 </a>
                             </li>
                         </ul>
@@ -981,6 +1051,15 @@ if (!isset($_SESSION['userid'])) {
                         </ul>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
+                                <!-- <a onclick="#" href="javascript:void();" class="nav-link text-danger"> -->
+                                <a onclick="openURL('invoiceSumReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Invoice Sum Report</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
                                 <a onclick="openURL('notBilledReport.php');" href="javascript:void();" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Items Not Billed</p>
@@ -995,8 +1074,42 @@ if (!isset($_SESSION['userid'])) {
                                 </a>
                             </li>
                         </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <!-- <a onclick="#" href="javascript:void();" class="nav-link text-danger"> -->
+                                <a onclick="openURL('lsuMaintenance.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>LSU Maintenance</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <!-- <a onclick="#" href="javascript:void();" class="nav-link text-danger"> -->
+                                <a onclick="openURL('monthlyBillingReportForBids.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon" style="margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);"></i>
+                                    <p style="margin-left: 35px;">Monthly Billing Report<br>for Bids</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <!-- <a onclick="#" href="javascript:void();" class="nav-link text-danger"> -->
+                                <a onclick="openURL('peopleSoftInfo.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon" style="margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);"></i>
+                                    <p style="margin-left: 35px;">Monthly Billing Report<br>for LSU</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
-
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-copy"></i>
@@ -1018,6 +1131,19 @@ if (!isset($_SESSION['userid'])) {
                                 <a onclick="openURL('misReport.php');" href="javascript:void();" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>MIS Report</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a onclick="#" href="javascript:void();" class="nav-link text-danger">
+                                <!-- <a onclick="openURL('monthlyBillingReportForBids.php');" href="javascript:void();" class="nav-link"> -->
+                                    <i class="far fa-circle nav-icon" style="margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);"></i>
+                                    <p style="margin-left: 35px;">Negative & Positive<br>Test Results</p>
                                 </a>
                             </li>
                         </ul>
@@ -1880,7 +2006,8 @@ if (!isset($_SESSION['userid'])) {
         my_url_location == 'billingReport.php' || my_url_location == 'labelsBillingReport.php' ||
         my_url_location == 'postBilledReport.php' ||
         my_url_location == 'unpaidInvoiceReport.php' || my_url_location == 'revenueReport.php' ||
-        my_url_location == 'peopleSoftInfo.php') {
+        my_url_location == 'peopleSoftInfo.php' ||
+        my_url_location == 'lsuMaintenance.php') {
         $('#accounts_select').attr('disabled', true);
         $('#accounts_select').hide();
     }

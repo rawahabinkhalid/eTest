@@ -9,7 +9,7 @@ include_once 'conn.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>Monthly Billing Report for LSU</title>
+    <title>LSU Maintenance</title>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
@@ -180,13 +180,13 @@ to get the desired effect
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1 class="m-0 text-dark"><b><u>Monthly Billing Report for LSU</u></b></h1>
+                                <h1 class="m-0 text-dark"><b><u>LSU Maintenance</u></b></h1>
                             </div><!-- /.col -->
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="landingscreen.php">Home</a></li>
 
-                                    <li class="breadcrumb-item active">Monthly Billing Report for LSU</li>
+                                    <li class="breadcrumb-item active">LSU Maintenance</li>
                                 </ol>
                             </div><!-- /.col -->
                         </div><!-- /.row -->
@@ -255,58 +255,46 @@ to get the desired effect
                                         ?>
                                     </div>
                                 </div>
-                                <table id="table_users" class="table table-responsive">
+                                <table id="table_users" class="table table-responsive table-hover">
                                     <thead class="thead-dark">
                                         <tr>
-                                            <th scope="col">account_nm</th>
-                                            <th scope="col">collection_date</th>
-                                            <th scope="col">amount</th>
-                                            <th scope="col">emp_id</th>
-                                            <th scope="col">FirstName</th>
-                                            <th scope="col">LastName</th>
+                                            <th scope="col">Client</th>
+                                            <th scope="col">Department</th>
+                                            <th scope="col">First Name</th>
+                                            <th scope="col">Last Name</th>
+                                            <th scope="col">SSN</th>
+                                            <th scope="col">Specimen ID</th>
+                                            <th scope="col">Collection Site</th>
                                             <th scope="col">PeopleSoftAcct</th>
                                             <th scope="col">PeopleSoftFund</th>
                                             <th scope="col">PeopleSoftDept</th>
                                             <th scope="col">PeopleSoftProgram</th>
                                             <th scope="col">PeopleSoftClass</th>
                                             <th scope="col">PeopleSoftProject</th>
-                                            <th scope="col">req_no</th>
-                                            <th scope="col">type_nm</th>
-                                            <th scope="col">invoice_id</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
                                     <?php
+                                    $i = 0;
                                     // $sql1 =
                                     //     'SELECT * FROM divisions JOIN accounts ON divisions.account_id = accounts.account_id JOIN test ON test.account_id = accounts.account_id AND test.division_id = divisions.division_id JOIN  ORDER BY accounts.account_nm';
-                                    $sql1 = 'SELECT accounts.account_nm, test.collection_date, test.amount, test.emp_id, lsuform.FirstName, lsuform.LastName, lsuform.Account, lsuform.Fund, lsuform.Department, lsuform.Program, lsuform.Class, lsuform.Project, test.req_no, testtype.type_nm, test.invoice_id
-                                    FROM (lsuform INNER JOIN (test INNER JOIN accounts ON test.account_id = accounts.account_id) ON lsuform.SSN = test.emp_id) INNER JOIN testtype ON test.type_id = testtype.type_id
-                                    ORDER BY lsuform.LastName;
-                                    ;                                    
-                                    ';
+                                    $sql1 = 'SELECT * FROM lsuform ORDER BY lsuform.LastName;';
                                     // echo $sql1;
                                     $result1 = $conn->query($sql1);
                                     while ($row1 = $result1->fetch_assoc()) {
 
-                                        echo '<tr>';
+                                        echo '<tr onclick="window.open('."'".'viewLSU_Form.php?account='.$_GET['account'].'&id='.$row1['Id']."'".', '."'".'_self'."'".')">';
                                         echo '
                                         <td>';
                                         // echo '<span style="display: none">' .
                                         // $account_id . '_' . $prevName .
                                         // '</span>';                                            
-                                        echo $row1['account_nm'];
+                                        echo $row1['Client'];
                                         echo '</td>
                                         <td>' .
-                                            // $row1['collection_date'] .
-                                            date('d-M-Y', strtotime($row1['collection_date'])) .
+                                            $row1['Dept'] .
                                             '</td>
-                                        <td>$ ' .
-                                        number_format(floatval($row1['amount']), 2) .
-                                            '</td>
-                                        <td>' .
-                                        $row1['emp_id'] .
-                                        '</td>
                                         <td>' .
                                         $row1['FirstName'] .
                                         '</td>
@@ -314,9 +302,18 @@ to get the desired effect
                                         $row1['LastName'] .
                                         '</td>
                                         <td>' .
-                                        $row1['Account'] .
+                                        $row1['SSN'] .
+                                        '</td>
+                                        <td>' .
+                                        $row1['Specimen'] .
+                                        '</td>
+                                        <td>' .
+                                        $row1['Collection'] .
                                         '</td>
                                         <td>$ ' .
+                                        $row1['Account'] .
+                                        '</td>
+                                        <td>' .
                                         $row1['Fund'] .
                                         '</td>
                                         <td>' .
@@ -330,15 +327,6 @@ to get the desired effect
                                         '</td>
                                         <td>' .
                                         $row1['Project'] .
-                                        '</td>
-                                        <td>' .
-                                        $row1['req_no'] .
-                                        '</td>
-                                        <td>' .
-                                        $row1['type_nm'] .
-                                        '</td>
-                                        <td>' .
-                                        $row1['invoice_id'] .
                                         '</td>';
                                         // echo '
                                         //       <td></td>

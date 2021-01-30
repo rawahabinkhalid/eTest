@@ -22,10 +22,11 @@ if(isset($_GET['delete_account_id'])) {
         mysqli_close($conn);
     }
 } else {
+
     $accountsData = json_decode($_POST['accountsData']);
     // print_r($accountsData);
     if(isset($accountsData->account_id) && $accountsData->account_id == ''){
-        $sql = 'INSERT INTO `accounts` (`account_code`, `account_nm`,`ar_funding_code`) VALUES ("'.$accountsData->account_code.'", "'.$accountsData->account_nm.'","'.$accountsData->ar_funding_code.'")';
+        $sql = 'INSERT INTO `accounts` (`account_code`, `account_nm`,`ar_funding_code`, `active_flg`, `random_flg`) VALUES ("'.$accountsData->account_code.'", "'.$accountsData->account_nm.'","'.$accountsData->ar_funding_code.'","'.$accountsData->active_flg.'","'.$accountsData->random_flg.'")';
         // echo $sql;
         if($conn->query($sql)) {
             $account_id = $conn->insert_id;
@@ -78,7 +79,8 @@ if(isset($_GET['delete_account_id'])) {
             mysqli_close($conn);
         }
     } else if(isset($accountsData->account_id) && $accountsData->account_id != ''){
-        $sql = 'UPDATE `accounts` SET `account_code` = "'.$accountsData->account_code.'", `account_nm` = "'.$accountsData->account_nm.'", `ar_funding_code` = "'.$accountsData->ar_funding_code.'"  WHERE account_id ='.$accountsData->account_id;
+        // echo 'in else';
+        $sql = 'UPDATE `accounts` SET `account_code` = "'.$accountsData->account_code.'", `account_nm` = "'.$accountsData->account_nm.'", `ar_funding_code` = "'.$accountsData->ar_funding_code.'", `active_flg` = "'.$accountsData->active_flg.'", `random_flg` = "'.$accountsData->random_flg.'"   WHERE account_id ='.$accountsData->account_id;
         // echo $sql;
         if($conn->query($sql))
         {

@@ -94,6 +94,8 @@ include_once "conn.php";
 
             $('#account_id').val('');
             $('#account_nm').val('');
+            $('#is_active').attr('checked', false);
+            $('#is_random').attr('checked', false);
             $('#ar_funding_code').val('');
             $('#account_code').val('');
 
@@ -552,6 +554,8 @@ include_once "conn.php";
             accountsData = {
                 'account_id': $('#account_id').val(),
                 'account_nm': $('#account_nm').val(),
+                'active_flg': ($('#is_active').is(':checked')) ? 'T' : 'F',
+                'random_flg': ($('#is_random').is(':checked')) ? 'T' : 'F',
                 'account_code': $('#account_code').val(),
                 'ar_funding_code': $('#ar_funding_code').val(),
                 'locations': locations,
@@ -603,6 +607,14 @@ include_once "conn.php";
                     $('#employeesindex').val('');
                     $('#account_id').val(data.accounts_data.account_id);
                     $('#account_nm').val(data.accounts_data.account_nm);
+                    if(data.accounts_data.active_flg == 'T')
+                        $('#is_active').prop('checked', true);
+                    else
+                        $('#is_active').prop('checked', false);
+                    if(data.accounts_data.random_flg == 'T')
+                        $('#is_random').prop('checked', true);
+                    else
+                        $('#is_random').prop('checked', false);
                     $('#account_code').val(data.accounts_data.account_code);
                     $('#ar_funding_code').val(data.accounts_data.ar_funding_code);
 
@@ -820,6 +832,12 @@ to get the desired effect
                                     </div>
                                     <div class="col-1">Code: </div>
                                     <div class="col-4"><input class="form-control" id="account_code" name="account_code">
+                                    </div>
+                                </div>
+                                <div class="row mt-1">
+                                    <div class="col-2"><label for="is_active"><input type="checkbox" id="is_active" name="is_active" value="T">&emsp;Active</label>
+                                    </div>
+                                    <div class="col-2"><label for="is_random"><input type="checkbox" id="is_random" name="is_random" value="T">&emsp;Random</label>
                                     </div>
                                 </div>
                                 <br>

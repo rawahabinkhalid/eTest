@@ -9,7 +9,7 @@ include_once 'conn.php'; ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>Monthly Billing Report for LSU</title>
+    <title>Random Results Report</title>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
@@ -180,34 +180,38 @@ to get the desired effect
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1 class="m-0 text-dark"><b><u>Monthly Billing Report for LSU</u></b></h1>
+                                <h1 class="m-0 text-dark"><b><u>Random Results Report</u></b></h1>
                             </div><!-- /.col -->
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="landingscreen.php">Home</a></li>
 
-                                    <li class="breadcrumb-item active">Monthly Billing Report for LSU</li>
+                                    <li class="breadcrumb-item active">Random Results Report</li>
                                 </ol>
                             </div><!-- /.col -->
                         </div><!-- /.row -->
                         <form action="" method="POST" class="">
                             <div class="row no-print">
 
-                                <div class="col-md-6">
-                                    <!-- Account Name&emsp;
-                                    <input class="form-control" name="account_nm" value="<?php // echo (isset($_POST['account_nm'])) ? $_POST['account_nm'] : ''; ?>" style="width: calc(100% - 150px); display: inline-block;"> -->
+                                <div class="col-md-3">
+                                    Account Name&emsp;
+                                    <input class="form-control" name="account_nm" value="<?php echo (isset($_POST['account_nm'])) ? $_POST['account_nm'] : ''; ?>" style="width: calc(100% - 150px); display: inline-block;">
+                                </div>
+                                <div class="col-md-3">
+                                    Reason Name&emsp;
+                                    <input class="form-control" name="reason_nm" value="<?php echo (isset($_POST['reason_nm'])) ? $_POST['reason_nm'] : ''; ?>" style="width: calc(100% - 150px); display: inline-block;">
                                 </div>
                                 <div class="col-md-3">
                                 </div>
                                 <div class="col-md-3" style="text-align: right">
-                                    <!-- <button type="submit" name="filterData" class="btn mt-2" style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Filter</button>
-                                    <button type="button" class="btn mt-2" onclick="window.open('peopleSoftInfo.php.php', '_self');" style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Reset</button> -->
+                                    <button type="submit" name="filterData" class="btn mt-2" style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Filter</button>
+                                    <button type="button" class="btn mt-2" onclick="window.open('randomResultsReport.php', '_self');" style="background-color:#E7D7B7; border-radius:5px; width: 100px;">Reset</button>
                                 </div>
                             </div>
 
                             <!-- </form> -->
                             <!-- <br><br> -->
-                            <?php if (isset($_GET['account'])) { ?>
+                            <?php if (isset($_GET['account']) && (isset($_POST['account_nm']) || isset($_POST['reason_nm']))) { ?>
                                 <!-- <form action="" method="POST" class=""> -->
                                 <div class="row no-print">
                                     <div class="col-md-12" style="text-align: right">
@@ -223,6 +227,14 @@ to get the desired effect
                                 <div class="row">
                                     <div class="col-md-12">
                                         <?php
+                                        $account_nm = "";
+                                        $reason_nm = "";
+                                        $last_nm = "";
+                                        if(isset($_POST['account_nm']))
+                                            $account_nm = $_POST['account_nm'];
+                                        if(isset($_POST['reason_nm']))
+                                            $reason_nm = $_POST['reason_nm'];
+
                                         $account_filter = $_GET['account'];
                                         $sqlDate = '';
                                         if (
@@ -258,21 +270,13 @@ to get the desired effect
                                 <table id="table_users" class="table table-responsive">
                                     <thead class="thead-dark">
                                         <tr>
-                                            <th scope="col">account_nm</th>
                                             <th scope="col">collection_date</th>
-                                            <th scope="col">amount</th>
+                                            <th scope="col">account_nm</th>
                                             <th scope="col">emp_id</th>
-                                            <th scope="col">FirstName</th>
-                                            <th scope="col">LastName</th>
-                                            <th scope="col">PeopleSoftAcct</th>
-                                            <th scope="col">PeopleSoftFund</th>
-                                            <th scope="col">PeopleSoftDept</th>
-                                            <th scope="col">PeopleSoftProgram</th>
-                                            <th scope="col">PeopleSoftClass</th>
-                                            <th scope="col">PeopleSoftProject</th>
-                                            <th scope="col">req_no</th>
-                                            <th scope="col">type_nm</th>
-                                            <th scope="col">invoice_id</th>
+                                            <th scope="col">first_nm</th>
+                                            <th scope="col">last_nm</th>
+                                            <th scope="col">reason_nm</th>
+                                            <th scope="col">amount</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -280,10 +284,11 @@ to get the desired effect
                                     <?php
                                     // $sql1 =
                                     //     'SELECT * FROM divisions JOIN accounts ON divisions.account_id = accounts.account_id JOIN test ON test.account_id = accounts.account_id AND test.division_id = divisions.division_id JOIN  ORDER BY accounts.account_nm';
-                                    $sql1 = 'SELECT accounts.account_nm, test.collection_date, test.amount, test.emp_id, lsuform.FirstName, lsuform.LastName, lsuform.Account, lsuform.Fund, lsuform.Department, lsuform.Program, lsuform.Class, lsuform.Project, test.req_no, testtype.type_nm, test.invoice_id
-                                    FROM (lsuform INNER JOIN (test INNER JOIN accounts ON test.account_id = accounts.account_id) ON lsuform.SSN = test.emp_id) INNER JOIN testtype ON test.type_id = testtype.type_id
-                                    ORDER BY lsuform.LastName;
-                                    ;                                    
+                                    $sql1 = 'SELECT test.collection_date, accounts.account_nm, test.emp_id, employees.first_nm, employees.last_nm, reasons.reason_nm, test.amount
+                                    FROM (divisions INNER JOIN (((accounts INNER JOIN test ON accounts.account_id = test.account_id) INNER JOIN employees ON (test.emp_id = employees.emp_id) AND (test.account_id = employees.account_id)) INNER JOIN reasons ON test.reason_id = reasons.reason_id) ON (divisions.division_id = test.division_id) AND (divisions.account_id = test.account_id)) INNER JOIN drugform AS drugform_1 ON test.form_id = drugform_1.form_id
+                                    GROUP BY test.collection_date, accounts.account_nm, test.emp_id, employees.first_nm, employees.last_nm, reasons.reason_nm, test.amount, test.result, drugform_1.form_nm, divisions.division_nm
+                                    HAVING (((accounts.account_nm) Like "%'.$account_nm.'%") AND ((reasons.reason_nm) LIKE "%'.$reason_nm.'%"))
+                                    ORDER BY employees.last_nm;
                                     ';
                                     // echo $sql1;
                                     $result1 = $conn->query($sql1);
@@ -295,50 +300,25 @@ to get the desired effect
                                         // echo '<span style="display: none">' .
                                         // $account_id . '_' . $prevName .
                                         // '</span>';                                            
-                                        echo $row1['account_nm'];
+                                        echo $row1['collection_date'];
                                         echo '</td>
                                         <td>' .
-                                            // $row1['collection_date'] .
-                                            date('d-M-Y', strtotime($row1['collection_date'])) .
+                                            $row1['account_nm'] .
                                             '</td>
-                                        <td>$ ' .
+                                        <td>' .
+                                            $row1['emp_id'] .
+                                            '</td>
+                                        <td>' .
+                                            $row1['first_nm'] .
+                                            '</td>
+                                        <td>' .
+                                            $row1['last_nm'] .
+                                            '</td>
+                                        <td>' .
+                                        $row1['reason_nm'] .
+                                        '</td>
+                                        <td>' .
                                         number_format(floatval($row1['amount']), 2) .
-                                            '</td>
-                                        <td>' .
-                                        $row1['emp_id'] .
-                                        '</td>
-                                        <td>' .
-                                        $row1['FirstName'] .
-                                        '</td>
-                                        <td>' .
-                                        $row1['LastName'] .
-                                        '</td>
-                                        <td>' .
-                                        $row1['Account'] .
-                                        '</td>
-                                        <td>$ ' .
-                                        $row1['Fund'] .
-                                        '</td>
-                                        <td>' .
-                                        $row1['Department'] .
-                                        '</td>
-                                        <td>' .
-                                        $row1['Program'] .
-                                        '</td>
-                                        <td>' .
-                                        $row1['Class'] .
-                                        '</td>
-                                        <td>' .
-                                        $row1['Project'] .
-                                        '</td>
-                                        <td>' .
-                                        $row1['req_no'] .
-                                        '</td>
-                                        <td>' .
-                                        $row1['type_nm'] .
-                                        '</td>
-                                        <td>' .
-                                        $row1['invoice_id'] .
                                         '</td>';
                                         // echo '
                                         //       <td></td>
@@ -501,4 +481,4 @@ to get the desired effect
     </script>
 </body>
 
-</html>peopleSoftInfo.php
+</html>randomResultsReport.php
