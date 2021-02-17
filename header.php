@@ -47,6 +47,18 @@ if (!isset($_SESSION['userid'])) {
         }
     }
 
+    .fa-usd:before {
+        content: "\f155";
+    }
+
+    .fa-area-chart:before {
+        content: "\f1fe";
+    }
+
+    .fa-google-wallet:before {
+        content: "\f1ee" !important;
+    }
+
     @media only screen and (max-width: 800px) {
         #nav-menu {
             /* display: none; */
@@ -396,7 +408,7 @@ if (!isset($_SESSION['userid'])) {
                     </li>
                     <li class="nav-item">
                         <a href="personal.php" class="nav-link">
-                            <i class="nav-icon fas fa-copy"></i>
+                            <i class="nav-icon fas fa-user"></i>
                             <p>
                                 Personal
                             </p>
@@ -467,7 +479,7 @@ if (!isset($_SESSION['userid'])) {
                     <li class="nav-item has-treeview">
                         <a onclick="openURL('invoice.php');" href="javascript:void();" class="nav-link">
                             <!-- <a href="" class="nav-link"> -->
-                            <i class="nav-icon fas fa-copy "></i>
+                            <i class="nav-icon fas fa-file-invoice"></i>
                             <p>
                                 Invoice
                             </p>
@@ -476,7 +488,7 @@ if (!isset($_SESSION['userid'])) {
                     <li class="nav-item has-treeview">
                         <a onclick="openURL('randomemployees.php');" href="javascript:void();" class="nav-link">
                             <!-- <a href="" class="nav-link"> -->
-                            <i class="nav-icon fas fa-copy "></i>
+                            <i class="nav-icon fa fa-random"></i>
                             <p>
                                 Random
                             </p>
@@ -484,7 +496,7 @@ if (!isset($_SESSION['userid'])) {
                     </li>
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-copy"></i>
+                            <i class="nav-icon fa fa-file"></i>
                             <p>
                                 File
                                 <i class="fas fa-angle-left right"></i>
@@ -609,7 +621,7 @@ if (!isset($_SESSION['userid'])) {
                 </li> -->
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-copy"></i>
+                            <i class="nav-icon fa fa-list-alt"></i>
                             <p>
                                 Results
                                 <i class="fas fa-angle-left right"></i>
@@ -675,7 +687,7 @@ if (!isset($_SESSION['userid'])) {
                     </li>
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-copy"></i>
+                            <i class="nav-icon fa fa-desktop"></i>
                             <p>
                                 System
                                 <i class="fas fa-angle-left right"></i>
@@ -912,7 +924,7 @@ if (!isset($_SESSION['userid'])) {
                     <!-- </li> -->
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-copy"></i>
+                            <i class="nav-icon fa fa-university"></i>
                             <p>
                                 Account Reports
                                 <i class="fas fa-angle-left right"></i>
@@ -1027,7 +1039,7 @@ if (!isset($_SESSION['userid'])) {
 
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-copy"></i>
+                            <i class="nav-icon fas fa-usd"></i>
                             <p>
                                 Billing Reports
                                 <i class="fas fa-angle-left right"></i>
@@ -1112,7 +1124,7 @@ if (!isset($_SESSION['userid'])) {
                     </li>
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-copy"></i>
+                            <i class="nav-icon fa fa-area-chart"></i>
                             <p>
                                 Company Reports
                                 <i class="fas fa-angle-left right"></i>
@@ -1185,7 +1197,7 @@ if (!isset($_SESSION['userid'])) {
                     </li>
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-copy"></i>
+                            <i class="nav-icon fa fa-question-circle"></i>
                             <p>
                                 Help
                                 <i class="fas fa-angle-left right"></i>
@@ -1208,7 +1220,7 @@ if (!isset($_SESSION['userid'])) {
                     </li>
                     <li class="nav-item">
                         <a href="personal.php" class="nav-link">
-                            <i class="nav-icon fas fa-copy"></i>
+                            <i class="nav-icon fas fa-user"></i>
                             <p>
                                 Personal
                             </p>

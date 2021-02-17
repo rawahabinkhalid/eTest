@@ -461,10 +461,12 @@ to get the desired effect
             "order": [[ 1, "asc" ]],
             "deferRender": true,
             buttons: [
-                { extend: 'print', footer: true, exportOptions: { columns: [ 0, 1, 2, 3 ] } },
+                { extend: 'print', footer: true, exportOptions: {
+                    columns: [ 0, 1, 2, 3 ]
+                } },
                 { extend: 'excelHtml5', footer: true },
                 { extend: 'csvHtml5', footer: true },
-                { extend: 'pdfHtml5', footer: true, exportOptions: { columns: [ 0, 1, 2, 3 ] } }
+                { extend: 'pdfHtml5', footer: true }
             ]
         });
         $('.dataTables_length').css('display', 'inline-block')

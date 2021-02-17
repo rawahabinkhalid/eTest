@@ -79,9 +79,9 @@ if(isset($_GET['delete_account_id'])) {
             mysqli_close($conn);
         }
     } else if(isset($accountsData->account_id) && $accountsData->account_id != ''){
-        // echo 'in else';
+        echo 'in else';
         $sql = 'UPDATE `accounts` SET `account_code` = "'.$accountsData->account_code.'", `account_nm` = "'.$accountsData->account_nm.'", `ar_funding_code` = "'.$accountsData->ar_funding_code.'", `active_flg` = "'.$accountsData->active_flg.'", `random_flg` = "'.$accountsData->random_flg.'"   WHERE account_id ='.$accountsData->account_id;
-        // echo $sql;
+        echo $sql;
         if($conn->query($sql))
         {
             $account_id = $accountsData->account_id;
