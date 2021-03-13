@@ -172,7 +172,10 @@ to get the desired effect
                                     <label>Emp ID:</label>
                                     <input type="hidden" id="getEmployeeId" placeholder="" value="<?php if (isset($row['emp_id'])) echo $row['emp_id']; ?>" style="width: 240px; height: 31px; text-align:center">
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input style="width: 240px; height: 31px;" id="employee_select" disabled value="<?php if (isset($row['emp_id'])) echo $row['specimen_id'] . ' - ' . $row['first_nm'] . ' ' . $row['last_nm']; ?>">
+                                    <select style="width: 240px; height: 31px;" id="employee_select">
+                                        <option id="getEmployee" value="<?php if (isset($row['emp_id'])) echo $row['emp_id']; ?>">
+                                            <?php if (isset($row['emp_id'])) echo $row['specimen_id'] . ' - ' . $row['first_nm'] . ' ' . $row['last_nm']; ?></option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Test Reason:</label>
@@ -341,20 +344,15 @@ to get the desired effect
                         </div>
                         <br>
 
-                        <?php if ($_SESSION['usertype'] == 'admin') { ?>
+                        <?php if ($_SESSION['usertype'] != 'accounts') { ?>
 
                             <button type="button" name="submitPurchase" class="btn ml-1" style="background-color:#E7D7B7; border-radius:12px; width: 100px;" onclick="window.open('testinfo.php', '_self');">New</button>
                         <?php } ?>
                         <button type="button" name="" id="" class="btn ml-1" style="background-color:#E7D7B7; border-radius:12px; width: 100px;" onclick="window.open('viewMROReport.php?id=<?php echo $_GET['id']; ?>', '_blank'
                             );">Print</button>
                         <button type="button" name="" id="" class="btn ml-1" style="background-color:#E7D7B7; border-radius:12px; width: 100px;" data-toggle="modal" data-target="#myModal_Send">Email</button>
-
-                        <?php if ($_SESSION['usertype'] == 'admin') { ?>
-
-                            <button type="button" name="submitSave" id="submitSave" class="btn ml-1"
-                                style="background-color:#E7D7B7; border-radius:12px; width: 100px;">Update</button>
-                        <?php } ?>
-
+                        <button type="button" name="submitSave" id="submitSave" class="btn ml-1"
+                            style="background-color:#E7D7B7; border-radius:12px; width: 100px;">Update</button>
                         <!-- <button type="button" name="submitDelete" id="submitDelete" class="btn ml-1"
                             style="background-color:#E7D7B7; border-radius:12px; width: 100px;">Delete</button> -->
                         <br>
@@ -530,7 +528,7 @@ to get the desired effect
     $('#sampletype').select2();
     $('#testtype').select2();
     $('#selectForm').select2();
-    // $('#employee_select').select2();
+    $('#employee_select').select2();
     $('#practitioner_default').select2({
         width: '100%'
     });
@@ -548,11 +546,11 @@ to get the desired effect
     });
     </script>
     <script>
-    // $('#employee_select').on('select2:select', function (e) {
-    //     $('span[aria-labelledby ="select2-employee_select-container"]').removeClass('validation-error')
-    //     var data = e.params.data;
-    //     console.log(data);
-    // });
+    $('#employee_select').on('select2:select', function (e) {
+        $('span[aria-labelledby ="select2-employee_select-container"]').removeClass('validation-error')
+        var data = e.params.data;
+        console.log(data);
+    });
     $('#location_select').on('select2:select', function (e) {
         $('span[aria-labelledby ="select2-location_select-container"]').removeClass('validation-error')
         var data = e.params.data;
@@ -664,12 +662,12 @@ to get the desired effect
         let account = new URL(location.href).searchParams.get("account");
         if(account != null && account != '' && account != 'null') {
             let employee = new URL(location.href).searchParams.get("employee");
-            // if(employee != undefined && employee != null && employee != '' && employee != 'null') {
-            //     console.log(employee)
-            //     $('#employee_select').val(employee);
-            //     $('#employee_select').trigger('change'); // Notify any JS components that the value changed
+            if(employee != undefined && employee != null && employee != '' && employee != 'null') {
+                console.log(employee)
+                $('#employee_select').val(employee);
+                $('#employee_select').trigger('change'); // Notify any JS components that the value changed
 
-            // }
+            }
 
             $('#select_account_div').css('display', 'none');
             $('#main_div_main').css('display', 'block');
@@ -705,24 +703,24 @@ to get the desired effect
     </script>
     <script>
 
-    // $.ajax({
-    //     type: "GET",
-    //     url: "get_location_testinfo.php?account_id_employee=" + $('#accounts_select')
-    //         .val(),
-    //     success: function(resultData) {
-    //         console.log(resultData);
-    //         $('#employee_select').html(resultData);
-    //         let employee = $('#getEmployeeId').val();
-    //         $('#employee_select').val(employee);
-    //         $('#employee_select').trigger('change'); // Notify any JS components that the value changed
-    //         // if(employee != undefined && employee != null && employee != '' && employee != 'null') {
+    $.ajax({
+        type: "GET",
+        url: "get_location_testinfo.php?account_id_employee=" + $('#accounts_select')
+            .val(),
+        success: function(resultData) {
+            console.log(resultData);
+            $('#employee_select').html(resultData);
+            let employee = $('#getEmployeeId').val();
+            $('#employee_select').val(employee);
+            $('#employee_select').trigger('change'); // Notify any JS components that the value changed
+            // if(employee != undefined && employee != null && employee != '' && employee != 'null') {
 
-    //         // $('#employee_select').val(employee);
-    //         // $('#employee_select').trigger('change'); // Notify any JS components that the value changed
-    //         // }
-    //         // window.open("accounts.php", "_self");
-    //     }
-    // });
+            // $('#employee_select').val(employee);
+            // $('#employee_select').trigger('change'); // Notify any JS components that the value changed
+            // }
+            // window.open("accounts.php", "_self");
+        }
+    });
     </script>
     <script>
 
@@ -847,7 +845,7 @@ to get the desired effect
                 'invoice_no': $('#invoice_no').val(),
                 'requisition_no': $('#requisitionNo').val(),
                 'accounts_select': $('#accounts_select').val(),
-                'employee_select': $('#getEmployeeId').val(),
+                'employee_select': $('#employee_select').val(),
                 'location_select': $('#location_select').val(),
                 'testreason': $('#testreason').val(),
                 'collectiondate': $('#collectiondate').val(),
@@ -912,16 +910,16 @@ to get the desired effect
         //     alert("Please enter Requisition No");
         //     return false;
         // }
-        // if ($('#employee_select').val() == '' || $('#employee_select').val() == null) {
-        //     // $('#employee_select').focus();
-        //     // alert("Please Select Employee");
-        //     $('span[aria-labelledby ="select2-employee_select-container"]').addClass('validation-error')
-        //     // console.log($('span[aria-labelledby ="select2-employee_select-container"]')[0])
-        //     // $('span[aria-labelledby ="select2-employee_select-container"]')[0].style.border = '1px solid red !important';
-        //     console.log("employee_select");
-        //     error_validateForm = true;
-        //     // return false;
-        // }
+        if ($('#employee_select').val() == '' || $('#employee_select').val() == null) {
+            // $('#employee_select').focus();
+            // alert("Please Select Employee");
+            $('span[aria-labelledby ="select2-employee_select-container"]').addClass('validation-error')
+            // console.log($('span[aria-labelledby ="select2-employee_select-container"]')[0])
+            // $('span[aria-labelledby ="select2-employee_select-container"]')[0].style.border = '1px solid red !important';
+            console.log("employee_select");
+            error_validateForm = true;
+            // return false;
+        }
         if ($('#location_select').val() == '' || $('#location_select').val() == null) {
             // $('#location_select').focus();
             // alert("Please Select Location");

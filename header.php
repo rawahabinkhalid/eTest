@@ -676,7 +676,7 @@ if (!isset($_SESSION['userid'])) {
                                     <p>Download</p>
                                 </a>
                             </li>
-                            <li class="nav-item" style="pointer-events: none;">
+                            <li class="nav-item" style="">
                                 <a href="" class="nav-link" data-toggle="modal" data-target="#myModal_Billing" id="btn_add_billing">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Billing</p>
@@ -953,8 +953,8 @@ if (!isset($_SESSION['userid'])) {
                         </ul>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a onclick="#" href="javascript:void();" class="nav-link text-danger">
-                                <!-- <a onclick="openURL('accountUsageReport.php');" href="javascript:void();" class="nav-link"> -->
+                                <!-- <a onclick="#" href="javascript:void();" class="nav-link text-danger"> -->
+                                <a onclick="openURL('accountUsageReport.php');" href="javascript:void();" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Account Usage Report</p>
                                 </a>
@@ -971,8 +971,8 @@ if (!isset($_SESSION['userid'])) {
                         </ul>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a onclick="#" href="javascript:void();" class="nav-link text-danger">
-                                <!-- <a onclick="openURL('companyDrugReport.php');" href="javascript:void();" class="nav-link"> -->
+                                <!-- <a onclick="#" href="javascript:void();" class="nav-link text-danger"> -->
+                                <a onclick="openURL('companyDrugReport.php');" href="javascript:void();" class="nav-link">
                                     <i class="far fa-circle nav-icon" style="margin: 0;
     position: absolute;
     top: 50%;
@@ -984,8 +984,8 @@ if (!isset($_SESSION['userid'])) {
                         </ul>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a onclick="#" href="javascript:void();" class="nav-link text-danger">
-                                <!-- <a onclick="openURL('emailReport.php');" href="javascript:void();" class="nav-link"> -->
+                                <!-- <a onclick="#" href="javascript:void();" class="nav-link text-danger"> -->
+                                <a onclick="openURL('emailReport.php');" href="javascript:void();" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Email Report</p>
                                 </a>
@@ -1146,19 +1146,15 @@ if (!isset($_SESSION['userid'])) {
                                 </a>
                             </li>
                         </ul>
-                        <ul class="nav nav-treeview">
+                        <!-- <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a onclick="#" href="javascript:void();" class="nav-link text-danger">
-                                <!-- <a onclick="openURL('monthlyBillingReportForBids.php');" href="javascript:void();" class="nav-link"> -->
-                                    <i class="far fa-circle nav-icon" style="margin: 0;
-    position: absolute;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);"></i>
-                                    <p style="margin-left: 35px;">Negative & Positive<br>Test Results</p>
+                                <a onclick="openURL('duplicatesReport.php');" href="javascript:void();" class="nav-link">
+                                    <i class="far fa-circle nav-icon" style=""></i>
+                                    <p style="margin-left: 35px;">Duplicates Report</p>
                                 </a>
                             </li>
-                        </ul>
+                        </ul> -->
                     </li>
                     
                     <li class="nav-item has-treeview">

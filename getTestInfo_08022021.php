@@ -161,35 +161,37 @@ to get the desired effect
                                 <div class="form-group">
                                     <label>Test No:</label>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input type="text" id="getTestNo" disabled value="<?php if (isset($row['test_id'])) echo $row['test_id']; ?>" style="width: 240px; height: 31px; text-align:center">
+                                    <input type="text" id="getTestNo" value="<?php if (isset($row['test_id'])) echo $row['test_id']; ?>" disabled style="width: 240px; height: 31px; text-align:center">
 
                                 </div>
                                 <div class="form-group">
                                     <label>Requisition No:</label>
-                                    <input type="text" placeholder="" value="<?php if (isset($row['req_no'])) echo $row['req_no']; ?>" style="width: 240px; height: 31px; text-align:center">
+                                    <input disabled type="text" placeholder="" value="<?php if (isset($row['req_no'])) echo $row['req_no']; ?>" style="width: 240px; height: 31px; text-align:center">
                                 </div>
                                 <div class="form-group">
                                     <label>Emp ID:</label>
-                                    <input type="hidden" id="getEmployeeId" placeholder="" value="<?php if (isset($row['emp_id'])) echo $row['emp_id']; ?>" style="width: 240px; height: 31px; text-align:center">
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input style="width: 240px; height: 31px;" id="employee_select" disabled value="<?php if (isset($row['emp_id'])) echo $row['specimen_id'] . ' - ' . $row['first_nm'] . ' ' . $row['last_nm']; ?>">
+                                    <select style="width: 240px; height: 31px;" id="employee_select" disabled>
+                                        <option id="getEmployee" value="<?php if (isset($row['emp_id'])) echo $row['emp_id']; ?>">
+                                            <?php if (isset($row['emp_id'])) echo $row['specimen_id'] . ' - ' . $row['first_nm'] . ' ' . $row['last_nm']; ?></option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Test Reason:</label>
                                     &nbsp;&nbsp;&nbsp;
-                                    <select style="width: 240px; height: 31px;" id="testreason">
+                                    <select style="width: 240px; height: 31px;" id="testreason" disabled>
                                         <option value="<?php if (isset($row['reason_id'])) echo $row['reason_id']; ?>">
                                             <?php if (isset($row['reason_id'])) echo $row['reason_nm']; ?></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Date Reported:</label>
-                                    <input type="date" value="<?php if (isset($row['reported_date'])) echo $row['reported_date']; ?>" name="date_reported" id="date_reported" placeholder="" style="width: 240px; height: 31px; text-align:center">
+                                    <input type="date" disabled value="<?php if (isset($row['reported_date'])) echo $row['reported_date']; ?>" name="date_reported" id="date_reported" placeholder="" style="width: 240px; height: 31px; text-align:center">
                                 </div>
                                 <div class="form-group">
                                     <label>Sample Type:</label>
                                     &nbsp;&nbsp;&nbsp;
-                                    <select style="width: 240px; height: 31px;" id="sampletype">
+                                    <select style="width: 240px; height: 31px;" id="sampletype" disabled>
                                         <option value="<?php if (isset($row['sample_id'])) echo $row['sample_id']; ?>">
                                             <?php if (isset($row['sample_id'])) echo $row['sample_nm']; ?></option>
 
@@ -198,7 +200,7 @@ to get the desired effect
                                 <div class="form-group">
                                     <label>Test Type:</label>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <select style="width: 240px; height: 31px;" id="testtype">
+                                    <select style="width: 240px; height: 31px;" id="testtype" disabled>
                                         <option id="getTestType" value="<?php if (isset($row['type_id'])) echo $row['type_id']; ?>">
                                             <?php if (isset($row['type_id'])) echo $row['type_nm']; ?></option>
                                     </select>
@@ -215,18 +217,18 @@ to get the desired effect
                                 <div class="form-group">
                                     <label>Invoice No:</label>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input type="text" id="invoice_no" value="<?php if (isset($row['invoice_id'])) echo $row['invoice_id']; ?>" style="width: 240px; height: 31px; text-align:center">
-                                    <input type="hidden" id="invoice_status" value="<?php if (isset($row['paid'])) echo $row['paid']; ?>" style="width: 240px; height: 31px; text-align:center">
+                                    <input type="text" id="invoice_no" value="<?php if (isset($row['invoice_id'])) echo $row['invoice_id']; ?>" disabled style="width: 240px; height: 31px; text-align:center">
+                                    <input type="hidden" id="invoice_status" value="<?php if (isset($row['paid'])) echo $row['paid']; ?>" disabled style="width: 240px; height: 31px; text-align:center">
                                 </div>
                                 <div class="form-group">
                                     <label>Group No:</label>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input style="width: 240px; height: 31px;" type="text" style="text-align:center" disabled>
+                                    <input disabled style="width: 240px; height: 31px;" type="text" style="text-align:center">
                                 </div>
                                 <div class="form-group">
                                     <label>Location:</label>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <select style="width: 240px; height: 31px;" id="location_select">
+                                    <select style="width: 240px; height: 31px;" id="location_select" disabled>
                                         <option value="<?php if (isset($row['division_id'])) echo $row['division_id']; ?>">
                                             <?php if (isset($row['division_id'])) echo $row['division_nm']; ?></option>
                                     </select>
@@ -234,7 +236,7 @@ to get the desired effect
                                 <div class="form-group">
                                     <label>Collection Date:</label>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input type="date" placeholder="" style="width: 240px; height: 31px;
+                                    <input type="date" disabled placeholder="" style="width: 240px; height: 31px;
                                             text-align:center" id="collectiondate" value="<?php if (isset($row['collection_date']))
                                                                                                 $date = explode(" ", $row['collection_date']);
                                                                                             echo $date[0]; ?>">
@@ -242,13 +244,13 @@ to get the desired effect
                                 <div class="form-group">
                                     <label>Date MRO Copy Recvd:</label>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input type="date" value="<?php if (isset($row['mro_received_date'])) echo $row['mro_received_date']; ?>" name="date_mro_recvd" id="date_mro_recvd" placeholder="" style="width: 240px; height: 31px; text-align:center">
+                                    <input type="date" disabled value="<?php if (isset($row['mro_received_date'])) echo $row['mro_received_date']; ?>" name="date_mro_recvd" id="date_mro_recvd" placeholder="" style="width: 240px; height: 31px; text-align:center">
                                 </div>
                                 <div class="form-group">
                                     <label>Test Date:</label>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input id="getTestDate" type="date" placeholder="" style=" width: 240px; height: 31px; text-align:center" id="testdate" value="<?php if (isset($row['test_date']))
+                                    <input id="getTestDate" type="date" disabled placeholder="" style=" width: 240px; height: 31px; text-align:center" id="testdate" value="<?php if (isset($row['test_date']))
                                                                                                                                                                                 $date = explode(" ", $row['test_date']);
                                                                                                                                                                             echo $date[0]; ?>">
                                 </div>
@@ -256,7 +258,7 @@ to get the desired effect
                                     <label>Fee Amount:</label>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input id="getFeeAmount" type="number" min="0" step="1" value="<?php if (isset($row['amount'])) echo number_format(floatval($row['amount']), 2); ?>" id="fee_amount" placeholder="" style="width: 240px; height: 31px; text-align:center">
+                                    <input id="getFeeAmount" disabled type="number" min="0" step="1" value="<?php if (isset($row['amount'])) echo number_format(floatval($row['amount']), 2); ?>" id="fee_amount" placeholder="" style="width: 240px; height: 31px; text-align:center">
                                 </div>
                             </div>
                         </div>
@@ -268,7 +270,7 @@ to get the desired effect
                                     <div class="col-md-3">
                                         <label for="negative_pos" style="display: inline-block">
                                             <div class="form-group">
-                                                <input type="radio" id="negative_pos" <?php if (isset($row['result']) && $row['result'] == "N") echo "checked"; ?> name="negative_positive">
+                                                <input type="radio" id="negative_pos" <?php if (isset($row['result']) && $row['result'] == "N") echo "checked"; ?> name="negative_positive" disabled>
                                                 Negative
                                             </div>
                                         </label>
@@ -277,7 +279,7 @@ to get the desired effect
                                         <div class="form-group">
                                             <label>Form:</label>
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <select style="width: 240px; height: 31px;" id="selectForm">
+                                            <select style="width: 240px; height: 31px;" disabled id="selectForm">
                                                 <option value="<?php if (isset($row['form_id'])) echo $row['form_id']; ?>">
                                                     <?php if (isset($row['form_id'])) echo $row['form_nm']; ?></option>
                                             </select>
@@ -287,7 +289,7 @@ to get the desired effect
                                 <div class="row">
                                     <div class="col-md-3" style="display: inline-block">
                                         <label for="negative_positive" style="display: inline-block; text-align: left;">
-                                            <input type="radio" id="negative_positive" name="negative_positive" <?php if (isset($row['result']) && $row['result'] == "P") echo "checked"; ?>>
+                                            <input type="radio" id="negative_positive" name="negative_positive" <?php if (isset($row['result']) && $row['result'] == "P") echo "checked"; ?> disabled>
                                             Positive for the Following:
                                         </label>
                                     </div>
@@ -309,7 +311,7 @@ to get the desired effect
                                                     echo '<div class="form-group ml-3">';
                                                     echo '    <label for="drug_' . $row['drug_id'] . '"><input type="checkbox" ';
                                                     if (isset($rowResult['result']) && $rowResult['result'] == "P") echo "checked";
-                                                    echo ' class="positiveForCheckBox" name="" id="drug_' . $row['drug_id'] . '" value="' . $row['drug_id'] . '">';
+                                                    echo ' disabled class="positiveForCheckBox" name="" id="drug_' . $row['drug_id'] . '" value="' . $row['drug_id'] . '">';
                                                     echo '&emsp;' . $row['drug_nm'];
                                                     echo '</label></div>';
                                                 }
@@ -324,14 +326,14 @@ to get the desired effect
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="other_substances" style="display: inline-block">
-                                                <input type="checkbox" name="" id="other_substances" value="" <?php if (isset($row['other'])) echo "checked"; ?>>
+                                                <input type="checkbox" name="" id="other_substances" value="" <?php if (isset($row['other'])) echo "checked"; ?> disabled>
                                                 Other Substances:
                                             </label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="text" name="" id="other_substances_input" value="<?php if (isset($row['other_nm'])) echo $row['other_nm']; ?>" style="width: 240px; height: 31px;">
+                                            <input type="text" name="" id="other_substances_input" value="<?php if (isset($row['other_nm'])) echo $row['other_nm']; ?>" style="width: 240px; height: 31px;" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -341,21 +343,16 @@ to get the desired effect
                         </div>
                         <br>
 
-                        <?php if ($_SESSION['usertype'] == 'admin') { ?>
+                        <?php if ($_SESSION['usertype'] != 'accounts') { ?>
 
                             <button type="button" name="submitPurchase" class="btn ml-1" style="background-color:#E7D7B7; border-radius:12px; width: 100px;" onclick="window.open('testinfo.php', '_self');">New</button>
                         <?php } ?>
                         <button type="button" name="" id="" class="btn ml-1" style="background-color:#E7D7B7; border-radius:12px; width: 100px;" onclick="window.open('viewMROReport.php?id=<?php echo $_GET['id']; ?>', '_blank'
                             );">Print</button>
                         <button type="button" name="" id="" class="btn ml-1" style="background-color:#E7D7B7; border-radius:12px; width: 100px;" data-toggle="modal" data-target="#myModal_Send">Email</button>
-
-                        <?php if ($_SESSION['usertype'] == 'admin') { ?>
-
-                            <button type="button" name="submitSave" id="submitSave" class="btn ml-1"
-                                style="background-color:#E7D7B7; border-radius:12px; width: 100px;">Update</button>
-                        <?php } ?>
-
-                        <!-- <button type="button" name="submitDelete" id="submitDelete" class="btn ml-1"
+                        <!-- <button type="button" name="submitSave" id="submitSave" class="btn ml-1"
+                            style="background-color:#E7D7B7; border-radius:12px; width: 100px;">Save</button>
+                        <button type="button" name="submitDelete" id="submitDelete" class="btn ml-1"
                             style="background-color:#E7D7B7; border-radius:12px; width: 100px;">Delete</button> -->
                         <br>
                         <!-- </form> -->
@@ -514,515 +511,192 @@ to get the desired effect
             });
         }
 
-        </script>
-        <script>
-    $('#accounts_select').select2().on("change", function(e) {
-        sessionStorage.setItem('account_selected', $(this).val());
-        console.log($(this).val())
-        console.log(location.pathname)
-        window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' +
-        sessionStorage.getItem('account_selected'), '_self');
-    });
-    </script>
-    <script>
-    $('#testreason').select2();
-    $('#location_select').select2();
-    $('#sampletype').select2();
-    $('#testtype').select2();
-    $('#selectForm').select2();
-    // $('#employee_select').select2();
-    $('#practitioner_default').select2({
-        width: '100%'
-    });
-    $('#lab_default').select2({
-        width: '100%'
-    });
-    $('#sampleType_default').select2({
-        width: '100%'
-    });
-    $('#testType_default').select2({
-        width: '100%'
-    });
-    $('#testReason_default').select2({
-        width: '100%'
-    });
-    </script>
-    <script>
-    // $('#employee_select').on('select2:select', function (e) {
-    //     $('span[aria-labelledby ="select2-employee_select-container"]').removeClass('validation-error')
-    //     var data = e.params.data;
-    //     console.log(data);
-    // });
-    $('#location_select').on('select2:select', function (e) {
-        $('span[aria-labelledby ="select2-location_select-container"]').removeClass('validation-error')
-        var data = e.params.data;
-        console.log(data);
-    });
-    $('#testreason').on('select2:select', function (e) {
-        $('span[aria-labelledby ="select2-testreason-container"]').removeClass('validation-error')
-        var data = e.params.data;
-        console.log(data);
-    });
-    $('#collectiondate').on('change', function () {
-        $('#collectiondate').removeClass('validation-error')
-    });
-    $('#date_reported').on('change', function () {
-        $('#date_reported').removeClass('validation-error')
-    });
-    $('#date_mro_recvd').on('change', function () {
-        $('#date_mro_recvd').removeClass('validation-error')
-    });
-    $('#getTestDate').on('change', function () {
-        $('#getTestDate').removeClass('validation-error')
-    });
-    $('#sampletype').on('select2:select', function (e) {
-        $('span[aria-labelledby ="select2-testtype-container"]').removeClass('validation-error')
-        var data = e.params.data;
-        console.log(data);
-    });
-    $('#testtype').on('select2:select', function (e) {
-        $('span[aria-labelledby ="select2-sampletype-container"]').removeClass('validation-error')
-        var data = e.params.data;
-        console.log(data);
-    });
-    $('#fee_amount').on('change', function () {
-        $('#fee_amount').removeClass('validation-error')
-    });
-    $('#selectForm').on('select2:select', function (e) {
-        $('span[aria-labelledby ="select2-selectForm-container"]').removeClass('validation-error')
-        var data = e.params.data;
-        console.log(data);
-    });
-    </script>
-    <script>
+        $(document).ready(function() {
+            // $('#select_account_div').css('display', 'none');
+            $('#status_pre_employment').prop('checked', true);
+            $('#new_form').css('pointer-events', 'all');
+            $('#cancel_form').css('pointer-events', 'all');
+            $('#btn_add_send').css('pointer-events', 'all');
+            if ($('#invoice_no').val() == '' || $('#invoice_status').val() != 'T')
+                $('#btn_add_billing').css('pointer-events', 'all');
+            $('#accounts_select').attr('disabled', 'disabled');
+            $('#invoiceNoBilled').select2({
+                width: '100%'
+            });
+            // setTimeout(() => {
+            // $("#accounts_select").children().eq(1).attr('selected', 'selected');
+            let account = new URL(location.href).searchParams.get("account");
+            console.log(account)
+            if (account != null && account != '' && account != 'null') {
+                $('#account_select').val(account);
+                $('#account_select').trigger('change');
+                // let employee = new URL(location.href).searchParams.get("employee");
+                // if(employee != undefined && employee != null && employee != '' && employee != 'null') {
+                //     $('#employee_select').val(employee);
+                //     $('#employee_select').trigger('change'); 
+                // }
 
-    // function addEmployees() {
-    //     $('#myModal_Employee').modal('hide');
-    //     var temp = {};
-    //     temp['emp_id'] = $('#emp_id').val();
-    //     temp['specimen_id'] = $('#specimen_id').val();
-    //     temp['first_nm'] = $('#first_nm').val();
-    //     temp['last_nm'] = $('#last_nm').val();
-    //     temp['division_id'] = $('#division_id').val();
-    //     temp['account_id'] = $('#accounts_select').val();
-    //     temp['status'] = '';
-    //     if ($('#status_pre_employment').is(':checked'))
-    //         temp['status'] = 'P';
-    //     else if ($('#status_active').is(':checked'))
-    //         temp['status'] = 'A';
-    //     else if ($('#status_terminated').is(':checked'))
-    //         temp['status'] = 'T';
+                $('#select_account_div').css('display', 'none');
+                $('#main_div_main').css('display', 'block');
+                $.ajax({
+                    type: "GET",
+                    url: "get_location_testinfo.php",
+                    data: 'account_id_location=' + $("#accounts_select").val(),
+                    success: function(resultData) {
+                        $('#location_select').html(resultData);
+                        $('#division_id_send').html(resultData);
+                        // window.open("accounts.php", "_self");
+                    }
+                });
+            } else if ($('#accounts_select').val() != '') {
+                // window.open('testinfo.php?account=' + $('#accounts_select').val(), '_self');
+            }
+            // }, 500);
+        })
 
-    //     $('#emp_id').val('');
-    //     $('#specimen_id').val('');
-    //     $('#first_nm').val('');
-    //     $('#last_nm').val('');
-    //     $('#division_id').val('');
-    //     $('#status_pre_employment').prop('checked', false);
-    //     $('#status_active').prop('checked', false);
-    //     $('#status_terminated').prop('checked', false);
-    //     $('#employeesindex').val('');
-
-    //     $.ajax({
-    //         type: "POST",
-    //         url: "insert_employee.php",
-    //         data: 'employeeData=' + JSON.stringify(temp),
-    //         success: function(resultData) {
-    //             // console.log(resultData);
-    //             // alert(resultData);
-    //             // location.reload();
-    //             resultData = JSON.parse(resultData);
-    //             console.log(resultData);
-    //             console.log("" + resultData.id);
-    //             alert(resultData.message);
-    //             if(resultData.id !== undefined)
-    //                 window.open(location.pathname.split('/')[location.pathname.split('/').length - 1] + '?account=' + sessionStorage.getItem('account_selected') + '&employee=' + resultData.id, '_self');
-    //             else
-    //                 $('#myModal_Employee').modal('show');
-    //             // else
-    //             //     location.reload();
-    //             // window.open("accounts.php", "_self");
-    //         }
-    //     });
-    // }
-
-    $(document).ready(function() {
-        if($('#negative_pos').is(':checked')) {
-            $('#negative_positive').click();
-            $('#negative_pos').click();
-        }
-        if($('#negative_positive').is(':checked')) {
-            $('#negative_pos').click();
-            $('#negative_positive').click();
-        }
-        // $('#select_account_div').css('display', 'none');
-        $('#status_pre_employment').prop('checked', true);
-        $('#new_form').css('pointer-events', 'all');
-        $('#cancel_form').css('pointer-events', 'all');
-        // setTimeout(() => {
-        // $("#accounts_select").children().eq(1).attr('selected', 'selected');
-        let account = new URL(location.href).searchParams.get("account");
-        if(account != null && account != '' && account != 'null') {
-            let employee = new URL(location.href).searchParams.get("employee");
-            // if(employee != undefined && employee != null && employee != '' && employee != 'null') {
-            //     console.log(employee)
-            //     $('#employee_select').val(employee);
-            //     $('#employee_select').trigger('change'); // Notify any JS components that the value changed
-
-            // }
-
+        $('#accounts_select').on('change', function() {
             $('#select_account_div').css('display', 'none');
             $('#main_div_main').css('display', 'block');
             $.ajax({
                 type: "GET",
                 url: "get_location_testinfo.php",
-                data: 'account_id_location=' + $("#accounts_select").val(),
+                data: 'account_id_location=' + $(this).val(),
                 success: function(resultData) {
-                    $('#location_select').html(resultData);
-                    $('#division_id_send').html(resultData);
+                    // $('#location_select').html(resultData);
                     // window.open("accounts.php", "_self");
                 }
             });
-        } else if($('#accounts_select').val() != '') {
-            // window.open('testinfo.php?account=' + $('#accounts_select').val(), '_self');
-        }
-        // }, 500);
-    })
+        })
 
-    // $('#accounts_select').on('change', function() {
-    //     $('#select_account_div').css('display', 'none');
-    //     $('#main_div_main').css('display', 'block');
-    //     $.ajax({
-    //         type: "GET",
-    //         url: "get_location_testinfo.php",
-    //         data: 'account_id_location=' + $(this).val(),
-    //         success: function(resultData) {
-    //             $('#location_select').html(resultData);
-    //             // window.open("accounts.php", "_self");
-    //         }
-    //     });
-    // })
-    </script>
-    <script>
-
-    // $.ajax({
-    //     type: "GET",
-    //     url: "get_location_testinfo.php?account_id_employee=" + $('#accounts_select')
-    //         .val(),
-    //     success: function(resultData) {
-    //         console.log(resultData);
-    //         $('#employee_select').html(resultData);
-    //         let employee = $('#getEmployeeId').val();
-    //         $('#employee_select').val(employee);
-    //         $('#employee_select').trigger('change'); // Notify any JS components that the value changed
-    //         // if(employee != undefined && employee != null && employee != '' && employee != 'null') {
-
-    //         // $('#employee_select').val(employee);
-    //         // $('#employee_select').trigger('change'); // Notify any JS components that the value changed
-    //         // }
-    //         // window.open("accounts.php", "_self");
-    //     }
-    // });
-    </script>
-    <script>
-
-    // $('#location_select').on('change', function() {
-    //     console.log("get_location_testinfo.php?account_id_employee=" + $('#accounts_select').val() +
-    //         "&location_select=" + $(this)
-    //         .val())
-    //     $.ajax({
-    //         type: "GET",
-    //         url: "get_location_testinfo.php?account_id_employee=" + $('#accounts_select').val() +
-    //             "&location_select=" + $(this)
-    //             .val(),
-    //         success: function(resultData) {
-    //             console.log(resultData);
-    //             $('#employee_select').html(resultData);
-    //             // window.open("accounts.php", "_self");
-    //         }
-    //     });
-    // })
-    </script>
-    <script>
-
-    $('#other_substances').on('click', function() {
-        if ($(this).is(":checked"))
-            $('#other_substances_input').prop('disabled', false);
-        else
-            $('#other_substances_input').prop('disabled', true);
-    })
-    </script>
-    <script>
-
-
-    $('#fee_amount').on('change', function() {
-        if ($(this).val() < $(this).attr('min'))
-            $(this).val($(this).attr('min'));
-    })
-    </script>
-    <script>
-
-    $('#selectForm').on('change', function() {
-        $.ajax({
-            type: "GET",
-            url: "get_drugs_from_form.php?form_id=" + $('#selectForm')
-                .val(),
-            success: function(resultData) {
-                console.log(resultData);
-                $('#drugsOfForm').html(resultData);
-                // window.open("accounts.php", "_self");
-            }
-        });
-    })
-    </script>
-    <script>
-
-    $('#negative_pos').on('click', function() {
-        if ($('#negative_pos').is(':checked')) {
-            // $('#selectForm').val('');
-            // $('#drugsOfForm').html('');
-            $('.positiveForCheckBox').prop('checked', false);
-            $('.positiveForCheckBox').prop('disabled', true);
-            // $('#selectForm').prop('disabled', true);
-        } else {
-            // $('#selectForm').prop('disabled', false);
-            // $('#selectForm').val('');
-            $('.positiveForCheckBox').prop('disabled', false);
-        }
-    })
-    </script>
-    <script>
-
-    $('#negative_positive').on('click', function() {
-        if ($('#negative_positive').is(':checked')) {
-            // $('#selectForm').val('');
-            // $('#selectForm').prop('disabled', false);
-            $('.positiveForCheckBox').prop('disabled', false);
-        } else {
-            // $('#selectForm').prop('disabled', true);
-            $('.positiveForCheckBox').prop('checked', false);
-            $('.positiveForCheckBox').prop('disabled', true);
-
-        }
-    })
-    </script>
-    <script>
-
-    $('#submitSave').on('click', function() {
-        if (validateForm()) {
-            console.log("form validated");
-            var negative_positive = '';
-            var other_substances = null;
-            var other_substances_input = '';
-            if ($('#negative_positive').is(':checked')) {
-                negative_positive = 'pos';
-            } else if ($('#negative_pos').is(':checked')) {
-                negative_positive = 'neg';
-            } else {
-                alert('Kindly select Test Result');
-                return;
-            }
-
-            if ($('#other_substances').is(':checked')) {
-                other_substances = 'T'
-                other_substances_input = $('#other_substances_input').val()
-            }
-
-            var drug_ids = [];
-            var drug_result = [];
-            for (i = 0; i < document.getElementsByName('positiveForCheckBoxName').length; i++) {
-                console.log("iter: " + i)
-                console.log(document.getElementsByName('positiveForCheckBoxName')[i].value)
-
-                drug_ids.push(document.getElementsByName('positiveForCheckBoxName')[i].value);
-                if (document.getElementsByName('positiveForCheckBox')[i].checked)
-                    drug_result.push('P');
-                else
-                    drug_result.push('N');
-
-            }
-
-            var data = {
-                'test_no': $('#getTestNo').val(),
-                'invoice_no': $('#invoice_no').val(),
-                'requisition_no': $('#requisitionNo').val(),
-                'accounts_select': $('#accounts_select').val(),
-                'employee_select': $('#getEmployeeId').val(),
-                'location_select': $('#location_select').val(),
-                'testreason': $('#testreason').val(),
-                'collectiondate': $('#collectiondate').val(),
-                'date_reported': $('#date_reported').val(),
-                'date_mro_recvd': $('#date_mro_recvd').val(),
-                'sampletype': $('#sampletype').val(),
-                'testdate': $('#getTestDate').val(),
-                'testtype': $('#testtype').val(),
-                'fee_amount': $('#getFeeAmount').val(),
-                'negative_positive': negative_positive,
-                'selectForm': $('#selectForm').val(),
-                'other': other_substances,
-                'otherName': other_substances_input,
-                'drug_ids': drug_ids,
-                'drug_result': drug_result
-            };
+        $('#location_select').on('change', function() {
+            console.log("get_location_testinfo.php?account_id_employee=" + $('#accounts_select').val() +
+                "&location_select=" + $(this)
+                .val())
             $.ajax({
-                type: 'POST',
-                url: 'insert_test.php',
-                data: data,
-                success: function(response) {
-                    console.log(response);
-                    if (response.split("id=").length > 0) {
-                        alert('Test saved successfully.')
-                        // window.open("testinfo.php", "_self");
-                        window.open("getTestInfo.php?account=" + $('#accounts_select').val() + "&id=" + response.split("id=")[1], "_self");
-                        // getTestInfo.php?account=1338
-                    } else {
-                        alert('Error occurred while saving test.')
-                        // window.open("testinfo.php", "_self");
-                    }
-
-                    // alert(response);
+                type: "GET",
+                url: "get_location_testinfo.php?account_id_employee=" + $('#accounts_select').val() +
+                    "&location_select=" + $(this)
+                    .val(),
+                success: function(resultData) {
+                    console.log(resultData);
+                    $('#employee_select').html(resultData);
+                    // window.open("accounts.php", "_self");
                 }
             });
-            console.log('form_validated', data);
-        }
-    })
-    </script>
-    <script>
+        })
 
-    $('#testtype').on('change', function() {
-        $.ajax({
-            type: 'GET',
-            url: 'getFeesFromTestType.php?account=' + $('#accounts_select').val() + '&type_id=' + $(
-                this).val(),
-            success: function(response) {
-                console.log(response);
-                $('#fee_amount').val(response);
-                if(response == '')
-                    $('#fee_amount').val('0.00');
+        $('#other_substances').on('click', function() {
+            if ($(this).is(":checked"))
+                $('#other_substances_input').prop('disabled', false);
+            else
+                $('#other_substances_input').prop('disabled', true);
+        })
+
+
+        $('#fee_amount').on('change', function() {
+            if ($(this).val() < $(this).attr('min'))
+                $(this).val($(this).attr('min'));
+        })
+
+        $('#negative_pos').on('click', function() {
+            if ($('#negative_pos').is(':checked')) {
+                $('.positiveForCheckBox').prop('checked', false);
+                $('.positiveForCheckBox').prop('disabled', true);
+                $('#selectForm').prop('disabled', false);
+            } else {
+                $('#selectForm').prop('disabled', true);
+                $('#selectForm').val('');
+                $('.positiveForCheckBox').prop('disabled', false);
             }
-        });
-    })
-    </script>
-    <script>
+        })
 
-    function validateForm() {
-        var error_validateForm = false;
-        // if ($('#requisitionNo').val() == '' || $('#requisitionNo').val() == null) {
-        //     $('#requisitionNo').focus();
-        //     alert("Please enter Requisition No");
-        //     return false;
-        // }
-        // if ($('#employee_select').val() == '' || $('#employee_select').val() == null) {
-        //     // $('#employee_select').focus();
-        //     // alert("Please Select Employee");
-        //     $('span[aria-labelledby ="select2-employee_select-container"]').addClass('validation-error')
-        //     // console.log($('span[aria-labelledby ="select2-employee_select-container"]')[0])
-        //     // $('span[aria-labelledby ="select2-employee_select-container"]')[0].style.border = '1px solid red !important';
-        //     console.log("employee_select");
-        //     error_validateForm = true;
-        //     // return false;
-        // }
-        if ($('#location_select').val() == '' || $('#location_select').val() == null) {
-            // $('#location_select').focus();
-            // alert("Please Select Location");
-            $('span[aria-labelledby ="select2-location_select-container"]').addClass('validation-error')
-            console.log("location_select");
-            error_validateForm = true;
-            // return false;
-        }
-        if ($('#testreason').val() == '' || $('#testreason').val() == null) {
-            // $('#testreason').focus();
-            $('span[aria-labelledby ="select2-testreason-container"]').addClass('validation-error')
-            // alert("Please Select Test Reason");
-            console.log("testreason");
-            error_validateForm = true;
-            // return false;
-        }
-        if ($('#collectiondate').val() == '' || $('#collectiondate').val() == null) {
-            // $('#collectiondate').focus();
-            $('#collectiondate').addClass('validation-error')
-            // alert("Please Select Collection Date");
-            console.log("collectiondate");
-            error_validateForm = true;
-            // return false;
-        }
-        if ($('#date_reported').val() == '' || $('#date_reported').val() == null) {
-            // $('#date_reported').focus();
-            $('#date_reported').addClass('validation-error')
-            // alert("Please Select Collection Date");
-            console.log("date_reported");
-            error_validateForm = true;
-            // return false;
-        }
-        if ($('#date_mro_recvd').val() == '' || $('#date_mro_recvd').val() == null) {
-            // $('#date_mro_recvd').focus();
-            $('#date_mro_recvd').addClass('validation-error')
-            // alert("Please Select Collection Date");
-            console.log("date_mro_recvd");
-            error_validateForm = true;
-            // return false;
-        }
-        if ($('#getTestDate').val() == '' || $('#getTestDate').val() == null) {
-            // $('#testdate').focus();
-            $('#getTestDate').addClass('validation-error')
-            // alert("Please Select Collection Date");
-            console.log("getTestDate");
-            error_validateForm = true;
-            // return false;
-        }
-        if ($('#sampletype').val() == '' || $('#sampletype').val() == null) {
-            // $('#sampletype').focus();
-            $('span[aria-labelledby ="select2-sampletype-container"]').addClass('validation-error')
-            // alert("Please Select Sample Type");
-            console.log("sampletype");
-            error_validateForm = true;
-            // return false;
-        }
-        if ($('#testtype').val() == '' || $('#testtype').val() == null) {
-            // $('#testtype').focus();
-            // alert("Please Select Test Type");
-            $('span[aria-labelledby ="select2-testtype-container"]').addClass('validation-error')
-            console.log("testtype");
-            error_validateForm = true;
-            // return false;
-        }
-        if ($('#fee_amount').val() == '0.00' || $('#fee_amount').val() == '' || $('#fee_amount').val() == '0') {
-            // $('#fee_amount').focus();
-            $('#fee_amount').addClass('validation-error')
-            // alert("Please Select Fee Amount");
-            console.log("fee_amount");
-            error_validateForm = true;
-            // return false;
-        }
-        if ($('#selectForm').val() == '' || $('#selectForm').val() == null) {
-            // $('#testtype').focus();
-            // alert("Please Select Test Type");
-            $('span[aria-labelledby ="select2-selectForm-container"]').addClass('validation-error')
-            console.log("selectForm");
-            error_validateForm = true;
-            // return false;
-        }
-        console.log(!error_validateForm);
-        return !error_validateForm;
-    }
-    </script>
-    <script>
+        $('#negative_positive').on('click', function() {
+            if ($('#negative_positive').is(':checked')) {
+                $('#selectForm').val('');
+                $('#selectForm').prop('disabled', true);
+                $('.positiveForCheckBox').prop('disabled', false);
+            } else {
+                $('#selectForm').prop('disabled', false);
+                $('.positiveForCheckBox').prop('checked', false);
+                $('.positiveForCheckBox').prop('disabled', true);
 
-    $('#negative_pos').on('click', function() {
-        if ($('#negative_pos').is(":checked")) {
-            console.log("asdadsa");
+            }
+        })
+
+        $('#submitSave').on('click', function() {
+            if (validateForm()) {
+                console.log("form validated");
+                var data = {
+                    'accounts_select': $('#accounts_select').val(),
+                    'employee_select': $('#employee_select').val(),
+                    'location_select': $('#location_select').val(),
+                    'testreason': $('#testreason').val(),
+                    'collectiondate': $('#collectiondate').val(),
+                    'sampletype': $('#sampletype').val(),
+                    'testdate': $('#testdate').val(),
+                    'testtype': $('#testtype').val(),
+                    'fee_amount': $('#fee_amount').val()
+                };
+                console.log('form_validated', data);
+            }
+        })
+
+        function validateForm() {
+            if ($('#employee_select').val() == '' || $('#employee_select').val() == null) {
+                $('.select2-selection').css('border', '1px solid red !important;')
+                // $('#employee_select').focus();
+                // alert("Please Select Employee");
+                return false;
+            }
+            if ($('#location_select').val() == '' || $('#location_select').val() == null) {
+                $('#location_select').focus();
+                alert("Please Select Location");
+                return false;
+            }
+            if ($('#testreason').val() == '' || $('#testreason').val() == null) {
+                $('#testreason').focus();
+                alert("Please Select Test Reason");
+                return false;
+            }
+            if ($('#collectiondate').val() == '' || $('#collectiondate').val() == null) {
+                $('#collectiondate').focus();
+                alert("Please Select Collection Date");
+                return false;
+            }
+            if ($('#sampletype').val() == '' || $('#sampletype').val() == null) {
+                $('#sampletype').focus();
+                alert("Please Select Sample Type");
+                return false;
+            }
+            if ($('#testdate').val() == '' || $('#testdate').val() == null) {
+                $('#testdate').focus();
+                alert("Please Select Test Date");
+                return false;
+            }
+            if ($('#testtype').val() == '' || $('#testtype').val() == null) {
+                $('#testtype').focus();
+                alert("Please Select Test Type");
+                return false;
+            }
+            if ($('#fee_amount').val() == '0.00') {
+                $('#fee_amount').focus();
+                alert("Please Select Fee Amount");
+                return false;
+            }
+            return true;
         }
-    })
-    </script>
-    <script>
 
-    $('#negative_positive').on('click', function() {
-        if ($('#negative_positive').is(":checked")) {
-            console.log("asdadsa");
-        }
-    })
+        $('#negative_pos').on('click', function() {
+            if ($('#negative_pos').is(":checked")) {
+                console.log("asdadsa");
+            }
+        })
 
-
+        $('#negative_positive').on('click', function() {
+            if ($('#negative_positive').is(":checked")) {
+                console.log("asdadsa");
+            }
+        })
     </script>
 </body>
 
